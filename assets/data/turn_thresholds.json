@@ -1,0 +1,22 @@
+[
+    {
+        "threshold": 350,
+        "point_loss": 2,
+        "message": "Tsk!  A wizard wouldn't have to take 350 turns.  This is going to cost\nyou a couple of points."
+    },
+    {
+        "threshold": 500,
+        "point_loss": 3,
+        "message": "500 turns?  That's another few points you've lost."
+    },
+    {
+        "threshold": 1000,
+        "point_loss": 5,
+        "message": "Are you still at it?  Five points off for exceeding 1000 turns!"
+    },
+    {
+        "threshold": 2500,
+        "point_loss": 10,
+        "message": "Good grief, don't you *EVER* give up?  Do you realize you've spent\nover 2500 turns at this?  That's another ten points off, a total of\ntwenty points lost for taking so long."
+    }
+]

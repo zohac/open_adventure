@@ -1,0 +1,638 @@
+[
+    [
+        "MOT_0",
+        {
+            "words": null
+        }
+    ],
+    [
+        "HERE",
+        {
+            "words": null
+        }
+    ],
+    [
+        "MOT_2",
+        {
+            "words": [
+                "road",
+                "hill"
+            ]
+        }
+    ],
+    [
+        "ENTER",
+        {
+            "words": [
+                "enter"
+            ]
+        }
+    ],
+    [
+        "MOT_4",
+        {
+            "words": [
+                "upstr"
+            ]
+        }
+    ],
+    [
+        "MOT_5",
+        {
+            "words": [
+                "downs"
+            ]
+        }
+    ],
+    [
+        "MOT_6",
+        {
+            "words": [
+                "fores"
+            ]
+        }
+    ],
+    [
+        "FORWARD",
+        {
+            "words": [
+                "forwa",
+                "conti",
+                "onwar"
+            ]
+        }
+    ],
+    [
+        "BACK",
+        {
+            "words": [
+                "back",
+                "retur",
+                "retre"
+            ]
+        }
+    ],
+    [
+        "MOT_9",
+        {
+            "words": [
+                "valle"
+            ]
+        }
+    ],
+    [
+        "MOT_10",
+        {
+            "words": [
+                "stair"
+            ]
+        }
+    ],
+    [
+        "OUTSIDE",
+        {
+            "words": [
+                "out",
+                "outsi",
+                "exit",
+                "leave"
+            ]
+        }
+    ],
+    [
+        "MOT_12",
+        {
+            "words": [
+                "build",
+                "house"
+            ]
+        }
+    ],
+    [
+        "MOT_13",
+        {
+            "words": [
+                "gully"
+            ]
+        }
+    ],
+    [
+        "STREAM",
+        {
+            "words": [
+                "strea"
+            ]
+        }
+    ],
+    [
+        "MOT_15",
+        {
+            "words": [
+                "fork"
+            ]
+        }
+    ],
+    [
+        "MOT_16",
+        {
+            "words": [
+                "bed"
+            ]
+        }
+    ],
+    [
+        "CRAWL",
+        {
+            "words": [
+                "crawl"
+            ]
+        }
+    ],
+    [
+        "MOT_18",
+        {
+            "words": [
+                "cobbl"
+            ]
+        }
+    ],
+    [
+        "INSIDE",
+        {
+            "words": [
+                "inwar",
+                "insid",
+                "in"
+            ]
+        }
+    ],
+    [
+        "MOT_20",
+        {
+            "words": [
+                "surfa"
+            ]
+        }
+    ],
+    [
+        "NUL",
+        {
+            "words": [
+                "null",
+                "nowhe"
+            ]
+        }
+    ],
+    [
+        "MOT_22",
+        {
+            "words": [
+                "dark"
+            ]
+        }
+    ],
+    [
+        "MOT_23",
+        {
+            "words": [
+                "passa",
+                "tunne"
+            ]
+        }
+    ],
+    [
+        "MOT_24",
+        {
+            "words": [
+                "low"
+            ]
+        }
+    ],
+    [
+        "MOT_25",
+        {
+            "words": [
+                "canyo"
+            ]
+        }
+    ],
+    [
+        "MOT_26",
+        {
+            "words": [
+                "awkwa"
+            ]
+        }
+    ],
+    [
+        "MOT_27",
+        {
+            "words": [
+                "giant"
+            ]
+        }
+    ],
+    [
+        "MOT_28",
+        {
+            "words": [
+                "view"
+            ]
+        }
+    ],
+    [
+        "UP",
+        {
+            "words": [
+                "upwar",
+                "up",
+                "u",
+                "above",
+                "ascen"
+            ]
+        }
+    ],
+    [
+        "DOWN",
+        {
+            "words": [
+                "d",
+                "downw",
+                "down",
+                "desce"
+            ]
+        }
+    ],
+    [
+        "MOT_31",
+        {
+            "words": [
+                "pit"
+            ]
+        }
+    ],
+    [
+        "MOT_32",
+        {
+            "words": [
+                "outdo"
+            ]
+        }
+    ],
+    [
+        "MOT_33",
+        {
+            "words": [
+                "crack"
+            ]
+        }
+    ],
+    [
+        "MOT_34",
+        {
+            "words": [
+                "steps"
+            ]
+        }
+    ],
+    [
+        "MOT_35",
+        {
+            "words": [
+                "dome"
+            ]
+        }
+    ],
+    [
+        "LEFT",
+        {
+            "words": [
+                "left"
+            ]
+        }
+    ],
+    [
+        "RIGHT",
+        {
+            "words": [
+                "right"
+            ]
+        }
+    ],
+    [
+        "MOT_38",
+        {
+            "words": [
+                "hall"
+            ]
+        }
+    ],
+    [
+        "MOT_39",
+        {
+            "words": [
+                "jump"
+            ]
+        }
+    ],
+    [
+        "MOT_40",
+        {
+            "words": [
+                "barre"
+            ]
+        }
+    ],
+    [
+        "MOT_41",
+        {
+            "words": [
+                "over"
+            ]
+        }
+    ],
+    [
+        "MOT_42",
+        {
+            "words": [
+                "acros"
+            ]
+        }
+    ],
+    [
+        "EAST",
+        {
+            "words": [
+                "east",
+                "e"
+            ]
+        }
+    ],
+    [
+        "WEST",
+        {
+            "words": [
+                "west",
+                "w"
+            ]
+        }
+    ],
+    [
+        "NORTH",
+        {
+            "words": [
+                "north",
+                "n"
+            ]
+        }
+    ],
+    [
+        "SOUTH",
+        {
+            "words": [
+                "south",
+                "s"
+            ]
+        }
+    ],
+    [
+        "NE",
+        {
+            "words": [
+                "ne"
+            ]
+        }
+    ],
+    [
+        "SE",
+        {
+            "words": [
+                "se"
+            ]
+        }
+    ],
+    [
+        "SW",
+        {
+            "words": [
+                "sw"
+            ]
+        }
+    ],
+    [
+        "NW",
+        {
+            "words": [
+                "nw"
+            ]
+        }
+    ],
+    [
+        "MOT_51",
+        {
+            "words": [
+                "debri"
+            ]
+        }
+    ],
+    [
+        "MOT_52",
+        {
+            "words": [
+                "hole"
+            ]
+        }
+    ],
+    [
+        "MOT_53",
+        {
+            "words": [
+                "wall"
+            ]
+        }
+    ],
+    [
+        "MOT_54",
+        {
+            "words": [
+                "broke"
+            ]
+        }
+    ],
+    [
+        "MOT_55",
+        {
+            "words": [
+                "y2"
+            ]
+        }
+    ],
+    [
+        "MOT_56",
+        {
+            "words": [
+                "climb"
+            ]
+        }
+    ],
+    [
+        "LOOK",
+        {
+            "words": [
+                "l",
+                "x",
+                "look",
+                "exami",
+                "touch",
+                "descr"
+            ],
+            "oldstyle": false
+        }
+    ],
+    [
+        "MOT_58",
+        {
+            "words": [
+                "floor"
+            ]
+        }
+    ],
+    [
+        "MOT_59",
+        {
+            "words": [
+                "room"
+            ]
+        }
+    ],
+    [
+        "MOT_60",
+        {
+            "words": [
+                "slit"
+            ]
+        }
+    ],
+    [
+        "MOT_61",
+        {
+            "words": [
+                "slab",
+                "slabr"
+            ]
+        }
+    ],
+    [
+        "XYZZY",
+        {
+            "words": [
+                "xyzzy"
+            ]
+        }
+    ],
+    [
+        "DEPRESSION",
+        {
+            "words": [
+                "depre"
+            ]
+        }
+    ],
+    [
+        "ENTRANCE",
+        {
+            "words": [
+                "entra"
+            ]
+        }
+    ],
+    [
+        "PLUGH",
+        {
+            "words": [
+                "plugh"
+            ]
+        }
+    ],
+    [
+        "MOT_66",
+        {
+            "words": [
+                "secre"
+            ]
+        }
+    ],
+    [
+        "CAVE",
+        {
+            "words": [
+                "cave"
+            ]
+        }
+    ],
+    [
+        "CROSS",
+        {
+            "words": [
+                "cross"
+            ]
+        }
+    ],
+    [
+        "BEDQUILT",
+        {
+            "words": [
+                "bedqu"
+            ]
+        }
+    ],
+    [
+        "PLOVER",
+        {
+            "words": [
+                "plove"
+            ]
+        }
+    ],
+    [
+        "ORIENTAL",
+        {
+            "words": [
+                "orien"
+            ]
+        }
+    ],
+    [
+        "CAVERN",
+        {
+            "words": [
+                "caver"
+            ]
+        }
+    ],
+    [
+        "SHELLROOM",
+        {
+            "words": [
+                "shell"
+            ]
+        }
+    ],
+    [
+        "RESERVOIR",
+        {
+            "words": [
+                "reser"
+            ]
+        }
+    ],
+    [
+        "OFFICE",
+        {
+            "words": [
+                "main",
+                "offic"
+            ]
+        }
+    ]
+]

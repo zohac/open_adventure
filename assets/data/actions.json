@@ -1,0 +1,602 @@
+[
+    [
+        "ACT_NULL",
+        {
+            "message": null,
+            "words": null
+        }
+    ],
+    [
+        "CARRY",
+        {
+            "message": "You are already carrying it!",
+            "words": [
+                "g",
+                "carry",
+                "take",
+                "keep",
+                "catch",
+                "steal",
+                "captu",
+                "get",
+                "tote",
+                "snarf"
+            ],
+            "oldstyle": false
+        }
+    ],
+    [
+        "DROP",
+        {
+            "message": "You aren't carrying it!",
+            "words": [
+                "drop",
+                "relea",
+                "free",
+                "disca",
+                "dump"
+            ]
+        }
+    ],
+    [
+        "SAY",
+        {
+            "message": "NO_MESSAGE",
+            "words": [
+                "say",
+                "chant",
+                "sing",
+                "utter",
+                "mumbl"
+            ]
+        }
+    ],
+    [
+        "UNLOCK",
+        {
+            "message": "I don't know how to lock or unlock such a thing.",
+            "words": [
+                "unloc",
+                "open"
+            ]
+        }
+    ],
+    [
+        "NOTHING",
+        {
+            "message": "NO_MESSAGE",
+            "words": [
+                "z",
+                "nothi"
+            ],
+            "oldstyle": false
+        }
+    ],
+    [
+        "LOCK",
+        {
+            "message": "I don't know how to lock or unlock such a thing.",
+            "words": [
+                "lock",
+                "close"
+            ]
+        }
+    ],
+    [
+        "LIGHT",
+        {
+            "message": "I'm afraid I don't understand.",
+            "words": [
+                "light",
+                "on"
+            ]
+        }
+    ],
+    [
+        "EXTINGUISH",
+        {
+            "message": "I'm afraid I don't understand.",
+            "words": [
+                "extin",
+                "off"
+            ]
+        }
+    ],
+    [
+        "WAVE",
+        {
+            "message": "Nothing happens.",
+            "words": [
+                "wave",
+                "shake",
+                "swing"
+            ]
+        }
+    ],
+    [
+        "TAME",
+        {
+            "message": "I'm game.  Would you care to explain how?",
+            "words": [
+                "calm",
+                "placa",
+                "tame"
+            ]
+        }
+    ],
+    [
+        "GO",
+        {
+            "message": "Where?",
+            "words": [
+                "walk",
+                "run",
+                "trave",
+                "go",
+                "proce",
+                "conti",
+                "explo",
+                "follo",
+                "turn"
+            ]
+        }
+    ],
+    [
+        "ATTACK",
+        {
+            "message": "Don't be ridiculous!",
+            "words": [
+                "attac",
+                "kill",
+                "fight",
+                "hit",
+                "strik",
+                "slay"
+            ]
+        }
+    ],
+    [
+        "POUR",
+        {
+            "message": "You aren't carrying it!",
+            "words": [
+                "pour"
+            ]
+        }
+    ],
+    [
+        "EAT",
+        {
+            "message": "Don't be ridiculous!",
+            "words": [
+                "eat",
+                "devou"
+            ]
+        }
+    ],
+    [
+        "DRINK",
+        {
+            "message": "You have taken a drink from the stream.  The water tastes strongly of\nminerals, but is not unpleasant.  It is extremely cold.",
+            "words": [
+                "drink"
+            ]
+        }
+    ],
+    [
+        "RUB",
+        {
+            "message": "Rubbing the electric lamp is not particularly rewarding.  Anyway,\nnothing exciting happens.",
+            "words": [
+                "rub"
+            ]
+        }
+    ],
+    [
+        "THROW",
+        {
+            "message": "You aren't carrying it!",
+            "words": [
+                "throw",
+                "toss"
+            ]
+        }
+    ],
+    [
+        "QUIT",
+        {
+            "message": "Huh?",
+            "words": [
+                "quit"
+            ]
+        }
+    ],
+    [
+        "FIND",
+        {
+            "message": "I can only tell you what you see as you move about and manipulate\nthings.  I cannot tell you where remote things are.",
+            "words": [
+                "find",
+                "where"
+            ]
+        }
+    ],
+    [
+        "INVENTORY",
+        {
+            "message": "I can only tell you what you see as you move about and manipulate\nthings.  I cannot tell you where remote things are.",
+            "words": [
+                "i",
+                "inven"
+            ],
+            "oldstyle": false
+        }
+    ],
+    [
+        "FEED",
+        {
+            "message": "There is nothing here to eat.",
+            "words": [
+                "feed"
+            ]
+        }
+    ],
+    [
+        "FILL",
+        {
+            "message": "You can't fill that.",
+            "words": [
+                "fill"
+            ]
+        }
+    ],
+    [
+        "BLAST",
+        {
+            "message": "Blasting requires dynamite.",
+            "words": [
+                "blast",
+                "deton",
+                "ignit",
+                "blowu"
+            ]
+        }
+    ],
+    [
+        "SCORE",
+        {
+            "message": "Huh?",
+            "words": [
+                "score"
+            ]
+        }
+    ],
+    [
+        "FEE",
+        {
+            "message": "I don't know how.",
+            "words": [
+                "fee"
+            ]
+        }
+    ],
+    [
+        "FIE",
+        {
+            "message": "I don't know how.",
+            "words": [
+                "fie"
+            ]
+        }
+    ],
+    [
+        "FOE",
+        {
+            "message": "I don't know how.",
+            "words": [
+                "foe"
+            ]
+        }
+    ],
+    [
+        "FOO",
+        {
+            "message": "I don't know how.",
+            "words": [
+                "foo"
+            ]
+        }
+    ],
+    [
+        "FUM",
+        {
+            "message": "I don't know how.",
+            "words": [
+                "fum"
+            ]
+        }
+    ],
+    [
+        "BRIEF",
+        {
+            "message": "On what?",
+            "words": [
+                "brief"
+            ]
+        }
+    ],
+    [
+        "READ",
+        {
+            "message": "I'm afraid I don't understand.",
+            "words": [
+                "read",
+                "perus"
+            ]
+        }
+    ],
+    [
+        "BREAK",
+        {
+            "message": "It is beyond your power to do that.",
+            "words": [
+                "break",
+                "shatt",
+                "smash"
+            ]
+        }
+    ],
+    [
+        "WAKE",
+        {
+            "message": "Don't be ridiculous!",
+            "words": [
+                "wake",
+                "distu"
+            ]
+        }
+    ],
+    [
+        "SAVE",
+        {
+            "message": "Huh?",
+            "words": [
+                "suspe",
+                "pause",
+                "save"
+            ]
+        }
+    ],
+    [
+        "RESUME",
+        {
+            "message": "Huh?",
+            "words": [
+                "resum",
+                "resta"
+            ]
+        }
+    ],
+    [
+        "FLY",
+        {
+            "message": "I'm game.  Would you care to explain how?",
+            "words": [
+                "fly"
+            ]
+        }
+    ],
+    [
+        "LISTEN",
+        {
+            "message": "I'm afraid I don't understand.",
+            "words": [
+                "liste"
+            ]
+        }
+    ],
+    [
+        "PART",
+        {
+            "message": "Nothing happens.",
+            "words": [
+                "z'zzz"
+            ]
+        }
+    ],
+    [
+        "SEED",
+        {
+            "message": "Seed set to %d",
+            "words": [
+                "seed"
+            ]
+        }
+    ],
+    [
+        "WASTE",
+        {
+            "message": "Game limit is now %d",
+            "words": [
+                "waste"
+            ]
+        }
+    ],
+    [
+        "ACT_UNKNOWN",
+        {
+            "message": "Huh?",
+            "words": null
+        }
+    ],
+    [
+        "THANKYOU",
+        {
+            "message": "You're quite welcome.",
+            "words": [
+                "thank"
+            ],
+            "noaction": true
+        }
+    ],
+    [
+        "INVALIDMAGIC",
+        {
+            "message": "Good try, but that is an old worn-out magic word.",
+            "words": [
+                "sesam",
+                "opens",
+                "abra",
+                "abrac",
+                "shaza",
+                "hocus",
+                "pocus"
+            ],
+            "noaction": true
+        }
+    ],
+    [
+        "HELP",
+        {
+            "message": "I know of places, actions, and things.  Most of my vocabulary\ndescribes places and is used to move you there.  To move, try words\nlike forest, building, downstream, enter, east, west, north, south,\nup, or down.  I know about a few special objects, like a black rod\nhidden in the cave.  These objects can be manipulated using some of\nthe action words that I know.  Usually you will need to give both the\nobject and action words (in either order), but sometimes I can infer\nthe object from the verb alone.  Some objects also imply verbs; in\nparticular, \"inventory\" implies \"take inventory\", which causes me to\ngive you a list of what you're carrying.  Some objects have unexpected\neffects; the effects are not always desirable!  Usually people having\ntrouble moving just need to try a few more words.  Usually people\ntrying unsuccessfully to manipulate an object are attempting something\nbeyond their (or my!) capabilities and should try a completely\ndifferent tack.  One point often confusing to beginners is that, when\nthere are several ways to go in a certain direction (e.g., if there\nare several holes in a wall), choosing that direction in effect\nchooses one of the ways at random; often, though, by specifying the\nplace you want to reach you can guarantee choosing the right path.\nAlso, to speed the game you can sometimes move long distances with a\nsingle word.  For example, \"building\" usually gets you to the building\nfrom anywhere above ground except when lost in the forest.  Also, note\nthat cave passages and forest paths turn a lot, so leaving one place\nheading north doesn't guarantee entering the next from the south.\nHowever (another important point), except when you've used a \"long\ndistance\" word such as \"building\", there is always a way to go back\nwhere you just came from unless I warn you to the contrary, even\nthough the direction that takes you back might not be the reverse of\nwhat got you here.  Good luck, and have fun!",
+            "words": [
+                "help",
+                "?"
+            ],
+            "noaction": true
+        }
+    ],
+    [
+        false,
+        {
+            "message": "OK",
+            "words": [
+                "no"
+            ],
+            "noaction": true
+        }
+    ],
+    [
+        "TREE",
+        {
+            "message": "The trees of the forest are large hardwood oak and maple, with an\noccasional grove of pine or spruce.  There is quite a bit of under-\ngrowth, largely birch and ash saplings plus nondescript bushes of\nvarious sorts.  This time of year visibility is quite restricted by\nall the leaves, but travel is quite easy if you detour around the\nspruce and berry bushes.",
+            "words": [
+                "tree",
+                "trees"
+            ],
+            "noaction": true
+        }
+    ],
+    [
+        "DIG",
+        {
+            "message": "Digging without a shovel is quite impractical.  Even with a shovel\nprogress is unlikely.",
+            "words": [
+                "dig",
+                "excav"
+            ],
+            "noaction": true
+        }
+    ],
+    [
+        "LOST",
+        {
+            "message": "I'm as confused as you are.",
+            "words": [
+                "lost"
+            ],
+            "noaction": true
+        }
+    ],
+    [
+        "MIST",
+        {
+            "message": "Mist is a white vapor, usually water, seen from time to time in\ncaverns.  It can be found anywhere but is frequently a sign of a deep\npit leading down to water.",
+            "words": [
+                "mist"
+            ],
+            "noaction": true
+        }
+    ],
+    [
+        "FBOMB",
+        {
+            "message": "Watch it!",
+            "words": [
+                "fuck"
+            ],
+            "noaction": true
+        }
+    ],
+    [
+        "STOP",
+        {
+            "message": "I don't know the word \"stop\".  Use \"quit\" if you want to give up.",
+            "words": [
+                "stop"
+            ],
+            "noaction": true
+        }
+    ],
+    [
+        "INFO",
+        {
+            "message": "For a summary of the most recent changes to the game, say \"news\".\nIf you want to end your adventure early, say \"quit\".  To suspend your\nadventure such that you can continue later, say \"suspend\" (or \"pause\"\nor \"save\").  To see how well you're doing, say \"score\".  To get full\ncredit for a treasure, you must have left it safely in the building,\nthough you get partial credit just for locating it.  You lose points\nfor getting killed, or for quitting, though the former costs you more.\nThere are also points based on how much (if any) of the cave you've\nmanaged to explore; in particular, there is a large bonus just for\ngetting in (to distinguish the beginners from the rest of the pack),\nand there are other ways to determine whether you've been through some\nof the more harrowing sections.  If you think you've found all the\ntreasures, just keep exploring for a while.  If nothing interesting\nhappens, you haven't found them all yet.  If something interesting\n*DOES* happen (incidentally, there *ARE* ways to hasten things along),\nit means you're getting a bonus and have an opportunity to garner many\nmore points in the Master's section.  I may occasionally offer hints\nif you seem to be having trouble.  If I do, I'll warn you in advance\nhow much it will affect your score to accept the hints.  Finally, to\nsave time, you may specify \"brief\", which tells me never to repeat the\nfull description of a place unless you explicitly ask me to.",
+            "words": [
+                "info",
+                "infor"
+            ],
+            "noaction": true
+        }
+    ],
+    [
+        "SWIM",
+        {
+            "message": "I don't know how.",
+            "words": [
+                "swim"
+            ],
+            "noaction": true
+        }
+    ],
+    [
+        "WIZARD",
+        {
+            "message": "Wizards are not to be disturbed by such as you.",
+            "words": [
+                "wizar"
+            ],
+            "noaction": true
+        }
+    ],
+    [
+        "YES",
+        {
+            "message": "Guess again.",
+            "words": [
+                "yes"
+            ],
+            "noaction": true
+        }
+    ],
+    [
+        "NEWS",
+        {
+            "message": "Open Adventure is an author-approved open-source release of\nVersion 2.5 with, as yet, no gameplay changes.\nVersion 2.5 was essentially the same as Version II; the cave and the\nhazards therein are unchanged, and top score is still 430 points.\nThere are a few more hints, especially for some of the more obscure\npuzzles.  There are a few minor bugfixes and cosmetic changes.  You\ncan now save a game and resume it at once (formerly you had to wait a\nwhile first), but it now costs you a few points each time you save the\ngame.  Saved games are now stored in much smaller files than before.",
+            "words": [
+                "news"
+            ],
+            "noaction": true
+        }
+    ],
+    [
+        "ACT_VERSION",
+        {
+            "message": "There is a puff of orange smoke; within it, fiery runes spell out:\n\n\\tOpen Adventure %V - http://www.catb.org/esr/open-adventure/",
+            "words": [
+                "versi"
+            ],
+            "noaction": true
+        }
+    ]
+]
