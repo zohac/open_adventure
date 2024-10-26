@@ -28,6 +28,29 @@ def construct_omap(loader, node):
 # Ajouter le constructeur personnalisé au Loader
 yaml.Loader.add_constructor(u'tag:yaml.org,2002:omap', construct_omap)
 
+def get_conditions_json(locations):
+    conditions_list = []
+    for (name, loc) in locations:
+        conditions = loc["conditions"]
+        hints = loc.get("hints") or []
+        flaglist = [flag for flag in conditions if conditions[flag]]
+        hintlist = ["H" + hint["name"] for hint in hints]
+        combined_flags = flaglist + hintlist
+
+        condition_entry = {
+            "location": name,
+            "conditions": combined_flags
+        }
+        conditions_list.append(condition_entry)
+
+    return conditions_list
+
+def export_conditions_to_json(locations, output_file):
+    conditions_json = get_conditions_json(locations)
+    with open(output_file, 'w', encoding='utf-8') as f:
+        json.dump(conditions_json, f, ensure_ascii=False, indent=4)
+    print(f"Conditions data exported to {output_file}")
+
 def main():
     with open(YAML_NAME, "r", encoding="utf-8") as f:
         db = yaml.load(f, Loader=yaml.Loader)
@@ -71,6 +94,9 @@ def main():
         with open(filename, 'w', encoding='utf-8') as f:
             json.dump(value, f, ensure_ascii=False, indent=4)
         print(f"Fichier {filename} généré.")
+
+    # Exporter les conditions en JSON
+    export_conditions_to_json(db["locations"].items(), 'data/conditions.json')
 
 def buildtravel(db, locnames, msgmap, objnames, motionnames):
     locs = db['locations']
@@ -204,13 +230,13 @@ def buildtravel(db, locnames, msgmap, objnames, motionnames):
             tkey.append(len(travel))
             oldloc = loc
         elif travel:
-            # Flip the last element's 'stop' between "true" and "false"
+            # Flip the last element's 'stop' between True and False
             last_flag = travel[-1]['stop']
-            travel[-1]['stop'] = False if last_flag == True else True
+            travel[-1]['stop'] = not last_flag
 
         while rule:
             cond = newloc // 1000
-            nodwarves = True if cond == 100 else False
+            nodwarves = cond == 100
 
             # Process conditions
             if cond == 0:
