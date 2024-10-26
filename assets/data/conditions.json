@@ -1,0 +1,1310 @@
+[
+    {
+        "location": "LOC_NOWHERE",
+        "conditions": []
+    },
+    {
+        "location": "LOC_START",
+        "conditions": [
+            "FLUID",
+            "ABOVE",
+            "LIT"
+        ]
+    },
+    {
+        "location": "LOC_HILL",
+        "conditions": [
+            "ABOVE",
+            "LIT"
+        ]
+    },
+    {
+        "location": "LOC_BUILDING",
+        "conditions": [
+            "FLUID",
+            "ABOVE",
+            "LIT"
+        ]
+    },
+    {
+        "location": "LOC_VALLEY",
+        "conditions": [
+            "FLUID",
+            "ABOVE",
+            "LIT"
+        ]
+    },
+    {
+        "location": "LOC_ROADEND",
+        "conditions": [
+            "ABOVE",
+            "LIT"
+        ]
+    },
+    {
+        "location": "LOC_CLIFF",
+        "conditions": [
+            "ABOVE",
+            "NOBACK",
+            "LIT",
+            "HCLIFF"
+        ]
+    },
+    {
+        "location": "LOC_SLIT",
+        "conditions": [
+            "FLUID",
+            "ABOVE",
+            "LIT"
+        ]
+    },
+    {
+        "location": "LOC_GRATE",
+        "conditions": [
+            "ABOVE",
+            "LIT",
+            "HCAVE",
+            "HJADE"
+        ]
+    },
+    {
+        "location": "LOC_BELOWGRATE",
+        "conditions": [
+            "LIT"
+        ]
+    },
+    {
+        "location": "LOC_COBBLE",
+        "conditions": [
+            "LIT"
+        ]
+    },
+    {
+        "location": "LOC_DEBRIS",
+        "conditions": []
+    },
+    {
+        "location": "LOC_AWKWARD",
+        "conditions": []
+    },
+    {
+        "location": "LOC_BIRDCHAMBER",
+        "conditions": [
+            "HBIRD"
+        ]
+    },
+    {
+        "location": "LOC_PITTOP",
+        "conditions": []
+    },
+    {
+        "location": "LOC_MISTHALL",
+        "conditions": [
+            "DEEP",
+            "HJADE"
+        ]
+    },
+    {
+        "location": "LOC_CRACK",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_EASTBANK",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_NUGGET",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_KINGHALL",
+        "conditions": [
+            "DEEP",
+            "HSNAKE"
+        ]
+    },
+    {
+        "location": "LOC_NECKBROKE",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_NOMAKE",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_DOME",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_WESTEND",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_EASTPIT",
+        "conditions": [
+            "FLUID",
+            "DEEP",
+            "OILY"
+        ]
+    },
+    {
+        "location": "LOC_WESTPIT",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_CLIMBSTALK",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_WESTBANK",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_FLOORHOLE",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_SOUTHSIDE",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_WESTSIDE",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_BUILDING1",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_SNAKEBLOCK",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_Y2",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_JUMBLE",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_WINDOW1",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_BROKEN",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_SMALLPITBRINK",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_SMALLPIT",
+        "conditions": [
+            "FLUID",
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_DUSTY",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_PARALLEL1",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_MISTWEST",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_ALIKE1",
+        "conditions": [
+            "DEEP",
+            "NOBACK",
+            "ALLALIKE",
+            "HMAZE"
+        ]
+    },
+    {
+        "location": "LOC_ALIKE2",
+        "conditions": [
+            "DEEP",
+            "NOBACK",
+            "ALLALIKE",
+            "HMAZE"
+        ]
+    },
+    {
+        "location": "LOC_ALIKE3",
+        "conditions": [
+            "DEEP",
+            "NOBACK",
+            "ALLALIKE",
+            "HMAZE"
+        ]
+    },
+    {
+        "location": "LOC_ALIKE4",
+        "conditions": [
+            "DEEP",
+            "NOBACK",
+            "ALLALIKE",
+            "HMAZE"
+        ]
+    },
+    {
+        "location": "LOC_MAZEEND1",
+        "conditions": [
+            "DEEP",
+            "NOARRR",
+            "ALLALIKE",
+            "HMAZE"
+        ]
+    },
+    {
+        "location": "LOC_MAZEEND2",
+        "conditions": [
+            "DEEP",
+            "NOARRR",
+            "ALLALIKE",
+            "HMAZE"
+        ]
+    },
+    {
+        "location": "LOC_MAZEEND3",
+        "conditions": [
+            "DEEP",
+            "NOARRR",
+            "ALLALIKE",
+            "HMAZE"
+        ]
+    },
+    {
+        "location": "LOC_ALIKE5",
+        "conditions": [
+            "DEEP",
+            "NOBACK",
+            "ALLALIKE",
+            "HMAZE"
+        ]
+    },
+    {
+        "location": "LOC_ALIKE6",
+        "conditions": [
+            "DEEP",
+            "NOBACK",
+            "ALLALIKE",
+            "HMAZE"
+        ]
+    },
+    {
+        "location": "LOC_ALIKE7",
+        "conditions": [
+            "DEEP",
+            "NOBACK",
+            "ALLALIKE",
+            "HMAZE"
+        ]
+    },
+    {
+        "location": "LOC_ALIKE8",
+        "conditions": [
+            "DEEP",
+            "NOBACK",
+            "ALLALIKE",
+            "HMAZE"
+        ]
+    },
+    {
+        "location": "LOC_ALIKE9",
+        "conditions": [
+            "DEEP",
+            "NOBACK",
+            "ALLALIKE",
+            "HMAZE"
+        ]
+    },
+    {
+        "location": "LOC_MAZEEND4",
+        "conditions": [
+            "DEEP",
+            "NOARRR",
+            "ALLALIKE",
+            "HMAZE"
+        ]
+    },
+    {
+        "location": "LOC_ALIKE10",
+        "conditions": [
+            "DEEP",
+            "NOBACK",
+            "ALLALIKE",
+            "HMAZE"
+        ]
+    },
+    {
+        "location": "LOC_MAZEEND5",
+        "conditions": [
+            "DEEP",
+            "NOARRR",
+            "ALLALIKE",
+            "HMAZE"
+        ]
+    },
+    {
+        "location": "LOC_PITBRINK",
+        "conditions": [
+            "DEEP",
+            "NOBACK",
+            "ALLALIKE"
+        ]
+    },
+    {
+        "location": "LOC_MAZEEND6",
+        "conditions": [
+            "NOARRR",
+            "DEEP",
+            "ALLALIKE"
+        ]
+    },
+    {
+        "location": "LOC_PARALLEL2",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_LONGEAST",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_LONGWEST",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_CROSSOVER",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_DEADEND7",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_COMPLEX",
+        "conditions": [
+            "DEEP",
+            "HJADE"
+        ]
+    },
+    {
+        "location": "LOC_BEDQUILT",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_SWISSCHEESE",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_EASTEND",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_SLAB",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_SECRET1",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_SECRET2",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_THREEJUNCTION",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_LOWROOM",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_DEADCRAWL",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_SECRET3",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_WIDEPLACE",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_TIGHTPLACE",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_TALL",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_BOULDERS1",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_SEWER",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_ALIKE11",
+        "conditions": [
+            "DEEP",
+            "NOBACK",
+            "ALLALIKE",
+            "HMAZE"
+        ]
+    },
+    {
+        "location": "LOC_MAZEEND8",
+        "conditions": [
+            "DEEP",
+            "ALLALIKE",
+            "HMAZE"
+        ]
+    },
+    {
+        "location": "LOC_MAZEEND9",
+        "conditions": [
+            "DEEP",
+            "NOARRR",
+            "ALLALIKE",
+            "HMAZE"
+        ]
+    },
+    {
+        "location": "LOC_ALIKE12",
+        "conditions": [
+            "DEEP",
+            "NOBACK",
+            "ALLALIKE"
+        ]
+    },
+    {
+        "location": "LOC_ALIKE13",
+        "conditions": [
+            "DEEP",
+            "NOBACK",
+            "ALLALIKE"
+        ]
+    },
+    {
+        "location": "LOC_MAZEEND10",
+        "conditions": [
+            "NOARRR",
+            "DEEP",
+            "ALLALIKE"
+        ]
+    },
+    {
+        "location": "LOC_MAZEEND11",
+        "conditions": [
+            "DEEP",
+            "NOARRR",
+            "ALLALIKE",
+            "HMAZE"
+        ]
+    },
+    {
+        "location": "LOC_ALIKE14",
+        "conditions": [
+            "DEEP",
+            "NOBACK",
+            "ALLALIKE",
+            "HMAZE"
+        ]
+    },
+    {
+        "location": "LOC_NARROW",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_NOCLIMB",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_PLANTTOP",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_INCLINE",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_GIANTROOM",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_CAVEIN",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_IMMENSE",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_WATERFALL",
+        "conditions": [
+            "FLUID",
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_SOFTROOM",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_ORIENTAL",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_MISTY",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_ALCOVE",
+        "conditions": [
+            "DEEP",
+            "HDARK"
+        ]
+    },
+    {
+        "location": "LOC_PLOVER",
+        "conditions": [
+            "DEEP",
+            "LIT",
+            "HDARK"
+        ]
+    },
+    {
+        "location": "LOC_DARKROOM",
+        "conditions": [
+            "DEEP",
+            "HDARK"
+        ]
+    },
+    {
+        "location": "LOC_ARCHED",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_SHELLROOM",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_SLOPING1",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_CULDESAC",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_ANTEROOM",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_DIFFERENT1",
+        "conditions": [
+            "DEEP",
+            "NOBACK",
+            "ALLDIFFERENT"
+        ]
+    },
+    {
+        "location": "LOC_WITTSEND",
+        "conditions": [
+            "DEEP",
+            "NOBACK",
+            "HWITT"
+        ]
+    },
+    {
+        "location": "LOC_MIRRORCANYON",
+        "conditions": [
+            "DEEP",
+            "HJADE"
+        ]
+    },
+    {
+        "location": "LOC_WINDOW2",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_TOPSTALACTITE",
+        "conditions": [
+            "DEEP",
+            "ALLALIKE"
+        ]
+    },
+    {
+        "location": "LOC_DIFFERENT2",
+        "conditions": [
+            "DEEP",
+            "NOBACK",
+            "ALLDIFFERENT"
+        ]
+    },
+    {
+        "location": "LOC_RESERVOIR",
+        "conditions": [
+            "FLUID",
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_MAZEEND12",
+        "conditions": [
+            "DEEP",
+            "ALLALIKE"
+        ]
+    },
+    {
+        "location": "LOC_NE",
+        "conditions": [
+            "DEEP",
+            "LIT"
+        ]
+    },
+    {
+        "location": "LOC_SW",
+        "conditions": [
+            "DEEP",
+            "LIT"
+        ]
+    },
+    {
+        "location": "LOC_SWCHASM",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_WINDING",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_SECRET4",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_SECRET5",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_SECRET6",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_NECHASM",
+        "conditions": [
+            "NOARRR",
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_CORRIDOR",
+        "conditions": [
+            "NOARRR",
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_FORK",
+        "conditions": [
+            "NOARRR",
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_WARMWALLS",
+        "conditions": [
+            "NOARRR",
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_BREATHTAKING",
+        "conditions": [
+            "NOARRR",
+            "LIT",
+            "DEEP",
+            "HJADE"
+        ]
+    },
+    {
+        "location": "LOC_BOULDERS2",
+        "conditions": [
+            "NOARRR",
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_LIMESTONE",
+        "conditions": [
+            "NOARRR",
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_BARRENFRONT",
+        "conditions": [
+            "NOARRR",
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_BARRENROOM",
+        "conditions": [
+            "NOARRR",
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_DIFFERENT3",
+        "conditions": [
+            "DEEP",
+            "NOBACK",
+            "ALLDIFFERENT"
+        ]
+    },
+    {
+        "location": "LOC_DIFFERENT4",
+        "conditions": [
+            "DEEP",
+            "NOBACK",
+            "ALLDIFFERENT"
+        ]
+    },
+    {
+        "location": "LOC_DIFFERENT5",
+        "conditions": [
+            "DEEP",
+            "NOBACK",
+            "ALLDIFFERENT"
+        ]
+    },
+    {
+        "location": "LOC_DIFFERENT6",
+        "conditions": [
+            "DEEP",
+            "NOBACK",
+            "ALLDIFFERENT"
+        ]
+    },
+    {
+        "location": "LOC_DIFFERENT7",
+        "conditions": [
+            "DEEP",
+            "NOBACK",
+            "ALLDIFFERENT"
+        ]
+    },
+    {
+        "location": "LOC_DIFFERENT8",
+        "conditions": [
+            "DEEP",
+            "NOBACK",
+            "ALLDIFFERENT"
+        ]
+    },
+    {
+        "location": "LOC_DIFFERENT9",
+        "conditions": [
+            "DEEP",
+            "NOBACK",
+            "ALLDIFFERENT"
+        ]
+    },
+    {
+        "location": "LOC_DIFFERENT10",
+        "conditions": [
+            "DEEP",
+            "NOBACK",
+            "ALLDIFFERENT"
+        ]
+    },
+    {
+        "location": "LOC_DIFFERENT11",
+        "conditions": [
+            "DEEP",
+            "NOBACK",
+            "ALLDIFFERENT"
+        ]
+    },
+    {
+        "location": "LOC_DEADEND13",
+        "conditions": [
+            "DEEP",
+            "ALLDIFFERENT"
+        ]
+    },
+    {
+        "location": "LOC_ROUGHHEWN",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_BADDIRECTION",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_LARGE",
+        "conditions": [
+            "DEEP",
+            "HOGRE"
+        ]
+    },
+    {
+        "location": "LOC_STOREROOM",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_FOREST1",
+        "conditions": [
+            "FOREST",
+            "NOBACK",
+            "LIT",
+            "HWOODS"
+        ]
+    },
+    {
+        "location": "LOC_FOREST2",
+        "conditions": [
+            "FOREST",
+            "NOBACK",
+            "LIT",
+            "HWOODS"
+        ]
+    },
+    {
+        "location": "LOC_FOREST3",
+        "conditions": [
+            "FOREST",
+            "NOBACK",
+            "LIT",
+            "HWOODS"
+        ]
+    },
+    {
+        "location": "LOC_FOREST4",
+        "conditions": [
+            "FOREST",
+            "NOBACK",
+            "LIT",
+            "HWOODS"
+        ]
+    },
+    {
+        "location": "LOC_FOREST5",
+        "conditions": [
+            "FOREST",
+            "NOBACK",
+            "LIT",
+            "HWOODS"
+        ]
+    },
+    {
+        "location": "LOC_FOREST6",
+        "conditions": [
+            "FOREST",
+            "NOBACK",
+            "LIT",
+            "HWOODS"
+        ]
+    },
+    {
+        "location": "LOC_FOREST7",
+        "conditions": [
+            "FOREST",
+            "NOBACK",
+            "LIT",
+            "HWOODS"
+        ]
+    },
+    {
+        "location": "LOC_FOREST8",
+        "conditions": [
+            "FOREST",
+            "NOBACK",
+            "LIT",
+            "HWOODS"
+        ]
+    },
+    {
+        "location": "LOC_FOREST9",
+        "conditions": [
+            "FOREST",
+            "NOBACK",
+            "LIT",
+            "HWOODS"
+        ]
+    },
+    {
+        "location": "LOC_FOREST10",
+        "conditions": [
+            "FOREST",
+            "NOBACK",
+            "LIT",
+            "HWOODS"
+        ]
+    },
+    {
+        "location": "LOC_FOREST11",
+        "conditions": [
+            "FOREST",
+            "NOBACK",
+            "LIT",
+            "HWOODS"
+        ]
+    },
+    {
+        "location": "LOC_FOREST12",
+        "conditions": [
+            "FOREST",
+            "NOBACK",
+            "LIT",
+            "HWOODS"
+        ]
+    },
+    {
+        "location": "LOC_FOREST13",
+        "conditions": [
+            "FOREST",
+            "NOBACK",
+            "LIT",
+            "HWOODS"
+        ]
+    },
+    {
+        "location": "LOC_FOREST14",
+        "conditions": [
+            "FOREST",
+            "NOBACK",
+            "LIT",
+            "HWOODS"
+        ]
+    },
+    {
+        "location": "LOC_FOREST15",
+        "conditions": [
+            "FOREST",
+            "NOBACK",
+            "LIT",
+            "HWOODS"
+        ]
+    },
+    {
+        "location": "LOC_FOREST16",
+        "conditions": [
+            "FOREST",
+            "NOBACK",
+            "LIT",
+            "HWOODS"
+        ]
+    },
+    {
+        "location": "LOC_FOREST17",
+        "conditions": [
+            "FOREST",
+            "NOBACK",
+            "LIT",
+            "HWOODS"
+        ]
+    },
+    {
+        "location": "LOC_FOREST18",
+        "conditions": [
+            "FOREST",
+            "NOBACK",
+            "LIT",
+            "HWOODS"
+        ]
+    },
+    {
+        "location": "LOC_FOREST19",
+        "conditions": [
+            "FOREST",
+            "NOBACK",
+            "LIT",
+            "HWOODS"
+        ]
+    },
+    {
+        "location": "LOC_FOREST20",
+        "conditions": [
+            "FOREST",
+            "NOBACK",
+            "LIT",
+            "HWOODS"
+        ]
+    },
+    {
+        "location": "LOC_FOREST21",
+        "conditions": [
+            "FOREST",
+            "NOBACK",
+            "LIT",
+            "HWOODS"
+        ]
+    },
+    {
+        "location": "LOC_FOREST22",
+        "conditions": [
+            "FOREST",
+            "NOBACK",
+            "LIT",
+            "HWOODS"
+        ]
+    },
+    {
+        "location": "LOC_LEDGE",
+        "conditions": [
+            "ABOVE",
+            "LIT"
+        ]
+    },
+    {
+        "location": "LOC_RESBOTTOM",
+        "conditions": [
+            "FLUID",
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_RESNORTH",
+        "conditions": [
+            "FLUID",
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_TREACHEROUS",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_STEEP",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_CLIFFBASE",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_CLIFFACE",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_FOOTSLIP",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_CLIFFTOP",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_CLIFFLEDGE",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_REACHDEAD",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_GRUESOME",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_FOOF1",
+        "conditions": []
+    },
+    {
+        "location": "LOC_FOOF2",
+        "conditions": [
+            "ABOVE"
+        ]
+    },
+    {
+        "location": "LOC_FOOF3",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_FOOF4",
+        "conditions": [
+            "ABOVE"
+        ]
+    },
+    {
+        "location": "LOC_FOOF5",
+        "conditions": [
+            "DEEP"
+        ]
+    },
+    {
+        "location": "LOC_FOOF6",
+        "conditions": [
+            "DEEP"
+        ]
+    }
+]
