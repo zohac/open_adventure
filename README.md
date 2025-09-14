@@ -91,6 +91,13 @@ Run scripts:
   3) Validate JSON vs YAML (and vs C if present):
      - `python3 scripts/validate_json.py`
 
+Orchestrate everything
+
+- Single command to update assets from upstream and validate (dev/maintainer only):
+  - `python3 scripts/update_assets.py --out assets/data`
+    - Add `--canonical` to overwrite travel.json/tkey.json from C tables
+    - Add `--strict` to fail on validation divergences (exit 1)
+
 Troubleshooting
 
 - FileNotFoundError: 'adventure.yaml' when running `open-adventure-master/make_dungeon.py` → the script must be run from within `open-adventure-master` (it looks for `adventure.yaml` in the current directory). Use the exact steps above.

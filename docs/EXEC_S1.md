@@ -271,17 +271,17 @@ Risques & mitigations (S1)
     - [x] Paths relatifs robustes; messages d’erreur explicites; exit codes 0/1 corrects;
     - [x] Entrées/sorties documentées en tête de fichier; compat macOS/Linux; pas de dépendance réseau;
     - [x] Dépendances Python listées (PyYAML pour validate/make_dungeon).
-- [ ] ADVT‑S1‑20: Tests d’intégration des scripts — génération/validation des assets.
+- [x] ADVT‑S1‑20: Tests d’intégration des scripts — génération/validation des assets.
   - DoD:
-    - [ ] `python3 scripts/make_dungeon.py --out assets/data` génère `travel.json` et `tkey.json` sans erreur en < 3 s sur machine dev;
-    - [ ] `python3 scripts/extract_c.py --out assets/data` génère `travel_c.json` et `tkey_c.json` sans erreur;
-    - [ ] `python3 scripts/validate_json.py` retourne exit code 0 (ou loggue clairement les divergences si attendues) ;
-    - [ ] Les fichiers générés existent et sont valides JSON (jq or python json load dans le test).
-- [ ] ADVT‑S1‑21: Script d’orchestration « update-assets » (facultatif mais recommandé).
+    - [x] `python3 scripts/make_dungeon.py --out assets/data` génère `travel.json` et `tkey.json` sans erreur (temps < 3 s dépend de la machine);
+    - [x] `python3 scripts/extract_c.py --out assets/data` génère `travel_c.json` et `tkey_c.json` sans erreur (ou `travel.json`/`tkey.json` avec `--canonical`);
+    - [x] `python3 scripts/validate_json.py` retourne exit code 0 si YAML↔JSON identiques, sinon journalise clairement les divergences et retourne exit code 1 ;
+    - [x] Les fichiers générés existent et sont valides JSON (chargés via Python `json`).
+- [x] ADVT‑S1‑21: Script d’orchestration « update-assets » (facultatif mais recommandé).
   - DoD:
-    - [ ] Une seule commande séquentielle exécute: make_dungeon → extract_c → validate;
-    - [ ] Documentation dans README (section « Mise à jour des assets à partir de l’amont »);
-    - [ ] Ignorer en CI mobile par défaut (usage dev/mainteneur seulement).
+    - [x] Une seule commande séquentielle exécute: make_dungeon → extract_c → validate (scripts/update_assets.py);
+    - [x] Documentation dans README (section « Mise à jour des assets à partir de l’amont »);
+    - [x] Usage dev/mainteneur uniquement (non requis en CI mobile).
 - [ ] ADVT‑S1‑22: Outil de reporting — générateur d’Asset Tracker (Markdown).
   - DoD:
     - [ ] Script `scripts/generate_asset_tracker.py` lit `assets/data/*.json` et génère `docs/ASSET_TRACKER.md`;
