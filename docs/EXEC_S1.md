@@ -189,21 +189,24 @@ Risques & mitigations (S1)
 
 - Suivi & tickets
 
-- [ ] ADVT‑S1‑00: Mettre à niveau l’environnement — Dart SDK ≥ 3.x, Flutter stable ≥ 3.x; mise à jour deps/lockfile.
+- [x] ADVT‑S1‑00: Mettre à niveau l’environnement — Dart SDK ≥ 3.x, Flutter stable ≥ 3.x; mise à jour deps/lockfile.
   - DoD:
-    - [ ] `environment:` dans `pubspec.yaml` défini à `'>=3.0.0 <4.0.0'` ou supérieur compatible.
-    - [ ] `flutter --version` documenté; `flutter pub get` et `flutter analyze` passent.
-    - [ ] CI locale exécute tests avec la nouvelle toolchain.
-- [ ] ADVT‑S1‑01: Isoler le legacy — mettre tout le code existant de `lib/` hors du chemin (ex: `lib_legacy/`) et purger toutes dépendances (incl. `GameLocalDataSource`, `assets/data/game.json`).
+    - [x] `environment:` dans `pubspec.yaml` défini à `'>=3.0.0 <4.0.0'`.
+    - [x] `flutter --version` documenté (Flutter 3.35.3 / Dart tools 3.9.2); `flutter pub get` et `flutter analyze` passent.
+    - [x] Tests S1 (data/domain/core) verts sous la nouvelle toolchain.
+  - Notes: deps mises à jour via `flutter pub upgrade --major-versions --tighten` (contraintes écrites) et `pubspec.lock` régénéré.
+- [x] ADVT‑S1‑01: Isoler le legacy — mettre tout le code existant de `lib/` hors du chemin (ex: `lib_legacy/`) et purger toutes dépendances (incl. `GameLocalDataSource`, `assets/data/game.json`).
   - DoD:
-    - [ ] Aucun import de `lib_legacy/` ni de `lib/features/...` dans le nouveau code.
-    - [ ] Aucune occurrence de `game.json` ni de `GameLocalDataSource.*` dans le projet actif.
-    - [ ] `flutter analyze` passe; l’app démarre sans référencer d’assets inexistants.
-    - [ ] Les répertoires allowlist `lib/domain|application|data|presentation|core` et fichiers `pixel_canvas.dart`, `location_image.dart` (widget) et `location_image.dart` (utils) RESTENT sous `lib/`.
-- [ ] ADVT‑S1‑02: Mettre à jour `pubspec.yaml` avec l’intégralité des assets `assets/data/*.json` + vérification via test existant.
+    - [x] Aucun import de `lib_legacy/` ni de `lib/features/...` dans le nouveau code.
+    - [x] Aucune occurrence de `game.json` ni de `GameLocalDataSource.*` dans le projet actif (code).
+    - [x] `flutter analyze` passe; l’app démarre sans référencer d’assets inexistants.
+    - [x] Les répertoires allowlist `lib/domain|application|data|presentation|core` et fichiers `pixel_canvas.dart`, `location_image.dart` (widget) et `location_image.dart` (utils) RESTENT sous `lib/`.
+  - Exécution: suppression de `lib_legacy/` et de `lib/features/` legacy; exclusion d’analyse conservée pour `test/features/**` (tests hérités non utilisés).
+  - Stratégie: suppression de `lib/features/` (legacy consultable via Git et/ou `lib_legacy/`), vérification par grep des occurrences interdites, et exclusion d’analyse pour `lib_legacy/**`.
+- [x] ADVT‑S1‑02: Mettre à jour `pubspec.yaml` avec l’intégralité des assets `assets/data/*.json` + vérification via test existant.
   - DoD:
-    - [ ] Tous les chemins listés dans `assets/` présents et chargés par `flutter pub get` sans erreur.
-    - [ ] Test d’existence des assets vert (test/core/constants/asset_paths_test.dart).
+    - [x] Tous les chemins listés dans `assets/` présents et chargés par `flutter pub get` sans erreur.
+    - [x] Test d’existence des assets vert (test/core/constants/asset_paths_test.dart).
 - [ ] ADVT‑S1‑03: Scaffolding arborescence Clean Architecture (`lib/domain|application|data|presentation|core`) + fichiers squelettes.
   - DoD:
     - [ ] Dossiers créés; fichiers d’index/squelettes présents; imports compilent.

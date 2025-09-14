@@ -55,10 +55,9 @@ class LocationImage extends StatelessWidget {
 
   Widget _placeholder() {
     return Container(
-      color: backgroundColor.withOpacity(0.2),
+      color: backgroundColor.withValues(alpha: 0.2),
       alignment: Alignment.center,
       child: const Icon(Icons.image_not_supported, color: Colors.white54, size: 24),
     );
   }
 }
-
