@@ -1,5 +1,7 @@
 
 import 'package:open_adventure/core/constant/asset_paths.dart';
+import 'package:open_adventure/core/error/exceptions.dart';
+import 'package:open_adventure/core/error/failures.dart';
 import 'package:open_adventure/data/datasources/asset_data_source.dart';
 import 'package:open_adventure/data/models/game_object_model.dart';
 import 'package:open_adventure/data/models/location_model.dart';
@@ -16,6 +18,8 @@ class AdventureRepositoryImpl implements AdventureRepository {
 
   List<Location>? _locations;
   List<GameObject>? _objects;
+  Map<String, int>? _locNameToId;
+  Map<String, int>? _objNameToId;
 
   AdventureRepositoryImpl({AssetDataSource? assets})
       : _assets = assets ?? BundleAssetDataSource();
@@ -23,26 +27,46 @@ class AdventureRepositoryImpl implements AdventureRepository {
   @override
   Future<List<Location>> getLocations() async {
     if (_locations != null) return _locations!;
-    final flattened = await _assets.getLocations();
-    final list = <Location>[];
-    for (var i = 0; i < flattened.length; i++) {
-      list.add(LocationModel.fromJson(flattened[i], i));
+    try {
+      final flattened = await _assets.getLocations();
+      final list = <Location>[];
+      final index = <String, int>{};
+      for (var i = 0; i < flattened.length; i++) {
+        final model = LocationModel.fromJson(flattened[i], i);
+        list.add(model);
+        index[model.name] = i;
+      }
+      _locations = list;
+      _locNameToId = index;
+      return list;
+    } on AssetDataFormatException catch (e) {
+      throw DataFailure('Invalid locations asset', cause: e);
+    } on FormatException catch (e) {
+      throw DataFailure('Invalid JSON format for locations', cause: e);
     }
-    _locations = list;
-    return list;
   }
 
   @override
   Future<List<GameObject>> getGameObjects() async {
     if (_objects != null) return _objects!;
-    final raw = await _assets.loadList(AssetPaths.objectsJson);
-    final list = <GameObject>[];
-    for (var i = 0; i < raw.length; i++) {
-      final entry = raw[i] as List<dynamic>;
-      list.add(GameObjectModel.fromEntry(entry, i));
+    try {
+      final raw = await _assets.loadList(AssetPaths.objectsJson);
+      final list = <GameObject>[];
+      final index = <String, int>{};
+      for (var i = 0; i < raw.length; i++) {
+        final entry = raw[i] as List<dynamic>;
+        final model = GameObjectModel.fromEntry(entry, i);
+        list.add(model);
+        index[model.name] = i;
+      }
+      _objects = list;
+      _objNameToId = index;
+      return list;
+    } on AssetDataFormatException catch (e) {
+      throw DataFailure('Invalid objects asset', cause: e);
+    } on FormatException catch (e) {
+      throw DataFailure('Invalid JSON format for objects', cause: e);
     }
-    _objects = list;
-    return list;
   }
 
   @override
@@ -56,12 +80,18 @@ class AdventureRepositoryImpl implements AdventureRepository {
 
   @override
   Future<List<TravelRule>> travelRulesFor(int locationId) async {
-    final raw = await _assets.loadList(AssetPaths.travelJson);
-    final rules = raw
-        .map((e) => TravelRuleModel.fromJson(Map<String, dynamic>.from(e as Map)))
-        .where((r) => r.fromId == locationId)
-        .toList(growable: false);
-    return rules;
+    try {
+      final raw = await _assets.loadList(AssetPaths.travelJson);
+      final rules = raw
+          .map((e) => TravelRuleModel.fromJson(Map<String, dynamic>.from(e as Map)))
+          .where((r) => r.fromId == locationId)
+          .toList(growable: false);
+      return rules;
+    } on AssetDataFormatException catch (e) {
+      throw DataFailure('Invalid travel asset', cause: e);
+    } on FormatException catch (e) {
+      throw DataFailure('Invalid JSON format for travel', cause: e);
+    }
   }
 
   @override
@@ -79,11 +109,13 @@ class AdventureRepositoryImpl implements AdventureRepository {
       } else if (raw.containsKey('start_location')) {
         final name = raw['start_location']?.toString();
         if (name != null) {
-          final locations = await getLocations();
-          final idx = locations.indexWhere((l) => l.name == name);
-          if (idx >= 0) startId = idx;
+          await getLocations();
+          final idx = _locNameToId?[name];
+          if (idx != null && idx >= 0) startId = idx;
         }
       }
+    } on DataFailure {
+      // metadata is optional; ignore.
     } catch (_) {
       // metadata.json is optional → fallback below.
     }
@@ -95,4 +127,12 @@ class AdventureRepositoryImpl implements AdventureRepository {
     }
     return Game(loc: startId, turns: 0, rngSeed: seed);
   }
+}
+
+// Visible for testing: name↔id lookups
+extension AdventureRepositoryImplIndex on AdventureRepositoryImpl {
+  int? locationIdForName(String name) => _locNameToId?[name];
+  int? objectIdForName(String name) => _objNameToId?[name];
+  String? locationNameForId(int id) => (_locations != null && id >= 0 && id < _locations!.length) ? _locations![id].name : null;
+  String? objectNameForId(int id) => (_objects != null && id >= 0 && id < _objects!.length) ? _objects![id].name : null;
 }

@@ -2,6 +2,14 @@ import 'package:open_adventure/domain/entities/travel_rule.dart';
 
 /// Data model for travel.json entries, mapped to [TravelRule].
 class TravelRuleModel extends TravelRule {
+  /// Optional condition type (stringified) and arguments found in travel.json.
+  final String? condType;
+  final int? condArg1;
+  final int? condArg2;
+
+  /// Optional destination type (stringified) from travel.json.
+  final String? destType;
+
   /// Constructs a [TravelRuleModel] from a JSON map.
   factory TravelRuleModel.fromJson(Map<String, dynamic> json) {
     final fromIndex = json['from_index'] as int?;
@@ -10,12 +18,20 @@ class TravelRuleModel extends TravelRule {
     final destVal = json['destval']?.toString() ?? '';
     final noDwarves = json['nodwarves'] as bool? ?? false;
     final stop = json['stop'] as bool? ?? false;
+    final condType = json.containsKey('condtype') ? json['condtype']?.toString() : null;
+    final destType = json.containsKey('desttype') ? json['desttype']?.toString() : null;
+    final condArg1 = json['condarg1'] is int ? json['condarg1'] as int : int.tryParse('${json['condarg1']}');
+    final condArg2 = json['condarg2'] is int ? json['condarg2'] as int : int.tryParse('${json['condarg2']}');
     return TravelRuleModel(
       fromId: fromIndex ?? 0,
       motion: motion,
       destName: destVal,
       noDwarves: noDwarves,
       stop: stop,
+      condType: condType,
+      condArg1: condArg1,
+      condArg2: condArg2,
+      destType: destType,
     );
   }
 
@@ -26,6 +42,9 @@ class TravelRuleModel extends TravelRule {
     required super.destName,
     super.noDwarves = false,
     super.stop = false,
+    this.condType,
+    this.condArg1,
+    this.condArg2,
+    this.destType,
   });
 }
-

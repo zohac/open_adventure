@@ -25,3 +25,14 @@ class AssetDataFormatException implements Exception {
   }
 }
 
+/// Thrown when a lookup for an id/name fails in lookup utilities.
+class LookupNotFoundException implements Exception {
+  /// Human-readable error message.
+  final String message;
+
+  /// Creates a not-found exception with [message].
+  const LookupNotFoundException(this.message);
+
+  @override
+  String toString() => 'LookupNotFoundException: $message';
+}

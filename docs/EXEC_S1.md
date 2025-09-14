@@ -223,20 +223,20 @@ Risques & mitigations (S1)
   - DoD:
     - [x] Gestion `locations` string|list validée; `states/descriptions/sounds/changes` null si vides.
     - [x] Tests de round‑trip `toEntity`/`toJson` sur un objet complexe.
-- [ ] ADVT‑S1‑07: Créer `ActionModel`, `ConditionModel`, `TravelRuleModel` (lecture depuis `locations.json` et/ou `travel.json`).
+- [x] ADVT‑S1‑07: Créer `ActionModel`, `ConditionModel`, `TravelRuleModel` (lecture depuis `locations.json` et/ou `travel.json`).
   - DoD:
-    - [ ] Parsing des structures JSON supporté, incluant présence/absence de conditions.
-    - [ ] Tests de parsing sur échantillons réels (assets/data/*) et cas limites (champs manquants).
-- [ ] ADVT‑S1‑08: Créer `AdventureRepository` (Domain) — interfaces: `initialGame()`, `getLocations()`, `getGameObjects()`, `locationById()`, `travelRulesFor(locationId)`.
+    - [x] Parsing des structures JSON supporté, incluant présence/absence de conditions.
+    - [x] Tests de parsing sur échantillons réels (assets/data/*) et cas limites (champs manquants).
+- [x] ADVT‑S1‑08: Créer `AdventureRepository` (Domain) — interfaces: `initialGame()`, `getLocations()`, `getGameObjects()`, `locationById()`, `travelRulesFor(locationId)`.
   - DoD:
-    - [ ] Interface publiée et utilisée par au moins un use case; pas de dépendance inversée (Data → Domain seulement).
-- [ ] ADVT‑S1‑09: Implémenter `AdventureRepositoryImpl` (Data) avec caches mémoire et index `name↔id` pour lieux/objets.
+    - [x] Interface publiée et utilisée par au moins un use case; pas de dépendance inversée (Data → Domain seulement).
+- [x] ADVT‑S1‑09: Implémenter `AdventureRepositoryImpl` (Data) avec caches mémoire et index `name↔id` pour lieux/objets.
   - DoD:
-    - [ ] Réutilisation des données entre appels; lookup O(1) par id/name; tests de perfs unitaires (< 5 ms/lookup sur dev).
-    - [ ] Gestion d’erreurs: renvoie une Failure typed en cas d’asset manquant/corrompu.
-- [ ] ADVT‑S1‑10: Utilitaires `LookupService` (résolution id/name, vérifs d’existence) — pur Dart.
+    - [x] Réutilisation des données entre appels; lookup O(1) par id/name; tests de perfs unitaires (< 5 ms/lookup sur dev).
+    - [x] Gestion d’erreurs: renvoie une Failure typed en cas d’asset manquant/corrompu.
+- [x] ADVT‑S1‑10: Utilitaires `LookupService` (résolution id/name, vérifs d’existence) — pur Dart.
   - DoD:
-    - [ ] `idFromName`/`nameFromId` pour `Location` et `GameObject`; tests succès/échec (`NotFound`).
+    - [x] `idFromName`/`nameFromId` pour `Location` et `GameObject`; tests succès/échec (`NotFound`).
 - [ ] ADVT‑S1‑11: Implémenter `initialGame()` (builder d’état minimal, RNG seedée 42, start loc depuis `metadata.json` sinon fallback).
   - DoD:
     - [ ] `Game` initial avec `loc` valide, `turns=0`, inventaire vide; seed stockée.
