@@ -282,11 +282,18 @@ Risques & mitigations (S1)
     - [x] Une seule commande séquentielle exécute: make_dungeon → extract_c → validate (scripts/update_assets.py);
     - [x] Documentation dans README (section « Mise à jour des assets à partir de l’amont »);
     - [x] Usage dev/mainteneur uniquement (non requis en CI mobile).
-- [ ] ADVT‑S1‑22: Outil de reporting — générateur d’Asset Tracker (Markdown).
+- [x] ADVT‑S1‑22: Outil de reporting — générateur d’Asset Tracker (Markdown).
   - DoD:
-    - [ ] Script `scripts/generate_asset_tracker.py` lit `assets/data/*.json` et génère `docs/ASSET_TRACKER.md`;
-    - [ ] Trois tableaux: Locations, Objects, Audio (voir `ART_ASSET_BIBLE.md` — section « Asset Tracker — spécification de génération »);
-    - [ ] Calcul des tailles d’images/audio et résumé des budgets; aucun accès réseau; exit code 0.
+    - [x] Script `scripts/generate_asset_tracker.py` lit `assets/data/*.json` et/ou `docs/ASSET_MANIFEST.json` et génère `docs/ASSET_TRACKER.md`;
+    - [x] Trois tableaux: Locations, Objects, Audio; tailles et budgets résumés; aucun accès réseau; exit code 0.
+- [x] ADVT‑S1‑23: Générateur d’Asset Manifest (source IA) — `docs/ASSET_MANIFEST.json`.
+  - DoD:
+    - [x] Script `scripts/generate_asset_manifest.py` parse `assets/data/*.json` et produit `docs/ASSET_MANIFEST.json` avec les clés minimales:
+      - `locations`: [{ `key`, `name`, `zone`, `priority`, `prompt`?, `negative_prompt`?, `loras`?, `seed`?, `steps`?, `cfg`?, `sampler`?, `target_size`:[320,180], `palette_max`:64, `vfx`:[] }]
+      - `objects`: [{ `name`, `isTreasure`, `locations_count`, `sfx`:{`pickup`?,`drop`?}, `vfx`?:{} }]
+      - `audio`: { `bgm`:[{ `zone`, `trackKey`, `length_sec`:45, `loop`:true }], `sfx`:[{ `key`, `length_ms`:350 }] }
+    - [x] Le script est idempotent, n’écrit jamais dans `assets/`; champs prompts/seeds/loras laissés vides pour édition par l’artiste;
+    - [x] `scripts/generate_asset_tracker.py` consomme ce manifest (s’il existe) pour produire `docs/ASSET_TRACKER.md`.
 
 Références C (source canonique)
 

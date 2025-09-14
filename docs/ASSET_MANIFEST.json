@@ -1,0 +1,2776 @@
+{
+  "locations": [
+    {
+      "key": "nowhere",
+      "name": "LOC_NOWHERE",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_start",
+      "name": "LOC_START",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_hill",
+      "name": "LOC_HILL",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_building",
+      "name": "LOC_BUILDING",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_valley",
+      "name": "LOC_VALLEY",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_roadend",
+      "name": "LOC_ROADEND",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_cliff",
+      "name": "LOC_CLIFF",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_slit",
+      "name": "LOC_SLIT",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_grate",
+      "name": "LOC_GRATE",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_belowgrate",
+      "name": "LOC_BELOWGRATE",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_cobble",
+      "name": "LOC_COBBLE",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_debris",
+      "name": "LOC_DEBRIS",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "awkward_canyon",
+      "name": "LOC_AWKWARD",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_birdchamber",
+      "name": "LOC_BIRDCHAMBER",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_pittop",
+      "name": "LOC_PITTOP",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_misthall",
+      "name": "LOC_MISTHALL",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_crack",
+      "name": "LOC_CRACK",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_eastbank",
+      "name": "LOC_EASTBANK",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_nugget",
+      "name": "LOC_NUGGET",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_kinghall",
+      "name": "LOC_KINGHALL",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "pit_bottom",
+      "name": "LOC_NECKBROKE",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_nomake",
+      "name": "LOC_NOMAKE",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_dome",
+      "name": "LOC_DOME",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_westend",
+      "name": "LOC_WESTEND",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_eastpit",
+      "name": "LOC_EASTPIT",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_westpit",
+      "name": "LOC_WESTPIT",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_climbstalk",
+      "name": "LOC_CLIMBSTALK",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_westbank",
+      "name": "LOC_WESTBANK",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "floor_hole",
+      "name": "LOC_FLOORHOLE",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_southside",
+      "name": "LOC_SOUTHSIDE",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_westside",
+      "name": "LOC_WESTSIDE",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "middle_of_plant",
+      "name": "LOC_BUILDING1",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_snakeblock",
+      "name": "LOC_SNAKEBLOCK",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "y2",
+      "name": "LOC_Y2",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "rock_jumble",
+      "name": "LOC_JUMBLE",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_window1",
+      "name": "LOC_WINDOW1",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_broken",
+      "name": "LOC_BROKEN",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_smallpitbrink",
+      "name": "LOC_SMALLPITBRINK",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "small_pit_bottom",
+      "name": "LOC_SMALLPIT",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_dusty",
+      "name": "LOC_DUSTY",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_parallel1",
+      "name": "LOC_PARALLEL1",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_mistwest",
+      "name": "LOC_MISTWEST",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "maze_all_alike",
+      "name": "LOC_ALIKE1",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "maze_all_alike",
+      "name": "LOC_ALIKE2",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "maze_all_alike",
+      "name": "LOC_ALIKE3",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "maze_all_alike",
+      "name": "LOC_ALIKE4",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "maze_all_alike",
+      "name": "LOC_MAZEEND1",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "maze_all_alike",
+      "name": "LOC_MAZEEND2",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "maze_all_alike",
+      "name": "LOC_MAZEEND3",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "maze_all_alike",
+      "name": "LOC_ALIKE5",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "maze_all_alike",
+      "name": "LOC_ALIKE6",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "maze_all_alike",
+      "name": "LOC_ALIKE7",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "maze_all_alike",
+      "name": "LOC_ALIKE8",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "maze_all_alike",
+      "name": "LOC_ALIKE9",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "maze_all_alike",
+      "name": "LOC_MAZEEND4",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "maze_all_alike",
+      "name": "LOC_ALIKE10",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "maze_all_alike",
+      "name": "LOC_MAZEEND5",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_pitbrink",
+      "name": "LOC_PITBRINK",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "maze_all_alike",
+      "name": "LOC_MAZEEND6",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "maze_all_alike",
+      "name": "LOC_PARALLEL2",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "maze_all_alike",
+      "name": "LOC_LONGEAST",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "maze_all_alike",
+      "name": "LOC_LONGWEST",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "passage_crossover",
+      "name": "LOC_CROSSOVER",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "maze_all_alike",
+      "name": "LOC_DEADEND7",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_complex",
+      "name": "LOC_COMPLEX",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_bedquilt",
+      "name": "LOC_BEDQUILT",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_swisscheese",
+      "name": "LOC_SWISSCHEESE",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_eastend",
+      "name": "LOC_EASTEND",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_slab",
+      "name": "LOC_SLAB",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_secret1",
+      "name": "LOC_SECRET1",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "secret_canyon",
+      "name": "LOC_SECRET2",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "secret_canyon_junction",
+      "name": "LOC_THREEJUNCTION",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_lowroom",
+      "name": "LOC_LOWROOM",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_deadcrawl",
+      "name": "LOC_DEADCRAWL",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "secret_ew_canyon",
+      "name": "LOC_SECRET3",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "wide_place",
+      "name": "LOC_WIDEPLACE",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "tight_canyon",
+      "name": "LOC_TIGHTPLACE",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "tall_canyon",
+      "name": "LOC_TALL",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "boulders",
+      "name": "LOC_BOULDERS1",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_sewer",
+      "name": "LOC_SEWER",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "maze_all_alike",
+      "name": "LOC_ALIKE11",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "maze_all_alike",
+      "name": "LOC_MAZEEND8",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "maze_all_alike",
+      "name": "LOC_MAZEEND9",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "maze_all_alike",
+      "name": "LOC_ALIKE12",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "maze_all_alike",
+      "name": "LOC_ALIKE13",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "maze_all_alike",
+      "name": "LOC_MAZEEND10",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "maze_all_alike",
+      "name": "LOC_MAZEEND11",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "maze_all_alike",
+      "name": "LOC_ALIKE14",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_narrow",
+      "name": "LOC_NARROW",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_noclimb",
+      "name": "LOC_NOCLIMB",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_planttop",
+      "name": "LOC_PLANTTOP",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_incline",
+      "name": "LOC_INCLINE",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_giantroom",
+      "name": "LOC_GIANTROOM",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "cave_in_blockage",
+      "name": "LOC_CAVEIN",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "immense_passage_end",
+      "name": "LOC_IMMENSE",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_waterfall",
+      "name": "LOC_WATERFALL",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_softroom",
+      "name": "LOC_SOFTROOM",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_oriental",
+      "name": "LOC_ORIENTAL",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_misty",
+      "name": "LOC_MISTY",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_alcove",
+      "name": "LOC_ALCOVE",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_plover",
+      "name": "LOC_PLOVER",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_darkroom",
+      "name": "LOC_DARKROOM",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_arched",
+      "name": "LOC_ARCHED",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_shellroom",
+      "name": "LOC_SHELLROOM",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "sloping_corridor",
+      "name": "LOC_SLOPING1",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "cul_de_sac",
+      "name": "LOC_CULDESAC",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_anteroom",
+      "name": "LOC_ANTEROOM",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "maze_all_different",
+      "name": "LOC_DIFFERENT1",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_wittsend",
+      "name": "LOC_WITTSEND",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_mirrorcanyon",
+      "name": "LOC_MIRRORCANYON",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_window2",
+      "name": "LOC_WINDOW2",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_topstalactite",
+      "name": "LOC_TOPSTALACTITE",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "maze_all_different",
+      "name": "LOC_DIFFERENT2",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_reservoir",
+      "name": "LOC_RESERVOIR",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_mazeend12",
+      "name": "LOC_MAZEEND12",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "repository_ne_end",
+      "name": "LOC_NE",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "repository_sw_end",
+      "name": "LOC_SW",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_swchasm",
+      "name": "LOC_SWCHASM",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_winding",
+      "name": "LOC_WINDING",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "secret_canyon",
+      "name": "LOC_SECRET4",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "secret_canyon",
+      "name": "LOC_SECRET5",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "secret_canyon",
+      "name": "LOC_SECRET6",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_nechasm",
+      "name": "LOC_NECHASM",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "ew_canyon",
+      "name": "LOC_CORRIDOR",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_fork",
+      "name": "LOC_FORK",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "warm_junction",
+      "name": "LOC_WARMWALLS",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_breathtaking",
+      "name": "LOC_BREATHTAKING",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_boulders2",
+      "name": "LOC_BOULDERS2",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_limestone",
+      "name": "LOC_LIMESTONE",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_barrenfront",
+      "name": "LOC_BARRENFRONT",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_barrenroom",
+      "name": "LOC_BARRENROOM",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "maze_all_different",
+      "name": "LOC_DIFFERENT3",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "maze_all_different",
+      "name": "LOC_DIFFERENT4",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "maze_all_different",
+      "name": "LOC_DIFFERENT5",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "maze_all_different",
+      "name": "LOC_DIFFERENT6",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "maze_all_different",
+      "name": "LOC_DIFFERENT7",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "maze_all_different",
+      "name": "LOC_DIFFERENT8",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "maze_all_different",
+      "name": "LOC_DIFFERENT9",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "maze_all_different",
+      "name": "LOC_DIFFERENT10",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "maze_all_different",
+      "name": "LOC_DIFFERENT11",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_deadend13",
+      "name": "LOC_DEADEND13",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "rough_hewn_corridor",
+      "name": "LOC_ROUGHHEWN",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_baddirection",
+      "name": "LOC_BADDIRECTION",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "large_chamber",
+      "name": "LOC_LARGE",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "ogres_storeroom",
+      "name": "LOC_STOREROOM",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "forest",
+      "name": "LOC_FOREST1",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "forest",
+      "name": "LOC_FOREST2",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "forest",
+      "name": "LOC_FOREST3",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "forest",
+      "name": "LOC_FOREST4",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "forest",
+      "name": "LOC_FOREST5",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "forest",
+      "name": "LOC_FOREST6",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "forest",
+      "name": "LOC_FOREST7",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "forest",
+      "name": "LOC_FOREST8",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "forest",
+      "name": "LOC_FOREST9",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "forest",
+      "name": "LOC_FOREST10",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "forest",
+      "name": "LOC_FOREST11",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "forest",
+      "name": "LOC_FOREST12",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "forest",
+      "name": "LOC_FOREST13",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "forest",
+      "name": "LOC_FOREST14",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "forest",
+      "name": "LOC_FOREST15",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "forest",
+      "name": "LOC_FOREST16",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "forest",
+      "name": "LOC_FOREST17",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "forest",
+      "name": "LOC_FOREST18",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "forest",
+      "name": "LOC_FOREST19",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "forest",
+      "name": "LOC_FOREST20",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "forest",
+      "name": "LOC_FOREST21",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "forest",
+      "name": "LOC_FOREST22",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_ledge",
+      "name": "LOC_LEDGE",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_resbottom",
+      "name": "LOC_RESBOTTOM",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_resnorth",
+      "name": "LOC_RESNORTH",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "rocky_passage",
+      "name": "LOC_TREACHEROUS",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "steep_incline",
+      "name": "LOC_STEEP",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_cliffbase",
+      "name": "LOC_CLIFFBASE",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "vertical_cliff",
+      "name": "LOC_CLIFFACE",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_footslip",
+      "name": "LOC_FOOTSLIP",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_clifftop",
+      "name": "LOC_CLIFFTOP",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "clifftop",
+      "name": "LOC_CLIFFLEDGE",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "dead_end",
+      "name": "LOC_REACHDEAD",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_gruesome",
+      "name": "LOC_GRUESOME",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_foof1",
+      "name": "LOC_FOOF1",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_foof2",
+      "name": "LOC_FOOF2",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_foof3",
+      "name": "LOC_FOOF3",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_foof4",
+      "name": "LOC_FOOF4",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_foof5",
+      "name": "LOC_FOOF5",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    },
+    {
+      "key": "loc_foof6",
+      "name": "LOC_FOOF6",
+      "zone": "unknown",
+      "priority": 0,
+      "target_size": [
+        320,
+        180
+      ],
+      "palette_max": 64,
+      "vfx": []
+    }
+  ],
+  "objects": [
+    {
+      "name": "NO_OBJECT",
+      "isTreasure": false,
+      "locations_count": 0,
+      "sfx": {}
+    },
+    {
+      "name": "KEYS",
+      "isTreasure": false,
+      "locations_count": 1,
+      "sfx": {}
+    },
+    {
+      "name": "LAMP",
+      "isTreasure": false,
+      "locations_count": 1,
+      "sfx": {}
+    },
+    {
+      "name": "GRATE",
+      "isTreasure": false,
+      "locations_count": 2,
+      "sfx": {}
+    },
+    {
+      "name": "CAGE",
+      "isTreasure": false,
+      "locations_count": 1,
+      "sfx": {}
+    },
+    {
+      "name": "ROD",
+      "isTreasure": false,
+      "locations_count": 1,
+      "sfx": {}
+    },
+    {
+      "name": "ROD2",
+      "isTreasure": false,
+      "locations_count": 1,
+      "sfx": {}
+    },
+    {
+      "name": "STEPS",
+      "isTreasure": false,
+      "locations_count": 2,
+      "sfx": {}
+    },
+    {
+      "name": "BIRD",
+      "isTreasure": false,
+      "locations_count": 1,
+      "sfx": {}
+    },
+    {
+      "name": "DOOR",
+      "isTreasure": false,
+      "locations_count": 1,
+      "sfx": {}
+    },
+    {
+      "name": "PILLOW",
+      "isTreasure": false,
+      "locations_count": 1,
+      "sfx": {}
+    },
+    {
+      "name": "SNAKE",
+      "isTreasure": false,
+      "locations_count": 1,
+      "sfx": {}
+    },
+    {
+      "name": "FISSURE",
+      "isTreasure": false,
+      "locations_count": 2,
+      "sfx": {}
+    },
+    {
+      "name": "OBJ_13",
+      "isTreasure": false,
+      "locations_count": 1,
+      "sfx": {}
+    },
+    {
+      "name": "CLAM",
+      "isTreasure": false,
+      "locations_count": 1,
+      "sfx": {}
+    },
+    {
+      "name": "OYSTER",
+      "isTreasure": false,
+      "locations_count": 1,
+      "sfx": {}
+    },
+    {
+      "name": "MAGAZINE",
+      "isTreasure": false,
+      "locations_count": 1,
+      "sfx": {}
+    },
+    {
+      "name": "DWARF",
+      "isTreasure": false,
+      "locations_count": 1,
+      "sfx": {}
+    },
+    {
+      "name": "KNIFE",
+      "isTreasure": false,
+      "locations_count": 1,
+      "sfx": {}
+    },
+    {
+      "name": "FOOD",
+      "isTreasure": false,
+      "locations_count": 1,
+      "sfx": {}
+    },
+    {
+      "name": "BOTTLE",
+      "isTreasure": false,
+      "locations_count": 1,
+      "sfx": {}
+    },
+    {
+      "name": "WATER",
+      "isTreasure": false,
+      "locations_count": 1,
+      "sfx": {}
+    },
+    {
+      "name": "OIL",
+      "isTreasure": false,
+      "locations_count": 1,
+      "sfx": {}
+    },
+    {
+      "name": "MIRROR",
+      "isTreasure": false,
+      "locations_count": 1,
+      "sfx": {}
+    },
+    {
+      "name": "PLANT",
+      "isTreasure": false,
+      "locations_count": 1,
+      "sfx": {}
+    },
+    {
+      "name": "PLANT2",
+      "isTreasure": false,
+      "locations_count": 2,
+      "sfx": {}
+    },
+    {
+      "name": "OBJ_26",
+      "isTreasure": false,
+      "locations_count": 1,
+      "sfx": {}
+    },
+    {
+      "name": "OBJ_27",
+      "isTreasure": false,
+      "locations_count": 2,
+      "sfx": {}
+    },
+    {
+      "name": "AXE",
+      "isTreasure": false,
+      "locations_count": 1,
+      "sfx": {}
+    },
+    {
+      "name": "OBJ_29",
+      "isTreasure": false,
+      "locations_count": 1,
+      "sfx": {}
+    },
+    {
+      "name": "OBJ_30",
+      "isTreasure": false,
+      "locations_count": 1,
+      "sfx": {}
+    },
+    {
+      "name": "DRAGON",
+      "isTreasure": false,
+      "locations_count": 2,
+      "sfx": {}
+    },
+    {
+      "name": "CHASM",
+      "isTreasure": false,
+      "locations_count": 2,
+      "sfx": {}
+    },
+    {
+      "name": "TROLL",
+      "isTreasure": false,
+      "locations_count": 2,
+      "sfx": {}
+    },
+    {
+      "name": "TROLL2",
+      "isTreasure": false,
+      "locations_count": 2,
+      "sfx": {}
+    },
+    {
+      "name": "BEAR",
+      "isTreasure": false,
+      "locations_count": 1,
+      "sfx": {}
+    },
+    {
+      "name": "MESSAG",
+      "isTreasure": false,
+      "locations_count": 1,
+      "sfx": {}
+    },
+    {
+      "name": "VOLCANO",
+      "isTreasure": false,
+      "locations_count": 1,
+      "sfx": {}
+    },
+    {
+      "name": "VEND",
+      "isTreasure": false,
+      "locations_count": 1,
+      "sfx": {}
+    },
+    {
+      "name": "BATTERY",
+      "isTreasure": false,
+      "locations_count": 1,
+      "sfx": {}
+    },
+    {
+      "name": "OBJ_40",
+      "isTreasure": false,
+      "locations_count": 1,
+      "sfx": {}
+    },
+    {
+      "name": "OGRE",
+      "isTreasure": false,
+      "locations_count": 1,
+      "sfx": {}
+    },
+    {
+      "name": "URN",
+      "isTreasure": false,
+      "locations_count": 1,
+      "sfx": {}
+    },
+    {
+      "name": "CAVITY",
+      "isTreasure": false,
+      "locations_count": 1,
+      "sfx": {}
+    },
+    {
+      "name": "BLOOD",
+      "isTreasure": false,
+      "locations_count": 1,
+      "sfx": {}
+    },
+    {
+      "name": "RESER",
+      "isTreasure": false,
+      "locations_count": 2,
+      "sfx": {}
+    },
+    {
+      "name": "RABBITFOOT",
+      "isTreasure": false,
+      "locations_count": 1,
+      "sfx": {}
+    },
+    {
+      "name": "OBJ_47",
+      "isTreasure": false,
+      "locations_count": 1,
+      "sfx": {}
+    },
+    {
+      "name": "OBJ_48",
+      "isTreasure": false,
+      "locations_count": 1,
+      "sfx": {}
+    },
+    {
+      "name": "SIGN",
+      "isTreasure": false,
+      "locations_count": 1,
+      "sfx": {}
+    },
+    {
+      "name": "NUGGET",
+      "isTreasure": false,
+      "locations_count": 1,
+      "sfx": {}
+    },
+    {
+      "name": "OBJ_51",
+      "isTreasure": false,
+      "locations_count": 1,
+      "sfx": {}
+    },
+    {
+      "name": "OBJ_52",
+      "isTreasure": false,
+      "locations_count": 1,
+      "sfx": {}
+    },
+    {
+      "name": "OBJ_53",
+      "isTreasure": false,
+      "locations_count": 1,
+      "sfx": {}
+    },
+    {
+      "name": "COINS",
+      "isTreasure": false,
+      "locations_count": 1,
+      "sfx": {}
+    },
+    {
+      "name": "CHEST",
+      "isTreasure": false,
+      "locations_count": 1,
+      "sfx": {}
+    },
+    {
+      "name": "EGGS",
+      "isTreasure": false,
+      "locations_count": 1,
+      "sfx": {}
+    },
+    {
+      "name": "TRIDENT",
+      "isTreasure": false,
+      "locations_count": 1,
+      "sfx": {}
+    },
+    {
+      "name": "VASE",
+      "isTreasure": false,
+      "locations_count": 1,
+      "sfx": {}
+    },
+    {
+      "name": "EMERALD",
+      "isTreasure": false,
+      "locations_count": 1,
+      "sfx": {}
+    },
+    {
+      "name": "PYRAMID",
+      "isTreasure": false,
+      "locations_count": 1,
+      "sfx": {}
+    },
+    {
+      "name": "PEARL",
+      "isTreasure": false,
+      "locations_count": 1,
+      "sfx": {}
+    },
+    {
+      "name": "RUG",
+      "isTreasure": false,
+      "locations_count": 2,
+      "sfx": {}
+    },
+    {
+      "name": "OBJ_63",
+      "isTreasure": false,
+      "locations_count": 1,
+      "sfx": {}
+    },
+    {
+      "name": "CHAIN",
+      "isTreasure": false,
+      "locations_count": 1,
+      "sfx": {}
+    },
+    {
+      "name": "RUBY",
+      "isTreasure": false,
+      "locations_count": 1,
+      "sfx": {}
+    },
+    {
+      "name": "JADE",
+      "isTreasure": false,
+      "locations_count": 1,
+      "sfx": {}
+    },
+    {
+      "name": "AMBER",
+      "isTreasure": false,
+      "locations_count": 1,
+      "sfx": {}
+    },
+    {
+      "name": "SAPPH",
+      "isTreasure": false,
+      "locations_count": 1,
+      "sfx": {}
+    },
+    {
+      "name": "OBJ_69",
+      "isTreasure": false,
+      "locations_count": 1,
+      "sfx": {}
+    }
+  ],
+  "audio": {
+    "bgm": [
+      {
+        "zone": "unknown",
+        "trackKey": "DULL_RUMBLING",
+        "length_sec": 45,
+        "loop": true
+      },
+      {
+        "zone": "unknown",
+        "trackKey": "LOUD_ROAR",
+        "length_sec": 45,
+        "loop": true
+      },
+      {
+        "zone": "unknown",
+        "trackKey": "MURMURING_SNORING",
+        "length_sec": 45,
+        "loop": true
+      },
+      {
+        "zone": "unknown",
+        "trackKey": "NO_MEANING",
+        "length_sec": 45,
+        "loop": true
+      },
+      {
+        "zone": "unknown",
+        "trackKey": "SNAKES_HISSING",
+        "length_sec": 45,
+        "loop": true
+      },
+      {
+        "zone": "unknown",
+        "trackKey": "STREAM_GURGLES",
+        "length_sec": 45,
+        "loop": true
+      },
+      {
+        "zone": "unknown",
+        "trackKey": "STREAM_SPLASHES",
+        "length_sec": 45,
+        "loop": true
+      },
+      {
+        "zone": "unknown",
+        "trackKey": "TOTAL_ROAR",
+        "length_sec": 45,
+        "loop": true
+      },
+      {
+        "zone": "unknown",
+        "trackKey": "WATERS_CRASHING",
+        "length_sec": 45,
+        "loop": true
+      },
+      {
+        "zone": "unknown",
+        "trackKey": "WIND_WHISTLES",
+        "length_sec": 45,
+        "loop": true
+      }
+    ],
+    "sfx": [
+      {
+        "key": "Even though it's an oyster, the critter's as tight-mouthed as a clam.",
+        "length_ms": 350
+      },
+      {
+        "key": "It almost seems as though the bird is trying to tell you something.",
+        "length_ms": 350
+      },
+      {
+        "key": "It says the same thing it did before.  Hm, maybe it's a pun?",
+        "length_ms": 350
+      },
+      {
+        "key": "The bird does not seem inclined to sing while in the cage.",
+        "length_ms": 350
+      },
+      {
+        "key": "The bird is singing to you in gratitude for your having returned it to\nits home.  In return, it informs you of a magic word which it thinks\nyou may find useful somewhere near the Hall of Mists.  The magic word\nchanges frequently, but for now the bird believes it is \"%s\".  You\nthank the bird for this information, and it flies off into the forest.",
+        "length_ms": 350
+      },
+      {
+        "key": "The bird's singing is quite melodious.",
+        "length_ms": 350
+      },
+      {
+        "key": "The clam is as tight-mouthed as a, er, clam.",
+        "length_ms": 350
+      },
+      {
+        "key": "The dragon is, not surprisingly, silent.",
+        "length_ms": 350
+      },
+      {
+        "key": "The dragon's ominous hissing does not bode well for you.",
+        "length_ms": 350
+      },
+      {
+        "key": "The ogre is apparently the strong, silent type.",
+        "length_ms": 350
+      },
+      {
+        "key": "The plant continues to ask plaintively for water.",
+        "length_ms": 350
+      },
+      {
+        "key": "The plant continues to demand water.",
+        "length_ms": 350
+      },
+      {
+        "key": "The plant now maintains a contented silence.",
+        "length_ms": 350
+      },
+      {
+        "key": "The snake is hissing venomously.",
+        "length_ms": 350
+      },
+      {
+        "key": "The troll sounds quite adamant in his demand for a treasure.",
+        "length_ms": 350
+      },
+      {
+        "key": "To your surprise, you can understand the bird's chirping; it is\nsinging about the joys of its forest home.",
+        "length_ms": 350
+      }
+    ]
+  }
+}

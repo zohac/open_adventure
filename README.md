@@ -27,6 +27,8 @@ Generate asset tracker (art/audio progress):
 python3 scripts/generate_asset_tracker.py             # writes docs/ASSET_TRACKER.md
 ```
 
+The asset tracker lists all locations/objects with expected images/audio and summarizes budgets. See section “Asset Tracker (Art/Audio)” below.
+
 Local save directories (runtime):
 
 - iOS: `NSApplicationSupportDirectory/open_adventure/saves/`
@@ -102,6 +104,16 @@ Advanced: run scripts manually (optional)
 Troubleshooting
 
 - FileNotFoundError: 'adventure.yaml' when running `open-adventure-master/make_dungeon.py` → the script must be run from within `open-adventure-master` (it looks for `adventure.yaml` in the current directory). Use the exact steps above.
+
+## Asset Tracker (Art/Audio)
+
+- Generate: `python3 scripts/generate_asset_tracker.py` → `docs/ASSET_TRACKER.md`
+- Tables generated:
+  - Locations: Id, Name, MapTag, Image, Exists, Size, MusicKey, MusicPath
+  - Objects: Id, Name, Inventory, Treasure, Immovable, LocCount, SfxKeys
+  - Audio: Music (Key/Path/Exists/Size), SFX (Key/Path/Exists/Size)
+- Summary includes total sizes vs budgets: images ≈ 10 MB, music ≈ 6–8 MB (≤ 600 KB/track), SFX ≈ 1 MB.
+- Purely local (no network); scans under `assets/images/locations` and `assets/audio/{music,sfx}`.
 
 ## Feature flags & performances
 
