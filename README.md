@@ -11,7 +11,7 @@ Development quickstart
 
 Update assets from upstream (optional):
 
-```
+```bash
 python3 scripts/make_dungeon.py --out assets/data     # generates travel.json + tkey.json
 python3 scripts/extract_c.py --out assets/data        # generates travel_c.json + tkey_c.json (for validation)
 python3 scripts/validate_json.py                      # validates YAML → JSON consistency

@@ -23,11 +23,10 @@ class AdventureRepositoryImpl implements AdventureRepository {
   @override
   Future<List<Location>> getLocations() async {
     if (_locations != null) return _locations!;
-    final raw = await _assets.loadList(AssetPaths.locationsJson);
+    final flattened = await _assets.getLocations();
     final list = <Location>[];
-    for (var i = 0; i < raw.length; i++) {
-      final entry = raw[i] as List<dynamic>;
-      list.add(LocationModel.fromEntry(entry, i));
+    for (var i = 0; i < flattened.length; i++) {
+      list.add(LocationModel.fromJson(flattened[i], i));
     }
     _locations = list;
     return list;

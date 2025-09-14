@@ -109,3 +109,4 @@ flutter:
     - assets/data/classes.json
     - assets/data/arbitrary_messages.json
     - assets/data/turn_thresholds.json
+    - assets/data/metadata.json

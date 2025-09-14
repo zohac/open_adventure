@@ -207,22 +207,22 @@ Risques & mitigations (S1)
   - DoD:
     - [x] Tous les chemins listés dans `assets/` présents et chargés par `flutter pub get` sans erreur.
     - [x] Test d’existence des assets vert (test/core/constants/asset_paths_test.dart).
-- [ ] ADVT‑S1‑03: Scaffolding arborescence Clean Architecture (`lib/domain|application|data|presentation|core`) + fichiers squelettes.
+- [x] ADVT‑S1‑03: Scaffolding arborescence Clean Architecture (`lib/domain|application|data|presentation|core`) + fichiers squelettes.
   - DoD:
-    - [ ] Dossiers créés; fichiers d’index/squelettes présents; imports compilent.
-    - [ ] `flutter analyze` zéro warning structurel (imports, unused files tolérés avec ignore localisé si nécessaire).
-- [ ] ADVT‑S1‑04: Implémenter `AssetDataSource` (loadList/loadMap) + helper de validation JSON (clés requises, types).
+    - [x] Dossiers créés; fichiers squelettes présents; imports compilent.
+    - [x] `flutter analyze` zéro warning structurel (imports, unused files tolérés avec ignore localisé si nécessaire).
+- [x] ADVT‑S1‑04: Implémenter `AssetDataSource` (loadList/loadMap) + helper de validation JSON (clés requises, types).
   - DoD:
-    - [ ] Deux méthodes opérationnelles, docstrings présentes, exceptions claires en cas d’échec.
-    - [ ] Tests: charge une liste et une map; cas d’erreur format → lève une exception dédiée.
-- [ ] ADVT‑S1‑05: Créer `LocationModel.fromJson(Map,int)` (nouveau fichier) + `AssetDataSource.getLocations()` pour fournir un `Map` par entrée.
+    - [x] Deux méthodes opérationnelles, docstrings présentes, exceptions claires en cas d’échec.
+    - [x] Tests: charge une liste et une map; cas d’erreur format → lève une exception dédiée.
+- [x] ADVT‑S1‑05: Créer `LocationModel.fromJson(Map,int)` (nouveau fichier) + `AssetDataSource.getLocations()` pour fournir un `Map` par entrée.
   - DoD:
-    - [ ] `LocationModel.fromJson` accepte un `Map` et renseigne toutes les propriétés attendues.
-    - [ ] `AssetDataSource` lit `assets/data/locations.json` et retourne une `List` mappable; tests verts sur 3 échantillons.
-- [ ] ADVT‑S1‑06: Créer `GameObjectModel.fromJson` (nouveau fichier) — normaliser `locations`, champs optionnels → null si vides.
+    - [x] `LocationModel.fromJson` accepte un `Map` et renseigne toutes les propriétés attendues.
+    - [x] `AssetDataSource` lit `assets/data/locations.json` et retourne une `List` mappable; tests verts sur 3 échantillons.
+- [x] ADVT‑S1‑06: Créer `GameObjectModel.fromJson` (nouveau fichier) — normaliser `locations`, champs optionnels → null si vides.
   - DoD:
-    - [ ] Gestion `locations` string|list validée; `states/descriptions/sounds/changes` null si vides.
-    - [ ] Tests de round‑trip `toEntity`/`toJson` sur un objet complexe.
+    - [x] Gestion `locations` string|list validée; `states/descriptions/sounds/changes` null si vides.
+    - [x] Tests de round‑trip `toEntity`/`toJson` sur un objet complexe.
 - [ ] ADVT‑S1‑07: Créer `ActionModel`, `ConditionModel`, `TravelRuleModel` (lecture depuis `locations.json` et/ou `travel.json`).
   - DoD:
     - [ ] Parsing des structures JSON supporté, incluant présence/absence de conditions.
