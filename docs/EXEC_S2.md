@@ -34,12 +34,18 @@ Livrables
 
 UI – livrables & DoD
 
+- [ ] HomePage v0 (accueil)
+  - DoD:
+    - [ ] Affiche les boutons: Nouvelle partie, Continuer, Charger, Options, Crédits;
+    - [ ] Bouton Continuer désactivé si autosave absente (`SaveRepository.latest()` retourne null);
+    - [ ] Navigation vers chacun des écrans cible fonctionne; aucun crash si aucun slot.
 - [ ] AdventurePage v0 (description + boutons travel + journal minimal)
   - DoD:
     - [ ] Affiche le titre et la description du lieu courant;
     - [ ] Rend une liste de boutons d’actions `category=travel` cohérente avec `ListAvailableActions`;
     - [ ] Tap sur un bouton met à jour titre/description du nouveau lieu; pas de jank observable;
-    - [ ] Journal affiche le dernier message retourné par `TurnResult`.
+    - [ ] Journal affiche le dernier message retourné par `TurnResult`;
+    - [ ] Respect de §17 (UX Mobile): 3–7 actions visibles max; si >7, rendre 6 + bouton `Plus…`; labels/icônes motion normalisés; première visite = `longDescription`, revisites = `shortDescription`.
 - [ ] Intégration GameController (injection par constructeur, état immuable)
   - DoD:
     - [ ] `init()` remplit l’état initial et `perform()` déclenche navigation + autosave;
@@ -185,6 +191,7 @@ Tests & validations (S2)
   - `perform()` applique la navigation et déclenche `SaveRepository.autosave` (mocké) exactement 1 fois.
 - Presentation (widget tests)
   - `AdventurePage` affiche description + N boutons; tap sur un bouton met à jour le titre/description (pump + settle).
+  - `AdventurePage` limite l’affichage à ≤7 boutons d’action et affiche `Plus…` si overflow; première visite rend « long », seconde rend « short ».
 - Non‑régression perfs: interaction < 16 ms; aucun jank sur le parcours tap→render.
 
 Definition of Done (S2)

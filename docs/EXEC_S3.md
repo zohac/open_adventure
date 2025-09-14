@@ -39,6 +39,7 @@ Livrables
   - `AdventurePage` v1: intégration des onglets/bottom bar (Carte, Inventaire, Journal, Menu) et des catégories d’actions.
   - Images de scène: intégration visuelle par lieu au-dessus du heading (si disponible), offline only.
   - Audio: BGM par zone (loop gapless) + SFX d’interaction (prendre/poser, lampe on/off, alerte nain).
+  - Art Bible: livrer 15–20 scènes prioritaires conformes à `docs/ART_ASSET_BIBLE.md` (noms, palettes, budgets, VFX discrets).
 
 UI – livrables & DoD
 
@@ -46,7 +47,8 @@ UI – livrables & DoD
   - DoD:
     - [ ] Bottom bar/onglets opérationnels (Carte, Inventaire, Journal, Menu);
     - [ ] Sections d’actions regroupées (travel/interaction/meta) avec titres;
-    - [ ] Navigation entre onglets sans perte d’état.
+    - [ ] Navigation entre onglets sans perte d’état;
+    - [ ] Respect de §17: priorisation (sécurité > travel > interaction > méta), 3–7 actions visibles (overflow paginé/scrollé), labels/icônes normalisés; `Observer` rejoue la description longue si disponible.
 - [ ] InventoryPage
   - DoD:
     - [ ] Liste des objets portés avec actions contextuelles par item (poser/utiliser/éteindre/allumer);
@@ -63,8 +65,13 @@ UI – livrables & DoD
   - DoD:
     - [ ] `pubspec.yaml` déclare les fichiers présents sous `assets/images/locations/` (listing explicite des .webp);
     - [ ] `AdventurePage` charge `assets/images/locations/<key>.webp` via `locationImageKey` (S2) avec `FadeInImage` + placeholder, rendu via `PixelCanvas` (scale entier);
-    - [ ] Contraintes: `AspectRatio 16/9`, poids ≤ 200 KB/image, total art ≤ 10 MB; `FilterQuality.none`; fallback silencieux si manquant;
+    - [ ] Contraintes: `AspectRatio 16/9`, poids ≤ 200 KB/image, total art ≤ 10 MB; `FilterQuality.none`; fallback silencieux si manquant; préchargement de l’image du prochain lieu après `ApplyTurn`;
     - [ ] Accessibilité: `semanticsLabel` = nom du lieu; tests widget vérifient fallback et affichage de l’image quand présente.
+ - [ ] Art Bible (S3) — scènes prioritaires
+  - DoD:
+    - [ ] 15–20 lieux livrés selon `ART_ASSET_BIBLE.md` (clés `<key>` valides, palettes/contrastes conformes, VFX discrets seulement);
+    - [ ] Revue croisée dev/art: rendu net via `PixelCanvas` (aucun flou), contrôles sur device (×2/×3);
+    - [ ] Budget total art ≤ 10 Mo maintenu.
 
 Audio – livrables & DoD
 
@@ -260,6 +267,9 @@ Suivi & tickets
 - [ ] ADVT‑S3‑22: Audio — SFX d’interaction (prendre/poser/lampe/danger nain) + throttle.
   - DoD:
     - [ ] SFX déclenchés aux bons événements; pas de spam; volumes appliqués.
+- [ ] ADVT‑S3‑23: Art — livrer top 15–20 scènes (Asset Bible) + revue croisée.
+  - DoD:
+    - [ ] Scènes livrées, nommage `<key>` correct, contraintes et budgets respectés; validation croisée effectuée.
 
 Références C (source canonique)
 

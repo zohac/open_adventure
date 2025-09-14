@@ -281,6 +281,11 @@ Risques & mitigations (S1)
     - [ ] Une seule commande séquentielle exécute: make_dungeon → extract_c → validate;
     - [ ] Documentation dans README (section « Mise à jour des assets à partir de l’amont »);
     - [ ] Ignorer en CI mobile par défaut (usage dev/mainteneur seulement).
+- [ ] ADVT‑S1‑22: Outil de reporting — générateur d’Asset Tracker (Markdown).
+  - DoD:
+    - [ ] Script `scripts/generate_asset_tracker.py` lit `assets/data/*.json` et génère `docs/ASSET_TRACKER.md`;
+    - [ ] Trois tableaux: Locations, Objects, Audio (voir `ART_ASSET_BIBLE.md` — section « Asset Tracker — spécification de génération »);
+    - [ ] Calcul des tailles d’images/audio et résumé des budgets; aucun accès réseau; exit code 0.
 
 Références C (source canonique)
 

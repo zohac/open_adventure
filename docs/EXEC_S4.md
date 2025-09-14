@@ -219,8 +219,8 @@ Suivi & tickets
     - [ ] Rapports LCOV au‑dessus des seuils; `flutter analyze` zéro warning; CI verte.
 - [ ] ADVT‑S4‑15: Images — préchargement et gestion mémoire (cache) + toggle Settings.
   - DoD:
-    - [ ] `precacheImage` appelé post‑tour pour le prochain lieu quand identifiable;
-    - [ ] Toggle Settings fonctionnel et persisté; défaut basé sur heuristique RAM;
+    - [ ] `precacheImage` appelé post‑tour pour le prochain lieu quand identifiable; 
+    - [ ] Toggle Settings fonctionnel et persisté; défaut basé sur heuristique RAM; 
     - [ ] Ajustement du cache et validation sans OOM sur devices cibles.
 - [ ] ADVT‑S4‑16: Audio — preload/mémoire (empreinte < 20 Mo) + ducking mixage final.
   - DoD:
@@ -229,6 +229,9 @@ Suivi & tickets
 - [ ] ADVT‑S4‑17: Audio — Settings avancés (toggles + sliders + reset + persistance).
   - DoD:
     - [ ] Persistance prouvée; UI réagit instantanément; test d’intégration traverse ON/OFF sans erreur.
+- [ ] ADVT‑S4‑18: Art — compléter les scènes restantes (Asset Bible) + QA finale 16‑bit.
+  - DoD:
+    - [ ] Toutes les scènes planifiées livrées; budgets respectés; rendu net via PixelCanvas; checklists DA/A11y passées.
 
 Références C (source canonique)
 

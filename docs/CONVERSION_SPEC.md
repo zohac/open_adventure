@@ -8,6 +8,12 @@ Source de vérité & gestion des changements
 - Toute modification de périmètre ou de décision technique doit être intégrée à ce document avant implémentation.
 - Les scripts d’outillage (scripts/*.py) ne sont pas embarqués dans l’app; ils servent uniquement à générer/valider les assets.
 
+Références normatives rattachées
+
+- Annexe UX/Audio/Pixel‑Art: `docs/DESIGN_ADDENDUM.md` (règles §17–§19)
+- Bible d’assets (art): `docs/ART_ASSET_BIBLE.md` (scènes prioritaires, VFX/SFX discrets, palettes)
+- Écrans UX détaillés: `docs/UX_SCREENS.md` (wireframes + DoD par écran)
+
 Résumé exécutif — décision non négociable:
 
 - Reboot Flutter complet. On conserve uniquement: `assets/data/*.json` et la référence C dans `open-adventure-master/`. Les scripts de génération/validation vivent sous `scripts/` (`scripts/make_dungeon.py`, `scripts/extract_c.py`, `scripts/validate_json.py`).
@@ -224,9 +230,16 @@ Détails d’implémentation:
 - `Journal`: fil des événements récents (textes système), scrollable.
 - Accessibilité: semantics labels, tailles adaptatives, navigation au switch/lecteur d’écran.
 
+Annexes et normes d’écran: voir `docs/UX_SCREENS.md` (normatif) décrivant le mandat, les entrées/sorties, DoD et tests par écran.
+
 Localisation:
 
 - V1 FR/EN embarquées via ARB; textes dynamiques (descriptions) restent issus des assets.
+
+Art & VFX:
+
+- Voir `docs/ART_ASSET_BIBLE.md` (normatif) pour listes prioritaires de scènes, briefs créatures/objets, VFX/SFX et palettes.
+- Suivi de production: `docs/ASSET_TRACKER.md` (tableaux générés). Le générateur doit préserver le préambule normatif et ne remplacer que la section encadrée par `<!-- GENERATED_START/END -->`.
 
 ## 10. Tests
 
@@ -433,3 +446,103 @@ class ActionOption {
   });
 }
 ```
+
+## 17. UX Mobile — Normes d’Interaction (normatif)
+
+- Règle d’or: à tout instant, proposer 3–7 choix réellement utiles, accessibles au pouce, sans saisie texte.
+- Absence de clavier virtuel: aucune saisie libre; toutes les commandes sont déduites et proposées sous forme de boutons.
+
+17.1 Génération des options (source unique)
+
+- Use case: `ListAvailableActions(Game)` (voir §6) agrège et normalise, Data ne contient aucune logique d’UI.
+- Catégories: `travel`, `interaction`, `meta` (toujours visibles: `Inventaire`, `Observer`, `Carte`, `Menu`).
+- Dédoublonnage: options identiques (même `verb`+`objectId`) sont fusionnées; conserver la première occurrence déterministe.
+- Canonicalisation: verbes motion normalisés via `motions.json` (alias→canonique). L’UI ne présente que le canonique.
+- Conditions: en S2 ne retenir que les règles triviales (sans condition). En S3+, appliquer `EvaluateCondition`.
+
+17.2 Priorisation et tri (déterministe)
+
+- Priorité 1: sécurité/urgence (lampe faible, danger nain) → actions `Light/Extinguish/Retreat` si applicables.
+- Priorité 2: navigation immédiate (`travel/goto`).
+- Priorité 3: interactions d’objets (`Take/Drop/Open/Close/Examine/Use`).
+- Priorité 4: méta (`Inventaire`, `Observer`, `Carte`, `Menu`).
+- Tiebreakers: (a) label asc (localisé), (b) destination id croissant pour travel, (c) object name asc.
+
+17.3 Surface et overflow
+
+- Visible simultané: max 7 boutons d’action (hors bottom bar). Si >7, rendre les 6 premiers + un bouton `Plus…` ouvrant la liste complète (S3: pagination/scroll au lieu de `Plus…`).
+- Taille des cibles tactiles: ≥ 48×48 dp, espacement vertical 8–12 dp, focus order linéaire descendant.
+- Fallback « cul‑de‑sac »: si aucune option `travel`/`interaction` n’est disponible, l’UI présente au minimum `Observer`, `Carte`, `Inventaire`.
+
+17.4 Libellés & icônes (génération UI)
+
+- Travel: `Aller ${directionLabel}` (N, S, E, O, NE, NO, SE, SO, HAUT, BAS, ENTRER, SORTIR). Icônes Material: `{N:arrow_upward, S:arrow_downward, E:arrow_forward, O:arrow_back, NE:north_east, NO:north_west, SE:south_east, SO:south_west, HAUT:arrow_upward, BAS:arrow_downward, ENTRER:login, SORTIR:logout}`.
+- Interaction objet: `${verbeUI} ${objetDisplayName}` (ex: `Prendre la clé`, `Ouvrir la porte`).
+- Méta: `Inventaire`, `Observer`, `Carte`, `Menu` (localisés via ARB; pas de logique dans Domain/Data).
+- Cas longs: troncature label à ~32–40 caractères avec ellipsis, `Semantics.label` complet conservé.
+
+17.5 Descriptions (long/short) et « Observer »
+
+- Première visite d’un lieu: utiliser `longDescription` si disponible, sinon `shortDescription`.
+- Revisites: utiliser `shortDescription` par défaut.
+- Action `Observer` (méta): ré‑affiche la `longDescription` du lieu courant quand elle existe, sinon `shortDescription`.
+- Le journal enregistre le texte effectivement affiché (pas la commande).
+
+17.6 Journal (rendu et rétention)
+
+- Fil chronologique des messages système produits par `ComputeOutput`/use cases; aucune écho de commandes.
+- Rétention: conserver les 200 derniers messages; suppression FIFO au‑delà, sans jank.
+- Accessibilité: `Semantics` activés, annonces par lot (dernier message), support lecteur d’écran.
+
+17.7 Accessibilité (AA)
+
+- Police ajustable (3 crans min.), contrastes conformes (thèmes clair/sombre), focus visible.
+- Ordre de focus: image → titre → description → liste d’actions (haut→bas) → bottom bar.
+- Labels semantics exhaustifs pour tous boutons; `tooltip` facultatif, pas de dépendance au survol.
+
+17.8 Images de lieu (offline, optionnelles)
+
+- Slot visuel 16:9 au‑dessus du titre; rendu via `PixelCanvas` (scale entier, `FilterQuality.none`, letterboxing noir).
+- Clé d’image: `locationImageKey(Location)` = `mapTag` si présent sinon `name` en snake_case ASCII sinon `id`.
+- Chemin: `assets/images/locations/<key>.webp`. Poids ≤ 200 KB/image, total art ≤ 10 Mo.
+- Fallback: si asset manquant ou feature désactivée → placeholder statique; zéro exception, zéro jank.
+- Preload: `precacheImage` de l’image du prochain lieu immédiatement après un `ApplyTurn` réussi.
+
+17.9 Audio (offline only)
+
+- BGM par zone (surface/grotte/river/sanctuary/danger). Formats OGG/Opus 48 kHz, −14 LUFS intégrée, pic ≤ −1 dBFS.
+- Volumes par défaut: 60% BGM / 100% SFX. Crossfade 250–500 ms lors d’un changement de zone; boucles gapless.
+- SFX: taps, prendre/poser, lampe on/off, alerte nain, découverte. Anti‑spam (throttle ≥ 150 ms pour répétitions).
+
+17.10 Performances & budgets
+
+- Interaction tap→render < 16 ms; démarrage à froid < 1,0 s; mémoire nominale < 150 Mo.
+- Parsing assets non bloquant (Isolate au‑delà de 1 Mo cumulés; flag S1/S4).
+
+17.11 Tests normatifs (extraits)
+
+- `ListAvailableActions`: ≥1 action sur lieu avec travel trivial; max 7 visibles; ordre conforme aux priorités.
+- `ApplyTurn(goto)`: met à jour `loc`, `turns++`, renvoie description attendue (long→short selon visite).
+- Widget: `AdventurePage` rend titre/description + boutons; tap → mise à jour; fallback image silencieux.
+
+## 18. Direction Artistique 16‑bit — Normes de Production (normatif)
+
+- Style: pixel‑art Megadrive/SNES‑like, contours nets, pas d’anti‑aliasing; éviter les dégradés continus.
+- Résolution de base: 320×180 (16:9). Composer sur cette grille; l’app applique un scaling entier (×2, ×3, …).
+- Palette: limiter à ~32–64 couleurs par scène, contrastes contrôlés, éviter banding via dithering léger si nécessaire.
+- Composition: focus clair, profondeur par silhouettes/valeurs, lisibilité du premier plan > arrière‑plan.
+- Nommage fichiers: `assets/images/locations/<key>.webp` (lower_snake_case); exporter en WebP lossless ou qualité visuelle équivalente; ≤ 200 KB.
+- QA artistique: vérifier lisibilité en taille réduite, contrastes en sombre/clair, absence d’artefacts de ré‑échantillonnage.
+- Audio: BGM 30–60 s loopable, ≤ 600 KB/loop; SFX courts, cue précis, enveloppes marquées (style chiptune/FM).
+
+Livrables Game Artist (S3→S4)
+
+- Feuille de route d’images par `mapTag` priorisée (top 20 lieux S3), reste en backlog S4.
+- Table `zoneKey → trackKey` (BGM) + 6–10 SFX essentiels, nommage stable (`sfx_pickup`, `sfx_drop`, `sfx_lamp_on`, etc.).
+- Validation croisée avec l’équipe dev: intégration sur device, contrôle de jank, itération micro‑contrastes.
+
+## 19. Rôles & Gouvernance (normatif)
+
+- CTO: cette spec prime et verrouille les invariants UX/techniques; tout écart doit être amendé ici avant merge.
+- Dev: aucune logique métier en UI; labels/icos générés côté Presentation; Data reste passive; Domain garde l’algorithme.
+- Game Artist: respecte les budgets et la grille 320×180; livrables nommés selon la clé d’image; review croisée avant ajout à `pubspec.yaml`.
