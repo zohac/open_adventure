@@ -73,7 +73,7 @@ class AdventureRepositoryImpl implements AdventureRepository {
   Future<Location> locationById(int id) async {
     final locs = await getLocations();
     if (id < 0 || id >= locs.length) {
-      throw RangeError('Location id out of range: $id');
+      throw DataFailure('Location id out of range: $id');
     }
     return locs[id];
   }

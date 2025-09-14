@@ -7,8 +7,6 @@ abstract class Failure extends Equatable {
   List<Object?> get props => [];
 }
 
-class ServerFailure extends Failure {}
-
 /// DataFailure represents a typed failure for data layer issues
 /// such as missing/corrupted assets or parse errors.
 class DataFailure extends Failure {

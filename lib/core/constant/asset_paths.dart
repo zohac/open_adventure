@@ -1,4 +1,4 @@
-// lib/core/constants/asset_paths.dart
+// lib/core/constant/asset_paths.dart
 
 class AssetPaths {
   static const String locationsJson = 'assets/data/locations.json';

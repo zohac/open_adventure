@@ -1,10 +1,8 @@
 // lib/core/usecases/usecase.dart
-
-import 'package:dartz/dartz.dart';
-import '../error/failures.dart';
+// Generic use case contract (no external dependency).
 
 abstract class UseCase<T, Params> {
-  Future<Either<Failure, T>> call(Params params);
+  Future<T> call(Params params);
 }
 
 class NoParams {}
