@@ -75,11 +75,20 @@ Verify install:
 
 - `python3 -c "import yaml; print(yaml.__version__)"`
 
-Run scripts:
+Recommended: orchestrate everything
+
+- Single command (dev/maintainer only):
+  - `python3 scripts/update_assets.py --out assets/data`
+    - Ensures: YAML→JSON (canonical), tries upstream C generation, extracts JSON from C (validation by default), runs validation.
+    - Creates `assets/data/metadata.json` if missing with `{ schema_version: 1, start_location_id: 1 }`.
+    - Add `--canonical` to overwrite travel.json/tkey.json from C tables (use with care).
+    - Add `--strict` to fail on validation divergences (exit 1).
+
+Advanced: run scripts manually (optional)
 
 - Generate JSON from YAML (repo tooling): `python3 scripts/make_dungeon.py --out assets/data`
-- Extract C-equivalent JSON (optional, for cross‑validation):
-  1) Generate C tables from the upstream YAML (run inside upstream dir):
+- Extract C-equivalent JSON (for cross‑validation):
+  1) Generate C tables from upstream (run inside upstream dir):
      - `cd open-adventure-master`
      - `python3 make_dungeon.py`   # produces dungeon.c and dungeon.h
      - `cd ..`
@@ -88,15 +97,7 @@ Run scripts:
        - `python3 scripts/extract_c.py --out assets/data --in-travel open-adventure-master/dungeon.c --in-tkey open-adventure-master/dungeon.c`
      - Or overwrite canonical assets directly (use with care):
        - `python3 scripts/extract_c.py --canonical --out assets/data --in-travel open-adventure-master/dungeon.c --in-tkey open-adventure-master/dungeon.c`
-  3) Validate JSON vs YAML (and vs C if present):
-     - `python3 scripts/validate_json.py`
-
-Orchestrate everything
-
-- Single command to update assets from upstream and validate (dev/maintainer only):
-  - `python3 scripts/update_assets.py --out assets/data`
-    - Add `--canonical` to overwrite travel.json/tkey.json from C tables
-    - Add `--strict` to fail on validation divergences (exit 1)
+- Validate JSON vs YAML (and vs C if present): `python3 scripts/validate_json.py`
 
 Troubleshooting
 

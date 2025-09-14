@@ -68,6 +68,19 @@ def main() -> int:
         extract_cmd.insert(3, "--canonical")
     run_step(extract_cmd, name="extract_c (C→JSON)", expect_ok=False)
 
+    # 3.5) Ensure metadata.json exists with sane defaults
+    meta_path = out_dir / "metadata.json"
+    if not meta_path.exists():
+        try:
+            meta_path.write_text("""{
+  "schema_version": 1,
+  "start_location_id": 1
+}
+""", encoding="utf-8")
+            print(f"[update-assets] Created default metadata at {meta_path}")
+        except Exception as e:
+            print(f"[update-assets] Warning: could not create metadata.json: {e}")
+
     # 4) Validate YAML↔JSON (and vs C if present)
     code = run_step([py, str(repo_root / "scripts" / "validate_json.py")], name="validate (YAML/JSON)", expect_ok=not args.strict)
     if code != 0:
@@ -79,4 +92,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     sys.exit(main())
-
