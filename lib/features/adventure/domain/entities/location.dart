@@ -1,7 +1,7 @@
 // lib/features/adventure/domain/entities/location.dart
 
 import 'travel_rule.dart';
-import 'sound.dart';
+import '../enums/sound.dart';
 
 class Location {
   final int id;
@@ -9,7 +9,7 @@ class Location {
   final String? mapTag;
   final String? shortDescription;
   final String? longDescription;
-  final Sound? sound;
+  final Sound sound;
   final bool loud;
   final Map<String, bool> conditions;
   final List<TravelRule> travel;
@@ -20,7 +20,7 @@ class Location {
     this.mapTag,
     this.shortDescription,
     this.longDescription,
-    this.sound,
+    this.sound = Sound.silent,
     this.loud = false,
     required this.conditions,
     required this.travel,

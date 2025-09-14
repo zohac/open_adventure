@@ -1,0 +1,269 @@
+# Exécution S2 — Moteur minimal (travel), UI v0, Autosave
+
+Statut: exécutable immédiatement. Durée cible: 1 semaine (5 j/h).
+
+Definition of Ready (DoR)
+
+- `initialGame()` disponible et stable depuis S1; `assets/data/travel.json` validé (scripts/validate_json.py).
+- `pubspec.yaml` déclare `assets/data/*` nécessaires et dépendances S2 (voir ci‑dessous).
+- Choix de la lib de mocks acté: `mocktail` recommandé.
+- Règles: aucune permission réseau; pas d’accès HTTP; seules permissions locales (FS via path_provider) sont autorisées.
+
+Objectif S2
+
+- Livrer un noyau jouable par boutons: calcul des actions de déplacement (`ListAvailableActions` — travel only), application d’un tour pour la navigation (`ApplyTurn` — goto uniquement), UI `AdventurePage` v0 affichant description et boutons d’actions, et autosave après chaque tour.
+
+Dépendances S1 (doivent être vertes)
+
+- Mappers Data ↔ Entities stables pour `locations.json`, `objects.json` (OK même si interactions non utilisées), `travel` embarqué, `motions.json` (pour labels).
+- `AdventureRepository.initialGame()` opérationnel. Lecture d’assets déclarée dans `pubspec.yaml`.
+
+Livrables
+
+- Domain
+  - `ListAvailableActions` (travel only).
+  - `ApplyTurn` (navigation: `goto` → changement de lieu, `speak/special` ignorés en S2).
+  - `Command` (VO), `TurnResult` (VO: `newGame`, `messages`).
+- Application
+  - `GameController` (ValueNotifier/BLoC sans dépendance UI) exposant `GameViewState` immuable.
+  - Autosave orchestrée après tour réussi (`SaveRepository.autosave`).
+- Presentation
+  - `AdventurePage` v0: titre/description du lieu courant + liste de boutons d’actions (travel) + journal minimal.
+- Data
+  - `SaveRepository` (impl locale fichiers) avec `autosave` + `latest()`.
+
+UI – livrables & DoD
+
+- [ ] AdventurePage v0 (description + boutons travel + journal minimal)
+  - DoD:
+    - [ ] Affiche le titre et la description du lieu courant;
+    - [ ] Rend une liste de boutons d’actions `category=travel` cohérente avec `ListAvailableActions`;
+    - [ ] Tap sur un bouton met à jour titre/description du nouveau lieu; pas de jank observable;
+    - [ ] Journal affiche le dernier message retourné par `TurnResult`.
+- [ ] Intégration GameController (injection par constructeur, état immuable)
+  - DoD:
+    - [ ] `init()` remplit l’état initial et `perform()` déclenche navigation + autosave;
+    - [ ] Widget tests valident le cycle init→tap→render.
+- [ ] Préparation images de scène (placeholder + mapping)
+  - DoD:
+    - [ ] Slot visuel réservé au-dessus du heading avec `AspectRatio(16/9)` et placeholder statique léger;
+    - [ ] Utilitaire `locationImageKey(Location)` dans `lib/core/utils/location_image.dart` (prépare la clé: `mapTag` sinon `name` snake_case sinon `id`);
+    - [ ] Si l’image est absente ou la feature désactivée, fallback textuel immédiat (zéro crash, zéro jank);
+    - [ ] Tests: absence d’asset ne provoque pas d’exception et le layout reste stable.
+    - [ ] Pixel‑perfect prêt: wrapper `PixelCanvas` (base 320×180) créé et utilisé par la zone visuelle; `FilterQuality.none` appliqué.
+
+Audio – livrables & DoD (bootstrap)
+
+- [ ] AudioController (service Application) — bootstrap
+  - DoD:
+    - [ ] Mise en place `AudioController` (lecture BGM/SFX via `just_audio`) sans réseau, assets embarqués;
+    - [ ] Gestion du cycle de vie (pause/resume sur `AppLifecycleState`), focus audio via `audio_session`;
+    - [ ] API: `playBgm(trackKey, {crossfadeMs})`, `stopBgm()`, `playSfx(sfxKey)`, `setVolumes(bgm,sfx)`; logs dev propres.
+- [ ] Settings audio (basique)
+  - DoD:
+    - [ ] Deux sliders en Settings: Volume Musique, Volume SFX; persistance simple (SharedPreferences);
+    - [ ] Valeurs appliquées à l’`AudioController` au démarrage et en temps réel.
+
+Contrats Domain (normatif)
+
+```dart
+class Command {
+  final String verb;      // ex: "NORTH", "SOUTH" (motion normalisée)
+  final String? target;   // ex: destination (name ou id) pour travel
+  const Command({required this.verb, this.target});
+}
+
+class TurnResult {
+  final Game newGame;
+  final List<String> messages; // descriptions/journal à afficher
+  const TurnResult(this.newGame, this.messages);
+}
+
+abstract class ListAvailableActions {
+  Future<List<ActionOption>> call(Game current);
+}
+
+abstract class ApplyTurn {
+  Future<TurnResult> call(Command command, Game current);
+}
+```
+
+Algorithme — ListAvailableActions (travel only)
+
+1) Récupérer le lieu courant: `loc = await repo.locationById(current.loc)`.
+2) Lister les règles de voyage: `rules = loc.travel` (ou `repo.travelRulesFor(loc.id)`).
+3) Filtrer les règles par condition satisfaite (S2: condition absente ou triviale — pas d’évaluation complexe; voir « Limitations S2 »).
+4) Pour chaque règle eligible:
+   - Si `action.type != 'goto'`, ignorer en S2.
+   - Déterminer la destination: `destName = action.value` (string) → `destId = lookupIdByName(destName)`.
+   - Pour chaque verbe de la règle `rule.verbs` (ex: ["NORTH", "N"]):
+     - Normaliser via `motions.json` (synonymes → motion canonique), ajouter une `ActionOption`
+       `{ id: "travel:$locId->$destId:$verb", category: 'travel', label: labelFor(verb, destName), icon: iconFor(verb), verb: verb, objectId: "$destId" }`.
+5) Dédupliquer par destination (garder le verbe canonique), trier par heuristique: cardinales (N,E,S,O) puis vert/haut/bas, puis autres.
+
+Algorithme — ApplyTurn (navigation)
+Entrée: `Command(verb, target)`.
+
+1) Récupérer lieu courant + règles: `rules = loc.travel`.
+2) Identifier les règles où `verb ∈ rule.verbs` ET `action.type == 'goto'` ET condition triviale satisfaite.
+3) Si multiple: appliquer la première selon l’ordre de définition.
+4) Appliquer: `newLoc = destId`, `turns += 1`, mettre à jour `oldloc/newloc`, etc. (champs de `Game`).
+5) Sorties: `messages = [Location.longDescription ?? shortDescription]`.
+6) Retourner `TurnResult` puis déclencher autosave (Application layer).
+
+Limitations S2 (assumées)
+
+- Conditions complexes sur travel (lampe, portes, flooding…) non évaluées; on n’expose que les routes sans condition ou triviales. Les règles `special`/`speak` ne sont pas proposées.
+- Pas d’inventaire, pas d’interactions d’objets, pas de nains.
+
+Save/Autosave — portée S2
+
+- Domain: définir `SaveRepository` minimal:
+
+```dart
+abstract class SaveRepository {
+  Future<void> autosave(GameSnapshot snapshot);
+  Future<GameSnapshot?> latest();
+}
+
+class GameSnapshot { // minimal S2
+  final int loc;
+  final int turns;
+  final int rngSeed;
+  const GameSnapshot({required this.loc, required this.turns, required this.rngSeed});
+}
+```
+
+- Impl locale fichier (`applicationSupportDirectory/open_adventure/autosave.json`).
+- `GameController` convertit `Game` → `GameSnapshot` après chaque tour.
+
+GameController — responsabilités (S2)
+
+- Exposer `state: GameViewState` avec `locationTitle`, `locationDescription`, `actions: List<ActionOption>`, `journal`.
+- Méthodes: `init()`, `perform(ActionOption)`, `refreshActions()`.
+- Orchestration:
+  - `init()` → `repo.initialGame()` → `refreshActions()`.
+  - `perform(option)` → construire `Command(verb=option.verb, target=option.objectId)` → `ApplyTurn` → maj `state` → autosave → `refreshActions()`.
+
+AdventurePage v0 — exigences
+
+- Affiche: AppBar (titre lieu), corps = description + liste de boutons d’actions (vertical) + zone « journal » (les derniers messages).
+- Appui sur un bouton: désactivé pendant exécution; spinner léger si besoin; remonte `perform`.
+- Accessibilité: `semanticsLabel` sur boutons, taille police réglable via paramètres système.
+
+Fichiers à créer/mettre à jour
+
+- `lib/domain/usecases/list_available_actions.dart`
+- `lib/domain/usecases/apply_turn.dart`
+- `lib/domain/value_objects/command.dart`, `lib/domain/value_objects/turn_result.dart`
+- `lib/application/controllers/game_controller.dart`
+- `lib/data/repositories/save_repository_impl.dart`, `lib/domain/repositories/save_repository.dart`
+- `lib/presentation/pages/adventure_page.dart` (impl v0)
+- `lib/core/utils/location_image.dart` (mapping de clé d’image, sans IO)
+- `lib/presentation/widgets/pixel_canvas.dart` (scale entier + letterboxing; aucun lissage)
+- `lib/application/controllers/audio_controller.dart` (service Application; sans UI)
+
+Dépendances S2 (pubspec)
+
+- Production: `path_provider` (saves sur FS), `shared_preferences` (volumes audio), `just_audio`, `audio_session`.
+- Test: `mocktail`.
+
+Sprint DoD (S2)
+
+- `AdventurePage` v0 jouable: navigation par boutons (travel only), journal mis à jour, autosave après chaque tour.
+- `GameController` testé (init/perform/autosave); `ListAvailableActions`/`ApplyTurn(goto)` couverts.
+- Slot image prêt (placeholder + PixelCanvas), sans jank ni crash si image absente.
+- Audio bootstrap opérationnel (api AudioController + sliders Settings) sans glitch; pas de dépendance réseau.
+
+Tests & validations (S2)
+
+- Domain
+  - `ListAvailableActions` retourne ≥1 action sur un lieu avec travel non conditionné; labels et verbes cohérents avec `motions.json`.
+  - `ApplyTurn` avec `goto` met à jour `loc` et incrémente `turns`; renvoie la description attendue.
+- Application
+  - `GameController.init()` produit un `state` avec actions non vides si travel simple disponible.
+  - `perform()` applique la navigation et déclenche `SaveRepository.autosave` (mocké) exactement 1 fois.
+- Presentation (widget tests)
+  - `AdventurePage` affiche description + N boutons; tap sur un bouton met à jour le titre/description (pump + settle).
+- Non‑régression perfs: interaction < 16 ms; aucun jank sur le parcours tap→render.
+
+Definition of Done (S2)
+
+- `flutter analyze` sans warnings; tests S2 verts; couverture Domain (S2) ≥ 80%.
+- Navigation jouable via boutons à partir de l’écran d’accueil vers au moins 10 lieux connectés sans conditions.
+- Autosave disponible: relance de l’app → reprise au dernier lieu.
+
+Risques & mitigations (S2)
+
+- Règles travel dépendant de conditions non gérées: filtrer côté `ListAvailableActions` pour n’exposer que les règles triviales; tracer les omissions pour S3 (backlog).
+- Ambiguïté des verbes (synonymes): normaliser via `motions.json` et définir une table `canonicalMotion[alias]`.
+- Régressions UI: widget tests sur `AdventurePage` + goldens basiques pour le layout.
+
+Suivi & tickets
+
+- [ ] ADVT‑S2‑01: Créer VOs `Command` et `TurnResult` (Domain) + tests basiques d’immutabilité.
+  - DoD:
+    - [ ] Classes final/const, sans setters; égalité basée sur valeur; tests de construction/égalité passent.
+- [ ] ADVT‑S2‑02: Implémenter `ListAvailableActions` (travel only) — normalisation via `motions.json`, déduplication, tri heuristique.
+  - DoD:
+    - [ ] Retourne uniquement des actions `category=travel`; verbes normalisés; pas de doublons; ordre déterministe testé.
+- [ ] ADVT‑S2‑03: Tests `ListAvailableActions` — cas: plusieurs verbes même destination, absence de condition, vérif labels/icônes.
+  - DoD:
+    - [ ] ≥ 5 cas couverts; labels lisibles; icônes mappées pour N/E/S/O et UP/DOWN.
+- [ ] ADVT‑S2‑04: Implémenter `ApplyTurn` (goto) — mutation `Game` (loc, oldloc/newloc, turns++), production messages description.
+  - DoD:
+    - [ ] Mise à jour cohérente des champs; message contient `longDescription` si disponible sinon `short`.
+- [ ] ADVT‑S2‑05: Tests `ApplyTurn` — transition de lieu, intégrité `turns`, messages non vides.
+  - DoD:
+    - [ ] Trois cas: normal, verb sans règle (échec attendu), multi‑règles → prend la première; tous verts.
+- [ ] ADVT‑S2‑06: Implémenter `SaveRepository` minimal (autosave/latest) — fichiers JSON, répertoires platform‑aware.
+  - DoD:
+    - [ ] Autosave écrit un fichier `autosave.json` valide; latest lit et reconstruit `GameSnapshot`.
+- [ ] ADVT‑S2‑07: Tests `SaveRepository` minimal — round‑trip autosave/latest, gestion absence d’autosave.
+  - DoD:
+    - [ ] Latest retourne `null` si fichier absent; round‑trip préserve valeurs; tests isolés du FS réel.
+- [ ] ADVT‑S2‑08: Implémenter `GameController` — `init/perform/refreshActions`, binding autosave, état immuable.
+  - DoD:
+    - [ ] `init()` renseigne état; `perform()` notifie changements; dépendances injectées par constructeur; tests unitaires verts.
+- [ ] ADVT‑S2‑09: Tests `GameController` — `init()` produit actions, `perform()` appelle autosave exactement 1 fois (mock), met à jour l’état.
+  - DoD:
+    - [ ] Vérification avec mockito: une seule invocation d’autosave par tour; journal mis à jour.
+- [ ] ADVT‑S2‑10: Implémenter `AdventurePage` v0 — description + boutons d’actions (travel) + journal minimal.
+  - DoD:
+    - [ ] Rendu stable; aucun `UnimplementedError`; état contrôlé par injection du contrôleur.
+- [ ] ADVT‑S2‑11: Widget tests `AdventurePage` — rendu initial, tap bouton → mise à jour description/titre.
+  - DoD:
+    - [ ] Deux tests passent sur simulateur de widget; pumpAndSettle sans jank apparent.
+- [ ] ADVT‑S2‑12: Normaliser motions — table `canonicalMotion[alias]`, mapping icônes/labels (UI utils) + tests utilitaires.
+  - DoD:
+    - [ ] Aliases courants couverts (N,S,E,W,NE,NW,SE,SW,UP,DOWN,IN,OUT); tests de mapping verts.
+- [ ] ADVT‑S2‑13: Gestion d’absence d’actions (lieu cul‑de‑sac non conditionné) — afficher message et action « Observer ».
+  - DoD:
+    - [ ] UI affiche un fallback; pas de crash; test dédié.
+- [ ] ADVT‑S2‑14: Lint/Analyze — zéro warning; vérifier tailles de listes, null‑safety.
+  - DoD:
+    - [ ] `flutter analyze` zéro warning; CI locale verte.
+- [ ] ADVT‑S2‑15: Mesure perf manuelle — interaction bouton→render < 16 ms; consigner dans note d’implémentation.
+  - DoD:
+    - [ ] Mesure notée (screenshot devtools ou log); pas de frame au‑delà de 16 ms sur action simple.
+- [ ] ADVT‑S2‑16: Préparer l’intégration des images — slot UI + utilitaire `locationImageKey` + tests de fallback.
+  - DoD:
+    - [ ] Fichier utilitaire créé et testé; AdventurePage v0 affiche un placeholder stable; absence d’asset ne loggue pas d’erreur.
+- [ ] ADVT‑S2‑17: Audio — bootstrap `AudioController` + cycle de vie + focus.
+  - DoD:
+    - [ ] `AudioController` instanciable en test; `playBgm/stopBgm/playSfx` n’échouent pas (mocks);
+    - [ ] Pause/resume appelé sur changement de lifecycle; pas d’accès réseau; pas de crash.
+- [ ] ADVT‑S2‑18: Audio — Settings volumes Musique/SFX persistés et appliqués.
+  - DoD:
+    - [ ] Modifs de sliders reflétées instantanément; persistance testée; restaurées au démarrage.
+
+Références C (source canonique)
+
+- open-adventure-master/make_dungeon.py
+- open-adventure-master/advent.h
+- open-adventure-master/main.c
+- open-adventure-master/adventure.yaml
+- open-adventure-master/tests/mazealldiff.chk
+- open-adventure-master/tests/tall.chk
+- open-adventure-master/tests/plover.chk
+- open-adventure-master/tests/domefail.chk

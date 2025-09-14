@@ -38,18 +38,20 @@ dependencies:
   equatable: ^2.0.5
   dartz: ^0.10.1
   yaml: ^3.1.2
-  collection: ^1.17.0
+  collection: ^1.18.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  test: ^1.25.7
+  coverage: ^1.10.0
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^2.0.0
+  flutter_lints: ^5.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -94,4 +96,5 @@ flutter:
   # see https://flutter.dev/custom-fonts/#from-packages
 
   assets:
-    - assets/data/locations.yaml
+    - assets/data/locations.json
+    - assets/data/objects.json
