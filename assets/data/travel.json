@@ -1,5 +1,3099 @@
 [
     {
+        "threshold": 0,
+        "message": "NULL"
+    },
+    {
+        "threshold": 45,
+        "message": "You are obviously a rank amateur.  Better luck next time."
+    },
+    {
+        "threshold": 120,
+        "message": "Your score qualifies you as a novice class adventurer."
+    },
+    {
+        "threshold": 170,
+        "message": "You have achieved the rating: \\\"Experienced Adventurer\\\"."
+    },
+    {
+        "threshold": 250,
+        "message": "You may now consider yourself a \\\"Seasoned Adventurer\\\"."
+    },
+    {
+        "threshold": 320,
+        "message": "You have reached \\\"Junior Master\\\" status."
+    },
+    {
+        "threshold": 375,
+        "message": "Your score puts you in Master Adventurer Class C."
+    },
+    {
+        "threshold": 410,
+        "message": "Your score puts you in Master Adventurer Class B."
+    },
+    {
+        "threshold": 426,
+        "message": "Your score puts you in Master Adventurer Class A."
+    },
+    {
+        "threshold": 429,
+        "message": "\"All of Adventuredom gives tribute to you"
+    },
+    {
+        "threshold": 9999,
+        "message": "\"Adventuredom stands in awe -- you have now joined the ranks of the\\n       W O R L D   C H A M P I O N   A D V E N T U R E R S !\\nIt may interest you to know that the Dungeon-Master himself has"
+    },
+    {
+        "threshold": 350,
+        "point_loss": 2,
+        "message": "Tsk!  A wizard wouldn\\'t have to take 350 turns.  This is going to cost\\nyou a couple of points."
+    },
+    {
+        "threshold": 500,
+        "point_loss": 3,
+        "message": "500 turns?  That\\'s another few points you\\'ve lost."
+    },
+    {
+        "threshold": 1000,
+        "point_loss": 5,
+        "message": "Are you still at it?  Five points off for exceeding 1000 turns!"
+    },
+    {
+        "threshold": 2500,
+        "point_loss": 10,
+        "message": "\"Good grief"
+    },
+    {
+        "small": "NULL",
+        "big": "NULL"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "You\\'re in front of building.",
+        "big": "You are standing at the end of a road before a small brick building.\\nAround you is a forest.  A small stream flows out of the building and\\ndown a gully."
+    },
+    {
+        "sound": "STREAM_GURGLES",
+        "loud": false
+    },
+    {
+        "small": "You\\'re at hill in road.",
+        "big": "\"You have walked up a hill"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "You\\'re inside building.",
+        "big": "\"You are inside a building"
+    },
+    {
+        "sound": "STREAM_GURGLES",
+        "loud": false
+    },
+    {
+        "small": "You\\'re in valley.",
+        "big": "You are in a valley in the forest beside a stream tumbling along a\\nrocky bed."
+    },
+    {
+        "sound": "STREAM_GURGLES",
+        "loud": false
+    },
+    {
+        "small": "You\\'re at end of road.",
+        "big": "\"The road"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "You\\'re at cliff.",
+        "big": "\"The forest thins out here to reveal a steep cliff.  There is no way\\ndown"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "You\\'re at slit in streambed.",
+        "big": "At your feet all the water of the stream splashes into a 2-inch slit\\nin the rock.  Downstream the streambed is bare rock."
+    },
+    {
+        "sound": "STREAM_GURGLES",
+        "loud": false
+    },
+    {
+        "small": "You\\'re outside grate.",
+        "big": "You are in a 20-foot depression floored with bare dirt.  Set into the\\ndirt is a strong steel grate mounted in concrete.  A dry streambed\\nleads into the depression."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "You\\'re below the grate.",
+        "big": "You are in a small chamber beneath a 3x3 steel grate to the surface.\\nA low crawl over cobbles leads inward to the west."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "You\\'re in cobble crawl.",
+        "big": "You are crawling over cobbles in a low passage.  There is a dim light\\nat the east end of the passage."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "You\\'re in debris room.",
+        "big": "\"You are in a debris room filled with stuff washed in from the surface.\\nA low wide passage with cobbles becomes plugged with mud and debris\\nhere"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "You are in an awkward sloping east/west canyon."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "You\\'re in bird chamber.",
+        "big": "You are in a splendid chamber thirty feet high.  The walls are frozen\\nrivers of orange stone.  An awkward canyon and a good passage exit\\nfrom east and west sides of the chamber."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "You\\'re at top of small pit.",
+        "big": "At your feet is a small pit breathing traces of white mist.  An east\\npassage ends here except for a small crack leading on."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "You\\'re in Hall of Mists.",
+        "big": "\"You are at one end of a vast hall stretching forward out of sight to\\nthe west.  There are openings to either side.  Nearby"
+    },
+    {
+        "sound": "WIND_WHISTLES",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "The crack is far too small for you to follow.  At its widest it is\\nbarely wide enough to admit your foot."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "You\\'re on east bank of fissure.",
+        "big": "\"You are on the east bank of a fissure slicing clear across the hall.\\nThe mist is quite thick here"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "You\\'re in nugget-of-gold room.",
+        "big": "\"This is a low room with a crude note on the wall.  The note says"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "You\\'re in Hall of Mt King.",
+        "big": "\"You are in the Hall of the Mountain King"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "You are at the bottom of the pit with a broken neck."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "You didn\\'t make it."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "The dome is unclimbable."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "You\\'re at west end of Twopit Room.",
+        "big": "You are at the west end of the Twopit Room.  There is a large hole in\\nthe wall above the pit at this end of the room."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "You\\'re in east pit.",
+        "big": "You are at the bottom of the eastern pit in the Twopit Room.  There is\\na small pool of oil in one corner of the pit."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "You\\'re in west pit.",
+        "big": "You are at the bottom of the western pit in the Twopit Room.  There is\\na large hole in the wall about 25 feet above you."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "You clamber up the plant and scurry through the hole at the top."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "You\\'re on west bank of fissure.",
+        "big": "You are on the west side of the fissure in the Hall of Mists."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "You\\'re in n/s passage above e/w passage.",
+        "big": "You are in a low n/s passage at a hole in the floor.  The hole goes\\ndown to an e/w passage."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "You are in the south side chamber."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "You\\'re in the west side chamber.",
+        "big": "You are in the west side chamber of the Hall of the Mountain King.\\nA passage continues west and up here."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": ""
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "You can\\'t get by the snake."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "You\\'re at \\\"Y2\\\".",
+        "big": "\"You are in a large room"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "\"You are in a jumble of rock"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "You\\'re at window on pit.",
+        "big": "\"You\\'re at a low window overlooking a huge pit"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "You\\'re in dirty passage.",
+        "big": "You are in a dirty broken passage.  To the east is a crawl.  To the\\nwest is a large passage.  Above you is a hole to another passage."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "You\\'re at brink of small pit.",
+        "big": "You are on the brink of a small clean climbable pit.  A crawl leads\\nwest."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "You\\'re at bottom of pit with stream.",
+        "big": "\"You are in the bottom of a small pit with a little stream"
+    },
+    {
+        "sound": "STREAM_GURGLES",
+        "loud": false
+    },
+    {
+        "small": "You\\'re in dusty rock room.",
+        "big": "\"You are in a large room full of dusty rocks.  There is a big hole in\\nthe floor.  There are cracks everywhere"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "You have crawled through a very low wide passage parallel to and north\\nof the Hall of Mists."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "You\\'re at west end of Hall of Mists.",
+        "big": "You are at the west end of the Hall of Mists.  A low wide crawl\\ncontinues west and another goes north.  To the south is a little\\npassage 6 feet off the floor."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "\"You are in a maze of twisty little passages"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "\"You are in a maze of twisty little passages"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "\"You are in a maze of twisty little passages"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "\"You are in a maze of twisty little passages"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "Dead end"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "Dead end"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "Dead end"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "\"You are in a maze of twisty little passages"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "\"You are in a maze of twisty little passages"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "\"You are in a maze of twisty little passages"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "\"You are in a maze of twisty little passages"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "\"You are in a maze of twisty little passages"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "Dead end"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "\"You are in a maze of twisty little passages"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "Dead end"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "You\\'re at brink of pit.",
+        "big": "You are on the brink of a thirty foot pit with a massive orange column\\ndown one wall.  You could climb down here but you could not get back\\nup.  The maze continues at this level."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "Dead end"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "You have crawled through a very low wide passage parallel to and north\\nof the Hall of Mists."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "You\\'re at east end of long hall.",
+        "big": "You are at the east end of a very long hall apparently without side\\nchambers.  To the east a low wide crawl slants up.  To the north a\\nround two foot hole slants down."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "You\\'re at west end of long hall.",
+        "big": "You are at the west end of a very long featureless hall.  The hall\\njoins up with a narrow north/south passage."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "You are at a crossover of a high n/s passage and a low e/w one."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "Dead end"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "You\\'re at complex junction.",
+        "big": "You are at a complex junction.  A low hands and knees passage from the\\nnorth joins a higher crawl from the east to make a walking passage\\ngoing west.  There is also a large room above.  The air is damp here."
+    },
+    {
+        "sound": "WIND_WHISTLES",
+        "loud": false
+    },
+    {
+        "small": "You\\'re in Bedquilt.",
+        "big": "\"You are in Bedquilt"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "You\\'re in Swiss Cheese Room.",
+        "big": "\"You are in a room whose walls resemble Swiss cheese.  Obvious passages\\ngo west"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "You\\'re at east end of Twopit Room.",
+        "big": "\"You are at the east end of the Twopit Room.  The floor here is\\nlittered with thin rock slabs"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "You\\'re in Slab Room.",
+        "big": "\"You are in a large low circular chamber whose floor is an immense slab\\nfallen from the ceiling (Slab Room).  East and west there once were\\nlarge passages"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "You are in a secret n/s canyon above a large room."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "You are in a secret n/s canyon above a sizable passage."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "You\\'re at junction of three secret canyons.",
+        "big": "\"You are in a secret canyon at a junction of three canyons"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "You\\'re in large low room.",
+        "big": "\"You are in a large low room.  Crawls lead north"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "Dead end crawl."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "You\\'re in secret e/w canyon above tight canyon.",
+        "big": "You are in a secret canyon which here runs e/w.  It crosses over a\\nvery tight canyon 15 feet below.  If you go down you may not be able\\nto get back up."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "You are at a wide place in a very tight n/s canyon."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "The canyon here becomes too tight to go further south."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "You are in a tall e/w canyon.  A low tight crawl goes 3 feet north and\\nseems to open up."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "The canyon runs into a mass of boulders -- dead end."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "The stream flows out through a pair of 1 foot diameter sewer pipes.\\nIt would be advisable to use the exit."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "\"You are in a maze of twisty little passages"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "Dead end"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "Dead end"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "\"You are in a maze of twisty little passages"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "\"You are in a maze of twisty little passages"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "Dead end"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "Dead end"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "\"You are in a maze of twisty little passages"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "You\\'re in narrow corridor.",
+        "big": "\"You are in a long"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "There is nothing here to climb.  Use \\\"up\\\" or \\\"out\\\" to leave the pit."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "You have climbed up the plant and out of the pit."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "You\\'re at steep incline above large room.",
+        "big": "\"You are at the top of a steep incline above a large room.  You could\\nclimb down here"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "You\\'re in Giant Room.",
+        "big": "\"You are in the Giant Room.  The ceiling here is too high up for your\\nlamp to show it.  Cavernous passages lead east"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "The passage here is blocked by a recent cave-in."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "You are at one end of an immense north/south passage."
+    },
+    {
+        "sound": "WIND_WHISTLES",
+        "loud": false
+    },
+    {
+        "small": "You\\'re in cavern with waterfall.",
+        "big": "\"You are in a magnificent cavern with a rushing stream"
+    },
+    {
+        "sound": "STREAM_SPLASHES",
+        "loud": false
+    },
+    {
+        "small": "You\\'re in Soft Room.",
+        "big": "\"You are in the Soft Room.  The walls are covered with heavy curtains"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "You\\'re in Oriental Room.",
+        "big": "\"This is the Oriental Room.  Ancient oriental cave drawings cover the\\nwalls.  A gently sloping passage leads upward to the north"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "You\\'re in misty cavern.",
+        "big": "\"You are following a wide path around the outer edge of a large cavern.\\nFar below"
+    },
+    {
+        "sound": "NO_MEANING",
+        "loud": false
+    },
+    {
+        "small": "You\\'re in alcove.",
+        "big": "You are in an alcove.  A small nw path seems to widen after a short\\ndistance.  An extremely tight tunnel leads east.  It looks like a very\\ntight squeeze.  An eerie light can be seen at the other end."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "You\\'re in Plover Room.",
+        "big": "You\\'re in a small chamber lit by an eerie green light.  An extremely\\nnarrow tunnel exits to the west.  A dark corridor leads ne."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "You\\'re in dark-room.",
+        "big": "You\\'re in the dark-room.  A corridor leading south is the only exit."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "You\\'re in arched hall.",
+        "big": "\"You are in an arched hall.  A coral passage once continued up and east\\nfrom here"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "You\\'re in Shell Room.",
+        "big": "\"You\\'re in a large room carved out of sedimentary rock.  The floor and\\nwalls are littered with bits of shells embedded in the stone.  A\\nshallow passage proceeds downward"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "You are in a long sloping corridor with ragged sharp walls."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "You are in a cul-de-sac about eight feet across."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "You\\'re in anteroom.",
+        "big": "You are in an anteroom leading to a large passage to the east.  Small\\npassages go west and up.  The remnants of recent digging are evident.\\nA sign in midair here says \\\"Cave under construction beyond this point.\\nProceed at own risk.  [Witt Construction Company]\\"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "\"You are in a maze of twisty little passages"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "You\\'re at Witt\\'s End.",
+        "big": "You are at Witt\\'s End.  Passages lead off in *ALL* directions."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "You\\'re in Mirror Canyon.",
+        "big": "\"You are in a north/south canyon about 25 feet across.  The floor is\\ncovered by white mist seeping in from the north.  The walls extend\\nupward for well over 100 feet.  Suspended from some unseen point far\\nabove you"
+    },
+    {
+        "sound": "WIND_WHISTLES",
+        "loud": false
+    },
+    {
+        "small": "You\\'re at window on pit.",
+        "big": "\"You\\'re at a low window overlooking a huge pit"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "You\\'re at top of stalactite.",
+        "big": "\"A large stalactite extends from the roof and almost reaches the floor\\nbelow.  You could climb down it"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "\"You are in a little maze of twisting passages"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "You\\'re at reservoir.",
+        "big": "\"You are at the edge of a large underground reservoir.  An opaque cloud\\nof white mist fills the room and rises rapidly upward.  The lake is\\nfed by a stream"
+    },
+    {
+        "sound": "STREAM_SPLASHES",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "Dead end"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "You\\'re at ne end.",
+        "big": "\"You are at the northeast end of an immense room"
+    },
+    {
+        "sound": "MURMURING_SNORING",
+        "loud": false
+    },
+    {
+        "small": "You\\'re at sw end.",
+        "big": "\"You are at the southwest end of the repository.  To one side is a pit\\nfull of fierce green snakes.  On the other side is a row of small\\nwicker cages"
+    },
+    {
+        "sound": "SNAKES_HISSING",
+        "loud": false
+    },
+    {
+        "small": "You\\'re on sw side of chasm.",
+        "big": "\"You are on one side of a large"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "You\\'re in sloping corridor.",
+        "big": "You are in a long winding corridor sloping out of sight in both\\ndirections."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "You are in a secret canyon which exits to the north and east."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "You are in a secret canyon which exits to the north and east."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "You are in a secret canyon which exits to the north and east."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "You\\'re on ne side of chasm.",
+        "big": "You are on the far side of the chasm.  A ne path leads away from the\\nchasm on this side."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "You\\'re in corridor.",
+        "big": "You\\'re in a long east/west corridor.  A faint rumbling noise can be\\nheard in the distance."
+    },
+    {
+        "sound": "DULL_RUMBLING",
+        "loud": false
+    },
+    {
+        "small": "You\\'re at fork in path.",
+        "big": "The path forks here.  The left fork leads northeast.  A dull rumbling\\nseems to get louder in that direction.  The right fork leads southeast\\ndown a gentle slope.  The main corridor enters from the west."
+    },
+    {
+        "sound": "DULL_RUMBLING",
+        "loud": false
+    },
+    {
+        "small": "You\\'re at junction with warm walls.",
+        "big": "\"The walls are quite warm here.  From the north can be heard a steady\\nroar"
+    },
+    {
+        "sound": "LOUD_ROAR",
+        "loud": false
+    },
+    {
+        "small": "You\\'re at breath-taking view.",
+        "big": "\"You are on the edge of a breath-taking view.  Far below you is an\\nactive volcano"
+    },
+    {
+        "sound": "TOTAL_ROAR",
+        "loud": true
+    },
+    {
+        "small": "You\\'re in Chamber of Boulders.",
+        "big": "\"You are in a small chamber filled with large boulders.  The walls are\\nvery warm"
+    },
+    {
+        "sound": "DULL_RUMBLING",
+        "loud": false
+    },
+    {
+        "small": "You\\'re in limestone passage.",
+        "big": "You are walking along a gently sloping north/south passage lined with\\noddly shaped limestone formations."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "You\\'re in front of Barren Room.",
+        "big": "\"You are standing at the entrance to a large"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "You\\'re in Barren Room.",
+        "big": "You are inside a barren room.  The center of the room is completely\\nempty except for some dust.  Marks in the dust lead away toward the\\nfar end of the room.  The only exit is the way you came in."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "\"You are in a maze of twisting little passages"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "\"You are in a little maze of twisty passages"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "\"You are in a twisting maze of little passages"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "\"You are in a twisting little maze of passages"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "\"You are in a twisty little maze of passages"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "\"You are in a twisty maze of little passages"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "\"You are in a little twisty maze of passages"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "\"You are in a maze of little twisting passages"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "\"You are in a maze of little twisty passages"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "Dead end"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "\"You are in a long"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "There is no way to go that direction."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "You are in a large chamber with passages to the west and north."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "You are in the ogre\\'s storeroom.  The only exit is to the south."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "You are wandering aimlessly through the forest."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "You are wandering aimlessly through the forest."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "You are wandering aimlessly through the forest."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "You are wandering aimlessly through the forest."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "You are wandering aimlessly through the forest."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "You are wandering aimlessly through the forest."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "You are wandering aimlessly through the forest."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "You are wandering aimlessly through the forest."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "You are wandering aimlessly through the forest."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "You are wandering aimlessly through the forest."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "You are wandering aimlessly through the forest."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "You are wandering aimlessly through the forest."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "You are wandering aimlessly through the forest."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "You are wandering aimlessly through the forest."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "You are wandering aimlessly through the forest."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "You are wandering aimlessly through the forest."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "You are wandering aimlessly through the forest."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "You are wandering aimlessly through the forest."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "You are wandering aimlessly through the forest."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "You are wandering aimlessly through the forest."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "You are wandering aimlessly through the forest."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "You are wandering aimlessly through the forest."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "You\\'re on ledge.",
+        "big": "You are on a small ledge on one face of a sheer cliff.  There are no\\npaths away from the ledge.  Across the chasm is a small clearing\\nsurrounded by forest."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "You\\'re at bottom of reservoir.",
+        "big": "\"You are walking across the bottom of the reservoir.  Walls of water\\nrear up on either side.  The roar of the water cascading past is\\nnearly deafening"
+    },
+    {
+        "sound": "TOTAL_ROAR",
+        "loud": true
+    },
+    {
+        "small": "You\\'re north of reservoir.",
+        "big": "You are at the northern edge of the reservoir.  A northwest passage\\nleads sharply up from here."
+    },
+    {
+        "sound": "WATERS_CRASHING",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "\"You are scrambling along a treacherously steep"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "\"You are on a very steep incline"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "You\\'re at base of cliff.",
+        "big": "\"You are at the base of a nearly vertical cliff.  There are some\\nslim footholds which would enable you to climb up"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "You are climbing along a nearly vertical cliff."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "\"Just as you reach the top"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "\"Just as you reach the top"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "You\\'re at top of cliff.",
+        "big": "You are on a small ledge at the top of a nearly vertical cliff.\\nThere is a low crawl leading off to the northeast."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "You have reached a dead end."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": "There is now one more gruesome aspect to the spectacular vista."
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": ">>Foof!<<"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": ">>Foof!<<"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": ">>Foof!<<"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": ">>Foof!<<"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": ">>Foof!<<"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "small": "NULL",
+        "big": ">>Foof!<<"
+    },
+    {
+        "sound": "SILENT",
+        "loud": false
+    },
+    {
+        "strs": "NULL",
+        "n": 0
+    },
+    {
+        "inventory": "NULL",
+        "plac": "LOC_NOWHERE",
+        "fixd": "LOC_NOWHERE",
+        "is_treasure": false
+    },
+    {
+        "strs": "(const char* []) {\"keys\"",
+        "n": 2
+    },
+    {
+        "inventory": "Set of keys",
+        "plac": "LOC_BUILDING",
+        "fixd": 0,
+        "is_treasure": false
+    },
+    {
+        "strs": "(const char* []) {\"lamp\"",
+        "n": 2
+    },
+    {
+        "inventory": "Brass lantern",
+        "plac": "LOC_BUILDING",
+        "fixd": 0,
+        "is_treasure": false
+    },
+    {
+        "strs": "(const char* []) {\"grate\"}",
+        "n": 1
+    },
+    {
+        "inventory": "*grate",
+        "plac": "LOC_GRATE",
+        "fixd": "LOC_BELOWGRATE",
+        "is_treasure": false
+    },
+    {
+        "strs": "(const char* []) {\"cage\"}",
+        "n": 1
+    },
+    {
+        "inventory": "Wicker cage",
+        "plac": "LOC_COBBLE",
+        "fixd": 0,
+        "is_treasure": false
+    },
+    {
+        "strs": "(const char* []) {\"rod\"}",
+        "n": 1
+    },
+    {
+        "inventory": "Black rod",
+        "plac": "LOC_DEBRIS",
+        "fixd": 0,
+        "is_treasure": false
+    },
+    {
+        "strs": "(const char* []) {\"rod\"}",
+        "n": 1
+    },
+    {
+        "inventory": "Black rod",
+        "plac": "LOC_NOWHERE",
+        "fixd": 0,
+        "is_treasure": false
+    },
+    {
+        "strs": "(const char* []) {\"steps\"}",
+        "n": 1
+    },
+    {
+        "inventory": "*steps",
+        "plac": "LOC_PITTOP",
+        "fixd": "LOC_MISTHALL",
+        "is_treasure": false
+    },
+    {
+        "strs": "(const char* []) {\"bird\"}",
+        "n": 1
+    },
+    {
+        "inventory": "Little bird in cage",
+        "plac": "LOC_BIRDCHAMBER",
+        "fixd": 0,
+        "is_treasure": false
+    },
+    {
+        "strs": "(const char* []) {\"door\"}",
+        "n": 1
+    },
+    {
+        "inventory": "*rusty door",
+        "plac": "LOC_IMMENSE",
+        "fixd": -1,
+        "is_treasure": false
+    },
+    {
+        "strs": "(const char* []) {\"pillo\"",
+        "n": 2
+    },
+    {
+        "inventory": "Velvet pillow",
+        "plac": "LOC_SOFTROOM",
+        "fixd": 0,
+        "is_treasure": false
+    },
+    {
+        "strs": "(const char* []) {\"snake\"}",
+        "n": 1
+    },
+    {
+        "inventory": "*snake",
+        "plac": "LOC_KINGHALL",
+        "fixd": -1,
+        "is_treasure": false
+    },
+    {
+        "strs": "(const char* []) {\"fissu\"}",
+        "n": 1
+    },
+    {
+        "inventory": "*fissure",
+        "plac": "LOC_EASTBANK",
+        "fixd": "LOC_WESTBANK",
+        "is_treasure": false
+    },
+    {
+        "strs": "(const char* []) {\"table\"}",
+        "n": 1
+    },
+    {
+        "inventory": "*stone tablet",
+        "plac": "LOC_DARKROOM",
+        "fixd": -1,
+        "is_treasure": false
+    },
+    {
+        "strs": "(const char* []) {\"clam\"}",
+        "n": 1
+    },
+    {
+        "inventory": "Giant clam  >GRUNT!<",
+        "plac": "LOC_SHELLROOM",
+        "fixd": 0,
+        "is_treasure": false
+    },
+    {
+        "strs": "(const char* []) {\"oyste\"}",
+        "n": 1
+    },
+    {
+        "inventory": "Giant oyster  >GROAN!<",
+        "plac": "LOC_NOWHERE",
+        "fixd": 0,
+        "is_treasure": false
+    },
+    {
+        "strs": "(const char* []) {\"magaz\"",
+        "n": 4
+    },
+    {
+        "inventory": "\\\"Spelunker Today\\",
+        "plac": "LOC_ANTEROOM",
+        "fixd": 0,
+        "is_treasure": false
+    },
+    {
+        "strs": "(const char* []) {\"dwarf\"",
+        "n": 2
+    },
+    {
+        "inventory": "NULL",
+        "plac": "LOC_NOWHERE",
+        "fixd": -1,
+        "is_treasure": false
+    },
+    {
+        "strs": "(const char* []) {\"knife\"",
+        "n": 2
+    },
+    {
+        "inventory": "NULL",
+        "plac": "LOC_NOWHERE",
+        "fixd": 0,
+        "is_treasure": false
+    },
+    {
+        "strs": "(const char* []) {\"food\"",
+        "n": 2
+    },
+    {
+        "inventory": "Tasty food",
+        "plac": "LOC_BUILDING",
+        "fixd": 0,
+        "is_treasure": false
+    },
+    {
+        "strs": "(const char* []) {\"bottl\"",
+        "n": 2
+    },
+    {
+        "inventory": "Small bottle",
+        "plac": "LOC_BUILDING",
+        "fixd": 0,
+        "is_treasure": false
+    },
+    {
+        "strs": "(const char* []) {\"water\"",
+        "n": 2
+    },
+    {
+        "inventory": "Water in the bottle",
+        "plac": "LOC_NOWHERE",
+        "fixd": 0,
+        "is_treasure": false
+    },
+    {
+        "strs": "(const char* []) {\"oil\"}",
+        "n": 1
+    },
+    {
+        "inventory": "Oil in the bottle",
+        "plac": "LOC_NOWHERE",
+        "fixd": 0,
+        "is_treasure": false
+    },
+    {
+        "strs": "(const char* []) {\"mirro\"}",
+        "n": 1
+    },
+    {
+        "inventory": "*mirror",
+        "plac": "LOC_MIRRORCANYON",
+        "fixd": -1,
+        "is_treasure": false
+    },
+    {
+        "strs": "(const char* []) {\"plant\"",
+        "n": 2
+    },
+    {
+        "inventory": "*plant",
+        "plac": "LOC_WESTPIT",
+        "fixd": -1,
+        "is_treasure": false
+    },
+    {
+        "strs": "(const char* []) {\"plant\"}",
+        "n": 1
+    },
+    {
+        "inventory": "*phony plant",
+        "plac": "LOC_WESTEND",
+        "fixd": "LOC_EASTEND",
+        "is_treasure": false
+    },
+    {
+        "strs": "(const char* []) {\"stala\"}",
+        "n": 1
+    },
+    {
+        "inventory": "*stalactite",
+        "plac": "LOC_TOPSTALACTITE",
+        "fixd": -1,
+        "is_treasure": false
+    },
+    {
+        "strs": "(const char* []) {\"shado\"",
+        "n": 3
+    },
+    {
+        "inventory": "*shadowy figure and/or window",
+        "plac": "LOC_WINDOW1",
+        "fixd": "LOC_WINDOW2",
+        "is_treasure": false
+    },
+    {
+        "strs": "(const char* []) {\"axe\"}",
+        "n": 1
+    },
+    {
+        "inventory": "Dwarf\\'s axe",
+        "plac": "LOC_NOWHERE",
+        "fixd": 0,
+        "is_treasure": false
+    },
+    {
+        "strs": "(const char* []) {\"drawi\"}",
+        "n": 1
+    },
+    {
+        "inventory": "*cave drawings",
+        "plac": "LOC_ORIENTAL",
+        "fixd": -1,
+        "is_treasure": false
+    },
+    {
+        "strs": "(const char* []) {\"pirat\"",
+        "n": 3
+    },
+    {
+        "inventory": "*pirate/genie",
+        "plac": "LOC_NOWHERE",
+        "fixd": -1,
+        "is_treasure": false
+    },
+    {
+        "strs": "(const char* []) {\"drago\"}",
+        "n": 1
+    },
+    {
+        "inventory": "*dragon",
+        "plac": "LOC_SECRET4",
+        "fixd": "LOC_SECRET6",
+        "is_treasure": false
+    },
+    {
+        "strs": "(const char* []) {\"chasm\"}",
+        "n": 1
+    },
+    {
+        "inventory": "*chasm",
+        "plac": "LOC_SWCHASM",
+        "fixd": "LOC_NECHASM",
+        "is_treasure": false
+    },
+    {
+        "strs": "(const char* []) {\"troll\"}",
+        "n": 1
+    },
+    {
+        "inventory": "*troll",
+        "plac": "LOC_SWCHASM",
+        "fixd": "LOC_NECHASM",
+        "is_treasure": false
+    },
+    {
+        "strs": "(const char* []) {\"troll\"}",
+        "n": 1
+    },
+    {
+        "inventory": "*phony troll",
+        "plac": "LOC_NOWHERE",
+        "fixd": "LOC_NOWHERE",
+        "is_treasure": false
+    },
+    {
+        "strs": "(const char* []) {\"bear\"}",
+        "n": 1
+    },
+    {
+        "inventory": "NULL",
+        "plac": "LOC_BARRENROOM",
+        "fixd": -1,
+        "is_treasure": false
+    },
+    {
+        "strs": "(const char* []) {\"messa\"}",
+        "n": 1
+    },
+    {
+        "inventory": "*message in second maze",
+        "plac": "LOC_NOWHERE",
+        "fixd": -1,
+        "is_treasure": false
+    },
+    {
+        "strs": "(const char* []) {\"volca\"",
+        "n": 2
+    },
+    {
+        "inventory": "*volcano and/or geyser",
+        "plac": "LOC_BREATHTAKING",
+        "fixd": -1,
+        "is_treasure": false
+    },
+    {
+        "strs": "(const char* []) {\"machi\"",
+        "n": 2
+    },
+    {
+        "inventory": "*vending machine",
+        "plac": "LOC_DEADEND13",
+        "fixd": -1,
+        "is_treasure": false
+    },
+    {
+        "strs": "(const char* []) {\"batte\"}",
+        "n": 1
+    },
+    {
+        "inventory": "Batteries",
+        "plac": "LOC_NOWHERE",
+        "fixd": 0,
+        "is_treasure": false
+    },
+    {
+        "strs": "(const char* []) {\"carpe\"",
+        "n": 2
+    },
+    {
+        "inventory": "*carpet and/or moss and/or curtains",
+        "plac": "LOC_SOFTROOM",
+        "fixd": -1,
+        "is_treasure": false
+    },
+    {
+        "strs": "(const char* []) {\"ogre\"}",
+        "n": 1
+    },
+    {
+        "inventory": "*ogre",
+        "plac": "LOC_LARGE",
+        "fixd": -1,
+        "is_treasure": false
+    },
+    {
+        "strs": "(const char* []) {\"urn\"}",
+        "n": 1
+    },
+    {
+        "inventory": "*urn",
+        "plac": "LOC_CLIFF",
+        "fixd": -1,
+        "is_treasure": false
+    },
+    {
+        "strs": "(const char* []) {\"cavit\"}",
+        "n": 1
+    },
+    {
+        "inventory": "*cavity",
+        "plac": "LOC_NOWHERE",
+        "fixd": -1,
+        "is_treasure": false
+    },
+    {
+        "strs": "(const char* []) {\"blood\"}",
+        "n": 1
+    },
+    {
+        "inventory": "*blood",
+        "plac": "LOC_NOWHERE",
+        "fixd": -1,
+        "is_treasure": false
+    },
+    {
+        "strs": "(const char* []) {\"reser\"}",
+        "n": 1
+    },
+    {
+        "inventory": "*reservoir",
+        "plac": "LOC_RESERVOIR",
+        "fixd": "LOC_RESNORTH",
+        "is_treasure": false
+    },
+    {
+        "strs": "(const char* []) {\"appen\"",
+        "n": 2
+    },
+    {
+        "inventory": "Leporine appendage",
+        "plac": "LOC_FOREST22",
+        "fixd": 0,
+        "is_treasure": false
+    },
+    {
+        "strs": "(const char* []) {\"mud\"}",
+        "n": 1
+    },
+    {
+        "inventory": "*mud",
+        "plac": "LOC_DEBRIS",
+        "fixd": -1,
+        "is_treasure": false
+    },
+    {
+        "strs": "(const char* []) {\"note\"}",
+        "n": 1
+    },
+    {
+        "inventory": "*note",
+        "plac": "LOC_NUGGET",
+        "fixd": -1,
+        "is_treasure": false
+    },
+    {
+        "strs": "(const char* []) {\"sign\"}",
+        "n": 1
+    },
+    {
+        "inventory": "*sign",
+        "plac": "LOC_ANTEROOM",
+        "fixd": -1,
+        "is_treasure": false
+    },
+    {
+        "strs": "(const char* []) {\"gold\"",
+        "n": 2
+    },
+    {
+        "inventory": "Large gold nugget",
+        "plac": "LOC_NUGGET",
+        "fixd": 0,
+        "is_treasure": true
+    },
+    {
+        "strs": "(const char* []) {\"diamo\"}",
+        "n": 1
+    },
+    {
+        "inventory": "Several diamonds",
+        "plac": "LOC_WESTBANK",
+        "fixd": 0,
+        "is_treasure": true
+    },
+    {
+        "strs": "(const char* []) {\"silve\"",
+        "n": 2
+    },
+    {
+        "inventory": "Bars of silver",
+        "plac": "LOC_FLOORHOLE",
+        "fixd": 0,
+        "is_treasure": true
+    },
+    {
+        "strs": "(const char* []) {\"jewel\"}",
+        "n": 1
+    },
+    {
+        "inventory": "Precious jewelry",
+        "plac": "LOC_SOUTHSIDE",
+        "fixd": 0,
+        "is_treasure": true
+    },
+    {
+        "strs": "(const char* []) {\"coins\"}",
+        "n": 1
+    },
+    {
+        "inventory": "Rare coins",
+        "plac": "LOC_WESTSIDE",
+        "fixd": 0,
+        "is_treasure": true
+    },
+    {
+        "strs": "(const char* []) {\"chest\"",
+        "n": 3
+    },
+    {
+        "inventory": "Treasure chest",
+        "plac": "LOC_NOWHERE",
+        "fixd": 0,
+        "is_treasure": true
+    },
+    {
+        "strs": "(const char* []) {\"eggs\"",
+        "n": 3
+    },
+    {
+        "inventory": "Golden eggs",
+        "plac": "LOC_GIANTROOM",
+        "fixd": 0,
+        "is_treasure": true
+    },
+    {
+        "strs": "(const char* []) {\"tride\"}",
+        "n": 1
+    },
+    {
+        "inventory": "Jeweled trident",
+        "plac": "LOC_WATERFALL",
+        "fixd": 0,
+        "is_treasure": true
+    },
+    {
+        "strs": "(const char* []) {\"vase\"",
+        "n": 4
+    },
+    {
+        "inventory": "Ming vase",
+        "plac": "LOC_ORIENTAL",
+        "fixd": 0,
+        "is_treasure": true
+    },
+    {
+        "strs": "(const char* []) {\"emera\"}",
+        "n": 1
+    },
+    {
+        "inventory": "Egg-sized emerald",
+        "plac": "LOC_PLOVER",
+        "fixd": 0,
+        "is_treasure": true
+    },
+    {
+        "strs": "(const char* []) {\"plati\"",
+        "n": 2
+    },
+    {
+        "inventory": "Platinum pyramid",
+        "plac": "LOC_DARKROOM",
+        "fixd": 0,
+        "is_treasure": true
+    },
+    {
+        "strs": "(const char* []) {\"pearl\"}",
+        "n": 1
+    },
+    {
+        "inventory": "Glistening pearl",
+        "plac": "LOC_NOWHERE",
+        "fixd": 0,
+        "is_treasure": true
+    },
+    {
+        "strs": "(const char* []) {\"rug\"",
+        "n": 2
+    },
+    {
+        "inventory": "Persian rug",
+        "plac": "LOC_SECRET4",
+        "fixd": "LOC_SECRET6",
+        "is_treasure": true
+    },
+    {
+        "strs": "(const char* []) {\"spice\"}",
+        "n": 1
+    },
+    {
+        "inventory": "Rare spices",
+        "plac": "LOC_BOULDERS2",
+        "fixd": 0,
+        "is_treasure": true
+    },
+    {
+        "strs": "(const char* []) {\"chain\"}",
+        "n": 1
+    },
+    {
+        "inventory": "Golden chain",
+        "plac": "LOC_BARRENROOM",
+        "fixd": -1,
+        "is_treasure": true
+    },
+    {
+        "strs": "(const char* []) {\"ruby\"}",
+        "n": 1
+    },
+    {
+        "inventory": "Giant ruby",
+        "plac": "LOC_STOREROOM",
+        "fixd": 0,
+        "is_treasure": true
+    },
+    {
+        "strs": "(const char* []) {\"jade\"",
+        "n": 2
+    },
+    {
+        "inventory": "Jade necklace",
+        "plac": "LOC_NOWHERE",
+        "fixd": 0,
+        "is_treasure": true
+    },
+    {
+        "strs": "(const char* []) {\"amber\"",
+        "n": 2
+    },
+    {
+        "inventory": "Amber gemstone",
+        "plac": "LOC_NOWHERE",
+        "fixd": 0,
+        "is_treasure": true
+    },
+    {
+        "strs": "(const char* []) {\"sapph\"}",
+        "n": 1
+    },
+    {
+        "inventory": "Star sapphire",
+        "plac": "LOC_LEDGE",
+        "fixd": 0,
+        "is_treasure": true
+    },
+    {
+        "strs": "(const char* []) {\"ebony\"",
+        "n": 2
+    },
+    {
+        "inventory": "Ebony statuette",
+        "plac": "LOC_REACHDEAD",
+        "fixd": 0,
+        "is_treasure": true
+    },
+    {
+        "query": "\"Oh dear",
+        "yes_response": "\"All right.  But don\\'t blame me if something goes wr......\\n                    --- POOF!! ---\\nYou are engulfed in a cloud of orange smoke.  Coughing and gasping"
+    },
+    {
+        "query": "\"You clumsy oaf",
+        "yes_response": "\"Okay"
+    },
+    {
+        "query": "\"Now you\\'ve really done it!  I\\'m out of orange smoke!  You don\\'t expect\\nme to do a decent reincarnation without any orange smoke",
+        "yes_response": "\"Okay"
+    },
+    {
+        "number": 1,
+        "penalty": 2,
+        "turns": 4,
+        "question": "Are you trying to get into the cave?",
+        "hint": "\"The grate is very solid and has a hardened steel lock.  You cannot\\nenter without a key"
+    },
+    {
+        "number": 2,
+        "penalty": 2,
+        "turns": 5,
+        "question": "Are you trying to catch the bird?",
+        "hint": "Something about you seems to be frightening the bird.  Perhaps you\\nmight figure out what it is."
+    },
+    {
+        "number": 3,
+        "penalty": 2,
+        "turns": 8,
+        "question": "Are you trying to somehow deal with the snake?",
+        "hint": "\"You can\\'t kill the snake"
+    },
+    {
+        "number": 4,
+        "penalty": 4,
+        "turns": 75,
+        "question": "Do you need help getting out of the maze?",
+        "hint": "You can make the passages look less alike by dropping things."
+    },
+    {
+        "number": 5,
+        "penalty": 5,
+        "turns": 25,
+        "question": "Are you trying to explore beyond the plover room?",
+        "hint": "There is a way to explore that region without having to worry about\\nfalling into a pit.  None of the objects available is immediately\\nuseful in discovering the secret."
+    },
+    {
+        "number": 6,
+        "penalty": 3,
+        "turns": 20,
+        "question": "Do you need help getting out of here?",
+        "hint": "Don\\'t go west.\\n"
+    },
+    {
+        "number": 7,
+        "penalty": 2,
+        "turns": 8,
+        "question": "Are you wondering what to do here?",
+        "hint": "This section is quite advanced.  Find the cave first.\\n"
+    },
+    {
+        "number": 8,
+        "penalty": 2,
+        "turns": 25,
+        "question": "Would you like to be shown out of the forest?",
+        "hint": "\"Go east ten times.  If that doesn\\'t get you out"
+    },
+    {
+        "number": 9,
+        "penalty": 4,
+        "turns": 10,
+        "question": "Do you need help dealing with the ogre?",
+        "hint": "There is nothing the presence of which will prevent you from defeating\\nhim; thus it can\\'t hurt to fetch everything you possibly can."
+    },
+    {
+        "number": 10,
+        "penalty": 4,
+        "turns": 1,
+        "question": "You\\'re missing only one other treasure.  Do you need help finding it?",
+        "hint": "\"Once you\\'ve found all the other treasures"
+    },
+    {
+        "strs": "NULL",
+        "n": 0
+    },
+    {
+        "strs": "NULL",
+        "n": 0
+    },
+    {
+        "strs": "(const char* []) {\"road\"",
+        "n": 2
+    },
+    {
+        "strs": "(const char* []) {\"enter\"}",
+        "n": 1
+    },
+    {
+        "strs": "(const char* []) {\"upstr\"}",
+        "n": 1
+    },
+    {
+        "strs": "(const char* []) {\"downs\"}",
+        "n": 1
+    },
+    {
+        "strs": "(const char* []) {\"fores\"}",
+        "n": 1
+    },
+    {
+        "strs": "(const char* []) {\"forwa\"",
+        "n": 3
+    },
+    {
+        "strs": "(const char* []) {\"back\"",
+        "n": 3
+    },
+    {
+        "strs": "(const char* []) {\"valle\"}",
+        "n": 1
+    },
+    {
+        "strs": "(const char* []) {\"stair\"}",
+        "n": 1
+    },
+    {
+        "strs": "(const char* []) {\"out\"",
+        "n": 4
+    },
+    {
+        "strs": "(const char* []) {\"build\"",
+        "n": 2
+    },
+    {
+        "strs": "(const char* []) {\"gully\"}",
+        "n": 1
+    },
+    {
+        "strs": "(const char* []) {\"strea\"}",
+        "n": 1
+    },
+    {
+        "strs": "(const char* []) {\"fork\"}",
+        "n": 1
+    },
+    {
+        "strs": "(const char* []) {\"bed\"}",
+        "n": 1
+    },
+    {
+        "strs": "(const char* []) {\"crawl\"}",
+        "n": 1
+    },
+    {
+        "strs": "(const char* []) {\"cobbl\"}",
+        "n": 1
+    },
+    {
+        "strs": "(const char* []) {\"inwar\"",
+        "n": 3
+    },
+    {
+        "strs": "(const char* []) {\"surfa\"}",
+        "n": 1
+    },
+    {
+        "strs": "(const char* []) {\"null\"",
+        "n": 2
+    },
+    {
+        "strs": "(const char* []) {\"dark\"}",
+        "n": 1
+    },
+    {
+        "strs": "(const char* []) {\"passa\"",
+        "n": 2
+    },
+    {
+        "strs": "(const char* []) {\"low\"}",
+        "n": 1
+    },
+    {
+        "strs": "(const char* []) {\"canyo\"}",
+        "n": 1
+    },
+    {
+        "strs": "(const char* []) {\"awkwa\"}",
+        "n": 1
+    },
+    {
+        "strs": "(const char* []) {\"giant\"}",
+        "n": 1
+    },
+    {
+        "strs": "(const char* []) {\"view\"}",
+        "n": 1
+    },
+    {
+        "strs": "(const char* []) {\"upwar\"",
+        "n": 5
+    },
+    {
+        "strs": "(const char* []) {\"d\"",
+        "n": 4
+    },
+    {
+        "strs": "(const char* []) {\"pit\"}",
+        "n": 1
+    },
+    {
+        "strs": "(const char* []) {\"outdo\"}",
+        "n": 1
+    },
+    {
+        "strs": "(const char* []) {\"crack\"}",
+        "n": 1
+    },
+    {
+        "strs": "(const char* []) {\"steps\"}",
+        "n": 1
+    },
+    {
+        "strs": "(const char* []) {\"dome\"}",
+        "n": 1
+    },
+    {
+        "strs": "(const char* []) {\"left\"}",
+        "n": 1
+    },
+    {
+        "strs": "(const char* []) {\"right\"}",
+        "n": 1
+    },
+    {
+        "strs": "(const char* []) {\"hall\"}",
+        "n": 1
+    },
+    {
+        "strs": "(const char* []) {\"jump\"}",
+        "n": 1
+    },
+    {
+        "strs": "(const char* []) {\"barre\"}",
+        "n": 1
+    },
+    {
+        "strs": "(const char* []) {\"over\"}",
+        "n": 1
+    },
+    {
+        "strs": "(const char* []) {\"acros\"}",
+        "n": 1
+    },
+    {
+        "strs": "(const char* []) {\"east\"",
+        "n": 2
+    },
+    {
+        "strs": "(const char* []) {\"west\"",
+        "n": 2
+    },
+    {
+        "strs": "(const char* []) {\"north\"",
+        "n": 2
+    },
+    {
+        "strs": "(const char* []) {\"south\"",
+        "n": 2
+    },
+    {
+        "strs": "(const char* []) {\"ne\"}",
+        "n": 1
+    },
+    {
+        "strs": "(const char* []) {\"se\"}",
+        "n": 1
+    },
+    {
+        "strs": "(const char* []) {\"sw\"}",
+        "n": 1
+    },
+    {
+        "strs": "(const char* []) {\"nw\"}",
+        "n": 1
+    },
+    {
+        "strs": "(const char* []) {\"debri\"}",
+        "n": 1
+    },
+    {
+        "strs": "(const char* []) {\"hole\"}",
+        "n": 1
+    },
+    {
+        "strs": "(const char* []) {\"wall\"}",
+        "n": 1
+    },
+    {
+        "strs": "(const char* []) {\"broke\"}",
+        "n": 1
+    },
+    {
+        "strs": "(const char* []) {\"y2\"}",
+        "n": 1
+    },
+    {
+        "strs": "(const char* []) {\"climb\"}",
+        "n": 1
+    },
+    {
+        "strs": "(const char* []) {\"l\"",
+        "n": 6
+    },
+    {
+        "strs": "(const char* []) {\"floor\"}",
+        "n": 1
+    },
+    {
+        "strs": "(const char* []) {\"room\"}",
+        "n": 1
+    },
+    {
+        "strs": "(const char* []) {\"slit\"}",
+        "n": 1
+    },
+    {
+        "strs": "(const char* []) {\"slab\"",
+        "n": 2
+    },
+    {
+        "strs": "(const char* []) {\"xyzzy\"}",
+        "n": 1
+    },
+    {
+        "strs": "(const char* []) {\"depre\"}",
+        "n": 1
+    },
+    {
+        "strs": "(const char* []) {\"entra\"}",
+        "n": 1
+    },
+    {
+        "strs": "(const char* []) {\"plugh\"}",
+        "n": 1
+    },
+    {
+        "strs": "(const char* []) {\"secre\"}",
+        "n": 1
+    },
+    {
+        "strs": "(const char* []) {\"cave\"}",
+        "n": 1
+    },
+    {
+        "strs": "(const char* []) {\"cross\"}",
+        "n": 1
+    },
+    {
+        "strs": "(const char* []) {\"bedqu\"}",
+        "n": 1
+    },
+    {
+        "strs": "(const char* []) {\"plove\"}",
+        "n": 1
+    },
+    {
+        "strs": "(const char* []) {\"orien\"}",
+        "n": 1
+    },
+    {
+        "strs": "(const char* []) {\"caver\"}",
+        "n": 1
+    },
+    {
+        "strs": "(const char* []) {\"shell\"}",
+        "n": 1
+    },
+    {
+        "strs": "(const char* []) {\"reser\"}",
+        "n": 1
+    },
+    {
+        "strs": "(const char* []) {\"main\"",
+        "n": 2
+    },
+    {
+        "strs": "NULL",
+        "n": 0
+    },
+    {
+        "message": "NULL",
+        "noaction": false
+    },
+    {
+        "strs": "(const char* []) {\"g\"",
+        "n": 10
+    },
+    {
+        "message": "You are already carrying it!",
+        "noaction": false
+    },
+    {
+        "strs": "(const char* []) {\"drop\"",
+        "n": 5
+    },
+    {
+        "message": "You aren\\'t carrying it!",
+        "noaction": false
+    },
+    {
+        "strs": "(const char* []) {\"say\"",
+        "n": 5
+    },
+    {
+        "message": "NO_MESSAGE",
+        "noaction": false
+    },
+    {
+        "strs": "(const char* []) {\"unloc\"",
+        "n": 2
+    },
+    {
+        "message": "I don\\'t know how to lock or unlock such a thing.",
+        "noaction": false
+    },
+    {
+        "strs": "(const char* []) {\"z\"",
+        "n": 2
+    },
+    {
+        "message": "NO_MESSAGE",
+        "noaction": false
+    },
+    {
+        "strs": "(const char* []) {\"lock\"",
+        "n": 2
+    },
+    {
+        "message": "I don\\'t know how to lock or unlock such a thing.",
+        "noaction": false
+    },
+    {
+        "strs": "(const char* []) {\"light\"",
+        "n": 2
+    },
+    {
+        "message": "I\\'m afraid I don\\'t understand.",
+        "noaction": false
+    },
+    {
+        "strs": "(const char* []) {\"extin\"",
+        "n": 2
+    },
+    {
+        "message": "I\\'m afraid I don\\'t understand.",
+        "noaction": false
+    },
+    {
+        "strs": "(const char* []) {\"wave\"",
+        "n": 3
+    },
+    {
+        "message": "Nothing happens.",
+        "noaction": false
+    },
+    {
+        "strs": "(const char* []) {\"calm\"",
+        "n": 3
+    },
+    {
+        "message": "I\\'m game.  Would you care to explain how?",
+        "noaction": false
+    },
+    {
+        "strs": "(const char* []) {\"walk\"",
+        "n": 9
+    },
+    {
+        "message": "Where?",
+        "noaction": false
+    },
+    {
+        "strs": "(const char* []) {\"attac\"",
+        "n": 6
+    },
+    {
+        "message": "Don\\'t be ridiculous!",
+        "noaction": false
+    },
+    {
+        "strs": "(const char* []) {\"pour\"}",
+        "n": 1
+    },
+    {
+        "message": "You aren\\'t carrying it!",
+        "noaction": false
+    },
+    {
+        "strs": "(const char* []) {\"eat\"",
+        "n": 2
+    },
+    {
+        "message": "Don\\'t be ridiculous!",
+        "noaction": false
+    },
+    {
+        "strs": "(const char* []) {\"drink\"}",
+        "n": 1
+    },
+    {
+        "message": "\"You have taken a drink from the stream.  The water tastes strongly of\\nminerals",
+        "noaction": false
+    },
+    {
+        "strs": "(const char* []) {\"rub\"}",
+        "n": 1
+    },
+    {
+        "message": "\"Rubbing the electric lamp is not particularly rewarding.  Anyway",
+        "noaction": false
+    },
+    {
+        "strs": "(const char* []) {\"throw\"",
+        "n": 2
+    },
+    {
+        "message": "You aren\\'t carrying it!",
+        "noaction": false
+    },
+    {
+        "strs": "(const char* []) {\"quit\"}",
+        "n": 1
+    },
+    {
+        "message": "Huh?",
+        "noaction": false
+    },
+    {
+        "strs": "(const char* []) {\"find\"",
+        "n": 2
+    },
+    {
+        "message": "I can only tell you what you see as you move about and manipulate\\nthings.  I cannot tell you where remote things are.",
+        "noaction": false
+    },
+    {
+        "strs": "(const char* []) {\"i\"",
+        "n": 2
+    },
+    {
+        "message": "I can only tell you what you see as you move about and manipulate\\nthings.  I cannot tell you where remote things are.",
+        "noaction": false
+    },
+    {
+        "strs": "(const char* []) {\"feed\"}",
+        "n": 1
+    },
+    {
+        "message": "There is nothing here to eat.",
+        "noaction": false
+    },
+    {
+        "strs": "(const char* []) {\"fill\"}",
+        "n": 1
+    },
+    {
+        "message": "You can\\'t fill that.",
+        "noaction": false
+    },
+    {
+        "strs": "(const char* []) {\"blast\"",
+        "n": 4
+    },
+    {
+        "message": "Blasting requires dynamite.",
+        "noaction": false
+    },
+    {
+        "strs": "(const char* []) {\"score\"}",
+        "n": 1
+    },
+    {
+        "message": "Huh?",
+        "noaction": false
+    },
+    {
+        "strs": "(const char* []) {\"fee\"}",
+        "n": 1
+    },
+    {
+        "message": "I don\\'t know how.",
+        "noaction": false
+    },
+    {
+        "strs": "(const char* []) {\"fie\"}",
+        "n": 1
+    },
+    {
+        "message": "I don\\'t know how.",
+        "noaction": false
+    },
+    {
+        "strs": "(const char* []) {\"foe\"}",
+        "n": 1
+    },
+    {
+        "message": "I don\\'t know how.",
+        "noaction": false
+    },
+    {
+        "strs": "(const char* []) {\"foo\"}",
+        "n": 1
+    },
+    {
+        "message": "I don\\'t know how.",
+        "noaction": false
+    },
+    {
+        "strs": "(const char* []) {\"fum\"}",
+        "n": 1
+    },
+    {
+        "message": "I don\\'t know how.",
+        "noaction": false
+    },
+    {
+        "strs": "(const char* []) {\"brief\"}",
+        "n": 1
+    },
+    {
+        "message": "On what?",
+        "noaction": false
+    },
+    {
+        "strs": "(const char* []) {\"read\"",
+        "n": 2
+    },
+    {
+        "message": "I\\'m afraid I don\\'t understand.",
+        "noaction": false
+    },
+    {
+        "strs": "(const char* []) {\"break\"",
+        "n": 3
+    },
+    {
+        "message": "It is beyond your power to do that.",
+        "noaction": false
+    },
+    {
+        "strs": "(const char* []) {\"wake\"",
+        "n": 2
+    },
+    {
+        "message": "Don\\'t be ridiculous!",
+        "noaction": false
+    },
+    {
+        "strs": "(const char* []) {\"suspe\"",
+        "n": 3
+    },
+    {
+        "message": "Huh?",
+        "noaction": false
+    },
+    {
+        "strs": "(const char* []) {\"resum\"",
+        "n": 2
+    },
+    {
+        "message": "Huh?",
+        "noaction": false
+    },
+    {
+        "strs": "(const char* []) {\"fly\"}",
+        "n": 1
+    },
+    {
+        "message": "I\\'m game.  Would you care to explain how?",
+        "noaction": false
+    },
+    {
+        "strs": "(const char* []) {\"liste\"}",
+        "n": 1
+    },
+    {
+        "message": "I\\'m afraid I don\\'t understand.",
+        "noaction": false
+    },
+    {
+        "strs": "(const char* []) {\"z\\'zzz\"}",
+        "n": 1
+    },
+    {
+        "message": "Nothing happens.",
+        "noaction": false
+    },
+    {
+        "strs": "(const char* []) {\"seed\"}",
+        "n": 1
+    },
+    {
+        "message": "Seed set to %d",
+        "noaction": false
+    },
+    {
+        "strs": "(const char* []) {\"waste\"}",
+        "n": 1
+    },
+    {
+        "message": "Game limit is now %d",
+        "noaction": false
+    },
+    {
+        "strs": "NULL",
+        "n": 0
+    },
+    {
+        "message": "Huh?",
+        "noaction": false
+    },
+    {
+        "strs": "(const char* []) {\"thank\"}",
+        "n": 1
+    },
+    {
+        "message": "You\\'re quite welcome.",
+        "noaction": true
+    },
+    {
+        "strs": "(const char* []) {\"sesam\"",
+        "n": 7
+    },
+    {
+        "message": "\"Good try",
+        "noaction": true
+    },
+    {
+        "strs": "(const char* []) {\"help\"",
+        "n": 2
+    },
+    {
+        "message": "\"I know of places",
+        "noaction": true
+    },
+    {
+        "strs": "(const char* []) {\"no\"}",
+        "n": 1
+    },
+    {
+        "message": "OK",
+        "noaction": true
+    },
+    {
+        "strs": "(const char* []) {\"tree\"",
+        "n": 2
+    },
+    {
+        "message": "\"The trees of the forest are large hardwood oak and maple",
+        "noaction": true
+    },
+    {
+        "strs": "(const char* []) {\"dig\"",
+        "n": 2
+    },
+    {
+        "message": "Digging without a shovel is quite impractical.  Even with a shovel\\nprogress is unlikely.",
+        "noaction": true
+    },
+    {
+        "strs": "(const char* []) {\"lost\"}",
+        "n": 1
+    },
+    {
+        "message": "I\\'m as confused as you are.",
+        "noaction": true
+    },
+    {
+        "strs": "(const char* []) {\"mist\"}",
+        "n": 1
+    },
+    {
+        "message": "\"Mist is a white vapor",
+        "noaction": true
+    },
+    {
+        "strs": "(const char* []) {\"fuck\"}",
+        "n": 1
+    },
+    {
+        "message": "Watch it!",
+        "noaction": true
+    },
+    {
+        "strs": "(const char* []) {\"stop\"}",
+        "n": 1
+    },
+    {
+        "message": "I don\\'t know the word \\\"stop\\\".  Use \\\"quit\\\" if you want to give up.",
+        "noaction": true
+    },
+    {
+        "strs": "(const char* []) {\"info\"",
+        "n": 2
+    },
+    {
+        "message": "\"For a summary of the most recent changes to the game",
+        "noaction": true
+    },
+    {
+        "strs": "(const char* []) {\"swim\"}",
+        "n": 1
+    },
+    {
+        "message": "I don\\'t know how.",
+        "noaction": true
+    },
+    {
+        "strs": "(const char* []) {\"wizar\"}",
+        "n": 1
+    },
+    {
+        "message": "Wizards are not to be disturbed by such as you.",
+        "noaction": true
+    },
+    {
+        "strs": "(const char* []) {\"yes\"}",
+        "n": 1
+    },
+    {
+        "message": "Guess again.",
+        "noaction": true
+    },
+    {
+        "strs": "(const char* []) {\"news\"}",
+        "n": 1
+    },
+    {
+        "message": "\"Open Adventure is an author-approved open-source release of\\nVersion 2.5 with",
+        "noaction": true
+    },
+    {
+        "strs": "(const char* []) {\"versi\"}",
+        "n": 1
+    },
+    {
+        "message": "\"There is a puff of orange smoke; within it",
+        "noaction": true
+    },
+    {
         "from_index": 0,
         "from_location": "LOC_NOWHERE",
         "motion": 0,
@@ -917,7 +4011,7 @@
         "motion": "ENTER",
         "condtype": "cond_not",
         "condarg1": 3,
-        "condarg2": 0,
+        "condarg2": 0.0,
         "desttype": "dest_goto",
         "destval": "LOC_BELOWGRATE",
         "nodwarves": false,
@@ -929,7 +4023,7 @@
         "motion": "INSIDE",
         "condtype": "cond_not",
         "condarg1": 3,
-        "condarg2": 0,
+        "condarg2": 0.0,
         "desttype": "dest_goto",
         "destval": "LOC_BELOWGRATE",
         "nodwarves": false,
@@ -941,7 +4035,7 @@
         "motion": "DOWN",
         "condtype": "cond_not",
         "condarg1": 3,
-        "condarg2": 0,
+        "condarg2": 0.0,
         "desttype": "dest_goto",
         "destval": "LOC_BELOWGRATE",
         "nodwarves": false,
@@ -965,7 +4059,7 @@
         "motion": "OUTSIDE",
         "condtype": "cond_not",
         "condarg1": 3,
-        "condarg2": 0,
+        "condarg2": 0.0,
         "desttype": "dest_goto",
         "destval": "LOC_GRATE",
         "nodwarves": false,
@@ -977,7 +4071,7 @@
         "motion": "UP",
         "condtype": "cond_not",
         "condarg1": 3,
-        "condarg2": 0,
+        "condarg2": 0.0,
         "desttype": "dest_goto",
         "destval": "LOC_GRATE",
         "nodwarves": false,
@@ -1169,7 +4263,7 @@
         "motion": "DEPRESSION",
         "condtype": "cond_not",
         "condarg1": 3,
-        "condarg2": 0,
+        "condarg2": 0.0,
         "desttype": "dest_goto",
         "destval": "LOC_GRATE",
         "nodwarves": false,
@@ -1325,7 +4419,7 @@
         "motion": "DEPRESSION",
         "condtype": "cond_not",
         "condarg1": 3,
-        "condarg2": 0,
+        "condarg2": 0.0,
         "desttype": "dest_goto",
         "destval": "LOC_GRATE",
         "nodwarves": false,
@@ -1433,7 +4527,7 @@
         "motion": "DEPRESSION",
         "condtype": "cond_not",
         "condarg1": 3,
-        "condarg2": 0,
+        "condarg2": 0.0,
         "desttype": "dest_goto",
         "destval": "LOC_GRATE",
         "nodwarves": false,
@@ -1529,7 +4623,7 @@
         "motion": "DEPRESSION",
         "condtype": "cond_not",
         "condarg1": 3,
-        "condarg2": 0,
+        "condarg2": 0.0,
         "desttype": "dest_goto",
         "destval": "LOC_GRATE",
         "nodwarves": false,
@@ -1889,7 +4983,7 @@
         "motion": "MOT_39",
         "condtype": "cond_not",
         "condarg1": 12,
-        "condarg2": 0,
+        "condarg2": 0.0,
         "desttype": "dest_speak",
         "destval": "CROSS_BRIDGE",
         "nodwarves": false,
@@ -1901,7 +4995,7 @@
         "motion": "FORWARD",
         "condtype": "cond_not",
         "condarg1": 12,
-        "condarg2": 1,
+        "condarg2": 1.0,
         "desttype": "dest_goto",
         "destval": "LOC_NOMAKE",
         "nodwarves": false,
@@ -1913,7 +5007,7 @@
         "motion": "MOT_41",
         "condtype": "cond_not",
         "condarg1": 12,
-        "condarg2": 1,
+        "condarg2": 1.0,
         "desttype": "dest_speak",
         "destval": "NO_CROSS",
         "nodwarves": false,
@@ -1925,7 +5019,7 @@
         "motion": "MOT_42",
         "condtype": "cond_not",
         "condarg1": 12,
-        "condarg2": 1,
+        "condarg2": 1.0,
         "desttype": "dest_speak",
         "destval": "NO_CROSS",
         "nodwarves": false,
@@ -1937,7 +5031,7 @@
         "motion": "WEST",
         "condtype": "cond_not",
         "condarg1": 12,
-        "condarg2": 1,
+        "condarg2": 1.0,
         "desttype": "dest_speak",
         "destval": "NO_CROSS",
         "nodwarves": false,
@@ -1949,7 +5043,7 @@
         "motion": "CROSS",
         "condtype": "cond_not",
         "condarg1": 12,
-        "condarg2": 1,
+        "condarg2": 1.0,
         "desttype": "dest_speak",
         "destval": "NO_CROSS",
         "nodwarves": false,
@@ -2045,7 +5139,7 @@
         "motion": "NORTH",
         "condtype": "cond_not",
         "condarg1": 11,
-        "condarg2": 0,
+        "condarg2": 0.0,
         "desttype": "dest_goto",
         "destval": "LOC_FLOORHOLE",
         "nodwarves": false,
@@ -2057,7 +5151,7 @@
         "motion": "RIGHT",
         "condtype": "cond_not",
         "condarg1": 11,
-        "condarg2": 0,
+        "condarg2": 0.0,
         "desttype": "dest_goto",
         "destval": "LOC_FLOORHOLE",
         "nodwarves": false,
@@ -2069,7 +5163,7 @@
         "motion": "SOUTH",
         "condtype": "cond_not",
         "condarg1": 11,
-        "condarg2": 0,
+        "condarg2": 0.0,
         "desttype": "dest_goto",
         "destval": "LOC_SOUTHSIDE",
         "nodwarves": false,
@@ -2081,7 +5175,7 @@
         "motion": "LEFT",
         "condtype": "cond_not",
         "condarg1": 11,
-        "condarg2": 0,
+        "condarg2": 0.0,
         "desttype": "dest_goto",
         "destval": "LOC_SOUTHSIDE",
         "nodwarves": false,
@@ -2093,7 +5187,7 @@
         "motion": "WEST",
         "condtype": "cond_not",
         "condarg1": 11,
-        "condarg2": 0,
+        "condarg2": 0.0,
         "desttype": "dest_goto",
         "destval": "LOC_WESTSIDE",
         "nodwarves": false,
@@ -2105,7 +5199,7 @@
         "motion": "FORWARD",
         "condtype": "cond_not",
         "condarg1": 11,
-        "condarg2": 0,
+        "condarg2": 0.0,
         "desttype": "dest_goto",
         "destval": "LOC_WESTSIDE",
         "nodwarves": false,
@@ -2333,7 +5427,7 @@
         "motion": "MOT_56",
         "condtype": "cond_not",
         "condarg1": 24,
-        "condarg2": 2,
+        "condarg2": 2.0,
         "desttype": "dest_goto",
         "destval": "LOC_BUILDING1",
         "nodwarves": false,
@@ -2369,7 +5463,7 @@
         "motion": "MOT_39",
         "condtype": "cond_not",
         "condarg1": 12,
-        "condarg2": 0,
+        "condarg2": 0.0,
         "desttype": "dest_speak",
         "destval": "CROSS_BRIDGE",
         "nodwarves": false,
@@ -2381,7 +5475,7 @@
         "motion": "FORWARD",
         "condtype": "cond_not",
         "condarg1": 12,
-        "condarg2": 1,
+        "condarg2": 1.0,
         "desttype": "dest_goto",
         "destval": "LOC_NOMAKE",
         "nodwarves": false,
@@ -2393,7 +5487,7 @@
         "motion": "MOT_41",
         "condtype": "cond_not",
         "condarg1": 12,
-        "condarg2": 1,
+        "condarg2": 1.0,
         "desttype": "dest_speak",
         "destval": "NO_CROSS",
         "nodwarves": false,
@@ -2405,7 +5499,7 @@
         "motion": "MOT_42",
         "condtype": "cond_not",
         "condarg1": 12,
-        "condarg2": 1,
+        "condarg2": 1.0,
         "desttype": "dest_speak",
         "destval": "NO_CROSS",
         "nodwarves": false,
@@ -2417,7 +5511,7 @@
         "motion": "EAST",
         "condtype": "cond_not",
         "condarg1": 12,
-        "condarg2": 1,
+        "condarg2": 1.0,
         "desttype": "dest_speak",
         "destval": "NO_CROSS",
         "nodwarves": false,
@@ -2429,7 +5523,7 @@
         "motion": "CROSS",
         "condtype": "cond_not",
         "condarg1": 12,
-        "condarg2": 1,
+        "condarg2": 1.0,
         "desttype": "dest_speak",
         "destval": "NO_CROSS",
         "nodwarves": false,
@@ -2657,7 +5751,7 @@
         "motion": 1,
         "condtype": "cond_not",
         "condarg1": 24,
-        "condarg2": 1,
+        "condarg2": 1.0,
         "desttype": "dest_goto",
         "destval": "LOC_NOCLIMB",
         "nodwarves": false,
@@ -4661,7 +7755,7 @@
         "motion": "SOUTH",
         "condtype": "cond_not",
         "condarg1": 31,
-        "condarg2": 0,
+        "condarg2": 0.0,
         "desttype": "dest_goto",
         "destval": "LOC_SECRET5",
         "nodwarves": false,
@@ -4901,7 +7995,7 @@
         "motion": "WEST",
         "condtype": "cond_not",
         "condarg1": 31,
-        "condarg2": 0,
+        "condarg2": 0.0,
         "desttype": "dest_goto",
         "destval": "LOC_SECRET5",
         "nodwarves": false,
@@ -5549,7 +8643,7 @@
         "motion": "NORTH",
         "condtype": "cond_not",
         "condarg1": 9,
-        "condarg2": 0,
+        "condarg2": 0.0,
         "desttype": "dest_goto",
         "destval": "LOC_WATERFALL",
         "nodwarves": false,
@@ -5561,7 +8655,7 @@
         "motion": "ENTER",
         "condtype": "cond_not",
         "condarg1": 9,
-        "condarg2": 0,
+        "condarg2": 0.0,
         "desttype": "dest_goto",
         "destval": "LOC_WATERFALL",
         "nodwarves": false,
@@ -5573,7 +8667,7 @@
         "motion": "CAVERN",
         "condtype": "cond_not",
         "condarg1": 9,
-        "condarg2": 0,
+        "condarg2": 0.0,
         "desttype": "dest_goto",
         "destval": "LOC_WATERFALL",
         "nodwarves": false,
@@ -6713,7 +9807,7 @@
         "motion": "NORTH",
         "condtype": "cond_not",
         "condarg1": 45,
-        "condarg2": 1,
+        "condarg2": 1.0,
         "desttype": "dest_speak",
         "destval": "BAD_DIRECTION",
         "nodwarves": false,
@@ -6725,7 +9819,7 @@
         "motion": "MOT_42",
         "condtype": "cond_not",
         "condarg1": 45,
-        "condarg2": 1,
+        "condarg2": 1.0,
         "desttype": "dest_speak",
         "destval": "BAD_DIRECTION",
         "nodwarves": false,
@@ -6737,7 +9831,7 @@
         "motion": "CROSS",
         "condtype": "cond_not",
         "condarg1": 45,
-        "condarg2": 1,
+        "condarg2": 1.0,
         "desttype": "dest_speak",
         "destval": "BAD_DIRECTION",
         "nodwarves": false,
@@ -6869,7 +9963,7 @@
         "motion": "MOT_41",
         "condtype": "cond_not",
         "condarg1": 32,
-        "condarg2": 0,
+        "condarg2": 0.0,
         "desttype": "dest_speak",
         "destval": "BRIDGE_GONE",
         "nodwarves": false,
@@ -6893,7 +9987,7 @@
         "motion": "MOT_39",
         "condtype": "cond_not",
         "condarg1": 32,
-        "condarg2": 0,
+        "condarg2": 0.0,
         "desttype": "dest_goto",
         "destval": "LOC_NOMAKE",
         "nodwarves": false,
@@ -8873,7 +11967,7 @@
         "motion": "SOUTH",
         "condtype": "cond_not",
         "condarg1": 38,
-        "condarg2": 0,
+        "condarg2": 0.0,
         "desttype": "dest_goto",
         "destval": "LOC_ROUGHHEWN",
         "nodwarves": false,
@@ -10085,7 +13179,7 @@
         "motion": "SOUTH",
         "condtype": "cond_not",
         "condarg1": 45,
-        "condarg2": 1,
+        "condarg2": 1.0,
         "desttype": "dest_speak",
         "destval": "BAD_DIRECTION",
         "nodwarves": false,
@@ -10097,7 +13191,7 @@
         "motion": "MOT_42",
         "condtype": "cond_not",
         "condarg1": 45,
-        "condarg2": 1,
+        "condarg2": 1.0,
         "desttype": "dest_speak",
         "destval": "BAD_DIRECTION",
         "nodwarves": false,
@@ -10109,7 +13203,7 @@
         "motion": "CROSS",
         "condtype": "cond_not",
         "condarg1": 45,
-        "condarg2": 1,
+        "condarg2": 1.0,
         "desttype": "dest_speak",
         "destval": "BAD_DIRECTION",
         "nodwarves": false,

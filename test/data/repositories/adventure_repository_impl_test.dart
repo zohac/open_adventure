@@ -18,6 +18,21 @@ void main() {
       final rules = await repo.travelRulesFor(1);
       expect(rules, isNotEmpty);
     });
+
+    test('getGameObjects returns non-empty list', () async {
+      final repo = AdventureRepositoryImpl();
+      final objs = await repo.getGameObjects();
+      expect(objs, isNotEmpty);
+      expect(objs.first.id, 0);
+      expect(objs.first.name, isA<String>());
+    });
+
+    test('locationById returns the same as indexing into getLocations', () async {
+      final repo = AdventureRepositoryImpl();
+      final locs = await repo.getLocations();
+      final loc3 = await repo.locationById(3);
+      expect(loc3.name, locs[3].name);
+      expect(loc3.id, 3);
+    });
   });
 }
-

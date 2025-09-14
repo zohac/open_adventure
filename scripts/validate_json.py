@@ -69,8 +69,19 @@ yaml.add_constructor(u"tag:yaml.org,2002:omap", _construct_omap)
 
 
 def normalize_data(data):
-    if isinstance(data, dict):
-        return {k: normalize_data(v) for k, v in sorted(data.items())}
+    """Return a canonical, comparable representation of nested data.
+
+    - Dict keys are coerced to strings and items are sorted by key to avoid
+      Python 3 comparison errors on mixed-type keys (e.g., bool vs str).
+    - Lists are normalized element-wise (order preserved).
+    - Scalars returned as-is.
+    """
+    if isinstance(data, (dict, OrderedDict)):
+        items = []
+        for k, v in data.items():
+            items.append((str(k), normalize_data(v)))
+        items.sort(key=lambda kv: kv[0])
+        return {k: v for k, v in items}
     if isinstance(data, list):
         return [normalize_data(x) for x in data]
     return data
@@ -154,4 +165,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     sys.exit(main())
-

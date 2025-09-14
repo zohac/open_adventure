@@ -1,13 +1,28 @@
 #!/usr/bin/env python3
 """
-Usage:
+Generate JSON assets from the YAML source of Open Adventure.
+
+Inputs
+- YAML: open-adventure-master/adventure.yaml (resolved relatively to repo root)
+
+Outputs
+- Writes multiple JSON files under the output directory (default: assets/data):
+  arbitrary_messages.json, classes.json, turn_thresholds.json, locations.json,
+  objects.json, obituaries.json, hints.json, motions.json, actions.json,
+  tkey.json, travel.json, ignore.json, and conditions.json.
+
+Usage
   python3 scripts/make_dungeon.py [--out assets/data]
 
-Script pour convertir adventure.yaml en plusieurs fichiers JSON, en gérant les 'omap' pour préserver l'ordre des objets.
+Notes
+- Requires PyYAML (pip install pyyaml)
+- No network access required; works on macOS/Linux; paths resolved via pathlib.
 """
 import sys
+import argparse
 import yaml
 import json
+from pathlib import Path
 from collections import OrderedDict
 YAML_NAME = "adventure.yaml"
 def construct_omap(loader, node):
@@ -46,7 +61,19 @@ def export_conditions_to_json(locations, output_file):
         json.dump(conditions_json, f, ensure_ascii=False, indent=4)
     print(f"Conditions data exported to {output_file}")
 def main():
-    with open(YAML_NAME, "r", encoding="utf-8") as f:
+    parser = argparse.ArgumentParser(description="Generate JSON assets from adventure.yaml")
+    parser.add_argument("--out", default=str(Path("assets")/"data"), help="Output directory for JSON files (default: assets/data)")
+    args = parser.parse_args()
+
+    repo_root = Path(__file__).resolve().parents[1]
+    yaml_path = repo_root / "open-adventure-master" / YAML_NAME
+    out_dir = Path(args.out)
+    if not yaml_path.exists():
+        print(f"YAML source not found: {yaml_path}", file=sys.stderr)
+        sys.exit(1)
+    out_dir.mkdir(parents=True, exist_ok=True)
+
+    with yaml_path.open("r", encoding="utf-8") as f:
         db = yaml.load(f, Loader=yaml.Loader)
     # Extraire les noms pour référence
     locnames = list(db["locations"].keys())
@@ -77,12 +104,12 @@ def main():
     }
     # Exporter chaque section dans un fichier JSON séparé
     for key, value in data.items():
-        filename = f"data/{key}.json"
+        filename = str(out_dir / f"{key}.json")
         with open(filename, 'w', encoding='utf-8') as f:
             json.dump(value, f, ensure_ascii=False, indent=4)
         print(f"Fichier {filename} généré.")
     # Exporter les conditions en JSON
-    export_conditions_to_json(db["locations"].items(), 'data/conditions.json')
+    export_conditions_to_json(db["locations"].items(), str(out_dir / 'conditions.json'))
 def buildtravel(db, locnames, msgmap, objnames, motionnames):
     locs = db['locations']
     objs = db['objects']
@@ -285,4 +312,8 @@ def compute_ignore(motions, actions):
                     ignore += word.upper()
     return ignore
 if __name__ == '__main__':
-    main()
+    try:
+        main()
+    except Exception as e:
+        print(f"Error: {e}", file=sys.stderr)
+        sys.exit(1)

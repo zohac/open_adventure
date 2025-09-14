@@ -592,7 +592,7 @@
     [
         "ACT_VERSION",
         {
-            "message": "There is a puff of orange smoke; within it, fiery runes spell out:\n\n\\tOpen Adventure %V - http://www.catb.org/esr/open-adventure/",
+            "message": "There is a puff of orange smoke; within it, fiery runes spell out:\n\nOpen Adventure %V - http://www.catb.org/esr/open-adventure/",
             "words": [
                 "versi"
             ],

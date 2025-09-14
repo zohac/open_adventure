@@ -23,5 +23,11 @@ void main() {
     final repo = AdventureRepositoryImpl(assets: assets);
     expect(repo.getGameObjects, throwsA(isA<DataFailure>()));
   });
-}
 
+  test('travelRulesFor throws DataFailure on malformed travel asset', () async {
+    final assets = _MockAssets();
+    when(() => assets.loadList(any())).thenThrow(const AssetDataFormatException('bad', assetPath: 'assets/data/travel.json'));
+    final repo = AdventureRepositoryImpl(assets: assets);
+    expect(() => repo.travelRulesFor(1), throwsA(isA<DataFailure>()));
+  });
+}

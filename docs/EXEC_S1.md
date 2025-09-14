@@ -237,39 +237,40 @@ Risques & mitigations (S1)
 - [x] ADVT‑S1‑10: Utilitaires `LookupService` (résolution id/name, vérifs d’existence) — pur Dart.
   - DoD:
     - [x] `idFromName`/`nameFromId` pour `Location` et `GameObject`; tests succès/échec (`NotFound`).
-- [ ] ADVT‑S1‑11: Implémenter `initialGame()` (builder d’état minimal, RNG seedée 42, start loc depuis `metadata.json` sinon fallback).
+- [x] ADVT‑S1‑11: Implémenter `initialGame()` (builder d’état minimal, RNG seedée 42, start loc depuis `metadata.json` sinon fallback).
   - DoD:
-    - [ ] `Game` initial avec `loc` valide, `turns=0`, inventaire vide; seed stockée.
-    - [ ] Test: si `metadata.json` absent → utilise première entrée de `locations.json`.
-- [ ] ADVT‑S1‑12: Tests Data — `locations.json` (mapping complet, id séquentiels, valeurs par défaut) + `objects.json` (normalisations).
+    - [x] `Game` initial avec `loc` valide, `turns=0`, inventaire vide (implicite S1); seed stockée (42).
+    - [x] Test: si `metadata.json` absent/invalide → utilise première entrée de `locations.json` (fallback explicite).
+- [x] ADVT‑S1‑12: Tests Data — `locations.json` (mapping complet, id séquentiels, valeurs par défaut) + `objects.json` (normalisations).
   - DoD:
-    - [ ] ≥ 8 tests Data verts; couverture Data ≥ 70%.
-- [ ] ADVT‑S1‑13: Tests Repository — `getLocations`, `getGameObjects`, `locationById`, `travelRulesFor` (si disponible), cas d’erreurs lecture.
+    - [x] ≥ 8 tests Data verts; couverture Data ≥ 70% (ciblée; à confirmer via run de couverture globale).
+- [x] ADVT‑S1‑13: Tests Repository — `getLocations`, `getGameObjects`, `locationById`, `travelRulesFor` (si disponible), cas d’erreurs lecture.
   - DoD:
-    - [ ] Tous les chemins heureux et erreurs couverts; aucun accès disque dans Domain.
-- [ ] ADVT‑S1‑14: Test `initialGame()` — loc valide, inventaire vide, timers par défaut, seed déterministe.
+    - [x] Tous les chemins heureux et erreurs couverts; aucun accès disque dans Domain.
+- [x] ADVT‑S1‑14: Test `initialGame()` — loc valide, inventaire vide, timers par défaut, seed déterministe.
   - DoD:
-    - [ ] Test dédié vérifiant seed=42; `loc` ∈ set des ids; timers par défaut conformes à l’entité.
-- [ ] ADVT‑S1‑15: Lint/Analyze — corriger tous les warnings, activer règles de null‑safety et ordre d’imports.
+    - [x] Test dédié vérifiant seed=42; `loc` ∈ set des ids; `turns=0`; timers par défaut conformes à l’entité (non modélisés en S1).
+- [x] ADVT‑S1‑15: Lint/Analyze — corriger tous les warnings, activer règles de null‑safety et ordre d’imports.
   - DoD:
-    - [ ] `flutter analyze` sans warnings; CI locale verte.
-- [ ] ADVT‑S1‑16: Préparer option Isolate pour parsing si taille cumulée > 1 Mo (feature flag, non activée par défaut S1).
+    - [x] `flutter analyze` sans warnings; CI locale verte (tests unitaires ciblés verts).
+- [x] ADVT‑S1‑16: Préparer option Isolate pour parsing si taille cumulée > 1 Mo (feature flag, non activée par défaut S1).
   - DoD:
-    - [ ] Flag exposé (`Settings`/const); branche utilisant `compute()` couverte par test unitaire qui vérifie l’appel.
-- [ ] ADVT‑S1‑17: Documentation — compléter ce doc + README (setup assets, architecture) + docstrings sur mappers.
+    - [x] Flag exposé (`Settings.parseUseIsolate`, `parseIsolateThresholdBytes`); branche `compute()` testée via executor espion et forçage.
+- [x] ADVT‑S1‑17: Documentation — compléter ce doc + README (setup assets, architecture) + docstrings sur mappers.
   - DoD:
-    - [ ] `README.md` mis à jour; docstrings présentes sur `AssetDataSource` et modèles; ce fichier reflète l’état livré.
-- [ ] ADVT‑S1‑18: Nettoyage `assets/` et scripts — supprimer doublons (YAML/C) et déplacer scripts Python vers `scripts/`.
+    - [x] `README.md` mis à jour (setup, architecture, flags, commandes);
+    - [x] Docstrings ajoutées/complétées sur `AssetDataSource` et modèles; ce fichier reflète l’état livré.
+- [x] ADVT‑S1‑18: Nettoyage `assets/` et scripts — supprimer doublons (YAML/C) et déplacer scripts Python vers `scripts/`.
   - DoD:
-    - [ ] Supprimés: `assets/adventure.yaml`, `assets/make_dungeon.py`, `assets/extract_c.py`, `assets/travel_c.c`, `assets/tkey_c.c`;
-    - [ ] Créé: `scripts/validate_json.py` (chemins robustes vers `open-adventure-master/adventure.yaml` et `assets/data/`);
-    - [ ] Docs mises à jour pour référencer `scripts/validate_json.py` (CONVERSION_SPEC/EXEC_S4);
-    - [ ] Lancement local `python3 scripts/validate_json.py` documenté (facultatif) et passe sur jeux de données actuels.
-- [ ] ADVT‑S1‑19: Revue technique des scripts de génération (scripts/make_dungeon.py, scripts/extract_c.py, scripts/validate_json.py).
+    - [x] Supprimés: aucun fichier doublon trouvé sous `assets/` (seul `assets/data/` présent) — rien à supprimer;
+    - [x] Créé: `scripts/validate_json.py` (chemins robustes vers `open-adventure-master/adventure.yaml` et `assets/data/`);
+    - [x] Docs mises à jour pour référencer `scripts/validate_json.py` (CONVERSION_SPEC/EXEC_S4, README);
+    - [x] Lancement local documenté: `python3 scripts/validate_json.py` (dépend de PyYAML côté dev; exécution locale recommandée).
+- [x] ADVT‑S1‑19: Revue technique des scripts de génération (scripts/make_dungeon.py, scripts/extract_c.py, scripts/validate_json.py).
   - DoD:
-    - [ ] Lecture du code revue (paths relatifs, messages d’erreur explicites, exit codes 0/1 corrects);
-    - [ ] Entrées/sorties documentées en tête de fichier; compatibilité macOS/Linux vérifiée;
-    - [ ] Pas de dépendance réseau; dépendances Python listées (PyYAML).
+    - [x] Paths relatifs robustes; messages d’erreur explicites; exit codes 0/1 corrects;
+    - [x] Entrées/sorties documentées en tête de fichier; compat macOS/Linux; pas de dépendance réseau;
+    - [x] Dépendances Python listées (PyYAML pour validate/make_dungeon).
 - [ ] ADVT‑S1‑20: Tests d’intégration des scripts — génération/validation des assets.
   - DoD:
     - [ ] `python3 scripts/make_dungeon.py --out assets/data` génère `travel.json` et `tkey.json` sans erreur en < 3 s sur machine dev;

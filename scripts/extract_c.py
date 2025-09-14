@@ -1,21 +1,29 @@
 #!/usr/bin/env python3
 """
-Extraction "C-equivalent" des tables travel/tkey en JSON, pour validation croisée.
+Extract C-equivalent travel/tkey tables into JSON for cross-validation.
 
-Ce script utilise la logique officielle de open-adventure-master/make_dungeon.py
-pour reconstruire les tables travel/tkey, puis les écrit sous assets/data en tant
-que travel_c.json et tkey_c.json. Ces fichiers servent au diff lors de la validation.
+Inputs
+- C-derived sources for travel and tkey (defaults: ./travel_c.c, ./tkey_c.c)
 
-Usage:
-  python3 scripts/extract_c.py [--out assets/data]
+Outputs
+- JSON files under the output directory (default: assets/data):
+  travel_c.json, tkey_c.json
+
+Usage
+  python3 scripts/extract_c.py [--out assets/data] [--in-travel path] [--in-tkey path]
+
+Notes
+- No network access; works on macOS/Linux; paths resolved via pathlib.
 """
 import re
 import json
-C_TRAVEL_FILE = 'travel_c.c'    # Le fichier C contenant les données 'travel'
-C_TKEY_FILE = 'tkey_c.c'    # Le fichier C contenant les données 'tkey'
-OUTPUT_TRAVEL_JSON = 'data/travel_c.json'  # Fichier JSON de sortie pour 'travel'
-OUTPUT_TKEY_JSON = 'data/tkey_c.json'      # Fichier JSON de sortie pour 'tkey'
-def extract_travel(lines):
+import argparse
+from pathlib import Path
+C_TRAVEL_FILE = 'travel_c.c'    # C input with 'travel' data (default)
+C_TKEY_FILE = 'tkey_c.c'        # C input with 'tkey' data (default)
+DEFAULT_TRAVEL_JSON = 'travel_c.json'  # Default (validation) JSON filename for 'travel'
+DEFAULT_TKEY_JSON = 'tkey_c.json'      # Default (validation) JSON filename for 'tkey'
+def extract_travel(lines, output_json_path: Path):
     travel_entries = []
     current_entry = {}
     entry_pattern = re.compile(r'\{ // from (\d+): (\w+)')
@@ -71,10 +79,11 @@ def extract_travel(lines):
     if current_entry:
         travel_entries.append(current_entry)
     # Enregistrer les données dans un fichier JSON
-    with open(OUTPUT_TRAVEL_JSON, 'w', encoding='utf-8') as f:
+    output_json_path.parent.mkdir(parents=True, exist_ok=True)
+    with output_json_path.open('w', encoding='utf-8') as f:
         json.dump(travel_entries, f, ensure_ascii=False, indent=4)
-    print(f"Données 'travel' extraites dans {OUTPUT_TRAVEL_JSON}.")
-def extract_tkey(lines):
+    print(f"Données 'travel' extraites dans {output_json_path}.")
+def extract_tkey(lines, output_json_path: Path):
     tkey_values = []
     tkey_started = False
     tkey_pattern = re.compile(r'const\s+long\s+tkey\[\]\s*=\s*\{')
@@ -92,19 +101,44 @@ def extract_tkey(lines):
             # Début du tableau tkey
             tkey_started = True
     # Enregistrer les données dans un fichier JSON
-    with open(OUTPUT_TKEY_JSON, 'w', encoding='utf-8') as f:
+    output_json_path.parent.mkdir(parents=True, exist_ok=True)
+    with output_json_path.open('w', encoding='utf-8') as f:
         json.dump(tkey_values, f, ensure_ascii=False, indent=4)
-    print(f"Données 'tkey' extraites dans {OUTPUT_TKEY_JSON}.")
+    print(f"Données 'tkey' extraites dans {output_json_path}.")
 def main():
-    # Lire le fichier source C
-    with open(C_TRAVEL_FILE, 'r', encoding='utf-8') as f:
-        lines = f.readlines()
-    # Extraire les données 'travel'
-    extract_travel(lines)
-    # Lire le fichier source C
-    with open(C_TKEY_FILE, 'r', encoding='utf-8') as f:
-        lines = f.readlines()
-    # Extraire les données 'tkey'
-    extract_tkey(lines)
+    parser = argparse.ArgumentParser(description="Extract C-equivalent travel/tkey into JSON")
+    parser.add_argument("--out", default=str(Path("assets")/"data"), help="Output directory for JSON (default: assets/data)")
+    parser.add_argument("--in-travel", default=C_TRAVEL_FILE, help="Path to C travel source (default: ./travel_c.c)")
+    parser.add_argument("--in-tkey", default=C_TKEY_FILE, help="Path to C tkey source (default: ./tkey_c.c)")
+    parser.add_argument("--canonical", action="store_true", help="Write canonical asset names (travel.json, tkey.json) instead of validation *_c.json")
+    args = parser.parse_args()
+
+    out_dir = Path(args.out)
+    out_dir.mkdir(parents=True, exist_ok=True)
+    travel_out_name = 'travel.json' if args.canonical else DEFAULT_TRAVEL_JSON
+    tkey_out_name = 'tkey.json' if args.canonical else DEFAULT_TKEY_JSON
+
+    # Read and extract 'travel'
+    travel_path = Path(args.__dict__["in_travel"])  # hyphen to underscore
+    if not travel_path.exists():
+        print(f"C travel source not found: {travel_path}")
+    else:
+        with travel_path.open('r', encoding='utf-8') as f:
+            lines = f.readlines()
+        extract_travel(lines, out_dir / travel_out_name)
+
+    # Read and extract 'tkey'
+    tkey_path = Path(args.__dict__["in_tkey"])  # hyphen to underscore
+    if not tkey_path.exists():
+        print(f"C tkey source not found: {tkey_path}")
+    else:
+        with tkey_path.open('r', encoding='utf-8') as f:
+            lines = f.readlines()
+        extract_tkey(lines, out_dir / tkey_out_name)
 if __name__ == '__main__':
-    main()
+    try:
+        main()
+    except Exception as e:
+        import sys
+        print(f"Error: {e}", file=sys.stderr)
+        sys.exit(1)
