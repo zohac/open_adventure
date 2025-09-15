@@ -210,19 +210,14 @@ This report is generated from assets/data/*.json and local files under assets/im
 | 5 | ROD | Black rod | no | no | 1 |  |
 | 6 | ROD2 | Black rod | no | no | 1 |  |
 | 7 | STEPS | *steps | no | yes | 2 |  |
-| 8 | BIRD | Little bird in cage | no | no | 1 | The bird's singing is quite melodious., The bird does not seem inclined to sing while in the cage., It almost seems as though the bird is trying to tell you something., To your surprise, you can understand the bird's chirping; it is
-singing about the joys of its forest home., The bird does not seem inclined to sing while in the cage., The bird is singing to you in gratitude for your having returned it to
-its home.  In return, it informs you of a magic word which it thinks
-you may find useful somewhere near the Hall of Mists.  The magic word
-changes frequently, but for now the bird believes it is "%s".  You
-thank the bird for this information, and it flies off into the forest. |
+| 8 | BIRD | Little bird in cage | no | no | 1 | The bird's singing is quite melodious. • The bird does not seem inclined to sing while in the cage. • It almost seems as though the bird is trying to tell you something. • To your surprise, you can understand the bird's chirping; it is singing about the joys of its forest home. • The bird does not seem inclined to sing while in the cage. • The bird is singing to you in gratitude for your having returned it to its home. In return, it informs you of a magic word which it thinks you may find useful somewhere near the Hall of Mists. The magic word changes frequently, but for now the bird believes it is "%s". You thank the bird for this information, and it flies off into the forest. |
 | 9 | DOOR | *rusty door | no | yes | 1 |  |
 | 10 | PILLOW | Velvet pillow | no | no | 1 |  |
-| 11 | SNAKE | *snake | no | yes | 1 | The snake is hissing venomously.,  |
+| 11 | SNAKE | *snake | no | yes | 1 | The snake is hissing venomously. •  |
 | 12 | FISSURE | *fissure | no | yes | 2 |  |
 | 13 | OBJ_13 | *stone tablet | no | yes | 1 |  |
-| 14 | CLAM | Giant clam  >GRUNT!< | no | no | 1 | The clam is as tight-mouthed as a, er, clam. |
-| 15 | OYSTER | Giant oyster  >GROAN!< | no | no | 1 | Even though it's an oyster, the critter's as tight-mouthed as a clam., It says the same thing it did before.  Hm, maybe it's a pun? |
+| 14 | CLAM | Giant clam >GRUNT!< | no | no | 1 | The clam is as tight-mouthed as a, er, clam. |
+| 15 | OYSTER | Giant oyster >GROAN!< | no | no | 1 | Even though it's an oyster, the critter's as tight-mouthed as a clam. • It says the same thing it did before. Hm, maybe it's a pun? |
 | 16 | MAGAZINE | "Spelunker Today" | no | no | 1 |  |
 | 17 | DWARF |  | no | yes | 1 |  |
 | 18 | KNIFE |  | no | no | 1 |  |
@@ -231,16 +226,16 @@ thank the bird for this information, and it flies off into the forest. |
 | 21 | WATER | Water in the bottle | no | no | 1 |  |
 | 22 | OIL | Oil in the bottle | no | no | 1 |  |
 | 23 | MIRROR | *mirror | no | yes | 1 |  |
-| 24 | PLANT | *plant | no | yes | 1 | The plant continues to ask plaintively for water., The plant continues to demand water., The plant now maintains a contented silence. |
+| 24 | PLANT | *plant | no | yes | 1 | The plant continues to ask plaintively for water. • The plant continues to demand water. • The plant now maintains a contented silence. |
 | 25 | PLANT2 | *phony plant | no | yes | 2 |  |
 | 26 | OBJ_26 | *stalactite | no | yes | 1 |  |
 | 27 | OBJ_27 | *shadowy figure and/or window | no | yes | 2 |  |
 | 28 | AXE | Dwarf's axe | no | no | 1 |  |
 | 29 | OBJ_29 | *cave drawings | no | yes | 1 |  |
 | 30 | OBJ_30 | *pirate/genie | no | yes | 1 |  |
-| 31 | DRAGON | *dragon | no | yes | 2 | The dragon's ominous hissing does not bode well for you., The dragon is, not surprisingly, silent., The dragon is, not surprisingly, silent. |
+| 31 | DRAGON | *dragon | no | yes | 2 | The dragon's ominous hissing does not bode well for you. • The dragon is, not surprisingly, silent. • The dragon is, not surprisingly, silent. |
 | 32 | CHASM | *chasm | no | yes | 2 |  |
-| 33 | TROLL | *troll | no | yes | 2 | The troll sounds quite adamant in his demand for a treasure., The troll sounds quite adamant in his demand for a treasure.,  |
+| 33 | TROLL | *troll | no | yes | 2 | The troll sounds quite adamant in his demand for a treasure. • The troll sounds quite adamant in his demand for a treasure. •  |
 | 34 | TROLL2 | *phony troll | no | yes | 2 |  |
 | 35 | BEAR |  | no | yes | 1 |  |
 | 36 | MESSAG | *message in second maze | no | yes | 1 |  |
@@ -283,43 +278,33 @@ thank the bird for this information, and it flies off into the forest. |
 ### Music
 | Key | Path | Exists | Size |
 | --- | --- | --- | --- |
-| DULL_RUMBLING | assets/audio/music/DULL_RUMBLING.ogg | no | 0 KB |
-| LOUD_ROAR | assets/audio/music/LOUD_ROAR.ogg | no | 0 KB |
-| MURMURING_SNORING | assets/audio/music/MURMURING_SNORING.ogg | no | 0 KB |
-| NO_MEANING | assets/audio/music/NO_MEANING.ogg | no | 0 KB |
-| SNAKES_HISSING | assets/audio/music/SNAKES_HISSING.ogg | no | 0 KB |
-| STREAM_GURGLES | assets/audio/music/STREAM_GURGLES.ogg | no | 0 KB |
-| STREAM_SPLASHES | assets/audio/music/STREAM_SPLASHES.ogg | no | 0 KB |
-| TOTAL_ROAR | assets/audio/music/TOTAL_ROAR.ogg | no | 0 KB |
-| WATERS_CRASHING | assets/audio/music/WATERS_CRASHING.ogg | no | 0 KB |
-| WIND_WHISTLES | assets/audio/music/WIND_WHISTLES.ogg | no | 0 KB |
+| DULL_RUMBLING | assets/audio/music/dull_rumbling.ogg | no | 0 KB |
+| LOUD_ROAR | assets/audio/music/loud_roar.ogg | no | 0 KB |
+| MURMURING_SNORING | assets/audio/music/murmuring_snoring.ogg | no | 0 KB |
+| NO_MEANING | assets/audio/music/no_meaning.ogg | no | 0 KB |
+| SNAKES_HISSING | assets/audio/music/snakes_hissing.ogg | no | 0 KB |
+| STREAM_GURGLES | assets/audio/music/stream_gurgles.ogg | no | 0 KB |
+| STREAM_SPLASHES | assets/audio/music/stream_splashes.ogg | no | 0 KB |
+| TOTAL_ROAR | assets/audio/music/total_roar.ogg | no | 0 KB |
+| WATERS_CRASHING | assets/audio/music/waters_crashing.ogg | no | 0 KB |
+| WIND_WHISTLES | assets/audio/music/wind_whistles.ogg | no | 0 KB |
 
 ### SFX
 | Key | Path | Exists | Size |
 | --- | --- | --- | --- |
-| Even though it's an oyster, the critter's as tight-mouthed as a clam. | assets/audio/sfx/Even though it's an oyster, the critter's as tight-mouthed as a clam..ogg | no | 0 KB |
-| It almost seems as though the bird is trying to tell you something. | assets/audio/sfx/It almost seems as though the bird is trying to tell you something..ogg | no | 0 KB |
-| It says the same thing it did before.  Hm, maybe it's a pun? | assets/audio/sfx/It says the same thing it did before.  Hm, maybe it's a pun?.ogg | no | 0 KB |
-| The bird does not seem inclined to sing while in the cage. | assets/audio/sfx/The bird does not seem inclined to sing while in the cage..ogg | no | 0 KB |
-| The bird is singing to you in gratitude for your having returned it to
-its home.  In return, it informs you of a magic word which it thinks
-you may find useful somewhere near the Hall of Mists.  The magic word
-changes frequently, but for now the bird believes it is "%s".  You
-thank the bird for this information, and it flies off into the forest. | assets/audio/sfx/The bird is singing to you in gratitude for your having returned it to
-its home.  In return, it informs you of a magic word which it thinks
-you may find useful somewhere near the Hall of Mists.  The magic word
-changes frequently, but for now the bird believes it is "%s".  You
-thank the bird for this information, and it flies off into the forest..ogg | no | 0 KB |
-| The bird's singing is quite melodious. | assets/audio/sfx/The bird's singing is quite melodious..ogg | no | 0 KB |
-| The clam is as tight-mouthed as a, er, clam. | assets/audio/sfx/The clam is as tight-mouthed as a, er, clam..ogg | no | 0 KB |
-| The dragon is, not surprisingly, silent. | assets/audio/sfx/The dragon is, not surprisingly, silent..ogg | no | 0 KB |
-| The dragon's ominous hissing does not bode well for you. | assets/audio/sfx/The dragon's ominous hissing does not bode well for you..ogg | no | 0 KB |
-| The ogre is apparently the strong, silent type. | assets/audio/sfx/The ogre is apparently the strong, silent type..ogg | no | 0 KB |
-| The plant continues to ask plaintively for water. | assets/audio/sfx/The plant continues to ask plaintively for water..ogg | no | 0 KB |
-| The plant continues to demand water. | assets/audio/sfx/The plant continues to demand water..ogg | no | 0 KB |
-| The plant now maintains a contented silence. | assets/audio/sfx/The plant now maintains a contented silence..ogg | no | 0 KB |
-| The snake is hissing venomously. | assets/audio/sfx/The snake is hissing venomously..ogg | no | 0 KB |
-| The troll sounds quite adamant in his demand for a treasure. | assets/audio/sfx/The troll sounds quite adamant in his demand for a treasure..ogg | no | 0 KB |
-| To your surprise, you can understand the bird's chirping; it is
-singing about the joys of its forest home. | assets/audio/sfx/To your surprise, you can understand the bird's chirping; it is
-singing about the joys of its forest home..ogg | no | 0 KB |
+| Even though it's an oyster, the critter's as tight-mouthed as a clam. | assets/audio/sfx/even_though_its_an_oyster_the_critters_as_tight_mouthed_as_a_clam.ogg | no | 0 KB |
+| It almost seems as though the bird is trying to tell you something. | assets/audio/sfx/it_almost_seems_as_though_the_bird_is_trying_to_tell_you_something.ogg | no | 0 KB |
+| It says the same thing it did before. Hm, maybe it's a pun? | assets/audio/sfx/it_says_the_same_thing_it_did_before_hm_maybe_its_a_pun.ogg | no | 0 KB |
+| The bird does not seem inclined to sing while in the cage. | assets/audio/sfx/the_bird_does_not_seem_inclined_to_sing_while_in_the_cage.ogg | no | 0 KB |
+| The bird is singing to you in gratitude for your having returned it to its home. In return, it informs you of a magic word which it thinks you may find useful somewhere near the Hall of Mists. The magic word changes frequently, but for now the bird believes it is "%s". You thank the bird for this information, and it flies off into the forest. | assets/audio/sfx/the_bird_is_singing_to_you_in_gratitude_for_your_having_returned_it_to_its_home_in_return_it_informs_you_of_a_magic_word_which_it_thinks_you_may_find_useful_somewhere_near_the_hall_of_mists_the_magic_word_changes_frequently_but_for_now_the_bird_believes_it_is_s_you_thank_the_bird_for_this_information_and_it_flies_off_into_the_forest.ogg | no | 0 KB |
+| The bird's singing is quite melodious. | assets/audio/sfx/the_birds_singing_is_quite_melodious.ogg | no | 0 KB |
+| The clam is as tight-mouthed as a, er, clam. | assets/audio/sfx/the_clam_is_as_tight_mouthed_as_a_er_clam.ogg | no | 0 KB |
+| The dragon is, not surprisingly, silent. | assets/audio/sfx/the_dragon_is_not_surprisingly_silent.ogg | no | 0 KB |
+| The dragon's ominous hissing does not bode well for you. | assets/audio/sfx/the_dragons_ominous_hissing_does_not_bode_well_for_you.ogg | no | 0 KB |
+| The ogre is apparently the strong, silent type. | assets/audio/sfx/the_ogre_is_apparently_the_strong_silent_type.ogg | no | 0 KB |
+| The plant continues to ask plaintively for water. | assets/audio/sfx/the_plant_continues_to_ask_plaintively_for_water.ogg | no | 0 KB |
+| The plant continues to demand water. | assets/audio/sfx/the_plant_continues_to_demand_water.ogg | no | 0 KB |
+| The plant now maintains a contented silence. | assets/audio/sfx/the_plant_now_maintains_a_contented_silence.ogg | no | 0 KB |
+| The snake is hissing venomously. | assets/audio/sfx/the_snake_is_hissing_venomously.ogg | no | 0 KB |
+| The troll sounds quite adamant in his demand for a treasure. | assets/audio/sfx/the_troll_sounds_quite_adamant_in_his_demand_for_a_treasure.ogg | no | 0 KB |
+| To your surprise, you can understand the bird's chirping; it is singing about the joys of its forest home. | assets/audio/sfx/to_your_surprise_you_can_understand_the_birds_chirping_it_is_singing_about_the_joys_of_its_forest_home.ogg | no | 0 KB |

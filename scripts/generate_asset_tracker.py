@@ -34,6 +34,23 @@ def load_json(path: Path) -> Any:
     return json.load(f)
 
 
+def sanitize_md(text: str) -> str:
+  """Sanitize free text for Markdown tables: fold newlines and escape pipes.
+
+  - Replace CR/LF with spaces, collapse multiple whitespace to single space.
+  - Escape '|' to avoid breaking table cells.
+  """
+  if not isinstance(text, str):
+    return str(text)
+  s = text.replace("\r\n", " ").replace("\n", " ").replace("\r", " ")
+  # Collapse multiple spaces
+  while "  " in s:
+    s = s.replace("  ", " ")
+  s = s.strip()
+  s = s.replace("|", "\\|")
+  return s
+
+
 def to_snake_case(s: str) -> str:
   t = s.strip()
   if not t:
@@ -103,7 +120,7 @@ def collect_objects() -> Tuple[List[List[str]], Set[str]]:
   sfx_keys: Set[str] = set()
   for idx, entry in enumerate(obj_json):
     name, data = entry[0], entry[1]
-    inv = data.get("inventory") or ""
+    inv = sanitize_md(data.get("inventory") or "")
     is_treasure = data.get("is_treasure", False)
     immovable = data.get("immovable", False)
     locs_raw = data.get("locations")
@@ -118,9 +135,11 @@ def collect_objects() -> Tuple[List[List[str]], Set[str]]:
       for sk in sounds:
         if isinstance(sk, str) and sk.strip():
           sfx_keys.add(sk)
+    # Join SFX keys with a bullet separator to avoid confusion with commas inside sentences.
+    sfx_joined = " • ".join([sanitize_md(s) for s in sounds if isinstance(s, str)])
     rows.append([
       str(idx), name, inv, "yes" if is_treasure else "no", "yes" if immovable else "no",
-      str(loc_count), ", ".join([s for s in sounds if isinstance(s, str)])
+      str(loc_count), sfx_joined
     ])
   return rows, sfx_keys
 
@@ -129,18 +148,22 @@ def collect_audio(music_keys: Set[str], sfx_keys: Set[str]) -> Tuple[List[List[s
   music_rows: List[List[str]] = []
   total_music = 0
   for mk in sorted(music_keys):
-    path = AUD_MUSIC_DIR / f"{mk}.ogg"
+    display_key = sanitize_md(mk)
+    file_key = to_snake_case(mk)
+    path = AUD_MUSIC_DIR / f"{file_key}.ogg"
     exists, size = file_info(path)
     total_music += size if exists else 0
-    music_rows.append([mk, str(path.relative_to(ROOT)), "yes" if exists else "no", fmt_size(size)])
+    music_rows.append([display_key, str(path.relative_to(ROOT)), "yes" if exists else "no", fmt_size(size)])
 
   sfx_rows: List[List[str]] = []
   total_sfx = 0
   for sk in sorted(sfx_keys):
-    path = AUD_SFX_DIR / f"{sk}.ogg"
+    display_key = sanitize_md(sk)
+    file_key = to_snake_case(sk)
+    path = AUD_SFX_DIR / f"{file_key}.ogg"
     exists, size = file_info(path)
     total_sfx += size if exists else 0
-    sfx_rows.append([sk, str(path.relative_to(ROOT)), "yes" if exists else "no", fmt_size(size)])
+    sfx_rows.append([display_key, str(path.relative_to(ROOT)), "yes" if exists else "no", fmt_size(size)])
   return music_rows, sfx_rows, total_music, total_sfx
 
 
@@ -172,18 +195,27 @@ def main() -> int:
   if MANIFEST.exists():
     try:
       manifest = load_json(MANIFEST)
-      bgm = manifest.get("audio", {}).get("bgm", []) or []
-      sfx = manifest.get("audio", {}).get("sfx", []) or []
+      audio = manifest.get("audio", {}) or {}
+      bgm = audio.get("bgm", []) or []
+      sfx = audio.get("sfx", []) or []
       mk = set()
       for e in bgm:
-        tk = e.get("trackKey")
+        tk = None
+        if isinstance(e, dict):
+          tk = e.get("trackKey") or e.get("key")
+        elif isinstance(e, str):
+          tk = e
         if isinstance(tk, str) and tk.strip():
-          mk.add(tk)
+          mk.add(tk.strip())
       sk = set()
       for e in sfx:
-        k = e.get("key")
+        k = None
+        if isinstance(e, dict):
+          k = e.get("key")
+        elif isinstance(e, str):
+          k = e
         if isinstance(k, str) and k.strip():
-          sk.add(k)
+          sk.add(k.strip())
       if mk:
         music_keys = mk
       if sk:
