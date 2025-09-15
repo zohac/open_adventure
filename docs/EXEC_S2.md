@@ -39,6 +39,7 @@ UI – livrables & DoD
     - [ ] Affiche les boutons: Nouvelle partie, Continuer, Charger, Options, Crédits;
     - [ ] Bouton Continuer désactivé si autosave absente (`SaveRepository.latest()` retourne null);
     - [ ] Navigation vers chacun des écrans cible fonctionne; aucun crash si aucun slot.
+    - [ ] Revue Game Designer (UX): labels/directions conformes, 3–7 actions visibles + overflow « Plus… », long/short corrects, accessibilité de base.
 - [ ] AdventurePage v0 (description + boutons travel + journal minimal)
   - DoD:
     - [ ] Affiche le titre et la description du lieu courant;
@@ -46,10 +47,12 @@ UI – livrables & DoD
     - [ ] Tap sur un bouton met à jour titre/description du nouveau lieu; pas de jank observable;
     - [ ] Journal affiche le dernier message retourné par `TurnResult`;
     - [ ] Respect de §17 (UX Mobile): 3–7 actions visibles max; si >7, rendre 6 + bouton `Plus…`; labels/icônes motion normalisés; première visite = `longDescription`, revisites = `shortDescription`.
+    - [ ] Revue Game Designer (UX): labels/directions conformes, 3–7 actions visibles + overflow « Plus… », long/short corrects, accessibilité de base.
 - [ ] Intégration GameController (injection par constructeur, état immuable)
   - DoD:
     - [ ] `init()` remplit l’état initial et `perform()` déclenche navigation + autosave;
     - [ ] Widget tests valident le cycle init→tap→render.
+    - [ ] Revue Game Designer (UX): labels/directions conformes, 3–7 actions visibles + overflow « Plus… », long/short corrects, accessibilité de base.
 - [ ] Préparation images de scène (placeholder + mapping)
   - DoD:
     - [ ] Slot visuel réservé au-dessus du heading avec `AspectRatio(16/9)` et placeholder statique léger;
@@ -57,6 +60,7 @@ UI – livrables & DoD
     - [ ] Si l’image est absente ou la feature désactivée, fallback textuel immédiat (zéro crash, zéro jank);
     - [ ] Tests: absence d’asset ne provoque pas d’exception et le layout reste stable.
     - [ ] Pixel‑perfect prêt: wrapper `PixelCanvas` (base 320×180) créé et utilisé par la zone visuelle; `FilterQuality.none` appliqué.
+    - [ ] Revue Game Designer (UX): labels/directions conformes, 3–7 actions visibles + overflow « Plus… », long/short corrects, accessibilité de base.
 
 Audio – livrables & DoD (bootstrap)
 
@@ -211,58 +215,104 @@ Suivi & tickets
 - [ ] ADVT‑S2‑01: Créer VOs `Command` et `TurnResult` (Domain) + tests basiques d’immutabilité.
   - DoD:
     - [ ] Classes final/const, sans setters; égalité basée sur valeur; tests de construction/égalité passent.
+    - [ ] Revue CTO validée (architecture/code/tests).
+    - [ ] Revue Game Designer validée (UX/labels, si applicable).
+    - [ ] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
 - [ ] ADVT‑S2‑02: Implémenter `ListAvailableActions` (travel only) — normalisation via `motions.json`, déduplication, tri heuristique.
   - DoD:
     - [ ] Retourne uniquement des actions `category=travel`; verbes normalisés; pas de doublons; ordre déterministe testé.
+    - [ ] Revue CTO validée (architecture/code/tests).
+    - [ ] Revue Game Designer validée (UX/labels/icônes, si applicable).
+    - [ ] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
 - [ ] ADVT‑S2‑03: Tests `ListAvailableActions` — cas: plusieurs verbes même destination, absence de condition, vérif labels/icônes.
   - DoD:
     - [ ] ≥ 5 cas couverts; labels lisibles; icônes mappées pour N/E/S/O et UP/DOWN.
+    - [ ] Revue CTO validée (architecture/code/tests).
+    - [ ] Revue Game Designer validée (UX/labels/icônes, si applicable).
+    - [ ] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
 - [ ] ADVT‑S2‑04: Implémenter `ApplyTurn` (goto) — mutation `Game` (loc, oldloc/newloc, turns++), production messages description.
   - DoD:
     - [ ] Mise à jour cohérente des champs; message contient `longDescription` si disponible sinon `short`.
+    - [ ] Revue CTO validée (architecture/code/tests).
+    - [ ] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
 - [ ] ADVT‑S2‑05: Tests `ApplyTurn` — transition de lieu, intégrité `turns`, messages non vides.
   - DoD:
     - [ ] Trois cas: normal, verb sans règle (échec attendu), multi‑règles → prend la première; tous verts.
+    - [ ] Revue CTO validée (architecture/code/tests).
+    - [ ] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
 - [ ] ADVT‑S2‑06: Implémenter `SaveRepository` minimal (autosave/latest) — fichiers JSON, répertoires platform‑aware.
   - DoD:
     - [ ] Autosave écrit un fichier `autosave.json` valide; latest lit et reconstruit `GameSnapshot`.
+    - [ ] Revue CTO validée (architecture/code/tests).
+    - [ ] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
 - [ ] ADVT‑S2‑07: Tests `SaveRepository` minimal — round‑trip autosave/latest, gestion absence d’autosave.
   - DoD:
     - [ ] Latest retourne `null` si fichier absent; round‑trip préserve valeurs; tests isolés du FS réel.
+    - [ ] Revue CTO validée (architecture/code/tests).
+    - [ ] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
 - [ ] ADVT‑S2‑08: Implémenter `GameController` — `init/perform/refreshActions`, binding autosave, état immuable.
   - DoD:
     - [ ] `init()` renseigne état; `perform()` notifie changements; dépendances injectées par constructeur; tests unitaires verts.
+    - [ ] Revue CTO validée (architecture/code/tests).
+    - [ ] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
 - [ ] ADVT‑S2‑09: Tests `GameController` — `init()` produit actions, `perform()` appelle autosave exactement 1 fois (mock), met à jour l’état.
   - DoD:
     - [ ] Vérification avec mockito: une seule invocation d’autosave par tour; journal mis à jour.
+    - [ ] Revue CTO validée (architecture/code/tests).
+    - [ ] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
 - [ ] ADVT‑S2‑10: Implémenter `AdventurePage` v0 — description + boutons d’actions (travel) + journal minimal.
   - DoD:
     - [ ] Rendu stable; aucun `UnimplementedError`; état contrôlé par injection du contrôleur.
+    - [ ] Revue CTO validée (architecture/code/tests).
+    - [ ] Revue Game Designer validée (UX/flow, si applicable).
+    - [ ] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
 - [ ] ADVT‑S2‑11: Widget tests `AdventurePage` — rendu initial, tap bouton → mise à jour description/titre.
   - DoD:
     - [ ] Deux tests passent sur simulateur de widget; pumpAndSettle sans jank apparent.
+    - [ ] Revue CTO validée (architecture/code/tests).
+    - [ ] Revue Game Designer validée (UX/labels, si applicable).
+    - [ ] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
 - [ ] ADVT‑S2‑12: Normaliser motions — table `canonicalMotion[alias]`, mapping icônes/labels (UI utils) + tests utilitaires.
   - DoD:
     - [ ] Aliases courants couverts (N,S,E,W,NE,NW,SE,SW,UP,DOWN,IN,OUT); tests de mapping verts.
+    - [ ] Revue CTO validée (architecture/code/tests).
+    - [ ] Revue Game Designer validée (icônes/labels, si applicable).
+    - [ ] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
 - [ ] ADVT‑S2‑13: Gestion d’absence d’actions (lieu cul‑de‑sac non conditionné) — afficher message et action « Observer ».
   - DoD:
     - [ ] UI affiche un fallback; pas de crash; test dédié.
+    - [ ] Revue CTO validée (architecture/code/tests).
+    - [ ] Revue Game Designer validée (UX/visuel, si applicable).
+    - [ ] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
 - [ ] ADVT‑S2‑14: Lint/Analyze — zéro warning; vérifier tailles de listes, null‑safety.
   - DoD:
     - [ ] `flutter analyze` zéro warning; CI locale verte.
+    - [ ] Revue CTO validée (lint/qualité).
+    - [ ] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
 - [ ] ADVT‑S2‑15: Mesure perf manuelle — interaction bouton→render < 16 ms; consigner dans note d’implémentation.
   - DoD:
     - [ ] Mesure notée (screenshot devtools ou log); pas de frame au‑delà de 16 ms sur action simple.
+    - [ ] Revue CTO validée (perfs mesurées).
+    - [ ] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
 - [ ] ADVT‑S2‑16: Préparer l’intégration des images — slot UI + utilitaire `locationImageKey` + tests de fallback.
   - DoD:
     - [ ] Fichier utilitaire créé et testé; AdventurePage v0 affiche un placeholder stable; absence d’asset ne loggue pas d’erreur.
+    - [ ] Revue CTO validée (architecture/code/tests).
+    - [ ] Revue Game Designer validée (cadrage visuel, si applicable).
+    - [ ] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
 - [ ] ADVT‑S2‑17: Audio — bootstrap `AudioController` + cycle de vie + focus.
   - DoD:
     - [ ] `AudioController` instanciable en test; `playBgm/stopBgm/playSfx` n’échouent pas (mocks);
     - [ ] Pause/resume appelé sur changement de lifecycle; pas d’accès réseau; pas de crash.
+    - [ ] Revue CTO validée (architecture/audio/focus/tests).
+    - [ ] Revue Game Designer validée (volumes défaut, si applicable).
+    - [ ] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
 - [ ] ADVT‑S2‑18: Audio — Settings volumes Musique/SFX persistés et appliqués.
   - DoD:
     - [ ] Modifs de sliders reflétées instantanément; persistance testée; restaurées au démarrage.
+    - [ ] Revue CTO validée (architecture/persistance/tests).
+    - [ ] Revue Game Designer validée (UX audio, si applicable).
+    - [ ] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
 
 Références C (source canonique)
 

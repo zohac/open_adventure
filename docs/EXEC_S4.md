@@ -59,28 +59,34 @@ UI – livrables & DoD
   - DoD:
     - [ ] StatusBar affiche correctement score/tours/lieu/lampe en temps réel;
     - [ ] Groupes d’actions avec entêtes et focus management (clavier/lecteur d’écran) fonctionnels.
+    - [ ] Revue Game Designer (UX/Art/Audio): polish final 16‑bit validé, images nettes et budgets respectés, BGM/SFX équilibrés (ducking, niveaux), i18n/a11y complètes.
 - [ ] SavesPage
   - DoD:
     - [ ] Liste des slots triée par `updated_at` avec `title/progression/date`;
     - [ ] Actions Charger/Supprimer avec confirmations; widget tests tap→callbacks OK.
+    - [ ] Revue Game Designer (UX/Art/Audio): polish final 16‑bit validé, images nettes et budgets respectés, BGM/SFX équilibrés (ducking, niveaux), i18n/a11y complètes.
 - [ ] SettingsPage
   - DoD:
     - [ ] Sélection de thème/texte/langue persistée; changement de langue reflété dans l’UI;
     - [ ] Tests de persistance et de changement de locale.
+    - [ ] Revue Game Designer (UX/Art/Audio): polish final 16‑bit validé, images nettes et budgets respectés, BGM/SFX équilibrés (ducking, niveaux), i18n/a11y complètes.
 - [ ] EndGamePage/Dialog
   - DoD:
     - [ ] Affiche breakdown complet et classe; actions rejouer/charger/crédits fonctionnelles;
     - [ ] Widget tests valident les boutons et la navigation.
+    - [ ] Revue Game Designer (UX/Art/Audio): polish final 16‑bit validé, images nettes et budgets respectés, BGM/SFX équilibrés (ducking, niveaux), i18n/a11y complètes.
 - [ ] Images — polish & contrôles
   - DoD:
     - [ ] Préchargement de l’image du prochain lieu (si connu) lors d’un `ApplyTurn` réussi;
     - [ ] Paramètre `Settings`: toggle « Afficher les images de scène » (on/off) persisté; par défaut activé sur appareils ≥ 3 Go RAM, sinon off;
     - [ ] Gestion du cache: limite `ImageCache.maximumSizeBytes` ajustée (64–96 MB) et testée sans OOM;
     - [ ] Mode sombre: overlay/tonemapping léger pour conserver la lisibilité; tests manuels visuels notés.
+    - [ ] Revue Game Designer (UX/Art/Audio): polish final 16‑bit validé, images nettes et budgets respectés, BGM/SFX équilibrés (ducking, niveaux), i18n/a11y complètes.
 - [ ] Thème 16‑bit
   - DoD:
     - [ ] Palette/typographie/espacement cohérents avec un style 16‑bit; icônes pixelisées;
     - [ ] `FilterQuality.none` vérifié sur toutes les images pixel art; pas de scaling non entier dans `PixelCanvas`.
+    - [ ] Revue Game Designer (UX/Art/Audio): polish final 16‑bit validé, images nettes et budgets respectés, BGM/SFX équilibrés (ducking, niveaux), i18n/a11y complètes.
 
 Audio – livrables & DoD (polish)
 
@@ -88,14 +94,17 @@ Audio – livrables & DoD (polish)
   - DoD:
     - [ ] Préchargement BGM de la zone suivante (si déterminable) via `just_audio` (ou warm‑up minimal);
     - [ ] BGM/SFX chargés/déchargés pour maintenir l’empreinte mémoire audio < 20 Mo.
+    - [ ] Revue Game Designer (UX/Art/Audio): polish final 16‑bit validé, images nettes et budgets respectés, BGM/SFX équilibrés (ducking, niveaux), i18n/a11y complètes.
 - [ ] Ducking et mixage final
   - DoD:
     - [ ] Ducking BGM (−4 dB / 200 ms) sur SFX majeurs (alerte/danger/victoire);
     - [ ] Courbes de volume lissées (pas de clicks); validation d’écoute.
+    - [ ] Revue Game Designer (UX/Art/Audio): polish final 16‑bit validé, images nettes et budgets respectés, BGM/SFX équilibrés (ducking, niveaux), i18n/a11y complètes.
 - [ ] Settings audio avancés
   - DoD:
     - [ ] Toggles Musique/SFX (on/off) + sliders; reset défaut; persistance prouvée;
     - [ ] Option « Audio rétro » appliquant un léger EQ (facultatif) — si non implémenté, masquer.
+    - [ ] Revue Game Designer (UX/Art/Audio): polish final 16‑bit validé, images nettes et budgets respectés, BGM/SFX équilibrés (ducking, niveaux), i18n/a11y complètes.
 
 Contrats — Domain (extraits)
 
@@ -178,60 +187,88 @@ Suivi & tickets
 - [ ] ADVT‑S4‑01: Implémenter `ComputeScore` complet (parité `score.c`) — trésors, exploration, pénalités, indices, morts, bonus, classes + tests miroirs.
   - DoD:
     - [ ] Chaque composante testée isolément; scénarios intégrés reproduisent sorties attendues; écart justifié documenté si non nul.
+    - [ ] Revue de code CTO: scoring conforme `score.c`, fins de jeu stables, multi‑saves robustes, perfs/coverage aux seuils.
 - [ ] ADVT‑S4‑02: Détection des fins de jeu — conditions victoire/closing/mort/abandon, structure `EndGame` + tests de scénarios.
   - DoD:
     - [ ] Détection correcte des quatre raisons; `EndGame` porte reason/score; UI reçoit l’événement; tests verts.
+    - [ ] Revue de code CTO: scoring conforme `score.c`, fins de jeu stables, multi‑saves robustes, perfs/coverage aux seuils.
 - [ ] ADVT‑S4‑03: Système d’indices — `GetHints` (disponibilité contextuelle) + `UseHint(id)` (malus, idempotence) + tests.
   - DoD:
     - [ ] Indices proposés seulement en contexte; malus appliqué une seule fois par indice; tests couvrant répétition.
+    - [ ] Revue de code CTO: scoring conforme `score.c`, fins de jeu stables, multi‑saves robustes, perfs/coverage aux seuils.
 - [ ] ADVT‑S4‑04: `SaveRepository` complet — `save/load/list/latest/delete`, écriture atomique (temp+rename), tolérance champs inconnus + tests.
   - DoD:
     - [ ] Liste triée par `updated_at`; delete retire le fichier; write atomicité simulée/testée; lecture ignore champs inconnus.
+    - [ ] Revue de code CTO: scoring conforme `score.c`, fins de jeu stables, multi‑saves robustes, perfs/coverage aux seuils.
 - [ ] ADVT‑S4‑05: `SavesPage` — liste des slots (tri, métadonnées), charger/supprimer avec confirmations + widget tests.
   - DoD:
     - [ ] Affiche slots avec `title/progression/date`; actions fonctionnelles; tests widgets tap→callbacks OK.
+    - [ ] Revue de code CTO: scoring conforme `score.c`, fins de jeu stables, multi‑saves robustes, perfs/coverage aux seuils.
+    - [ ] Revue Game Designer validée (UX flows, wording, lisibilité).
 - [ ] ADVT‑S4‑06: `SettingsPage` — thème, taille de police, langue (FR/EN), persistance préférences + tests.
   - DoD:
     - [ ] Préférences persistées et restaurées; changement de langue reflété dans l’UI; tests.
+    - [ ] Revue de code CTO: scoring conforme `score.c`, fins de jeu stables, multi‑saves robustes, perfs/coverage aux seuils.
+    - [ ] Revue Game Designer validée (UX réglages, i18n terminologie).
 - [ ] ADVT‑S4‑07: `AdventurePage` v2 — `StatusBar` (score/tours/lampe), groupes d’actions, focus management + tests UI.
   - DoD:
     - [ ] StatusBar affiche valeurs correctes; navigation au clavier/lecteur d’écran cohérente; tests.
+    - [ ] Revue de code CTO: scoring conforme `score.c`, fins de jeu stables, multi‑saves robustes, perfs/coverage aux seuils.
+    - [ ] Revue Game Designer validée (lisibilité, hiérarchie visuelle, focus management).
 - [ ] ADVT‑S4‑08: `EndGamePage/Dialog` — affichage breakdown, classe, actions (rejouer/charger/crédits) + tests.
   - DoD:
     - [ ] Breakdown complet; actions mènent aux écrans attendus; tests widgets verts.
+    - [ ] Revue de code CTO: scoring conforme `score.c`, fins de jeu stables, multi‑saves robustes, perfs/coverage aux seuils.
+    - [ ] Revue Game Designer validée (UX de fin, textes et classements).
 - [ ] ADVT‑S4‑09: i18n finale — ARB FR/EN, extraction/validation des clés, test « clés manquantes ».
   - DoD:
     - [ ] Aucun placeholder dur dans l’UI; script de validation garantit l’existence des clés; tests de locale passent.
+    - [ ] Revue de code CTO: scoring conforme `score.c`, fins de jeu stables, multi‑saves robustes, perfs/coverage aux seuils.
+    - [ ] Revue Game Designer validée (traductions/tonalité FR/EN).
 - [ ] ADVT‑S4‑10: Accessibilité finale — vérif voice‑over/lecteur d’écran, contrastes, navigation clavier (émulée) + correctifs.
   - DoD:
     - [ ] Audit accessibilité passé (checklist interne); problèmes critiques corrigés; tests semantics clés.
+    - [ ] Revue de code CTO: scoring conforme `score.c`, fins de jeu stables, multi‑saves robustes, perfs/coverage aux seuils.
+    - [ ] Revue Game Designer validée (a11y perçue, confort de lecture).
 - [ ] ADVT‑S4‑11: Job `data-validate` (optionnel) — exécuter `scripts/validate_json.py`, rapporter divergences en CI (non bloquant mobile).
   - DoD:
     - [ ] Job CI configuré; sortie lisible; pipeline mobile non bloqué si indisponible.
+    - [ ] Revue de code CTO: scoring conforme `score.c`, fins de jeu stables, multi‑saves robustes, perfs/coverage aux seuils.
 - [ ] ADVT‑S4‑12: Perf & hardening — parse en Isolate (flag ON si >1 Mo), bench démarrage, traçage jank, profil mémoire + correctifs.
   - DoD:
     - [ ] Démarrage à froid < 1,0 s; aucune frame > 16 ms sur parcours nominal; mémoire < 150 Mo; traces enregistrées.
+    - [ ] Revue de code CTO: scoring conforme `score.c`, fins de jeu stables, multi‑saves robustes, perfs/coverage aux seuils.
 - [ ] ADVT‑S4‑13: Résilience sauvegardes — stratégie de rollback, gestion corruption (fallback autosave) + tests d’erreurs.
   - DoD:
     - [ ] Corruption simulée → fallback sur dernier autosave; aucun crash; logs informatifs.
+    - [ ] Revue de code CTO: scoring conforme `score.c`, fins de jeu stables, multi‑saves robustes, perfs/coverage aux seuils.
 - [ ] ADVT‑S4‑14: Lint/Analyze + Couverture — Domain ≥ 90%, Data ≥ 80%, Application ≥ 80%, Presentation ≥ 60% (enforcer CI).
   - DoD:
     - [ ] Rapports LCOV au‑dessus des seuils; `flutter analyze` zéro warning; CI verte.
+    - [ ] Revue de code CTO: scoring conforme `score.c`, fins de jeu stables, multi‑saves robustes, perfs/coverage aux seuils.
 - [ ] ADVT‑S4‑15: Images — préchargement et gestion mémoire (cache) + toggle Settings.
   - DoD:
-    - [ ] `precacheImage` appelé post‑tour pour le prochain lieu quand identifiable; 
-    - [ ] Toggle Settings fonctionnel et persisté; défaut basé sur heuristique RAM; 
+    - [ ] `precacheImage` appelé post‑tour pour le prochain lieu quand identifiable;
+    - [ ] Toggle Settings fonctionnel et persisté; défaut basé sur heuristique RAM;
     - [ ] Ajustement du cache et validation sans OOM sur devices cibles.
+    - [ ] Revue de code CTO: scoring conforme `score.c`, fins de jeu stables, multi‑saves robustes, perfs/coverage aux seuils.
+    - [ ] Revue Game Designer validée (DA 16‑bit finale, budgets, lisibilité sombre/clair).
 - [ ] ADVT‑S4‑16: Audio — preload/mémoire (empreinte < 20 Mo) + ducking mixage final.
   - DoD:
     - [ ] Preload du prochain BGM opérationnel; ducking audible propre; mesure mémoire conforme;
     - [ ] Tests unitaires manager (états/volumes), validation d’écoute manuelle documentée.
+    - [ ] Revue de code CTO: scoring conforme `score.c`, fins de jeu stables, multi‑saves robustes, perfs/coverage aux seuils.
+    - [ ] Revue Game Designer validée (mixage final, ducking, niveaux relatifs BGM/SFX).
 - [ ] ADVT‑S4‑17: Audio — Settings avancés (toggles + sliders + reset + persistance).
   - DoD:
     - [ ] Persistance prouvée; UI réagit instantanément; test d’intégration traverse ON/OFF sans erreur.
+    - [ ] Revue de code CTO: scoring conforme `score.c`, fins de jeu stables, multi‑saves robustes, perfs/coverage aux seuils.
+    - [ ] Revue Game Designer validée (UX audio — sliders/toggles compréhensibles).
 - [ ] ADVT‑S4‑18: Art — compléter les scènes restantes (Asset Bible) + QA finale 16‑bit.
   - DoD:
     - [ ] Toutes les scènes planifiées livrées; budgets respectés; rendu net via PixelCanvas; checklists DA/A11y passées.
+    - [ ] Revue de code CTO: scoring conforme `score.c`, fins de jeu stables, multi‑saves robustes, perfs/coverage aux seuils.
+    - [ ] Revue Game Designer validée (DA finale, conformité Asset Bible et qualité perçue).
 
 Références C (source canonique)
 

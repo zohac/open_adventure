@@ -49,29 +49,35 @@ UI – livrables & DoD
     - [ ] Sections d’actions regroupées (travel/interaction/meta) avec titres;
     - [ ] Navigation entre onglets sans perte d’état;
     - [ ] Respect de §17: priorisation (sécurité > travel > interaction > méta), 3–7 actions visibles (overflow paginé/scrollé), labels/icônes normalisés; `Observer` rejoue la description longue si disponible.
+    - [ ] Revue Game Designer (UX): labels/directions conformes, 3–7 actions visibles + overflow « Plus… », long/short corrects, accessibilité de base.
 - [ ] InventoryPage
   - DoD:
     - [ ] Liste des objets portés avec actions contextuelles par item (poser/utiliser/éteindre/allumer);
     - [ ] Tap déclenche `perform` et met à jour l’inventaire/journal.
+    - [ ] Revue Game Designer (UX): labels/directions conformes, 3–7 actions visibles + overflow « Plus… », long/short corrects, accessibilité de base.
 - [ ] MapPage v1
   - DoD:
     - [ ] Rendu des nœuds/arêtes découverts; lieu courant surligné;
     - [ ] Golden test stable pour un graphe d’exemple.
+    - [ ] Revue Game Designer (UX): labels/directions conformes, 3–7 actions visibles + overflow « Plus… », long/short corrects, accessibilité de base.
 - [ ] JournalView
   - DoD:
     - [ ] Append des messages, trim au seuil (ex: 200), scroll to bottom sur nouvel ajout;
     - [ ] Widget test valide l’append + scroll.
+    - [ ] Revue Game Designer (UX): labels/directions conformes, 3–7 actions visibles + overflow « Plus… », long/short corrects, accessibilité de base.
 - [ ] Image de scène par lieu (intégration S3)
   - DoD:
     - [ ] `pubspec.yaml` déclare les fichiers présents sous `assets/images/locations/` (listing explicite des .webp);
     - [ ] `AdventurePage` charge `assets/images/locations/<key>.webp` via `locationImageKey` (S2) avec `FadeInImage` + placeholder, rendu via `PixelCanvas` (scale entier);
     - [ ] Contraintes: `AspectRatio 16/9`, poids ≤ 200 KB/image, total art ≤ 10 MB; `FilterQuality.none`; fallback silencieux si manquant; préchargement de l’image du prochain lieu après `ApplyTurn`;
     - [ ] Accessibilité: `semanticsLabel` = nom du lieu; tests widget vérifient fallback et affichage de l’image quand présente.
- - [ ] Art Bible (S3) — scènes prioritaires
+    - [ ] Revue Game Designer (UX): labels/directions conformes, 3–7 actions visibles + overflow « Plus… », long/short corrects, accessibilité de base.
+- [ ] Art Bible (S3) — scènes prioritaires
   - DoD:
     - [ ] 15–20 lieux livrés selon `ART_ASSET_BIBLE.md` (clés `<key>` valides, palettes/contrastes conformes, VFX discrets seulement);
     - [ ] Revue croisée dev/art: rendu net via `PixelCanvas` (aucun flou), contrôles sur device (×2/×3);
     - [ ] Budget total art ≤ 10 Mo maintenu.
+    - [ ] Revue Game Designer (UX): labels/directions conformes, 3–7 actions visibles + overflow « Plus… », long/short corrects, accessibilité de base.
 
 Audio – livrables & DoD
 
@@ -200,76 +206,107 @@ Suivi & tickets
 - [ ] ADVT‑S3‑01: Implémenter `EvaluateCondition` (types: carry, with, not, at, state, prop, have) + tests de vérité.
   - DoD:
     - [ ] Chaque type retourne vrai/faux correct sur scénarios contrôlés; cas de combinaison `not` couvert; couverture ≥ 90% sur ce module.
+    - [ ] Revue de code CTO: séparation stricte (Domain vs UI), interactions/conditions encapsulées en use cases, tests Domain ≥ 85%.
 - [ ] ADVT‑S3‑02: Étendre `ListAvailableActions` — catégories `interaction` et `meta` (Inventaire/Observer/Carte) + tests.
   - DoD:
     - [ ] Options contextuelles visibles uniquement quand applicables; pas de doublons; tri par priorité (sécurité > travel > interaction > méta);
     - [ ] Tests: présence de `Inventaire/Observer/Carte` et d’au moins 2 interactions valides.
+    - [ ] Revue de code CTO: séparation stricte (Domain vs UI), interactions/conditions encapsulées en use cases, tests Domain ≥ 85%.
 - [ ] ADVT‑S3‑03: Use case `TakeObject` — maj inventaire/lieu, interdits (immovable), messages + tests.
   - DoD:
     - [ ] Objet passe de lieu → inventaire; immovable interdit avec message spécifique; tests succès/échec.
+    - [ ] Revue de code CTO: séparation stricte (Domain vs UI), interactions/conditions encapsulées en use cases, tests Domain ≥ 85%.
 - [ ] ADVT‑S3‑04: Use case `DropObject` — maj inventaire/lieu, messages + tests.
   - DoD:
     - [ ] Objet retiré de l’inventaire et visible au lieu courant; message ajouté au journal; tests verts.
+    - [ ] Revue de code CTO: séparation stricte (Domain vs UI), interactions/conditions encapsulées en use cases, tests Domain ≥ 85%.
 - [ ] ADVT‑S3‑05: Use case `OpenObject` — gestion états simples via `states/descriptions`, contraintes triviales + tests.
   - DoD:
     - [ ] État bascule open; description cohérente; échec si condition non satisfaite (clé manquante) — S3: cas trivials seulement.
+    - [ ] Revue de code CTO: séparation stricte (Domain vs UI), interactions/conditions encapsulées en use cases, tests Domain ≥ 85%.
 - [ ] ADVT‑S3‑06: Use case `CloseObject` — états inverses + tests.
   - DoD:
     - [ ] État bascule closed; messages corrects; tests couverts.
+    - [ ] Revue de code CTO: séparation stricte (Domain vs UI), interactions/conditions encapsulées en use cases, tests Domain ≥ 85%.
 - [ ] ADVT‑S3‑07: Use case `LightLamp` — prérequis batterie, flags, messages + tests (incl. échec).
   - DoD:
     - [ ] Lampe passe à allumée; compteur non négatif; message d’avertissement quand seuil; test d’échec batterie vide.
+    - [ ] Revue de code CTO: séparation stricte (Domain vs UI), interactions/conditions encapsulées en use cases, tests Domain ≥ 85%.
 - [ ] ADVT‑S3‑08: Use case `ExtinguishLamp` — transitions + tests.
   - DoD:
     - [ ] Lampe éteinte; pas de décrément au tour suivant; tests verts.
+    - [ ] Revue de code CTO: séparation stricte (Domain vs UI), interactions/conditions encapsulées en use cases, tests Domain ≥ 85%.
 - [ ] ADVT‑S3‑09: Use case `Examine` — description contextuelle (courte/longue) + tests.
   - DoD:
     - [ ] Retourne description adaptée au contexte (porté/en vue); message non vide; tests.
+    - [ ] Revue de code CTO: séparation stricte (Domain vs UI), interactions/conditions encapsulées en use cases, tests Domain ≥ 85%.
 - [ ] ADVT‑S3‑10: `InventoryUseCase` — rendu texte de l’inventaire pour journal/UI + tests.
   - DoD:
     - [ ] Liste formatée stable; test d’objets multiples, ordre défini.
+    - [ ] Revue de code CTO: séparation stricte (Domain vs UI), interactions/conditions encapsulées en use cases, tests Domain ≥ 85%.
 - [ ] ADVT‑S3‑11: `DwarfSystem.tick` (minimal) — apparition/déplacement, messages, déterminisme par seed + tests.
   - DoD:
     - [ ] Avec seed fixe, séquence de messages stable; aucune modification d’objets/chemins en S3; tests 100%.
+    - [ ] Revue de code CTO: séparation stricte (Domain vs UI), interactions/conditions encapsulées en use cases, tests Domain ≥ 85%.
 - [ ] ADVT‑S3‑12: `ComputeScore(partiel)` — trésors/exploration/pénalités + tests.
   - DoD:
     - [ ] Calcule total = trésors + exploration − pénalités; valeurs attendues sur scénarios unitaires; tests verts.
+    - [ ] Revue de code CTO: séparation stricte (Domain vs UI), interactions/conditions encapsulées en use cases, tests Domain ≥ 85%.
 - [ ] ADVT‑S3‑13: Intégrer interactions dans `ApplyTurn` (routing) + autosave après mutation + tests d’intégration.
   - DoD:
     - [ ] `ApplyTurn` route par `category`; autosave appelée une fois par tour; tests d’intégration couvrent 2 interactions.
+    - [ ] Revue de code CTO: séparation stricte (Domain vs UI), interactions/conditions encapsulées en use cases, tests Domain ≥ 85%.
 - [ ] ADVT‑S3‑14: Mettre à jour `GameController` — journal append, timers lampe par tour, hook nains + tests.
   - DoD:
     - [ ] Journal conserve les 200 derniers messages; timers décrémentés si lampe allumée; nains hook exécuté; tests.
+    - [ ] Revue de code CTO: séparation stricte (Domain vs UI), interactions/conditions encapsulées en use cases, tests Domain ≥ 85%.
 - [ ] ADVT‑S3‑15: `InventoryPage` — liste + actions contextuelles + widget tests.
   - DoD:
     - [ ] Affiche objets portés; actions par item fonctionnelles; widget tests tap→perform OK.
+    - [ ] Revue de code CTO: séparation stricte (Domain vs UI), interactions/conditions encapsulées en use cases, tests Domain ≥ 85%.
+    - [ ] Revue Game Designer validée (UX/labels/interactions).
 - [ ] ADVT‑S3‑16: `MapPage` v1 — graphe des lieux découverts + goldens.
   - DoD:
     - [ ] Noeuds/arêtes rendus pour lieux visités; lieu courant mis en évidence; golden test stable.
+    - [ ] Revue de code CTO: séparation stricte (Domain vs UI), interactions/conditions encapsulées en use cases, tests Domain ≥ 85%.
+    - [ ] Revue Game Designer validée (lisibilité, conventions UX).
 - [ ] ADVT‑S3‑17: `JournalView` — append/trim/scroll bottom + tests.
   - DoD:
     - [ ] Ajoute en bas; tronque au‑delà du seuil; scroll automatique testé.
+    - [ ] Revue de code CTO: séparation stricte (Domain vs UI), interactions/conditions encapsulées en use cases, tests Domain ≥ 85%.
+    - [ ] Revue Game Designer validée (UX/lecture/ordre de focus).
 - [ ] ADVT‑S3‑18: Accessibilité de base — labels semantics sur actions et listes + vérifs.
   - DoD:
     - [ ] Tous boutons dotés de labels; tests semantics passent (where applicable);
     - [ ] Revue manuelle sur lecteur d’écran.
+    - [ ] Revue de code CTO: séparation stricte (Domain vs UI), interactions/conditions encapsulées en use cases, tests Domain ≥ 85%.
+    - [ ] Revue Game Designer validée (a11y de base confirmée).
 - [ ] ADVT‑S3‑19: Lint/Analyze — zéro warning; couverture Domain ≥ 85%.
   - DoD:
     - [ ] `flutter analyze` ok; rapport de couverture ≥ 85% sur Domain; build de test vert.
+    - [ ] Revue de code CTO: séparation stricte (Domain vs UI), interactions/conditions encapsulées en use cases, tests Domain ≥ 85%.
 - [ ] ADVT‑S3‑20: Déclarer et intégrer les images de scène — `pubspec.yaml` + widget `LocationImage`.
   - DoD:
     - [ ] `pubspec.yaml` liste les .webp présents; `LocationImage` affiche l’image quand disponible sinon placeholder;
     - [ ] Widget tests: image présente → rendue; image absente → placeholder, zéro exception.
+    - [ ] Revue de code CTO: séparation stricte (Domain vs UI), interactions/conditions encapsulées en use cases, tests Domain ≥ 85%.
+    - [ ] Revue Game Designer validée (DA 16‑bit/palette/netteté/budgets).
 - [ ] ADVT‑S3‑21: Audio — mapping zones→BGM + crossfade sur changement de zone.
   - DoD:
     - [ ] Crossfade audible propre; loop gapless validé; latence < 50 ms à l’oreille;
     - [ ] Tests unitaires: sélection de track par zone; intégration: appels AudioController au bon moment.
+    - [ ] Revue de code CTO: séparation stricte (Domain vs UI), interactions/conditions encapsulées en use cases, tests Domain ≥ 85%.
+    - [ ] Revue Game Designer validée (mixage/DA audio).
 - [ ] ADVT‑S3‑22: Audio — SFX d’interaction (prendre/poser/lampe/danger nain) + throttle.
   - DoD:
     - [ ] SFX déclenchés aux bons événements; pas de spam; volumes appliqués.
+    - [ ] Revue de code CTO: séparation stricte (Domain vs UI), interactions/conditions encapsulées en use cases, tests Domain ≥ 85%.
+    - [ ] Revue Game Designer validée (DA audio/rendu UX).
 - [ ] ADVT‑S3‑23: Art — livrer top 15–20 scènes (Asset Bible) + revue croisée.
   - DoD:
     - [ ] Scènes livrées, nommage `<key>` correct, contraintes et budgets respectés; validation croisée effectuée.
+    - [ ] Revue de code CTO: séparation stricte (Domain vs UI), interactions/conditions encapsulées en use cases, tests Domain ≥ 85%.
+    - [ ] Revue Game Designer validée (DA 16‑bit/netteté/conformité Asset Bible).
 
 Références C (source canonique)
 
