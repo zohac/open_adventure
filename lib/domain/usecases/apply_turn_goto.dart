@@ -27,6 +27,7 @@ class ApplyTurnGoto {
     if (destId == null) {
       throw StateError('Invalid destination id: ${command.target}');
     }
+
     final verb = _motion.toCanonical(command.verb);
     final rules = await _repo.travelRulesFor(current.loc);
     final destLoc = await _repo.locationById(destId);

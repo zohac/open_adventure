@@ -13,6 +13,7 @@ void main() {
       final repo = AdventureRepositoryImpl();
       final motion = MotionNormalizerImpl();
       final usecase = ApplyTurnGoto(repo, motion);
+
       const game = Game(loc: 1, oldLoc: 1, newLoc: 1, turns: 0, rngSeed: 42);
       final cmd = Command(verb: 'WEST', target: '2');
       final result = await usecase(cmd, game);
