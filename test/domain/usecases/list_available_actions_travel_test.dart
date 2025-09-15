@@ -12,7 +12,7 @@ void main() {
     final motion = MotionNormalizerImpl();
     final usecase = ListAvailableActionsTravel(repo, motion);
     // Start from LOC_START (id 1) per assets; ensure deterministic seed not needed here
-    const game = Game(loc: 1, turns: 0, rngSeed: 42);
+    const game = Game(loc: 1, oldLoc: 1, newLoc: 1, turns: 0, rngSeed: 42);
     final opts = await usecase(game);
     expect(opts, isNotEmpty);
     // Only travel
@@ -38,7 +38,7 @@ void main() {
     final repo = AdventureRepositoryImpl();
     final motion = MotionNormalizerImpl();
     final usecase = ListAvailableActionsTravel(repo, motion);
-    const game = Game(loc: 1, turns: 0, rngSeed: 42);
+    const game = Game(loc: 1, oldLoc: 1, newLoc: 1, turns: 0, rngSeed: 42);
     final opts = await usecase(game);
     // If both MOT_2 and WEST exist in travel.json for LOC_START, they must dedupe to one WEST option.
     final westOpts = opts.where((o) => o.verb == 'WEST').toList();
@@ -49,7 +49,7 @@ void main() {
     final repo = AdventureRepositoryImpl();
     final motion = MotionNormalizerImpl();
     final usecase = ListAvailableActionsTravel(repo, motion);
-    const game = Game(loc: 1, turns: 0, rngSeed: 42);
+    const game = Game(loc: 1, oldLoc: 1, newLoc: 1, turns: 0, rngSeed: 42);
     final opts = await usecase(game);
     for (final o in opts) {
       expect(o.label.startsWith('motion.'), isTrue);
@@ -63,7 +63,7 @@ void main() {
     final repo = AdventureRepositoryImpl();
     final motion = MotionNormalizerImpl();
     final usecase = ListAvailableActionsTravel(repo, motion);
-    const game = Game(loc: 1, turns: 0, rngSeed: 42);
+    const game = Game(loc: 1, oldLoc: 1, newLoc: 1, turns: 0, rngSeed: 42);
     final opts = await usecase(game);
     for (final o in opts) {
       expect(o.id.startsWith('travel:1->'), isTrue);

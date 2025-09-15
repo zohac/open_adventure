@@ -28,14 +28,17 @@ class ApplyTurnGoto {
       throw StateError('Invalid destination id: ${command.target}');
     }
 
+    final verb = _motion.toCanonical(command.verb);
     final rules = await _repo.travelRulesFor(current.loc);
     final destLoc = await _repo.locationById(destId);
 
     for (final r in rules) {
       final canonical = _motion.toCanonical(r.motion);
-      if (canonical == command.verb && r.destName == destLoc.name) {
+      if (canonical == verb && r.destName == destLoc.name) {
         final newGame = current.copyWith(
+          oldLoc: current.loc,
           loc: destId,
+          newLoc: destId,
           turns: current.turns + 1,
         );
         final desc = destLoc.longDescription?.isNotEmpty == true

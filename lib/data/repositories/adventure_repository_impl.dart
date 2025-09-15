@@ -125,7 +125,13 @@ class AdventureRepositoryImpl implements AdventureRepository {
     if (startId < 0 || startId >= locations.length) {
       startId = 0;
     }
-    return Game(loc: startId, turns: 0, rngSeed: seed);
+    return Game(
+      loc: startId,
+      oldLoc: startId,
+      newLoc: startId,
+      turns: 0,
+      rngSeed: seed,
+    );
   }
 }
 
