@@ -11,6 +11,8 @@ void main() {
     expect(game.rngSeed, 42);
     expect(game.turns, 0);
     expect(game.loc, inInclusiveRange(0, locs.length - 1));
+    expect(game.oldLoc, game.loc);
+    expect(game.newLoc, game.loc);
   });
 }
 
