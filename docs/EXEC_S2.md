@@ -212,21 +212,21 @@ Risques & mitigations (S2)
 
 Suivi & tickets
 
-- [ ] ADVT‑S2‑01: Créer VOs `Command` et `TurnResult` (Domain) + tests basiques d’immutabilité.
+- [x] ADVT‑S2‑01: Créer VOs `Command` et `TurnResult` (Domain) + tests basiques d’immutabilité.
   - DoD:
-    - [ ] Classes final/const, sans setters; égalité basée sur valeur; tests de construction/égalité passent.
+    - [x] Classes final/const, sans setters; égalité basée sur valeur; tests de construction/égalité passent.
     - [ ] Revue CTO validée (architecture/code/tests).
     - [ ] Revue Game Designer validée (UX/labels, si applicable).
     - [ ] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
-- [ ] ADVT‑S2‑02: Implémenter `ListAvailableActions` (travel only) — normalisation via `motions.json`, déduplication, tri heuristique.
+- [x] ADVT‑S2‑02: Implémenter `ListAvailableActions` (travel only) — normalisation via `motions.json`, déduplication, tri heuristique.
   - DoD:
-    - [ ] Retourne uniquement des actions `category=travel`; verbes normalisés; pas de doublons; ordre déterministe testé.
+    - [x] Retourne uniquement des actions `category=travel`; verbes normalisés; pas de doublons; ordre déterministe testé.
     - [ ] Revue CTO validée (architecture/code/tests).
     - [ ] Revue Game Designer validée (UX/labels/icônes, si applicable).
     - [ ] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
-- [ ] ADVT‑S2‑03: Tests `ListAvailableActions` — cas: plusieurs verbes même destination, absence de condition, vérif labels/icônes.
+- [x] ADVT‑S2‑03: Tests `ListAvailableActions` — cas: plusieurs verbes même destination, absence de condition, vérif labels/icônes.
   - DoD:
-    - [ ] ≥ 5 cas couverts; labels lisibles; icônes mappées pour N/E/S/O et UP/DOWN.
+    - [x] ≥ 5 cas couverts; labels lisibles; icônes mappées pour N/E/S/O et UP/DOWN (si présents sur le lieu).
     - [ ] Revue CTO validée (architecture/code/tests).
     - [ ] Revue Game Designer validée (UX/labels/icônes, si applicable).
     - [ ] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
