@@ -44,6 +44,7 @@ Design & UX — source de vérité
 - Spécification: `docs/CONVERSION_SPEC.md` (normatif). Voir §17–§19 pour UX mobile, heuristiques d’actions, direction artistique.
 - Annexe: `docs/DESIGN_ADDENDUM.md` (checklists Dev/Artist/CTO) — rattachements normatifs à la spec.
 - Bible assets: `docs/ART_ASSET_BIBLE.md` — briefs scènes/objets/créatures, VFX/SFX et palettes prioritaires.
+- Style visuel: `docs/VISUAL_STYLE_GUIDE.md` — polices, couleurs, composants UI, motion et règles d’accessibilité.
 - Règle d’or UX: proposer 3–7 actions utiles sans saisie texte; prioriser sécurité → travel → interaction → méta; première visite = description longue, revisites = courte.
 - Écrans: `docs/UX_SCREENS.md` — mandat, entrées/sorties, DoD et tests par écran (Home/Adventure/Inventory/Map/Journal/Saves/Settings/EndGame/etc.).
 

@@ -13,6 +13,7 @@ Règle d’or (non négociable): sur les écrans d’action, afficher 3–7 choi
 - Journal: append-only, 200 derniers messages, zéro echo des commandes.
 - Images: 16:9 via `PixelCanvas` (scale entier, FilterQuality.none), clé `locationImageKey`.
 - Audio: BGM par zone (crossfade 250–500 ms), SFX throttle ≥ 150 ms.
+- Style visuel: couleurs, typo, composants et motion conformes à `docs/VISUAL_STYLE_GUIDE.md`.
 
 Notation & conventions
 
@@ -31,6 +32,7 @@ Notation & conventions
 - États vides: `Continuer` désactivé si autosave absente.
 - A11y: semantics boutons, ordre de focus stable, texte lisible.
 - DoD: navigation correcte vers chaque écran; autosave absente ne provoque pas d’erreur.
+- Style visuel: conforme à `VISUAL_STYLE_GUIDE.md` §10 (Style A — Héros 16:9 + cartes AccentCard avec barre d’accent 3–4 dp, icônes 24 dp, états enabled/pressed/disabled/focused, mapping d’accents par entrée Home).
 
 Wireframe (320×180, schématique)
 

@@ -312,6 +312,18 @@ Suivi & tickets
     - [ ] Modifs de sliders reflétées instantanément; persistance testée; restaurées au démarrage.
     - [ ] Revue CTO validée (architecture/persistance/tests).
     - [ ] Revue Game Designer validée (UX audio, si applicable).
+- [ ] ADVT‑S2‑19: Theme/tokens baseline (VISUAL_STYLE_GUIDE)
+  - DoD:
+    - [ ] Définir `ThemeData` (ColorScheme, TextTheme, spacing scale) et styles de base (boutons/listes);
+    - [ ] Appliquer les règles 16‑bit: `PixelCanvas`/FilterQuality.none intégrés au layout, pas de lissage;
+    - [ ] Revue CTO validée (archi/qualité/tests);
+    - [ ] Revue Game Designer validée (cohérence visuelle avec VISUAL_STYLE_GUIDE).
+- [ ] ADVT‑S2‑20: HomePage v0 (wireframe UX_SCREENS)
+  - DoD:
+    - [ ] Menu minimal: [Nouvelle partie] [Continuer] [Charger] [Options] [Crédits]; “Continuer” affiche autosave si présent (sinon disabled);
+    - [ ] Navigation fonctionnelle vers chaque écran (placeholders acceptés); widget tests tap→route OK;
+    - [ ] Revue CTO validée (UI/tests);
+    - [ ] Revue Game Designer validée (structure/wording UX_SCREENS).
     - [ ] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
 
 Références C (source canonique)

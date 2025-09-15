@@ -230,6 +230,8 @@ Détails d’implémentation:
 - `Journal`: fil des événements récents (textes système), scrollable.
 - Accessibilité: semantics labels, tailles adaptatives, navigation au switch/lecteur d’écran.
 
+Style visuel: voir `docs/VISUAL_STYLE_GUIDE.md` (polices, couleurs, composants, motion) — normatif.
+
 Annexes et normes d’écran: voir `docs/UX_SCREENS.md` (normatif) décrivant le mandat, les entrées/sorties, DoD et tests par écran.
 
 Localisation:

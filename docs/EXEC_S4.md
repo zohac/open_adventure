@@ -270,6 +270,13 @@ Suivi & tickets
     - [ ] Revue de code CTO: scoring conforme `score.c`, fins de jeu stables, multi‑saves robustes, perfs/coverage aux seuils.
     - [ ] Revue Game Designer validée (DA finale, conformité Asset Bible et qualité perçue).
 
+- [ ] ADVT‑S4‑19: HomePage v1 (style 16‑bit final, i18n/a11y)
+  - DoD:
+    - [ ] Application VISUAL_STYLE_GUIDE (typographies, spacing, états); “Continuer” disabled si absence d’autosave;
+    - [ ] i18n FR/EN complètes; a11y AA (focus/labels/contraste);
+    - [ ] Revue CTO validée (UI/tests/a11y/i18n);
+    - [ ] Revue Game Designer validée (DA/UX finales).
+
 Références C (source canonique)
 
 - open-adventure-master/score.c
