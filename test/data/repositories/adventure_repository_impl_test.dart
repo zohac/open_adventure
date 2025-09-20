@@ -13,10 +13,25 @@ void main() {
       expect(locs[0].name, isA<String>());
     });
 
-    test('travelRulesFor returns at least one rule for LOC_START (id 1)', () async {
+    test('travelRulesFor returns at least one rule for LOC_START (id 1)',
+        () async {
       final repo = AdventureRepositoryImpl();
       final rules = await repo.travelRulesFor(1);
       expect(rules, isNotEmpty);
+    });
+
+    test('travelRulesFor filters conditional/stop rules', () async {
+      final repo = AdventureRepositoryImpl();
+      final rules = await repo.travelRulesFor(8);
+      expect(rules.every((r) => r.stop == false), isTrue);
+      expect(
+        rules.every((r) =>
+            r.condType == null ||
+            r.condType!.isEmpty ||
+            r.condType!.toLowerCase() == 'cond_goto' ||
+            r.condType == '0'),
+        isTrue,
+      );
     });
 
     test('getGameObjects returns non-empty list', () async {
@@ -27,7 +42,8 @@ void main() {
       expect(objs.first.name, isA<String>());
     });
 
-    test('locationById returns the same as indexing into getLocations', () async {
+    test('locationById returns the same as indexing into getLocations',
+        () async {
       final repo = AdventureRepositoryImpl();
       final locs = await repo.getLocations();
       final loc3 = await repo.locationById(3);

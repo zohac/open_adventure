@@ -1,32 +1,58 @@
+import 'package:open_adventure/core/constant/asset_paths.dart';
 import 'package:open_adventure/data/datasources/asset_data_source.dart';
 import 'package:open_adventure/domain/services/motion_canonicalizer.dart';
 
-/// Implementation of MotionCanonicalizer using assets/data/motions.json.
+/// Implementation of [MotionCanonicalizer] backed by `assets/data/motions.json`.
 class MotionNormalizerImpl implements MotionCanonicalizer {
-  final Map<int, String> _numericToNamed; // e.g., 2 -> 'WEST'
+  MotionNormalizerImpl._(this._tokenToCanonical);
 
-  MotionNormalizerImpl({AssetDataSource? assets})
-      : _numericToNamed = {
-          // Minimal mapping to unify early aliases (can be extended as needed)
-          2: 'WEST',
-          12: 'ENTER',
-        };
+  final Map<String, String> _tokenToCanonical;
+
+  /// Loads the motion vocabulary from assets and returns a ready-to-use normalizer.
+  static Future<MotionNormalizerImpl> load({AssetDataSource? assets}) async {
+    final dataSource = assets ?? BundleAssetDataSource();
+    final raw = await dataSource.loadList(AssetPaths.motionsJson);
+    final tokenToCanonical = <String, String>{};
+
+    for (final entry in raw) {
+      if (entry is List && entry.length == 2) {
+        final canonical = entry.first.toString().toUpperCase();
+        tokenToCanonical[canonical] = canonical;
+        final payload = entry.last;
+        if (payload is Map) {
+          final words = payload['words'];
+          if (words is List) {
+            for (final word in words) {
+              if (word == null) continue;
+              final token = word.toString().toUpperCase();
+              tokenToCanonical[token] = canonical;
+            }
+          }
+        }
+      }
+    }
+
+    return MotionNormalizerImpl._(tokenToCanonical);
+  }
+
+  static const Map<String, String> _renames = {
+    'INSIDE': 'ENTER',
+    'IN': 'ENTER',
+    'INWARD': 'ENTER',
+    'ENTER': 'ENTER',
+    'OUTSIDE': 'OUT',
+    'OUT': 'OUT',
+    'OUTSI': 'OUT',
+  };
+
+  static const Set<String> _blockedCanonicals = {'MOT_0', 'HERE', 'NUL'};
 
   @override
   String toCanonical(String raw) {
-    final s = (raw).toUpperCase();
-    if (s.startsWith('MOT_')) {
-      final n = int.tryParse(s.substring(4));
-      final mapped = n != null ? _numericToNamed[n] : null;
-      return mapped ?? s; // fallback MOT_n
-    }
-    final n = int.tryParse(s);
-    if (n != null) {
-      final mapped = _numericToNamed[n];
-      if (mapped != null) return mapped;
-      return 'MOT_$n';
-    }
-    return s;
+    final token = raw.trim().toUpperCase();
+    if (token.isEmpty) return '';
+    final canonical = _tokenToCanonical[token] ?? token;
+    return _normalizeCanonical(canonical);
   }
 
   @override
@@ -44,14 +70,19 @@ class MotionNormalizerImpl implements MotionCanonicalizer {
       case 'WEST':
         return 'arrow_back';
       case 'UP':
-        return 'north';
+        return 'arrow_upward';
       case 'DOWN':
-        return 'south';
+        return 'arrow_downward';
       case 'ENTER':
         return 'login';
-      case 'OUTSIDE':
+      case 'IN':
+        return 'login';
       case 'OUT':
         return 'logout';
+      case 'BACK':
+        return 'undo';
+      case 'FORWARD':
+        return 'redo';
       default:
         return 'directions_walk';
     }
@@ -59,10 +90,25 @@ class MotionNormalizerImpl implements MotionCanonicalizer {
 
   @override
   int priority(String canonical) {
+    const contextual = {'ENTER', 'IN', 'OUT', 'UP', 'DOWN'};
     const cardinal = {'NORTH', 'EAST', 'SOUTH', 'WEST'};
-    const vertical = {'UP', 'DOWN', 'ENTER', 'OUT', 'OUTSIDE'};
-    if (cardinal.contains(canonical)) return 0;
-    if (vertical.contains(canonical)) return 1;
+    if (contextual.contains(canonical)) return 0;
+    if (cardinal.contains(canonical)) return 1;
     return 2;
+  }
+
+  String _normalizeCanonical(String canonicalRaw) {
+    final upper = canonicalRaw.toUpperCase();
+    if (_blockedCanonicals.contains(upper)) {
+      return 'UNKNOWN';
+    }
+    if (upper.startsWith('MOT_')) {
+      return 'UNKNOWN';
+    }
+    final renamed = _renames[upper];
+    if (renamed != null) {
+      return renamed;
+    }
+    return upper;
   }
 }

@@ -7,9 +7,15 @@ import 'package:open_adventure/domain/usecases/list_available_actions.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  test('ListAvailableActionsTravel returns only travel, deduped and sorted', () async {
+  late MotionNormalizerImpl motion;
+
+  setUpAll(() async {
+    motion = await MotionNormalizerImpl.load();
+  });
+
+  test('ListAvailableActionsTravel returns only travel, deduped and sorted',
+      () async {
     final repo = AdventureRepositoryImpl();
-    final motion = MotionNormalizerImpl();
     final usecase = ListAvailableActionsTravel(repo, motion);
     // Start from LOC_START (id 1) per assets; ensure deterministic seed not needed here
     const game = Game(loc: 1, oldLoc: 1, newLoc: 1, turns: 0, rngSeed: 42);
@@ -25,18 +31,17 @@ void main() {
     expect(opts.first.label.startsWith('motion.'), isTrue);
     expect(opts.first.icon, isNotNull);
 
-    // Ordering: cardinal (e.g., WEST) should come before ENTER at LOC_START
     final verbs = opts.map((e) => e.verb).toList();
-    final idxWest = verbs.indexOf('WEST');
+    expect(verbs.contains('ENTER'), isTrue);
+    final idxEast = verbs.indexOf('EAST');
     final idxEnter = verbs.indexOf('ENTER');
-    if (idxEnter != -1) {
-      expect(idxWest == -1 || idxWest < idxEnter, isTrue);
+    if (idxEast != -1 && idxEnter != -1) {
+      expect(idxEnter < idxEast, isTrue);
     }
   });
 
   test('Synonyms (numeric/text) dedupe to a single canonical option', () async {
     final repo = AdventureRepositoryImpl();
-    final motion = MotionNormalizerImpl();
     final usecase = ListAvailableActionsTravel(repo, motion);
     const game = Game(loc: 1, oldLoc: 1, newLoc: 1, turns: 0, rngSeed: 42);
     final opts = await usecase(game);
@@ -47,7 +52,6 @@ void main() {
 
   test('Labels are UI keys and icons mapped for known motions', () async {
     final repo = AdventureRepositoryImpl();
-    final motion = MotionNormalizerImpl();
     final usecase = ListAvailableActionsTravel(repo, motion);
     const game = Game(loc: 1, oldLoc: 1, newLoc: 1, turns: 0, rngSeed: 42);
     final opts = await usecase(game);
@@ -61,7 +65,6 @@ void main() {
 
   test('IDs are stable and include fromId,destId,motion', () async {
     final repo = AdventureRepositoryImpl();
-    final motion = MotionNormalizerImpl();
     final usecase = ListAvailableActionsTravel(repo, motion);
     const game = Game(loc: 1, oldLoc: 1, newLoc: 1, turns: 0, rngSeed: 42);
     final opts = await usecase(game);
@@ -72,9 +75,23 @@ void main() {
   });
 
   test('Unknown/empty motions are excluded', () async {
-    final motion = MotionNormalizerImpl();
     // Directly verify canonicalization fallback behavior for odd inputs.
     expect(motion.toCanonical(''), equals(''));
-    expect(motion.toCanonical('mot_9999'), equals('MOT_9999'));
+    expect(motion.toCanonical('mot_9999'), equals('UNKNOWN'));
+  });
+
+  test('Filters conditional travel rules (cond_not etc.)', () async {
+    final repo = AdventureRepositoryImpl();
+    final usecase = ListAvailableActionsTravel(repo, motion);
+    const game = Game(loc: 8, oldLoc: 8, newLoc: 8, turns: 0, rngSeed: 42);
+    final opts = await usecase(game);
+    expect(opts.any((o) => o.verb == 'DOWN' || o.verb == 'IN'), isFalse);
+  });
+
+  test('Contextual motions expose the canonical iconography', () {
+    expect(motion.iconName('UP'), equals('arrow_upward'));
+    expect(motion.iconName('DOWN'), equals('arrow_downward'));
+    expect(motion.iconName('ENTER'), equals('login'));
+    expect(motion.iconName('OUT'), equals('logout'));
   });
 }

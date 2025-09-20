@@ -1,4 +1,3 @@
-
 import 'package:open_adventure/core/constant/asset_paths.dart';
 import 'package:open_adventure/core/error/exceptions.dart';
 import 'package:open_adventure/core/error/failures.dart';
@@ -82,16 +81,49 @@ class AdventureRepositoryImpl implements AdventureRepository {
   Future<List<TravelRule>> travelRulesFor(int locationId) async {
     try {
       final raw = await _assets.loadList(AssetPaths.travelJson);
-      final rules = raw
-          .map((e) => TravelRuleModel.fromJson(Map<String, dynamic>.from(e as Map)))
-          .where((r) => r.fromId == locationId)
-          .toList(growable: false);
-      return rules;
+      final rules = <TravelRule>[];
+      for (final entry in raw) {
+        final model =
+            TravelRuleModel.fromJson(Map<String, dynamic>.from(entry as Map));
+        if (model.fromId != locationId) continue;
+        if (model.stop) continue;
+        final condType = model.condType?.toLowerCase();
+        if (condType != null &&
+            condType.isNotEmpty &&
+            condType != 'cond_goto' &&
+            condType != '0') {
+          continue;
+        }
+        var resolvedDestId = model.destId;
+        if (resolvedDestId == null) {
+          final index = await _ensureLocationIndex();
+          resolvedDestId = index[model.destName];
+        }
+        rules.add(TravelRule(
+          fromId: model.fromId,
+          motion: model.motion,
+          destName: model.destName,
+          destId: resolvedDestId,
+          condType: model.condType,
+          condArg1: model.condArg1,
+          condArg2: model.condArg2,
+          noDwarves: model.noDwarves,
+          stop: model.stop,
+        ));
+      }
+      return List.unmodifiable(rules);
     } on AssetDataFormatException catch (e) {
       throw DataFailure('Invalid travel asset', cause: e);
     } on FormatException catch (e) {
       throw DataFailure('Invalid JSON format for travel', cause: e);
     }
+  }
+
+  Future<Map<String, int>> _ensureLocationIndex() async {
+    if (_locNameToId == null) {
+      await getLocations();
+    }
+    return _locNameToId ?? const <String, int>{};
   }
 
   @override
@@ -131,6 +163,7 @@ class AdventureRepositoryImpl implements AdventureRepository {
       newLoc: startId,
       turns: 0,
       rngSeed: seed,
+      visitedLocations: {startId},
     );
   }
 }
@@ -139,6 +172,12 @@ class AdventureRepositoryImpl implements AdventureRepository {
 extension AdventureRepositoryImplIndex on AdventureRepositoryImpl {
   int? locationIdForName(String name) => _locNameToId?[name];
   int? objectIdForName(String name) => _objNameToId?[name];
-  String? locationNameForId(int id) => (_locations != null && id >= 0 && id < _locations!.length) ? _locations![id].name : null;
-  String? objectNameForId(int id) => (_objects != null && id >= 0 && id < _objects!.length) ? _objects![id].name : null;
+  String? locationNameForId(int id) =>
+      (_locations != null && id >= 0 && id < _locations!.length)
+          ? _locations![id].name
+          : null;
+  String? objectNameForId(int id) =>
+      (_objects != null && id >= 0 && id < _objects!.length)
+          ? _objects![id].name
+          : null;
 }

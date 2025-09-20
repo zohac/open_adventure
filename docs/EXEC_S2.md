@@ -215,31 +215,35 @@ Suivi & tickets
 - [x] ADVT‑S2‑01: Créer VOs `Command` et `TurnResult` (Domain) + tests basiques d’immutabilité.
   - DoD:
     - [x] Classes final/const, sans setters; égalité basée sur valeur; tests de construction/égalité passent.
-    - [ ] Revue CTO validée (architecture/code/tests).
-    - [ ] Revue Game Designer validée (UX/labels, si applicable).
-    - [ ] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
+    - [x] `Game` (et les structures qu’il embarque) exposent une égalité/hashCode structurés afin que `TurnResult` compare réellement les valeurs.
+    - [x] Revue CTO validée (architecture/code/tests).
+    - [x] Revue Game Designer validée (UX/labels, si applicable).
+    - [x] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
 - [x] ADVT‑S2‑02: Implémenter `ListAvailableActions` (travel only) — normalisation via `motions.json`, déduplication, tri heuristique.
   - DoD:
     - [x] Retourne uniquement des actions `category=travel`; verbes normalisés; pas de doublons; ordre déterministe testé.
-    - [ ] Revue CTO validée (architecture/code/tests).
-    - [ ] Revue Game Designer validée (UX/labels/icônes, si applicable).
-    - [ ] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
+    - [x] Canonicalisation alimentée par `motions.json` (chargée/calculée, pas de table hardcodée) et production de labels/icônes ARB.
+    - [x] Filtre toute règle `condtype` ≠ `cond_goto`/`0` et toutes les règles `stop=true` tant que l’évaluateur de conditions n’est pas en place.
+    - [x] Revue CTO validée (architecture/code/tests).
+    - [x] Revue Game Designer validée (UX/labels/icônes, si applicable).
+    - [x] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
 - [x] ADVT‑S2‑03: Tests `ListAvailableActions` — cas: plusieurs verbes même destination, absence de condition, vérif labels/icônes.
   - DoD:
     - [x] ≥ 5 cas couverts; labels lisibles; icônes mappées pour N/E/S/O et UP/DOWN (si présents sur le lieu).
-    - [ ] Revue CTO validée (architecture/code/tests).
-    - [ ] Revue Game Designer validée (UX/labels/icônes, si applicable).
-    - [ ] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
-- [ ] ADVT‑S2‑04: Implémenter `ApplyTurn` (goto) — mutation `Game` (loc, oldloc/newloc, turns++), production messages description.
+    - [x] Revue CTO validée (architecture/code/tests).
+    - [x] Revue Game Designer validée (UX/labels/icônes, si applicable).
+    - [x] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
+- [x] ADVT‑S2‑04: Implémenter `ApplyTurn` (goto) — mutation `Game` (loc, oldloc/newloc, turns++), production messages description.
   - DoD:
-    - [ ] Mise à jour cohérente des champs; message contient `longDescription` si disponible sinon `short`.
-    - [ ] Revue CTO validée (architecture/code/tests).
-    - [ ] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
-- [ ] ADVT‑S2‑05: Tests `ApplyTurn` — transition de lieu, intégrité `turns`, messages non vides.
+    - [x] Mise à jour cohérente des champs; message contient `longDescription` si disponible sinon `short`.
+    - [x] Met à jour `visitedLocations` pour respecter la règle « première visite = long, revisite = short », et `initialGame()` marque déjà le lieu de départ comme visité.
+    - [x] Revue CTO validée (architecture/code/tests).
+    - [x] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
+- [x] ADVT‑S2‑05: Tests `ApplyTurn` — transition de lieu, intégrité `turns`, messages non vides.
   - DoD:
-    - [ ] Trois cas: normal, verb sans règle (échec attendu), multi‑règles → prend la première; tous verts.
-    - [ ] Revue CTO validée (architecture/code/tests).
-    - [ ] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
+    - [x] Trois cas: normal, verb sans règle (échec attendu), multi‑règles → prend la première; tous verts.
+    - [x] Revue CTO validée (architecture/code/tests).
+    - [x] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
 - [ ] ADVT‑S2‑06: Implémenter `SaveRepository` minimal (autosave/latest) — fichiers JSON, répertoires platform‑aware.
   - DoD:
     - [ ] Autosave écrit un fichier `autosave.json` valide; latest lit et reconstruit `GameSnapshot`.

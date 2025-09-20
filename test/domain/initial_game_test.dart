@@ -13,6 +13,6 @@ void main() {
     expect(game.loc, inInclusiveRange(0, locs.length - 1));
     expect(game.oldLoc, game.loc);
     expect(game.newLoc, game.loc);
+    expect(game.visitedLocations, {game.loc});
   });
 }
-

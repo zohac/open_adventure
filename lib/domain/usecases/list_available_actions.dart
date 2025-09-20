@@ -12,32 +12,44 @@ class ListAvailableActionsTravel {
   /// Retourne uniquement des options `category=travel` pour l'état courant.
   Future<List<ActionOption>> call(Game current) async {
     final rules = await _repo.travelRulesFor(current.loc);
-    final options = <ActionOption>[];
-    final seen = <String>{};
-    final locs = await _repo.getLocations();
-    final nameToId = {for (final l in locs) l.name: l.id};
+    final candidates = <String, _TravelCandidate>{};
+    Map<String, int>? nameToId;
     for (final r in rules) {
       final canonical = _motion.toCanonical(r.motion);
-      if (canonical == 'UNKNOWN') continue;
-      final destName = r.destName;
-      if (destName.isEmpty) continue;
-      final destId = nameToId[destName];
+      if (canonical.isEmpty || canonical == 'UNKNOWN') continue;
+      var destId = r.destId;
+      if (destId == null) {
+        nameToId ??= {for (final l in await _repo.getLocations()) l.name: l.id};
+        final destName = r.destName;
+        if (destName.isEmpty) continue;
+        destId = nameToId[destName];
+      }
       if (destId == null) continue;
-      final id = 'travel:${current.loc}->$destId:$canonical';
-      if (seen.contains(id)) continue;
-      seen.add(id);
-      final label = _motion.uiKey(canonical);
-      final icon = _motion.iconName(canonical);
-      options.add(ActionOption(
-        id: id,
-        category: 'travel',
-        label: label,
-        icon: icon,
-        verb: canonical,
-        objectId: destId.toString(),
-      ));
+      final candidate = _TravelCandidate(
+        canonical: canonical,
+        label: _motion.uiKey(canonical),
+        icon: _motion.iconName(canonical),
+        priority: _motion.priority(canonical),
+        destId: destId,
+      );
+      final key = '${destId}_$canonical';
+      final currentBest = candidates[key];
+      if (currentBest == null || candidate.compareTo(currentBest) < 0) {
+        candidates[key] = candidate;
+      }
     }
-    // Tri: priorité (cardinal > vertical > autres), puis label, puis destId
+
+    final options = candidates.values
+        .map((c) => ActionOption(
+              id: 'travel:${current.loc}->${c.destId}:${c.canonical}',
+              category: 'travel',
+              label: c.label,
+              icon: c.icon,
+              verb: c.canonical,
+              objectId: c.destId.toString(),
+            ))
+        .toList();
+
     options.sort((a, b) {
       final pa = _motion.priority(a.verb);
       final pb = _motion.priority(b.verb);
@@ -49,5 +61,32 @@ class ListAvailableActionsTravel {
       return da - db;
     });
     return options;
+  }
+}
+
+class _TravelCandidate {
+  final String canonical;
+  final String label;
+  final String? icon;
+  final int priority;
+  final int destId;
+
+  const _TravelCandidate({
+    required this.canonical,
+    required this.label,
+    required this.icon,
+    required this.priority,
+    required this.destId,
+  });
+
+  int compareTo(_TravelCandidate other) {
+    if (priority != other.priority) {
+      return priority - other.priority;
+    }
+    final labelComparison = label.compareTo(other.label);
+    if (labelComparison != 0) {
+      return labelComparison;
+    }
+    return destId - other.destId;
   }
 }
