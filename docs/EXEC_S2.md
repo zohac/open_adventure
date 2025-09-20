@@ -244,32 +244,32 @@ Suivi & tickets
     - [x] Trois cas: normal, verb sans règle (échec attendu), multi‑règles → prend la première; tous verts.
     - [x] Revue CTO validée (architecture/code/tests).
     - [x] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
-- [ ] ADVT‑S2‑06: Implémenter `SaveRepository` minimal (autosave/latest) — fichiers JSON, répertoires platform‑aware.
+- [x] ADVT‑S2‑06: Implémenter `SaveRepository` minimal (autosave/latest) — fichiers JSON, répertoires platform‑aware.
   - DoD:
-    - [ ] Autosave écrit un fichier `autosave.json` valide; latest lit et reconstruit `GameSnapshot`.
-    - [ ] Revue CTO validée (architecture/code/tests).
-    - [ ] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
-- [ ] ADVT‑S2‑07: Tests `SaveRepository` minimal — round‑trip autosave/latest, gestion absence d’autosave.
+    - [x] Autosave écrit un fichier `autosave.json` valide; latest lit et reconstruit `GameSnapshot`.
+    - [x] Revue CTO validée (architecture/code/tests).
+    - [x] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
+- [x] ADVT‑S2‑07: Tests `SaveRepository` minimal — round‑trip autosave/latest, gestion absence d’autosave.
   - DoD:
-    - [ ] Latest retourne `null` si fichier absent; round‑trip préserve valeurs; tests isolés du FS réel.
-    - [ ] Revue CTO validée (architecture/code/tests).
-    - [ ] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
-- [ ] ADVT‑S2‑08: Implémenter `GameController` — `init/perform/refreshActions`, binding autosave, état immuable.
+    - [x] Latest retourne `null` si fichier absent; round‑trip préserve valeurs; tests isolés du FS réel.
+    - [x] Revue CTO validée (architecture/code/tests).
+    - [x] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
+- [x] ADVT‑S2‑08: Implémenter `GameController` — `init/perform/refreshActions`, binding autosave, état immuable.
   - DoD:
-    - [ ] `init()` renseigne état; `perform()` notifie changements; dépendances injectées par constructeur; tests unitaires verts.
-    - [ ] Revue CTO validée (architecture/code/tests).
-    - [ ] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
-- [ ] ADVT‑S2‑09: Tests `GameController` — `init()` produit actions, `perform()` appelle autosave exactement 1 fois (mock), met à jour l’état.
+    - [x] `init()` renseigne état; `perform()` notifie changements; dépendances injectées par constructeur; tests unitaires verts.
+    - [x] Revue CTO validée (architecture/code/tests).
+    - [x] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
+- [x] ADVT‑S2‑09: Tests `GameController` — `init()` produit actions, `perform()` appelle autosave exactement 1 fois (mock), met à jour l’état.
   - DoD:
-    - [ ] Vérification avec mockito: une seule invocation d’autosave par tour; journal mis à jour.
-    - [ ] Revue CTO validée (architecture/code/tests).
-    - [ ] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
-- [ ] ADVT‑S2‑10: Implémenter `AdventurePage` v0 — description + boutons d’actions (travel) + journal minimal.
+    - [x] Vérification avec mockito: une seule invocation d’autosave par tour; journal mis à jour.
+    - [x] Revue CTO validée (architecture/code/tests).
+    - [x] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
+- [x] ADVT‑S2‑10: Implémenter `AdventurePage` v0 — description + boutons d’actions (travel) + journal minimal.
   - DoD:
-    - [ ] Rendu stable; aucun `UnimplementedError`; état contrôlé par injection du contrôleur.
-    - [ ] Revue CTO validée (architecture/code/tests).
-    - [ ] Revue Game Designer validée (UX/flow, si applicable).
-    - [ ] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
+    - [x] Rendu stable; aucun `UnimplementedError`; état contrôlé par injection du contrôleur.
+    - [x] Revue CTO validée (architecture/code/tests).
+    - [x] Revue Game Designer validée (UX/flow, si applicable).
+    - [x] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
 - [ ] ADVT‑S2‑11: Widget tests `AdventurePage` — rendu initial, tap bouton → mise à jour description/titre.
   - DoD:
     - [ ] Deux tests passent sur simulateur de widget; pumpAndSettle sans jank apparent.

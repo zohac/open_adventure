@@ -1,0 +1,160 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
+import 'package:open_adventure/application/controllers/game_controller.dart';
+import 'package:open_adventure/domain/entities/game.dart';
+import 'package:open_adventure/domain/entities/location.dart';
+import 'package:open_adventure/domain/repositories/adventure_repository.dart';
+import 'package:open_adventure/domain/repositories/save_repository.dart';
+import 'package:open_adventure/domain/usecases/apply_turn_goto.dart';
+import 'package:open_adventure/domain/usecases/list_available_actions.dart';
+import 'package:open_adventure/domain/value_objects/action_option.dart';
+import 'package:open_adventure/domain/value_objects/command.dart';
+import 'package:open_adventure/domain/value_objects/game_snapshot.dart';
+import 'package:open_adventure/domain/value_objects/turn_result.dart';
+import 'package:open_adventure/presentation/pages/adventure_page.dart';
+
+class _MockAdventureRepository extends Mock implements AdventureRepository {}
+
+class _MockListAvailableActions extends Mock
+    implements ListAvailableActionsTravel {}
+
+class _MockApplyTurnGoto extends Mock implements ApplyTurnGoto {}
+
+class _MockSaveRepository extends Mock implements SaveRepository {}
+
+void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+
+  setUpAll(() {
+    registerFallbackValue(const Command(verb: 'WEST', target: '2'));
+    registerFallbackValue(const Game(
+      loc: 0,
+      oldLoc: 0,
+      newLoc: 0,
+      turns: 0,
+      rngSeed: 0,
+    ));
+    registerFallbackValue(const GameSnapshot(loc: 0, turns: 0, rngSeed: 0));
+  });
+
+  group('AdventurePage', () {
+    late _MockAdventureRepository adventureRepository;
+    late _MockListAvailableActions listAvailableActions;
+    late _MockApplyTurnGoto applyTurn;
+    late _MockSaveRepository saveRepository;
+    late GameController controller;
+
+    const initialGame = Game(
+      loc: 1,
+      oldLoc: 1,
+      newLoc: 1,
+      turns: 0,
+      rngSeed: 42,
+      visitedLocations: {1},
+    );
+
+    setUp(() {
+      adventureRepository = _MockAdventureRepository();
+      listAvailableActions = _MockListAvailableActions();
+      applyTurn = _MockApplyTurnGoto();
+      saveRepository = _MockSaveRepository();
+
+      controller = GameController(
+        adventureRepository: adventureRepository,
+        listAvailableActions: listAvailableActions,
+        applyTurn: applyTurn,
+        saveRepository: saveRepository,
+      );
+    });
+
+    testWidgets('renders description, actions and journal after init',
+        (tester) async {
+      final location = Location(
+        id: 1,
+        name: 'LOC_START',
+        longDescription: 'Long start description',
+        shortDescription: 'Short start description',
+      );
+      final actions = <ActionOption>[
+        const ActionOption(
+          id: 'travel:1->2:WEST',
+          category: 'travel',
+          label: 'motion.west.label',
+          verb: 'WEST',
+          objectId: '2',
+          icon: 'arrow_back',
+        ),
+      ];
+
+      when(() => adventureRepository.initialGame())
+          .thenAnswer((_) async => initialGame);
+      when(() => adventureRepository.locationById(1))
+          .thenAnswer((_) async => location);
+      when(() => listAvailableActions(initialGame))
+          .thenAnswer((_) async => actions);
+      when(() => saveRepository.autosave(any())).thenAnswer((_) async {});
+
+      await tester.pumpWidget(MaterialApp(
+        home: AdventurePage(controller: controller),
+      ));
+
+      await tester.pumpAndSettle();
+
+      expect(find.text('Long start description'), findsWidgets);
+      expect(find.text('Aller Ouest'), findsOneWidget);
+      expect(find.text('Journal'), findsOneWidget);
+
+      verify(() => saveRepository.autosave(
+            const GameSnapshot(loc: 1, turns: 0, rngSeed: 42),
+          )).called(1);
+
+      clearInteractions(saveRepository);
+
+      const nextGame = Game(
+        loc: 2,
+        oldLoc: 1,
+        newLoc: 2,
+        turns: 1,
+        rngSeed: 42,
+        visitedLocations: {1, 2},
+      );
+      final nextLocation = Location(
+        id: 2,
+        name: 'LOC_WEST',
+        shortDescription: 'Short west description',
+      );
+      const followupActions = <ActionOption>[
+        ActionOption(
+          id: 'travel:2->1:EAST',
+          category: 'travel',
+          label: 'motion.east.label',
+          verb: 'EAST',
+          objectId: '1',
+          icon: 'arrow_forward',
+        ),
+      ];
+
+      when(() => applyTurn(any(), any())).thenAnswer(
+        (_) async =>
+            TurnResult(nextGame, const <String>['Short west description']),
+      );
+      when(() => adventureRepository.locationById(2))
+          .thenAnswer((_) async => nextLocation);
+      when(() => listAvailableActions(nextGame))
+          .thenAnswer((_) async => followupActions);
+      when(() => saveRepository.autosave(any())).thenAnswer((_) async {});
+
+      await tester.tap(find.text('Aller Ouest'));
+      await tester.pump();
+      await tester.pumpAndSettle();
+
+      expect(find.text('Short west description'), findsWidgets);
+      expect(find.text('Aller Est'), findsOneWidget);
+
+      verify(() => saveRepository.autosave(
+            const GameSnapshot(loc: 2, turns: 1, rngSeed: 42),
+          )).called(1);
+    });
+  });
+}
