@@ -16,6 +16,7 @@ Objectif S3
 Dépendances S2 (doivent être vertes)
 
 - `ListAvailableActions` (travel) et `ApplyTurn` (goto) en place. `GameController` + autosave opérationnels. `AdventurePage` v0 fonctionnelle.
+- Mouvement `BACK/RETURN` implémenté côté Domain/Application/UI (ADVT‑S2‑21/22) pour garantir l’option « Revenir » dans les cul-de-sac.
 - Mappers JSON stables (S1) et accès Repository aux entités requises.
 
 Livrables

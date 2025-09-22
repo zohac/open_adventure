@@ -126,22 +126,33 @@ class _ActionsSection extends StatelessWidget {
         if (actions.isEmpty)
           Text('No actions available', style: theme.bodyMedium)
         else
-          ...actions.map(
-            (action) => Padding(
-              padding: const EdgeInsets.only(bottom: 8),
-              child: SizedBox(
-                width: double.infinity,
-                child: ElevatedButton.icon(
-                  icon: action.icon != null
-                      ? Icon(IconsHelper.iconForName(action.icon!))
-                      : const Icon(Icons.directions_walk),
-                  label: Text(_resolveLabel(action.label)),
-                  onPressed: () => onActionSelected(action),
-                ),
-              ),
-            ),
-          ),
+          ...actions.map((action) => _ActionButton(
+                action: action,
+                onActionSelected: onActionSelected,
+              )),
       ],
+    );
+  }
+}
+
+class _ActionButton extends StatelessWidget {
+  const _ActionButton({required this.action, required this.onActionSelected});
+
+  final ActionOption action;
+  final Future<void> Function(ActionOption) onActionSelected;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: SizedBox(
+        width: double.infinity,
+        child: ElevatedButton.icon(
+          icon: Icon(IconsHelper.iconForName(action.icon ?? 'directions_walk')),
+          label: Text(_resolveLabel(action.label)),
+          onPressed: () => onActionSelected(action),
+        ),
+      ),
     );
   }
 }
@@ -196,6 +207,16 @@ class IconsHelper {
         return Icons.undo;
       case 'redo':
         return Icons.redo;
+      case 'north_east':
+        return Icons.north_east;
+      case 'north_west':
+        return Icons.north_west;
+      case 'south_east':
+        return Icons.south_east;
+      case 'south_west':
+        return Icons.south_west;
+      case 'visibility':
+        return Icons.visibility;
       default:
         return Icons.directions_walk;
     }
@@ -219,6 +240,7 @@ String _resolveLabel(String rawLabel) {
     'motion.se.label': 'Aller Sud-Est',
     'motion.sw.label': 'Aller Sud-Ouest',
     'motion.nw.label': 'Aller Nord-Ouest',
+    'actions.observer.label': 'Observer',
   };
 
   final resolved = mapping[rawLabel];

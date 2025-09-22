@@ -68,8 +68,7 @@ void main() {
       );
     });
 
-    testWidgets('renders description, actions and journal after init',
-        (tester) async {
+    Future<void> pumpInitialState(WidgetTester tester) async {
       final location = Location(
         id: 1,
         name: 'LOC_START',
@@ -101,15 +100,24 @@ void main() {
 
       await tester.pumpAndSettle();
 
-      expect(find.text('Long start description'), findsWidgets);
-      expect(find.text('Aller Ouest'), findsOneWidget);
-      expect(find.text('Journal'), findsOneWidget);
-
       verify(() => saveRepository.autosave(
             const GameSnapshot(loc: 1, turns: 0, rngSeed: 42),
           )).called(1);
-
       clearInteractions(saveRepository);
+    }
+
+    testWidgets('shows initial state after init', (tester) async {
+      await pumpInitialState(tester);
+
+      expect(find.text('LOC_START'), findsOneWidget);
+      expect(find.text('Long start description'), findsWidgets);
+      expect(find.text('Aller Ouest'), findsOneWidget);
+      expect(find.text('Journal'), findsOneWidget);
+    });
+
+    testWidgets('tapping a travel action updates title and description',
+        (tester) async {
+      await pumpInitialState(tester);
 
       const nextGame = Game(
         loc: 2,
@@ -149,12 +157,53 @@ void main() {
       await tester.pump();
       await tester.pumpAndSettle();
 
+      expect(find.text('LOC_WEST'), findsOneWidget);
       expect(find.text('Short west description'), findsWidgets);
       expect(find.text('Aller Est'), findsOneWidget);
 
       verify(() => saveRepository.autosave(
             const GameSnapshot(loc: 2, turns: 1, rngSeed: 42),
           )).called(1);
+    });
+
+    testWidgets('shows observer fallback when no travel actions', (tester) async {
+      const observerAction = ActionOption(
+        id: 'meta:observer',
+        category: 'meta',
+        label: 'actions.observer.label',
+        icon: 'visibility',
+        verb: 'OBSERVER',
+      );
+
+      final location = Location(
+        id: 1,
+        name: 'LOC_START',
+        longDescription: 'Long start description',
+        shortDescription: 'Short start description',
+      );
+
+      when(() => adventureRepository.initialGame())
+          .thenAnswer((_) async => initialGame);
+      when(() => adventureRepository.locationById(1))
+          .thenAnswer((_) async => location);
+      when(() => listAvailableActions(initialGame))
+          .thenAnswer((_) async => const [observerAction]);
+      when(() => applyTurn(any(), any())).thenThrow(Exception('Should not be called'));
+      when(() => saveRepository.autosave(any())).thenAnswer((_) async {});
+
+      await tester.pumpWidget(MaterialApp(
+        home: AdventurePage(controller: controller),
+      ));
+
+      await tester.pumpAndSettle();
+
+      expect(find.text('Observer'), findsOneWidget);
+
+      await tester.tap(find.text('Observer'));
+      await tester.pump();
+      await tester.pumpAndSettle();
+
+      verifyNever(() => applyTurn(any(), any()));
     });
   });
 }

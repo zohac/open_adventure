@@ -270,32 +270,34 @@ Suivi & tickets
     - [x] Revue CTO validée (architecture/code/tests).
     - [x] Revue Game Designer validée (UX/flow, si applicable).
     - [x] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
-- [ ] ADVT‑S2‑11: Widget tests `AdventurePage` — rendu initial, tap bouton → mise à jour description/titre.
+- [x] ADVT‑S2‑11: Widget tests `AdventurePage` — rendu initial, tap bouton → mise à jour description/titre.
   - DoD:
-    - [ ] Deux tests passent sur simulateur de widget; pumpAndSettle sans jank apparent.
+    - [x] Deux tests passent sur simulateur de widget; pumpAndSettle sans jank apparent.
     - [ ] Revue CTO validée (architecture/code/tests).
     - [ ] Revue Game Designer validée (UX/labels, si applicable).
     - [ ] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
-- [ ] ADVT‑S2‑12: Normaliser motions — table `canonicalMotion[alias]`, mapping icônes/labels (UI utils) + tests utilitaires.
+- [x] ADVT‑S2‑12: Normaliser motions — table `canonicalMotion[alias]`, mapping icônes/labels (UI utils) + tests utilitaires.
   - DoD:
-    - [ ] Aliases courants couverts (N,S,E,W,NE,NW,SE,SW,UP,DOWN,IN,OUT); tests de mapping verts.
+    - [x] Aliases courants couverts (N,S,E,W,NE,NW,SE,SW,UP,DOWN,IN,OUT); tests de mapping verts.
     - [ ] Revue CTO validée (architecture/code/tests).
     - [ ] Revue Game Designer validée (icônes/labels, si applicable).
     - [ ] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
-- [ ] ADVT‑S2‑13: Gestion d’absence d’actions (lieu cul‑de‑sac non conditionné) — afficher message et action « Observer ».
+- [x] ADVT‑S2‑13: Gestion d’absence d’actions (lieu cul‑de‑sac non conditionné) — afficher message et action « Observer ».
   - DoD:
-    - [ ] UI affiche un fallback; pas de crash; test dédié.
+    - [x] UI affiche un fallback; pas de crash; test dédié.
     - [ ] Revue CTO validée (architecture/code/tests).
     - [ ] Revue Game Designer validée (UX/visuel, si applicable).
     - [ ] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
-- [ ] ADVT‑S2‑14: Lint/Analyze — zéro warning; vérifier tailles de listes, null‑safety.
+- [x] ADVT‑S2‑14: Lint/Analyze — zéro warning; vérifier tailles de listes, null‑safety.
   - DoD:
-    - [ ] `flutter analyze` zéro warning; CI locale verte.
+    - [x] `flutter analyze` zéro warning; CI locale verte.
     - [ ] Revue CTO validée (lint/qualité).
     - [ ] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
-- [ ] ADVT‑S2‑15: Mesure perf manuelle — interaction bouton→render < 16 ms; consigner dans note d’implémentation.
+- [x] ADVT‑S2‑15: Mesure perf manuelle — interaction bouton→render < 16 ms; consigner dans note d’implémentation.
   - DoD:
-    - [ ] Mesure notée (screenshot devtools ou log); pas de frame au‑delà de 16 ms sur action simple.
+    - [x] Mesure notée (screenshot devtools ou log); pas de frame au‑delà de 16 ms sur action simple.
+      - Samsung Tab A8 (profil) — interaction « Aller Nord » : Build 1.5 ms / Layout 3.4 ms / Raster 12.4 ms (aucun jank).
+      - POCO F4 (120 Hz) — interaction « Aller Nord » : Build 1.4 ms / Layout 6.6 ms / Raster 4.5 ms (jank signalé car budget 8.3 ms @120 Hz, conforme <16 ms).
     - [ ] Revue CTO validée (perfs mesurées).
     - [ ] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
 - [ ] ADVT‑S2‑16: Préparer l’intégration des images — slot UI + utilitaire `locationImageKey` + tests de fallback.
@@ -328,6 +330,22 @@ Suivi & tickets
     - [ ] Navigation fonctionnelle vers chaque écran (placeholders acceptés); widget tests tap→route OK;
     - [ ] Revue CTO validée (UI/tests);
     - [ ] Revue Game Designer validée (structure/wording UX_SCREENS).
+    - [ ] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
+- [ ] ADVT‑S2‑21: Prise en charge du mouvement `BACK/RETURN` (retour arrière) — Domain/Application/UI.
+  - DoD:
+    - [ ] `ListAvailableActionsTravel` expose une option `category=travel` « Revenir » lorsque `Game.oldLoc` reste accessible et qu’aucune condition `COND_NOBACK` ne bloque la marche arrière;
+    - [ ] `ApplyTurnGoto` gère `motion=BACK` en suivant l’historique (`oldLoc/oldLc2`) sans passer par `travel.json`, en respectant les règles forcées et les lieux sans retour;
+    - [ ] `GameController` conserve l’historique requis pour le retour, déclenche `perform()` sur l’action « Revenir », journal mis à jour;
+    - [ ] Widget tests AdventurePage: présence du bouton « Revenir » dans un cul-de-sac, tap → retour à la salle précédente → autosave invoquée;
+    - [ ] Revue CTO validée (architecture/code/tests);
+    - [ ] Revue Game Designer validée (libellés/flow « Revenir »);
+    - [ ] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
+- [ ] ADVT‑S2‑22: Tests de non-régression `BACK` — scénarios de retour bloqué/autorisé.
+  - DoD:
+    - [ ] Tests Domain (ApplyTurn) couvrant: retour simple, retour via lieu forcé, retour impossible (`COND_NOBACK`) → message adéquat;
+    - [ ] Tests Application (GameController) vérifiant qu’un retour invalide ne modifie pas l’état et que l’historique est mis à jour sur navigation normale;
+    - [ ] Widget test garantissant qu’aucune option « Revenir » n’apparaît sur un lieu initial sans historique;
+    - [ ] Revue CTO validée (architecture/code/tests);
     - [ ] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
 
 Références C (source canonique)

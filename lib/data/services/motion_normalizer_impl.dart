@@ -43,6 +43,24 @@ class MotionNormalizerImpl implements MotionCanonicalizer {
     'OUTSIDE': 'OUT',
     'OUT': 'OUT',
     'OUTSI': 'OUT',
+    'U': 'UP',
+    'UPWARD': 'UP',
+    'UPWARDS': 'UP',
+    'D': 'DOWN',
+    'DOWNWARD': 'DOWN',
+    'DOWNWARDS': 'DOWN',
+    'N': 'NORTH',
+    'S': 'SOUTH',
+    'E': 'EAST',
+    'W': 'WEST',
+    'NORTHEAST': 'NE',
+    'NORTH-EAST': 'NE',
+    'NORTHWEST': 'NW',
+    'NORTH-WEST': 'NW',
+    'SOUTHEAST': 'SE',
+    'SOUTH-EAST': 'SE',
+    'SOUTHWEST': 'SW',
+    'SOUTH-WEST': 'SW',
   };
 
   static const Set<String> _blockedCanonicals = {'MOT_0', 'HERE', 'NUL'};
@@ -83,6 +101,14 @@ class MotionNormalizerImpl implements MotionCanonicalizer {
         return 'undo';
       case 'FORWARD':
         return 'redo';
+      case 'NE':
+        return 'north_east';
+      case 'NW':
+        return 'north_west';
+      case 'SE':
+        return 'south_east';
+      case 'SW':
+        return 'south_west';
       default:
         return 'directions_walk';
     }
@@ -91,7 +117,7 @@ class MotionNormalizerImpl implements MotionCanonicalizer {
   @override
   int priority(String canonical) {
     const contextual = {'ENTER', 'IN', 'OUT', 'UP', 'DOWN'};
-    const cardinal = {'NORTH', 'EAST', 'SOUTH', 'WEST'};
+    const cardinal = {'NORTH', 'EAST', 'SOUTH', 'WEST', 'NE', 'NW', 'SE', 'SW'};
     if (contextual.contains(canonical)) return 0;
     if (cardinal.contains(canonical)) return 1;
     return 2;

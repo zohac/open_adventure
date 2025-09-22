@@ -122,6 +122,21 @@ class GameController extends ValueNotifier<GameViewState> {
       throw StateError('Cannot perform action before init() succeeds.');
     }
 
+    if (option.category == 'meta' && option.verb == 'OBSERVER') {
+      final Location location =
+          await _adventureRepository.locationById(currentGame.loc);
+      final description = location.longDescription?.isNotEmpty == true
+          ? location.longDescription!
+          : location.shortDescription ?? '';
+      final updatedJournal =
+          _appendJournal(value.journal, [description].where((m) => m.isNotEmpty).toList());
+      value = value.copyWith(
+        locationDescription: description,
+        journal: List.unmodifiable(updatedJournal),
+      );
+      return;
+    }
+
     final Command command = Command(verb: option.verb, target: option.objectId);
     final TurnResult result = await _applyTurn(command, currentGame);
     final Game newGame = result.newGame;

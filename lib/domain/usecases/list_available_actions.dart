@@ -60,6 +60,18 @@ class ListAvailableActionsTravel {
       final db = int.tryParse(b.objectId ?? '') ?? 0;
       return da - db;
     });
+    if (options.isEmpty) {
+      return const [
+        ActionOption(
+          id: 'meta:observer',
+          category: 'meta',
+          label: 'actions.observer.label',
+          icon: 'visibility',
+          verb: 'OBSERVER',
+        ),
+      ];
+    }
+
     return options;
   }
 }

@@ -186,6 +186,43 @@ void main() {
           const GameSnapshot(loc: 2, turns: 1, rngSeed: 42))).called(1);
     });
 
+    test('meta observer replays description without calling applyTurn',
+        () async {
+      final location = Location(
+        id: 1,
+        name: 'LOC_START',
+        longDescription: 'Long start description',
+        shortDescription: 'Short start description',
+      );
+      when(() => adventureRepository.initialGame())
+          .thenAnswer((_) async => initialGame);
+      when(() => adventureRepository.locationById(1))
+          .thenAnswer((_) async => location);
+      when(() => listAvailableActions(initialGame))
+          .thenAnswer((_) async => initialActions);
+      when(() => saveRepository.autosave(any())).thenAnswer((_) async {});
+      await controller.init();
+
+      clearInteractions(saveRepository);
+      clearInteractions(applyTurn);
+
+      const observerAction = ActionOption(
+        id: 'meta:observer',
+        category: 'meta',
+        label: 'actions.observer.label',
+        icon: 'visibility',
+        verb: 'OBSERVER',
+      );
+
+      await controller.perform(observerAction);
+
+      final state = controller.value;
+      expect(state.locationDescription, equals('Long start description'));
+      expect(state.journal.last, equals('Long start description'));
+      verifyNever(() => applyTurn(any(), any()));
+      verifyNever(() => saveRepository.autosave(any()));
+    });
+
     test('throws StateError if perform is called before init', () async {
       final freshController = GameController(
         adventureRepository: adventureRepository,

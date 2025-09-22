@@ -2,10 +2,23 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:open_adventure/data/repositories/adventure_repository_impl.dart';
 import 'package:open_adventure/data/services/motion_normalizer_impl.dart';
 import 'package:open_adventure/domain/entities/game.dart';
+import 'package:open_adventure/domain/entities/game_object.dart';
+import 'package:open_adventure/domain/entities/location.dart';
+import 'package:open_adventure/domain/entities/travel_rule.dart';
+import 'package:open_adventure/domain/repositories/adventure_repository.dart';
 import 'package:open_adventure/domain/usecases/list_available_actions.dart';
+import 'package:open_adventure/domain/value_objects/action_option.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
+
+  const observerAction = ActionOption(
+    id: 'meta:observer',
+    category: 'meta',
+    label: 'actions.observer.label',
+    icon: 'visibility',
+    verb: 'OBSERVER',
+  );
 
   late MotionNormalizerImpl motion;
 
@@ -94,4 +107,40 @@ void main() {
     expect(motion.iconName('ENTER'), equals('login'));
     expect(motion.iconName('OUT'), equals('logout'));
   });
+
+  test('returns observer fallback when no travel actions are available', () async {
+    final repo = _EmptyTravelRepository();
+    final usecase = ListAvailableActionsTravel(repo, motion);
+    const game = Game(loc: 42, oldLoc: 42, newLoc: 42, turns: 0, rngSeed: 99);
+
+    final options = await usecase(game);
+
+    expect(options, equals(const [observerAction]));
+  });
+}
+
+class _EmptyTravelRepository implements AdventureRepository {
+  @override
+  Future<Game> initialGame() {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<List<Location>> getLocations() async {
+    return const [
+      Location(id: 42, name: 'LOC_TEST'),
+    ];
+  }
+
+  @override
+  Future<List<GameObject>> getGameObjects() {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Location> locationById(int id) async =>
+      const Location(id: 42, name: 'LOC_TEST');
+
+  @override
+  Future<List<TravelRule>> travelRulesFor(int locationId) async => const [];
 }
