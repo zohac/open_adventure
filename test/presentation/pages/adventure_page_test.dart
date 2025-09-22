@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:open_adventure/application/controllers/game_controller.dart';
@@ -68,7 +69,8 @@ void main() {
       );
     });
 
-    Future<void> pumpInitialState(WidgetTester tester) async {
+    Future<void> pumpInitialState(WidgetTester tester,
+        {AssetBundle? bundle}) async {
       final location = Location(
         id: 1,
         name: 'LOC_START',
@@ -94,16 +96,25 @@ void main() {
           .thenAnswer((_) async => actions);
       when(() => saveRepository.autosave(any())).thenAnswer((_) async {});
 
-      await tester.pumpWidget(MaterialApp(
+      Widget app = MaterialApp(
         home: AdventurePage(controller: controller),
-      ));
+      );
+      if (bundle != null) {
+        app = DefaultAssetBundle(bundle: bundle, child: app);
+      }
+
+      await tester.pumpWidget(app);
 
       await tester.pumpAndSettle();
+
+      expect(tester.takeException(), isNull);
 
       verify(() => saveRepository.autosave(
             const GameSnapshot(loc: 1, turns: 0, rngSeed: 42),
           )).called(1);
       clearInteractions(saveRepository);
+
+      expect(controller.value.actions, isNotEmpty);
     }
 
     testWidgets('shows initial state after init', (tester) async {
@@ -111,8 +122,15 @@ void main() {
 
       expect(find.text('LOC_START'), findsOneWidget);
       expect(find.text('Long start description'), findsWidgets);
+      expect(find.text('Actions'), findsOneWidget);
       expect(find.text('Aller Ouest'), findsOneWidget);
       expect(find.text('Journal'), findsOneWidget);
+      expect(
+        find.byWidgetPredicate(
+          (widget) => widget.runtimeType.toString() == '_ActionsSection',
+        ),
+        findsOneWidget,
+      );
     });
 
     testWidgets('tapping a travel action updates title and description',
@@ -166,6 +184,16 @@ void main() {
           )).called(1);
     });
 
+    testWidgets('renders placeholder when asset is missing without errors',
+        (tester) async {
+      await pumpInitialState(tester, bundle: _FailingAssetBundle());
+
+      await tester.pump();
+
+      expect(find.byIcon(Icons.image_not_supported), findsOneWidget);
+      expect(tester.takeException(), isNull);
+    });
+
     testWidgets('shows observer fallback when no travel actions', (tester) async {
       const observerAction = ActionOption(
         id: 'meta:observer',
@@ -206,4 +234,11 @@ void main() {
       verifyNever(() => applyTurn(any(), any()));
     });
   });
+}
+
+class _FailingAssetBundle extends CachingAssetBundle {
+  @override
+  Future<ByteData> load(String key) {
+    return Future<ByteData>.error(FlutterError('missing asset: $key'));
+  }
 }

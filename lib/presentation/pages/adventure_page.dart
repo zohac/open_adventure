@@ -1,6 +1,9 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:open_adventure/application/controllers/game_controller.dart';
 import 'package:open_adventure/domain/value_objects/action_option.dart';
+import 'package:open_adventure/presentation/widgets/location_image.dart';
 
 /// First iteration of the Adventure screen (S2) showing description, travel
 /// buttons and a minimal journal backed by the [GameController].
@@ -67,17 +70,41 @@ class _AdventurePageState extends State<AdventurePage> {
           }
           return Padding(
             padding: const EdgeInsets.all(16),
-            child: ListView(
-              children: [
-                _DescriptionSection(description: state.locationDescription),
-                const SizedBox(height: 24),
-                _ActionsSection(
-                  actions: state.actions,
-                  onActionSelected: widget.controller.perform,
-                ),
-                const SizedBox(height: 24),
-                _JournalSection(entries: state.journal),
-              ],
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  LayoutBuilder(
+                    builder: (context, constraints) {
+                      final double maxWidth = constraints.maxWidth;
+                      const double ratio = 16 / 9;
+                      final double computedHeight = maxWidth.isFinite && maxWidth > 0
+                          ? math.min(maxWidth / ratio, 240)
+                          : 180.0;
+                      return SizedBox(
+                        height: computedHeight,
+                        child: LocationImage(
+                          mapTag: state.locationMapTag,
+                          name: state.locationTitle,
+                          id: state.locationId,
+                          semanticsLabel: state.locationTitle.isEmpty
+                              ? 'Illustration du lieu'
+                              : state.locationTitle,
+                        ),
+                      );
+                    },
+                  ),
+                  const SizedBox(height: 16),
+                  _DescriptionSection(description: state.locationDescription),
+                  const SizedBox(height: 24),
+                  _ActionsSection(
+                    actions: state.actions,
+                    onActionSelected: widget.controller.perform,
+                  ),
+                  const SizedBox(height: 24),
+                  _JournalSection(entries: state.journal),
+                ],
+              ),
             ),
           );
         },
@@ -118,11 +145,21 @@ class _ActionsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).textTheme;
+    final hasTravelActions =
+        actions.any((action) => action.category == 'travel');
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text('Actions', style: theme.titleMedium),
         const SizedBox(height: 8),
+        if (!hasTravelActions)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 12),
+            child: Text(
+              'Aucune sortie immédiate. Observez les alentours.',
+              style: theme.bodyMedium,
+            ),
+          ),
         if (actions.isEmpty)
           Text('No actions available', style: theme.bodyMedium)
         else

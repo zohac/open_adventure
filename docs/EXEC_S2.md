@@ -273,36 +273,36 @@ Suivi & tickets
 - [x] ADVT‑S2‑11: Widget tests `AdventurePage` — rendu initial, tap bouton → mise à jour description/titre.
   - DoD:
     - [x] Deux tests passent sur simulateur de widget; pumpAndSettle sans jank apparent.
-    - [ ] Revue CTO validée (architecture/code/tests).
-    - [ ] Revue Game Designer validée (UX/labels, si applicable).
-    - [ ] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
+    - [x] Revue CTO validée (architecture/code/tests).
+    - [x] Revue Game Designer validée (UX/labels, si applicable).
+    - [x] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
 - [x] ADVT‑S2‑12: Normaliser motions — table `canonicalMotion[alias]`, mapping icônes/labels (UI utils) + tests utilitaires.
   - DoD:
     - [x] Aliases courants couverts (N,S,E,W,NE,NW,SE,SW,UP,DOWN,IN,OUT); tests de mapping verts.
-    - [ ] Revue CTO validée (architecture/code/tests).
-    - [ ] Revue Game Designer validée (icônes/labels, si applicable).
+    - [x] Revue CTO validée (architecture/code/tests).
+    - [x] Revue Game Designer validée (icônes/labels, si applicable).
     - [ ] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
 - [x] ADVT‑S2‑13: Gestion d’absence d’actions (lieu cul‑de‑sac non conditionné) — afficher message et action « Observer ».
   - DoD:
     - [x] UI affiche un fallback; pas de crash; test dédié.
-    - [ ] Revue CTO validée (architecture/code/tests).
-    - [ ] Revue Game Designer validée (UX/visuel, si applicable).
-    - [ ] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
+    - [x] Revue CTO validée (architecture/code/tests).
+    - [x] Revue Game Designer validée (UX/visuel, si applicable).
+    - [x] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
 - [x] ADVT‑S2‑14: Lint/Analyze — zéro warning; vérifier tailles de listes, null‑safety.
   - DoD:
     - [x] `flutter analyze` zéro warning; CI locale verte.
-    - [ ] Revue CTO validée (lint/qualité).
-    - [ ] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
+    - [x] Revue CTO validée (lint/qualité).
+    - [x] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
 - [x] ADVT‑S2‑15: Mesure perf manuelle — interaction bouton→render < 16 ms; consigner dans note d’implémentation.
   - DoD:
     - [x] Mesure notée (screenshot devtools ou log); pas de frame au‑delà de 16 ms sur action simple.
       - Samsung Tab A8 (profil) — interaction « Aller Nord » : Build 1.5 ms / Layout 3.4 ms / Raster 12.4 ms (aucun jank).
       - POCO F4 (120 Hz) — interaction « Aller Nord » : Build 1.4 ms / Layout 6.6 ms / Raster 4.5 ms (jank signalé car budget 8.3 ms @120 Hz, conforme <16 ms).
-    - [ ] Revue CTO validée (perfs mesurées).
-    - [ ] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
-- [ ] ADVT‑S2‑16: Préparer l’intégration des images — slot UI + utilitaire `locationImageKey` + tests de fallback.
+    - [x] Revue CTO validée (perfs mesurées).
+    - [x] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
+- [x] ADVT‑S2‑16: Préparer l’intégration des images — slot UI + utilitaire `locationImageKey` + tests de fallback.
   - DoD:
-    - [ ] Fichier utilitaire créé et testé; AdventurePage v0 affiche un placeholder stable; absence d’asset ne loggue pas d’erreur.
+    - [x] Fichier utilitaire créé et testé; AdventurePage v0 affiche un placeholder stable; absence d’asset ne loggue pas d’erreur.
     - [ ] Revue CTO validée (architecture/code/tests).
     - [ ] Revue Game Designer validée (cadrage visuel, si applicable).
     - [ ] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.

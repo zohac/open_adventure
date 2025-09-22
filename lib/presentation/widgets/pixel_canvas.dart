@@ -3,6 +3,8 @@
 
 import 'package:flutter/material.dart';
 
+/// Constrains its child to the 320×180 logical grid and scales it by an
+/// integer factor while adding letterboxing when necessary.
 class PixelCanvas extends StatelessWidget {
   const PixelCanvas({
     super.key,
@@ -64,4 +66,3 @@ class PixelCanvas extends StatelessWidget {
     );
   }
 }
-

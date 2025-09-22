@@ -20,6 +20,12 @@ class GameViewState {
   /// Title of the current location (falls back to an empty string).
   final String locationTitle;
 
+  /// Map tag of the current location when available (used for image lookup).
+  final String? locationMapTag;
+
+  /// Identifier of the current location (used for image fallback and tests).
+  final int? locationId;
+
   /// Description currently shown to the user.
   final String locationDescription;
 
@@ -35,6 +41,8 @@ class GameViewState {
   const GameViewState({
     required this.game,
     required this.locationTitle,
+    required this.locationMapTag,
+    required this.locationId,
     required this.locationDescription,
     required this.actions,
     required this.journal,
@@ -44,6 +52,8 @@ class GameViewState {
   factory GameViewState.initial() => const GameViewState(
         game: null,
         locationTitle: '',
+        locationMapTag: null,
+        locationId: null,
         locationDescription: '',
         actions: <ActionOption>[],
         journal: <String>[],
@@ -53,6 +63,8 @@ class GameViewState {
   GameViewState copyWith({
     Game? game,
     String? locationTitle,
+    String? locationMapTag,
+    int? locationId,
     String? locationDescription,
     List<ActionOption>? actions,
     List<String>? journal,
@@ -61,6 +73,8 @@ class GameViewState {
     return GameViewState(
       game: game ?? this.game,
       locationTitle: locationTitle ?? this.locationTitle,
+      locationMapTag: locationMapTag ?? this.locationMapTag,
+      locationId: locationId ?? this.locationId,
       locationDescription: locationDescription ?? this.locationDescription,
       actions: actions ?? this.actions,
       journal: journal ?? this.journal,
@@ -106,6 +120,8 @@ class GameController extends ValueNotifier<GameViewState> {
     value = GameViewState(
       game: initialGame,
       locationTitle: location.name,
+      locationMapTag: location.mapTag,
+      locationId: location.id,
       locationDescription: description,
       actions: List.unmodifiable(actions),
       journal: List.unmodifiable(journal),
@@ -133,6 +149,9 @@ class GameController extends ValueNotifier<GameViewState> {
       value = value.copyWith(
         locationDescription: description,
         journal: List.unmodifiable(updatedJournal),
+        locationTitle: location.name,
+        locationMapTag: location.mapTag,
+        locationId: location.id,
       );
       return;
     }
@@ -154,6 +173,8 @@ class GameController extends ValueNotifier<GameViewState> {
     value = value.copyWith(
       game: newGame,
       locationTitle: location.name,
+      locationMapTag: location.mapTag,
+      locationId: location.id,
       locationDescription: description,
       actions: List.unmodifiable(actions),
       journal: List.unmodifiable(updatedJournal),

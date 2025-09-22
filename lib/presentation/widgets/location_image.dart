@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:open_adventure/core/utils/location_image.dart';
 import 'package:open_adventure/presentation/widgets/pixel_canvas.dart';
 
+/// Displays the location illustration using pixel-perfect scaling and provides
+/// a graceful placeholder when the asset is missing.
 class LocationImage extends StatelessWidget {
   const LocationImage({
     super.key,
@@ -15,6 +17,7 @@ class LocationImage extends StatelessWidget {
     this.backgroundColor = Colors.black,
     this.semanticsLabel,
     this.enablePixelCanvas = true,
+    this.bundle,
   });
 
   final String? mapTag;
@@ -24,16 +27,19 @@ class LocationImage extends StatelessWidget {
   final Color backgroundColor;
   final String? semanticsLabel;
   final bool enablePixelCanvas;
+  final AssetBundle? bundle;
 
   @override
   Widget build(BuildContext context) {
     final String key = computeLocationImageKey(mapTag: mapTag, name: name, id: id);
     final String path = imageAssetPathFromKey(key);
+    final AssetBundle resolvedBundle = bundle ?? DefaultAssetBundle.of(context);
 
     Widget img = Image.asset(
       path,
       fit: BoxFit.fill,
       filterQuality: FilterQuality.none,
+      bundle: resolvedBundle,
       errorBuilder: (context, error, stackTrace) => _placeholder(),
     );
 
