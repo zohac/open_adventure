@@ -311,13 +311,13 @@ Suivi & tickets
 - [x] ADVT‑S2‑17: Audio — bootstrap `AudioController` + cycle de vie + focus.
   - DoD:
     - [x] `AudioController` instanciable en test; `playBgm/stopBgm/playSfx` n’échouent pas (mocks);
-    - [ ] Pause/resume appelé sur changement de lifecycle; pas d’accès réseau; pas de crash.
+    - [x] Pause/resume appelé sur changement de lifecycle; pas d’accès réseau; pas de crash.
     - [ ] Revue CTO validée (architecture/audio/focus/tests).
     - [ ] Revue Game Designer validée (volumes défaut, si applicable).
     - [ ] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
-- [ ] ADVT‑S2‑18: Audio — Settings volumes Musique/SFX persistés et appliqués.
+- [x] ADVT‑S2‑18: Audio — Settings volumes Musique/SFX persistés et appliqués.
   - DoD:
-    - [ ] Modifs de sliders reflétées instantanément; persistance testée; restaurées au démarrage.
+    - [x] Modifs de sliders reflétées instantanément; persistance testée; restaurées au démarrage.
     - [ ] Revue CTO validée (architecture/persistance/tests).
     - [ ] Revue Game Designer validée (UX audio, si applicable).
 - [ ] ADVT‑S2‑19: Theme/tokens baseline (VISUAL_STYLE_GUIDE)

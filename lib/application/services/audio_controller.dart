@@ -4,6 +4,13 @@ import 'package:audio_session/audio_session.dart';
 import 'package:flutter/widgets.dart';
 import 'package:just_audio/just_audio.dart';
 
+abstract class AudioOutput {
+  Future<void> playBgm(String trackKey);
+  Future<void> stopBgm();
+  Future<void> playSfx(String effectKey);
+  Future<void> setVolumes({double? bgm, double? sfx});
+}
+
 /// Resolves an asset path for the provided [key]. Keep the mapping confined to
 /// this layer so higher layers only reason about semantic keys.
 typedef AudioAssetPathResolver = String Function(String key);
@@ -30,7 +37,7 @@ String defaultSfxAssetResolver(String key) {
 ///
 /// The controller is architected for clean testability: callers inject
 /// lightweight mocks for [AudioPlayer]s and the [AudioSessionProvider].
-class AudioController with WidgetsBindingObserver {
+class AudioController with WidgetsBindingObserver implements AudioOutput {
   AudioController({
     AudioSessionProvider? sessionProvider,
     AudioPlayer? bgmPlayer,
@@ -98,6 +105,7 @@ class AudioController with WidgetsBindingObserver {
   }
 
   /// Plays (or resumes) the background music track associated with [trackKey].
+  @override
   Future<void> playBgm(String trackKey) async {
     if (_disposed) return;
     await init();
@@ -130,6 +138,7 @@ class AudioController with WidgetsBindingObserver {
   }
 
   /// Stops the currently playing background music.
+  @override
   Future<void> stopBgm() async {
     if (_disposed) return;
     _resumeAfterFocus = false;
@@ -143,6 +152,7 @@ class AudioController with WidgetsBindingObserver {
   }
 
   /// Plays a one-shot sound effect mapped by [effectKey].
+  @override
   Future<void> playSfx(String effectKey) async {
     if (_disposed) return;
     await init();
@@ -168,6 +178,7 @@ class AudioController with WidgetsBindingObserver {
   }
 
   /// Adjusts the current volumes (clamped to [0, 1]).
+  @override
   Future<void> setVolumes({double? bgm, double? sfx}) async {
     if (_disposed) return;
     await init();

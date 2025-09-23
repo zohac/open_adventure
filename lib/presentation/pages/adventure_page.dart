@@ -1,9 +1,11 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:open_adventure/application/controllers/audio_settings_controller.dart';
 import 'package:open_adventure/application/controllers/game_controller.dart';
 import 'package:open_adventure/domain/value_objects/action_option.dart';
 import 'package:open_adventure/presentation/widgets/location_image.dart';
+import 'package:open_adventure/presentation/pages/settings_page.dart';
 
 /// First iteration of the Adventure screen (S2) showing description, travel
 /// buttons and a minimal journal backed by the [GameController].
@@ -13,6 +15,7 @@ class AdventurePage extends StatefulWidget {
     required this.controller,
     this.initializeOnMount = true,
     this.disposeController = false,
+    this.audioSettingsController,
   });
 
   /// Application controller orchestrating the game.
@@ -24,6 +27,9 @@ class AdventurePage extends StatefulWidget {
   /// If true, the provided controller will be disposed when the widget is
   /// removed from the tree (useful for local previews/tests).
   final bool disposeController;
+
+  /// Audio settings orchestrator (optional until the Settings page is wired).
+  final AudioSettingsController? audioSettingsController;
 
   @override
   State<AdventurePage> createState() => _AdventurePageState();
@@ -61,6 +67,24 @@ class _AdventurePageState extends State<AdventurePage> {
             return Text(title);
           },
         ),
+        actions: [
+          if (widget.audioSettingsController != null)
+            IconButton(
+              icon: const Icon(Icons.volume_up_outlined),
+              tooltip: 'Réglages audio',
+              onPressed: () {
+                final controller = widget.audioSettingsController!;
+                Navigator.of(context).push(
+                  MaterialPageRoute<void>(
+                    builder: (_) => SettingsPage(
+                      audioSettingsController: controller,
+                      initializeOnMount: false,
+                    ),
+                  ),
+                );
+              },
+            ),
+        ],
       ),
       body: ValueListenableBuilder<GameViewState>(
         valueListenable: widget.controller,
