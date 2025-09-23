@@ -1,6 +1,6 @@
 # Guide Visuel — Typo, Couleurs, Composants, Motion (normatif)
 
-Statut: Normatif. Ce guide fixe l’apparence de l’application (polices, couleurs, composants, états, motion) et aligne UI avec le pixel‑art 16‑bit. Toute dérive visuelle doit être amendée ici avant implémentation.
+Statut: Normatif. Ce guide fixe l’apparence de l’application (polices, couleurs, composants, états, motion) et aligne UI avec le pixel‑art 16‑bit. Toute dérive visuelle doit être amendée ici avant implémentation. Les tonalités doivent rester cohérentes avec le contexte historique rappelé dans `docs/Dossier_de_Référence.md` (esprit 1976–1977, exploration souterraine).
 
 Règle d’or: l’UI sert la lisibilité des 3–7 actions et le texte. Elle s’efface derrière l’art 16:9 (PixelCanvas), reste contrastée et accessible (AA), sans bruit visuel.
 

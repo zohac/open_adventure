@@ -8,6 +8,7 @@ Definition of Ready (DoR)
 - Nommage des images `<key>.webp` validé (mapTag → snake_case) et budget art confirmé (≤ 10 Mo).
 - Direction artistique 16‑bit (palette, typographie) approuvée.
 - `pubspec.yaml` préparé pour lister explicitement toutes les images `assets/images/locations/*.webp` et les audio `assets/audio/{music,sfx}/*.ogg`.
+- DDR pertinentes confirmées dans `docs/Dossier_de_Référence.md` (incantations Option A, comportement PNJ, oracles O1–O3 prêts pour QA).
 
 Objectif S3
 
@@ -15,7 +16,7 @@ Objectif S3
 
 Dépendances S2 (doivent être vertes)
 
-- `ListAvailableActions` (travel) et `ApplyTurn` (goto) en place. `GameController` + autosave opérationnels. `AdventurePage` v0 fonctionnelle.
+- `ListAvailableActions` (travel) et `ApplyTurn` (goto) en place. `GameController` + autosave opérationnels. `AdventurePage` v0 fonctionnelle. Les incantations sont déjà filtrées par ADVT‑S2‑23/24 et ne doivent être débloquées qu’ici (actions `special`).
 - Mouvement `BACK/RETURN` implémenté côté Domain/Application/UI (ADVT‑S2‑21/22) pour garantir l’option « Revenir » dans les cul-de-sac.
 - Mappers JSON stables (S1) et accès Repository aux entités requises.
 

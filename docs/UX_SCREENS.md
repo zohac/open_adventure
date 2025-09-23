@@ -13,6 +13,7 @@ Règle d’or (non négociable): sur les écrans d’action, afficher 3–7 choi
 - Journal: append-only, 200 derniers messages, zéro echo des commandes.
 - Images: 16:9 via `PixelCanvas` (scale entier, FilterQuality.none), clé `locationImageKey`.
 - Audio: BGM par zone (crossfade 250–500 ms), SFX throttle ≥ 150 ms.
+- Incantations: DDR-001 Option A (voir `docs/Dossier_de_Référence.md`) → aucun mot affiché avant découverte; après apprentissage, seul un bouton contextuel dans les salles concernées est autorisé.
 - Style visuel: couleurs, typo, composants et motion conformes à `docs/VISUAL_STYLE_GUIDE.md`.
 
 Notation & conventions
@@ -60,6 +61,8 @@ i18n clés minimales
 - But: écran principal de jeu.
 - Entrées: Home (Nouvelle/Continuer/Charger), retour onglets.
 - Contenu commun: image 16:9 (optionnelle), titre (lieu), description (long/short), liste d’actions (3–7 visibles), journal minimal.
+- Bouton « Revenir »: affiché uniquement si le moteur expose le mouvement BACK/RETURN (historique valide, lieu non `COND_NOBACK`), positionné en tête de la section travel.
+- Incantations: aucun bouton ni champ permanent avant découverte; après apprentissage, un seul bouton contextuel apparaît dans les salles actives (zéro liste globale) ; toute autre solution exige un DDR.
 - V0 (S2): `travel only`, overflow `Plus…`, Observer rejoue la description, autosave après tour.
 - V1 (S3): regroupement par catégories, pagination/scroll, intégration onglets, images intégrées, BGM par zone.
 - V2 (S4): StatusBar (score/tours/lampe), i18n, accessibilité finale.

@@ -8,6 +8,7 @@ Definition of Ready (DoR)
 - Données présentes: `assets/data/*.json` existants; `open-adventure-master/adventure.yaml` accessible.
 - Outils prêts: scripts `scripts/make_dungeon.py`, `scripts/extract_c.py`, `scripts/validate_json.py` exécutables localement.
 - Legacy isolable: accord d’archiver `lib/features/**` et de conserver `lib/(domain|application|data|presentation|core)`.
+- Lecture du `docs/Dossier_de_Référence.md` validée (repères historiques, DDR en vigueur).
 
 Objectif S1
 

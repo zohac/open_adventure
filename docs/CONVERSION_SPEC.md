@@ -8,11 +8,12 @@ Source de vérité & gestion des changements
 - Toute modification de périmètre ou de décision technique doit être intégrée à ce document avant implémentation.
 - Les scripts d’outillage (scripts/*.py) ne sont pas embarqués dans l’app; ils servent uniquement à générer/valider les assets.
 
-Références normatives rattachées
+ Références normatives rattachées
 
 - Annexe UX/Audio/Pixel‑Art: `docs/DESIGN_ADDENDUM.md` (règles §17–§19)
 - Bible d’assets (art): `docs/ART_ASSET_BIBLE.md` (scènes prioritaires, VFX/SFX discrets, palettes)
 - Écrans UX détaillés: `docs/UX_SCREENS.md` (wireframes + DoD par écran)
+- Dossier historien & DDR: `docs/Dossier_de_Référence.md` (incantations, PNJ, oracles seedés, politique de fidélité)
 
 Résumé exécutif — décision non négociable:
 
@@ -54,7 +55,7 @@ Hors périmètre:
    - Entrée: les actions possibles sont proposées sous forme de boutons contextuels (navigation, interaction, objets).
    - Sortie: en-tête (nom du lieu), image illustrative (optionnelle), description textuelle, score, nombre de tours.
    - Journal: fil consultable des évènements (sorties système), sans affichage des commandes tapées (puisqu’il n’y en a pas).
-   - Commandes: navigation (N, S, E, O…), interactions (PRENDRE, LÂCHER, OUVRIR, FERMER, ALLUMER, ÉTEINDRE…), déduites des règles « travel » et « actions ».
+   - Commandes: navigation (N, S, E, O, BACK/RETURN…), interactions (PRENDRE, LÂCHER, OUVRIR, FERMER, ALLUMER, ÉTEINDRE…), déduites des règles « travel » et « actions ».
    - Accessibilité: taille de police ajustable, focus/semantics sur les boutons.
 
 2) Écran d’accueil et menu
@@ -183,6 +184,7 @@ Résolution des options (normatif):
   - Déplacements: pour `current.locationId`, filtrer `TravelRule` dont `condition` est satisfaite → options `category=travel`, `verb=motion`, `value=dest` (ou `special/speak`).
   - Interactions: dérivées de `actions.json` + état objets en vue ou en inventaire + `conditions.json`.
 - Les « specials » mappent vers des use cases dédiés (`SpecialAction_XYZ`) pour garder la lisibilité.
+- DDR-001 (Option A par défaut) : les incantations historiques ne sont **jamais listées** proactivement; lorsqu’un mot est découvert diegétiquement, un bouton contextuel `category=meta` n’apparaît que dans les lieux où il agit. Aucune pénalité supplémentaire n’est appliquée hors malus d’indice canonique.
 
 ## 7. Moteur de jeu (Domain)
 
@@ -211,6 +213,7 @@ Contrats use cases (signature indicative):
 - `SaveRepository`: API `save(slot, GameSnapshot)`, `load(slot)`, `latest()`, `list()`, `delete(slot)`.
 - Format JSON compact, compressible (optionnel), avec `schema_version` et `game_version`.
 - Résilience: lecture tolérante (ignorer champs inconnus), corruption → message + fallback dernier autosave sain.
+- Exemple de payload V1 détaillé dans `docs/Dossier_de_Référence.md` §7.3 (à aligner sur les snapshots Domain pour garantir compatibilité future).
 
 Détails d’implémentation:
 
@@ -466,6 +469,7 @@ class ActionOption {
 
 - Priorité 1: sécurité/urgence (lampe faible, danger nain) → actions `Light/Extinguish/Retreat` si applicables.
 - Priorité 2: navigation immédiate (`travel/goto`).
+- Le mouvement `BACK/RETURN` (bouton « Revenir ») est proposé dès qu'un chemin inverse existe et est traité comme navigation prioritaire (entre sécurité et le reste des travels classiques).
 - Priorité 3: interactions d’objets (`Take/Drop/Open/Close/Examine/Use`).
 - Priorité 4: méta (`Inventaire`, `Observer`, `Carte`, `Menu`).
 - Tiebreakers: (a) label asc (localisé), (b) destination id croissant pour travel, (c) object name asc.
@@ -478,7 +482,7 @@ class ActionOption {
 
 17.4 Libellés & icônes (génération UI)
 
-- Travel: `Aller ${directionLabel}` (N, S, E, O, NE, NO, SE, SO, HAUT, BAS, ENTRER, SORTIR). Icônes Material: `{N:arrow_upward, S:arrow_downward, E:arrow_forward, O:arrow_back, NE:north_east, NO:north_west, SE:south_east, SO:south_west, HAUT:arrow_upward, BAS:arrow_downward, ENTRER:login, SORTIR:logout}`.
+- Travel: `Aller ${directionLabel}` (N, S, E, O, NE, NO, SE, SO, HAUT, BAS, ENTRER, SORTIR, RETOUR). Icônes Material: `{N:arrow_upward, S:arrow_downward, E:arrow_forward, O:arrow_back, NE:north_east, NO:north_west, SE:south_east, SO:south_west, HAUT:arrow_upward, BAS:arrow_downward, ENTRER:login, SORTIR:logout, RETOUR:undo}`.
 - Interaction objet: `${verbeUI} ${objetDisplayName}` (ex: `Prendre la clé`, `Ouvrir la porte`).
 - Méta: `Inventaire`, `Observer`, `Carte`, `Menu` (localisés via ARB; pas de logique dans Domain/Data).
 - Cas longs: troncature label à ~32–40 caractères avec ellipsis, `Semantics.label` complet conservé.
@@ -526,6 +530,7 @@ class ActionOption {
 - `ListAvailableActions`: ≥1 action sur lieu avec travel trivial; max 7 visibles; ordre conforme aux priorités.
 - `ApplyTurn(goto)`: met à jour `loc`, `turns++`, renvoie description attendue (long→short selon visite).
 - Widget: `AdventurePage` rend titre/description + boutons; tap → mise à jour; fallback image silencieux.
+- Oracles seedés (voir `docs/Dossier_de_Référence.md` §7.4) : jeux de tests d’intégration couvrant incantations, nains et pirate afin de verrouiller la fidélité face au moteur C ; à décliner dans la suite des tests Domain/Application.
 
 ## 18. Direction Artistique 16‑bit — Normes de Production (normatif)
 

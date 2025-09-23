@@ -5,9 +5,10 @@ Statut: exécutable immédiatement. Durée cible: 1 semaine (5 j/h).
 Definition of Ready (DoR)
 
 - `initialGame()` disponible et stable depuis S1; `assets/data/travel.json` validé (scripts/validate_json.py).
-- `pubspec.yaml` déclare `assets/data/*` nécessaires et dépendances S2 (voir ci‑dessous).
+- `pubspec.yaml` déclare `assets/data/*` nécessaires et dépendances S2 (voir ci-dessous).
 - Choix de la lib de mocks acté: `mocktail` recommandé.
 - Règles: aucune permission réseau; pas d’accès HTTP; seules permissions locales (FS via path_provider) sont autorisées.
+- Lecture du `docs/Dossier_de_Référence.md` (PNJ, DDR-001) acquise; incantations toujours hors surface UI (Option A).
 
 Objectif S2
 
@@ -46,6 +47,7 @@ UI – livrables & DoD
     - [ ] Rend une liste de boutons d’actions `category=travel` cohérente avec `ListAvailableActions`;
     - [ ] Tap sur un bouton met à jour titre/description du nouveau lieu; pas de jank observable;
     - [ ] Journal affiche le dernier message retourné par `TurnResult`;
+    - [ ] Libellés affichés = chaînes localisées (aucune clé ARB brute à l’écran) conformément à DDR-001;
     - [ ] Respect de §17 (UX Mobile): 3–7 actions visibles max; si >7, rendre 6 + bouton `Plus…`; labels/icônes motion normalisés; première visite = `longDescription`, revisites = `shortDescription`.
     - [ ] Revue Game Designer (UX): labels/directions conformes, 3–7 actions visibles + overflow « Plus… », long/short corrects, accessibilité de base.
 - [ ] Intégration GameController (injection par constructeur, état immuable)
@@ -304,11 +306,11 @@ Suivi & tickets
   - DoD:
     - [x] Fichier utilitaire créé et testé; AdventurePage v0 affiche un placeholder stable; absence d’asset ne loggue pas d’erreur.
     - [ ] Revue CTO validée (architecture/code/tests).
-    - [ ] Revue Game Designer validée (cadrage visuel, si applicable).
+    - [X] Revue Game Designer validée (cadrage visuel, si applicable).
     - [ ] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
-- [ ] ADVT‑S2‑17: Audio — bootstrap `AudioController` + cycle de vie + focus.
+- [x] ADVT‑S2‑17: Audio — bootstrap `AudioController` + cycle de vie + focus.
   - DoD:
-    - [ ] `AudioController` instanciable en test; `playBgm/stopBgm/playSfx` n’échouent pas (mocks);
+    - [x] `AudioController` instanciable en test; `playBgm/stopBgm/playSfx` n’échouent pas (mocks);
     - [ ] Pause/resume appelé sur changement de lifecycle; pas d’accès réseau; pas de crash.
     - [ ] Revue CTO validée (architecture/audio/focus/tests).
     - [ ] Revue Game Designer validée (volumes défaut, si applicable).
@@ -346,6 +348,20 @@ Suivi & tickets
     - [ ] Tests Application (GameController) vérifiant qu’un retour invalide ne modifie pas l’état et que l’historique est mis à jour sur navigation normale;
     - [ ] Widget test garantissant qu’aucune option « Revenir » n’apparaît sur un lieu initial sans historique;
     - [ ] Revue CTO validée (architecture/code/tests);
+    - [ ] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
+- [ ] ADVT‑S2‑23: Filtrer les incantations (PLUGH, XYZZY…) des actions tant qu’elles ne sont pas découvertes.
+  - DoD:
+    - [ ] `ListAvailableActionsTravel` exclut par défaut les motions spéciaux (`special`/`magic`) et ne les injecte que si un flag `Game.magicWordsUnlocked` (ou équivalent) est posé par la couche Domain (S3) ;
+    - [ ] `GameController` ne relaie aucune action incantation tant que le joueur n’a pas déclenché l’événement d’apprentissage ;
+    - [ ] Widget test AdventurePage: absence de boutons « Aller Plugh/Xyzzy » en début de partie ;
+    - [ ] Revue CTO validée (architecture/code/tests) ;
+    - [ ] Revue Game Designer validée (fidélité DDR‑001 Option A) ;
+    - [ ] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
+- [ ] ADVT‑S2‑24: Tests de non-régression incantations — visibilité conditionnelle.
+  - DoD:
+    - [ ] Tests Domain simulant l’apprentissage d’un mot magique → l’action devient disponible uniquement dans les salles concernées ;
+    - [ ] Tests Application/Widget vérifiant l’apparition/disparition dynamique des boutons d’incantation ;
+    - [ ] Revue CTO validée (architecture/code/tests) ;
     - [ ] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
 
 Références C (source canonique)

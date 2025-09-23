@@ -1,6 +1,6 @@
 # Asset Bible — Scenes, Characters, VFX/SFX (normatif)
 
-Statut: Normatif. Cette bible guide la production artistique (images 16‑bit), les VFX minimalistes et les SFX. Elle complète `docs/CONVERSION_SPEC.md` (§17–§19) et `docs/DESIGN_ADDENDUM.md`.
+Statut: Normatif. Cette bible guide la production artistique (images 16‑bit), les VFX minimalistes et les SFX. Elle complète `docs/CONVERSION_SPEC.md` (§17–§19), `docs/DESIGN_ADDENDUM.md` et s’aligne sur les lectures historiques du `docs/Dossier_de_Référence.md` (PNJ, ambiance 1977).
 
 Règle d’or: images nettes (PixelCanvas, scale entier), ≤ 200 KB par scène, budget total art ≤ 10 Mo. Aucune animation lourde: overlays discrets seulement.
 
@@ -96,6 +96,8 @@ Note: la liste exhaustive des lieux est dérivable de `assets/data/locations.jso
 
 ## 2) Personnages/Créatures — Briefs visuels & VFX discrets
 
+👉 Référentiel comportemental détaillé dans `docs/Dossier_de_Référence.md` §C ; s’en servir pour caler les poses/clins d’œil narratifs.
+
 Les créatures sont intégrées dans les images de scène correspondantes (pas de sprites séparés). Utiliser silhouettes lisibles 16‑bit, détails par aplats.
 
 - DWARF (apparitions aléatoires)
@@ -161,6 +163,8 @@ Note: la liste exhaustive des objets vient de `assets/data/objects.json`. Ce sou
 Implémentation: overlays légers (rendus Flutter, pas d’assets animés lourds); désactivables via Settings.
 
 ## 5) Audio — Cue Sheet minimale (S3)
+
+👉 Vérifier les ambiances et cues décrits par l’historien (pirate, nains, lampe) afin de rester fidèle à l’imaginaire sonore d’origine.
 
 - UI tap: clic doux 30–60 ms.
 - Take/Drop: pick/drop brefs.

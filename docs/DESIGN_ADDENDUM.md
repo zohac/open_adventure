@@ -2,15 +2,17 @@
 
 Statut: annexe normative rattachée à `docs/CONVERSION_SPEC.md` (§17–§19). En cas d’écart, aligner le code et les assets sur ce document et la spec.
 
-Règle d’or: 3–7 choix vraiment utiles à chaque instant, zéro clavier.
+Règle d’or: 3–7 choix vraiment utiles à chaque instant, zéro clavier (incantations traitées selon DDR-001 du `docs/Dossier_de_Référence.md`).
 
 ## UX — Checklist d’implémentation (Dev)
 
-- Actions visibles: ≤ 7. Au‑delà: 6 + `Plus…` (S2) ou scroll/pagination (S3).
+- Actions visibles: ≤ 7. Au-delà: 6 + `Plus…` (S2) ou scroll/pagination (S3).
 - Catégories: `travel`, `interaction`, `meta` (Inventaire, Observer, Carte, Menu toujours présents).
 - Priorisation (ordre): sécurité/urgence → travel → interaction → méta (tiebreakers: label asc, dest id asc, objet asc).
+- Incantations: par défaut (DDR-001 Option A) aucun mot magique n’est visible tant qu’il n’est pas appris; après découverte, un bouton contextuel limité au lieu pertinent est injecté (`category=meta`), sans liste globale. Toute autre exposition requiert un DDR. Avant déblocage, `ListAvailableActions`/UI doivent filtrer les motions “special”.
+- Cul-de-sac & retour: lorsque `Game` expose un historique valide (`BACK/RETURN`), afficher un bouton « Revenir » (icon `undo`) classé juste après les actions de sécurité; si le jeu interdit la marche arrière (`COND_NOBACK`), ne rien afficher.
 - Long/Short: première visite = long; revisites = short; `Observer` rejoue la long si disponible.
-- Journal: append‑only, garde 200 derniers; messages uniquement (pas de commandes).
+- Journal: append-only, garde 200 derniers; messages uniquement (pas de commandes).
 - Images: `PixelCanvas` 16:9, `FilterQuality.none`, fallback silencieux, `locationImageKey`.
 - Audio: BGM par zone avec crossfade 250–500 ms; SFX throttle ≥ 150 ms.
 - A11y: cibles ≥ 48dp, labels semantics, ordre de focus image→titre→desc→actions→bottom bar.

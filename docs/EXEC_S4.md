@@ -8,6 +8,7 @@ Definition of Ready (DoR)
 - Stratégies de precache image/audio validées; toggles Settings décidés.
 - Liste d’assets audio/images finale déclarée dans `pubspec.yaml`.
 - ARB de base créés pour FR/EN (fichiers vides avec clés de structure), checklist accessibilité prête (AA), et plan de tests goldens (si activé) défini.
+- DDR à jour (`docs/Dossier_de_Référence.md`) : incantations Option A confirmée, messages lampe (DDR-003) cadrés, oracles seedés intégrés au plan QA.
 
 Objectif S4
 
