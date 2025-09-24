@@ -272,9 +272,9 @@ void main() {
         audioSettingsController: audioSettingsController,
       );
 
-      final BuildContext optionsContext = tester.element(find.text('Options'));
-      final AppActionAccents accents =
-          Theme.of(optionsContext).extension<AppActionAccents>()!;
+      final AppActionAccents metaAccents = Theme.of(
+        tester.element(find.text('Options')),
+      ).extension<AppActionAccents>()!;
 
       final Container optionsAccent = tester.widget(
         find.byKey(const ValueKey('homeMenuAccent-Options')),
@@ -288,7 +288,7 @@ void main() {
           Theme.of(optionsContext).extension<AppActionAccents>()!;
 
       final Icon optionsIcon = tester.widget(find.byIcon(Icons.tune_rounded));
-      expect(optionsIcon.color, accents.meta);
+      expect(optionsIcon.color, metaAccents.meta);
 
       final Container creditsAccent = tester.widget(
         find.byKey(const ValueKey('homeMenuAccent-Crédits')),
@@ -299,7 +299,7 @@ void main() {
 
       final Icon creditsIcon =
           tester.widget(find.byIcon(Icons.info_outline_rounded));
-      expect(creditsIcon.color, accents.meta);
+      expect(creditsIcon.color, metaAccents.meta);
     });
 
     testWidgets('disabled accent buttons dim surfaces and typography',
