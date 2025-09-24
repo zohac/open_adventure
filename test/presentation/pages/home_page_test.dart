@@ -243,7 +243,7 @@ void main() {
       expect(icon.color, scheme.primary);
     });
 
-    testWidgets('options and credits use meta accent colors',
+    testWidgets('options and credits tint icons without accent stripe',
         (tester) async {
       final gameController = buildGameController(
         adventureRepository: adventureRepository,
@@ -272,7 +272,7 @@ void main() {
       );
       final BoxDecoration optionsDecoration =
           optionsAccent.decoration! as BoxDecoration;
-      expect(optionsDecoration.color, const Color(0xFF616161));
+      expect(optionsDecoration.color, Colors.transparent);
 
       final Icon optionsIcon = tester.widget(find.byIcon(Icons.tune_rounded));
       expect(optionsIcon.color, const Color(0xFF616161));
@@ -282,7 +282,7 @@ void main() {
       );
       final BoxDecoration creditsDecoration =
           creditsAccent.decoration! as BoxDecoration;
-      expect(creditsDecoration.color, const Color(0xFF616161));
+      expect(creditsDecoration.color, Colors.transparent);
 
       final Icon creditsIcon =
           tester.widget(find.byIcon(Icons.info_outline_rounded));

@@ -158,6 +158,7 @@ class _HomePageState extends State<HomePage> {
                                   icon: Icons.tune_rounded,
                                   accentColor:
                                       _metaAccent(Theme.of(context).brightness),
+                                  showAccentStripe: false,
                                   onPressed: _openSettings,
                                 ),
                                 const SizedBox(height: AppSpacing.md),
@@ -167,6 +168,7 @@ class _HomePageState extends State<HomePage> {
                                   icon: Icons.info_outline_rounded,
                                   accentColor:
                                       _metaAccent(Theme.of(context).brightness),
+                                  showAccentStripe: false,
                                   onPressed: _openCredits,
                                 ),
                               ],
@@ -196,55 +198,52 @@ class _HeroBanner extends StatelessWidget {
     final scheme = Theme.of(context).colorScheme;
     return AspectRatio(
       aspectRatio: 16 / 9,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(16),
-        child: Stack(
-          fit: StackFit.expand,
-          children: [
-            PixelCanvas(
-              child: CustomPaint(
-                painter: _HeroPixelArtPainter(
-                  scheme: scheme,
-                ),
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          PixelCanvas(
+            child: CustomPaint(
+              painter: _HeroPixelArtPainter(
+                scheme: scheme,
               ),
             ),
-            DecoratedBox(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Colors.transparent,
-                    Colors.black.withValues(alpha: 0.55),
-                  ],
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(AppSpacing.lg),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Open Adventure',
-                    style: textTheme.headlineSmall?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                  const SizedBox(height: AppSpacing.sm),
-                  Text(
-                    'Partez pour l\'expédition textuelle culte, remasterisée pour mobile.',
-                    style: textTheme.bodyMedium?.copyWith(
-                      color: Colors.white.withValues(alpha: 0.85),
-                    ),
-                  ),
+          ),
+          DecoratedBox(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Colors.transparent,
+                  Colors.black.withValues(alpha: 0.55),
                 ],
               ),
             ),
-          ],
-        ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(AppSpacing.lg),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Open Adventure',
+                  style: textTheme.headlineSmall?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.sm),
+                Text(
+                  'Partez pour l\'expédition textuelle culte, remasterisée pour mobile.',
+                  style: textTheme.bodyMedium?.copyWith(
+                    color: Colors.white.withValues(alpha: 0.85),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -324,6 +323,7 @@ class _PrimaryMenuButton extends StatelessWidget {
     required this.subtitle,
     required this.icon,
     this.accentColor,
+    this.showAccentStripe = true,
     required this.onPressed,
   });
 
@@ -331,6 +331,8 @@ class _PrimaryMenuButton extends StatelessWidget {
   final String subtitle;
   final IconData icon;
   final Color? accentColor;
+  /// Controls whether the accent stripe is painted on the left side.
+  final bool showAccentStripe;
   final VoidCallback? onPressed;
 
   @override
@@ -388,7 +390,8 @@ class _PrimaryMenuButton extends StatelessWidget {
                   width: 4,
                   height: 56,
                   decoration: BoxDecoration(
-                    color: accentForState,
+                    color:
+                        showAccentStripe ? accentForState : Colors.transparent,
                     borderRadius: BorderRadius.circular(4),
                   ),
                 ),
