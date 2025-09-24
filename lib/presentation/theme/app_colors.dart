@@ -82,3 +82,65 @@ class AppColorSchemes {
     surfaceTint: Color(0xFF8C88FF),
   );
 }
+
+/// Provides categorical accent colors for travel, interaction and meta actions
+/// as mandated by the visual style guide. Exposed as a [ThemeExtension] so
+/// presentation widgets can retrieve consistent hues regardless of the active
+/// brightness.
+@immutable
+class AppActionAccents extends ThemeExtension<AppActionAccents> {
+  /// Creates a set of action accent colors.
+  const AppActionAccents({
+    required this.travel,
+    required this.interaction,
+    required this.meta,
+  });
+
+  /// Accent used for travel actions (movement between locations).
+  final Color travel;
+
+  /// Accent used for interaction actions (manipulating the environment).
+  final Color interaction;
+
+  /// Accent used for meta actions (UI, options, journal, saves...).
+  final Color meta;
+
+  /// Light theme accents defined by the visual style guide tokens.
+  static const AppActionAccents light = AppActionAccents(
+    travel: Color(0xFF2E7D32),
+    interaction: Color(0xFF0288D1),
+    meta: Color(0xFF616161),
+  );
+
+  /// Dark theme accents defined by the visual style guide tokens.
+  static const AppActionAccents dark = AppActionAccents(
+    travel: Color(0xFF81C784),
+    interaction: Color(0xFF64B5F6),
+    meta: Color(0xFF9E9E9E),
+  );
+
+  @override
+  AppActionAccents copyWith({
+    Color? travel,
+    Color? interaction,
+    Color? meta,
+  }) {
+    return AppActionAccents(
+      travel: travel ?? this.travel,
+      interaction: interaction ?? this.interaction,
+      meta: meta ?? this.meta,
+    );
+  }
+
+  @override
+  AppActionAccents lerp(AppActionAccents? other, double t) {
+    if (other == null) {
+      return this;
+    }
+    return AppActionAccents(
+      travel: Color.lerp(travel, other.travel, t) ?? travel,
+      interaction: Color.lerp(interaction, other.interaction, t) ?? interaction,
+      meta: Color.lerp(meta, other.meta, t) ?? meta,
+    );
+  }
+}
