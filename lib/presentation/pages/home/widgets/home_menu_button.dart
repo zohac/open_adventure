@@ -3,11 +3,11 @@ import 'package:open_adventure/presentation/theme/app_spacing.dart';
 
 /// A primary action button displayed in the home menu.
 class HomeMenuButton extends StatelessWidget {
-  /// Creates a [HomeMenuButton] with a title, subtitle and accent styling.
+  /// Creates a [HomeMenuButton] with a title, optional subtitle and accent styling.
   const HomeMenuButton({
     super.key,
     required this.label,
-    required this.subtitle,
+    this.subtitle,
     required this.icon,
     this.accentColor,
     this.showAccentStripe = true,
@@ -18,7 +18,7 @@ class HomeMenuButton extends StatelessWidget {
   final String label;
 
   /// Supporting description displayed under [label].
-  final String subtitle;
+  final String? subtitle;
 
   /// Icon representing the action category.
   final IconData icon;
@@ -58,6 +58,8 @@ class HomeMenuButton extends StatelessWidget {
     final Color subtitleColor = enabled
         ? scheme.onSurfaceVariant
         : scheme.onSurface.withValues(alpha: 0.38);
+    final bool hasSubtitle = subtitle != null && subtitle!.isNotEmpty;
+
     return Semantics(
       button: true,
       enabled: enabled,
@@ -109,13 +111,15 @@ class HomeMenuButton extends StatelessWidget {
                           color: labelColor,
                         ),
                       ),
-                      const SizedBox(height: AppSpacing.xs / 2),
-                      Text(
-                        subtitle,
-                        style: theme.textTheme.bodySmall?.copyWith(
-                          color: subtitleColor,
+                      if (hasSubtitle) ...[
+                        const SizedBox(height: AppSpacing.xs / 2),
+                        Text(
+                          subtitle!,
+                          style: theme.textTheme.bodySmall?.copyWith(
+                            color: subtitleColor,
+                          ),
                         ),
-                      ),
+                      ],
                     ],
                   ),
                 ),

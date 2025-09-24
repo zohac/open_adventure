@@ -162,8 +162,8 @@ class _HomePageState extends State<HomePage> {
         label: 'Continuer',
         subtitle: state.autosave != null
             ? 'Dernier tour : ${state.autosave!.turns}, lieu #${state.autosave!.loc}'
-            : 'Aucune sauvegarde automatique détectée',
-        icon: Icons.history_rounded,
+            : null,
+        icon: Icons.bookmark_rounded,
         accentColor: scheme.secondary,
         onPressed: state.autosave != null ? _openAdventure : null,
       ),
@@ -179,6 +179,7 @@ class _HomePageState extends State<HomePage> {
         subtitle: 'Configurer l\'expérience audio et tactile',
         icon: Icons.tune_rounded,
         accentColor: accents.meta,
+        showAccentStripe: false,
         onPressed: _openSettings,
       ),
       _MenuConfiguration(
@@ -186,6 +187,7 @@ class _HomePageState extends State<HomePage> {
         subtitle: 'L\'équipe derrière cette aventure',
         icon: Icons.info_outline_rounded,
         accentColor: accents.meta,
+        showAccentStripe: false,
         onPressed: _openCredits,
       ),
     ];
@@ -216,7 +218,7 @@ class _HomePageState extends State<HomePage> {
 class _MenuConfiguration {
   _MenuConfiguration({
     required this.label,
-    required this.subtitle,
+    this.subtitle,
     required this.icon,
     required this.accentColor,
     this.showAccentStripe = true,
@@ -224,7 +226,7 @@ class _MenuConfiguration {
   });
 
   final String label;
-  final String subtitle;
+  final String? subtitle;
   final IconData icon;
   final Color? accentColor;
   final bool showAccentStripe;

@@ -204,6 +204,10 @@ void main() {
 
       verifyNever(() => observer.didPush(any(), any()));
       expect(find.byType(AdventurePage), findsNothing);
+      expect(
+        find.text('Aucune sauvegarde automatique détectée'),
+        findsNothing,
+      );
     });
 
     testWidgets('accented buttons tint icons with their accent color',
@@ -268,6 +272,10 @@ void main() {
         audioSettingsController: audioSettingsController,
       );
 
+      final BuildContext optionsContext = tester.element(find.text('Options'));
+      final AppActionAccents accents =
+          Theme.of(optionsContext).extension<AppActionAccents>()!;
+
       final Container optionsAccent = tester.widget(
         find.byKey(const ValueKey('homeMenuAccent-Options')),
       );
@@ -328,7 +336,7 @@ void main() {
           accentContainer.decoration! as BoxDecoration;
       expect(decoration.color, expectedAccent);
 
-      final Icon icon = tester.widget(find.byIcon(Icons.history_rounded));
+      final Icon icon = tester.widget(find.byIcon(Icons.bookmark_rounded));
       expect(icon.color, expectedAccent);
 
       final Ink ink = tester.widget(
@@ -343,6 +351,10 @@ void main() {
 
       final Text label = tester.widget(find.text('Continuer'));
       expect(label.style?.color, expectedText);
+      expect(
+        find.text('Aucune sauvegarde automatique détectée'),
+        findsNothing,
+      );
     });
 
     testWidgets('hero banner renders through PixelCanvas', (tester) async {
