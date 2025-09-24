@@ -13,6 +13,7 @@ import 'package:open_adventure/domain/usecases/apply_turn_goto.dart';
 import 'package:open_adventure/domain/usecases/list_available_actions.dart';
 import 'package:open_adventure/domain/usecases/save_audio_settings.dart';
 import 'package:open_adventure/presentation/pages/adventure_page.dart';
+import 'package:open_adventure/presentation/theme/app_theme.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -79,7 +80,9 @@ class _OpenAdventureAppState extends State<OpenAdventureApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Open Adventure',
-      theme: ThemeData.from(colorScheme: const ColorScheme.light()),
+      theme: AppTheme.light(),
+      darkTheme: AppTheme.dark(),
+      themeMode: ThemeMode.system,
       home: AdventurePage(
         controller: widget.gameController,
         audioSettingsController: widget.audioSettingsController,

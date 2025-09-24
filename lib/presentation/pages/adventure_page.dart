@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:open_adventure/application/controllers/audio_settings_controller.dart';
 import 'package:open_adventure/application/controllers/game_controller.dart';
 import 'package:open_adventure/domain/value_objects/action_option.dart';
+import 'package:open_adventure/presentation/theme/app_spacing.dart';
 import 'package:open_adventure/presentation/widgets/location_image.dart';
 import 'package:open_adventure/presentation/pages/settings_page.dart';
 
@@ -93,7 +94,7 @@ class _AdventurePageState extends State<AdventurePage> {
             return const Center(child: CircularProgressIndicator());
           }
           return Padding(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(AppSpacing.md),
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -118,14 +119,14 @@ class _AdventurePageState extends State<AdventurePage> {
                       );
                     },
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: AppSpacing.md),
                   _DescriptionSection(description: state.locationDescription),
-                  const SizedBox(height: 24),
+                  const SizedBox(height: AppSpacing.xl),
                   _ActionsSection(
                     actions: state.actions,
                     onActionSelected: widget.controller.perform,
                   ),
-                  const SizedBox(height: 24),
+                  const SizedBox(height: AppSpacing.xl),
                   _JournalSection(entries: state.journal),
                 ],
               ),

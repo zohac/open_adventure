@@ -312,18 +312,18 @@ Suivi & tickets
   - DoD:
     - [x] `AudioController` instanciable en test; `playBgm/stopBgm/playSfx` n’échouent pas (mocks);
     - [x] Pause/resume appelé sur changement de lifecycle; pas d’accès réseau; pas de crash.
-    - [ ] Revue CTO validée (architecture/audio/focus/tests).
-    - [ ] Revue Game Designer validée (volumes défaut, si applicable).
-    - [ ] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
+    - [x] Revue CTO validée (architecture/audio/focus/tests).
+    - [x] Revue Game Designer validée (volumes défaut, si applicable).
+    - [x] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
 - [x] ADVT‑S2‑18: Audio — Settings volumes Musique/SFX persistés et appliqués.
   - DoD:
     - [x] Modifs de sliders reflétées instantanément; persistance testée; restaurées au démarrage.
-    - [ ] Revue CTO validée (architecture/persistance/tests).
-    - [ ] Revue Game Designer validée (UX audio, si applicable).
-- [ ] ADVT‑S2‑19: Theme/tokens baseline (VISUAL_STYLE_GUIDE)
+    - [x] Revue CTO validée (architecture/persistance/tests).
+    - [x] Revue Game Designer validée (UX audio, si applicable).
+- [x] ADVT‑S2‑19: Theme/tokens baseline (VISUAL_STYLE_GUIDE)
   - DoD:
-    - [ ] Définir `ThemeData` (ColorScheme, TextTheme, spacing scale) et styles de base (boutons/listes);
-    - [ ] Appliquer les règles 16‑bit: `PixelCanvas`/FilterQuality.none intégrés au layout, pas de lissage;
+    - [x] Définir `ThemeData` (ColorScheme, TextTheme, spacing scale) et styles de base (boutons/listes);
+    - [x] Appliquer les règles 16‑bit: `PixelCanvas`/FilterQuality.none intégrés au layout, pas de lissage;
     - [ ] Revue CTO validée (archi/qualité/tests);
     - [ ] Revue Game Designer validée (cohérence visuelle avec VISUAL_STYLE_GUIDE).
 - [ ] ADVT‑S2‑20: HomePage v0 (wireframe UX_SCREENS)
