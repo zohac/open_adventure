@@ -104,6 +104,14 @@ void main() {
     );
   }
 
+  _MockNavigatorObserver buildNavigatorObserver() {
+    final observer = _MockNavigatorObserver();
+    when(() => observer.navigator).thenReturn(null);
+    when(() => observer.didPush(any(), any())).thenAnswer((_) {});
+    when(() => observer.didChangeTop(any(), any())).thenAnswer((_) {});
+    return observer;
+  }
+
   Future<void> pumpHome(
     WidgetTester tester, {
     required GameController gameController,
@@ -174,8 +182,7 @@ void main() {
         state: const HomeViewState(isLoading: false, autosave: null),
       );
       final audioSettingsController = buildAudioSettingsController();
-      final observer = _MockNavigatorObserver();
-      when(() => observer.didPush(any(), any())).thenAnswer((_) {});
+      final observer = buildNavigatorObserver();
 
       await pumpHome(
         tester,
@@ -238,8 +245,7 @@ void main() {
         state: const HomeViewState(isLoading: false, autosave: null),
       );
       final audioSettingsController = buildAudioSettingsController();
-      final observer = _MockNavigatorObserver();
-      when(() => observer.didPush(any(), any())).thenAnswer((_) {});
+      final observer = buildNavigatorObserver();
 
       await pumpHome(
         tester,
