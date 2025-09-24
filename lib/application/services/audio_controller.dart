@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math' as math;
 
 import 'package:audio_session/audio_session.dart';
 import 'package:flutter/widgets.dart';
@@ -48,6 +49,9 @@ class AudioController with WidgetsBindingObserver implements AudioOutput {
     double initialBgmVolume = _defaultBgmVolume,
     double initialSfxVolume = _defaultSfxVolume,
     bool registerLifecycleListener = true,
+    Duration? crossfadeDuration,
+    Duration? sfxThrottle,
+    DateTime Function()? nowProvider,
   })  : _sessionProvider = sessionProvider ?? _defaultSessionProvider,
         _bgmPlayer = bgmPlayer ?? AudioPlayer(),
         _sfxPlayer = sfxPlayer ?? AudioPlayer(),
@@ -56,7 +60,12 @@ class AudioController with WidgetsBindingObserver implements AudioOutput {
         _binding = widgetsBinding ?? WidgetsBinding.instance,
         _registerLifecycleListener = registerLifecycleListener,
         _bgmVolume = initialBgmVolume.clamp(0.0, 1.0),
-        _sfxVolume = initialSfxVolume.clamp(0.0, 1.0);
+        _sfxVolume = initialSfxVolume.clamp(0.0, 1.0),
+        _crossfadeDuration =
+            crossfadeDuration ?? const Duration(milliseconds: 350),
+        _sfxThrottle = sfxThrottle ?? const Duration(milliseconds: 150),
+        _nowProvider = nowProvider ?? DateTime.now,
+        _bgmPlayerVolume = initialBgmVolume.clamp(0.0, 1.0);
 
   static const double _defaultBgmVolume = 0.6;
   static const double _defaultSfxVolume = 1.0;
@@ -68,6 +77,9 @@ class AudioController with WidgetsBindingObserver implements AudioOutput {
   final AudioAssetPathResolver _sfxAssetResolver;
   final WidgetsBinding? _binding;
   final bool _registerLifecycleListener;
+  final Duration _crossfadeDuration;
+  final Duration _sfxThrottle;
+  final DateTime Function() _nowProvider;
 
   AudioSession? _session;
   StreamSubscription<AudioInterruptionEvent>? _interruptionSub;
@@ -78,6 +90,8 @@ class AudioController with WidgetsBindingObserver implements AudioOutput {
   String? _currentBgmKey;
   double _bgmVolume;
   double _sfxVolume;
+  double _bgmPlayerVolume;
+  final Map<String, DateTime> _sfxLastPlayed = <String, DateTime>{};
 
   static Future<AudioSession> _defaultSessionProvider() => AudioSession.instance;
 
@@ -98,7 +112,7 @@ class AudioController with WidgetsBindingObserver implements AudioOutput {
       _binding?.addObserver(this);
     }
 
-    await _bgmPlayer.setVolume(_bgmVolume);
+    await _setBgmVolume(_bgmVolume);
     await _sfxPlayer.setVolume(_sfxVolume);
 
     _initialized = true;
@@ -117,17 +131,25 @@ class AudioController with WidgetsBindingObserver implements AudioOutput {
     }
 
     try {
+      if (_currentBgmKey != null &&
+          _currentBgmKey != trackKey &&
+          _bgmPlayer.playing) {
+        await _rampVolume(target: 0.0, duration: _crossfadeDuration);
+      }
+
       if (_currentBgmKey != trackKey) {
-        await _session?.setActive(true);
         await _bgmPlayer.setLoopMode(LoopMode.one);
         await _bgmPlayer.setAsset(assetPath);
+        await _bgmPlayer.seek(Duration.zero);
         _currentBgmKey = trackKey;
-      } else if (!_bgmPlayer.playing) {
-        await _session?.setActive(true);
+        await _setBgmVolume(0.0);
       }
+
+      await _session?.setActive(true);
 
       await _bgmPlayer.play();
       _resumeAfterFocus = true;
+      await _rampVolume(target: _bgmVolume, duration: _crossfadeDuration);
     } on PlayerException catch (error, stackTrace) {
       debugPrint('AudioController: failed to play BGM $trackKey: $error');
       debugPrintStack(stackTrace: stackTrace);
@@ -144,6 +166,7 @@ class AudioController with WidgetsBindingObserver implements AudioOutput {
     _resumeAfterFocus = false;
     _currentBgmKey = null;
     try {
+      await _setBgmVolume(0.0);
       await _bgmPlayer.stop();
     } on PlayerException catch (error, stackTrace) {
       debugPrint('AudioController: failed to stop BGM: $error');
@@ -163,11 +186,18 @@ class AudioController with WidgetsBindingObserver implements AudioOutput {
       return;
     }
 
+    final DateTime now = _nowProvider();
+    final DateTime? lastPlayed = _sfxLastPlayed[effectKey];
+    if (lastPlayed != null && now.difference(lastPlayed) < _sfxThrottle) {
+      return;
+    }
+
     try {
       await _session?.setActive(true);
       await _sfxPlayer.setAsset(assetPath);
       await _sfxPlayer.seek(Duration.zero);
       await _sfxPlayer.play();
+      _sfxLastPlayed[effectKey] = _nowProvider();
     } on PlayerException catch (error, stackTrace) {
       debugPrint('AudioController: failed to play SFX $effectKey: $error');
       debugPrintStack(stackTrace: stackTrace);
@@ -184,7 +214,7 @@ class AudioController with WidgetsBindingObserver implements AudioOutput {
     await init();
     if (bgm != null) {
       _bgmVolume = bgm.clamp(0.0, 1.0);
-      await _bgmPlayer.setVolume(_bgmVolume);
+      await _setBgmVolume(_bgmVolume);
     }
     if (sfx != null) {
       _sfxVolume = sfx.clamp(0.0, 1.0);
@@ -239,6 +269,47 @@ class AudioController with WidgetsBindingObserver implements AudioOutput {
   @visibleForTesting
   void handleAudioInterruption(AudioInterruptionEvent event) =>
       _handleInterruption(event);
+
+  Future<void> _setBgmVolume(double value) async {
+    final double clamped = value.clamp(0.0, 1.0);
+    await _bgmPlayer.setVolume(clamped);
+    _bgmPlayerVolume = clamped;
+  }
+
+  Future<void> _rampVolume({
+    required double target,
+    required Duration duration,
+  }) async {
+    final double clampedTarget = target.clamp(0.0, 1.0);
+    final double start = _bgmPlayerVolume;
+    if ((_disposed) || (start - clampedTarget).abs() < 0.001) {
+      await _setBgmVolume(clampedTarget);
+      return;
+    }
+
+    final int totalMs = duration.inMilliseconds;
+    if (totalMs <= 0) {
+      await _setBgmVolume(clampedTarget);
+      return;
+    }
+
+    final int steps = math.max(totalMs ~/ 40, 1);
+    final int stepDelayMs = math.max(totalMs ~/ steps, 1);
+
+    for (int i = 1; i <= steps; i++) {
+      if (_disposed) return;
+      final double value =
+          start + (clampedTarget - start) * (i / steps);
+      await _setBgmVolume(value);
+      if (i < steps) {
+        await Future.delayed(Duration(milliseconds: stepDelayMs));
+      }
+    }
+
+    if (!_disposed && (_bgmPlayerVolume - clampedTarget).abs() > 0.001) {
+      await _setBgmVolume(clampedTarget);
+    }
+  }
 
   /// Cleans up the players and subscriptions.
   Future<void> dispose() async {

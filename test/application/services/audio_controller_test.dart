@@ -46,6 +46,10 @@ void main() {
     late StreamController<void> becomingNoisyEvents;
     late AudioController controller;
     late bool isPlaying;
+    late List<double> bgmVolumeLog;
+    late int bgmPlayCount;
+    late int sfxPlayCount;
+    late DateTime currentTime;
 
     setUp(() {
       session = _MockAudioSession();
@@ -54,6 +58,10 @@ void main() {
       interruptionEvents = StreamController<AudioInterruptionEvent>.broadcast();
       becomingNoisyEvents = StreamController<void>.broadcast();
       isPlaying = false;
+      bgmVolumeLog = <double>[];
+      bgmPlayCount = 0;
+      sfxPlayCount = 0;
+      currentTime = DateTime(2024);
 
       when(() => session.configure(any())).thenAnswer((_) async {});
       when(() => session.interruptionEventStream)
@@ -62,14 +70,19 @@ void main() {
           .thenAnswer((_) => becomingNoisyEvents.stream);
       when(() => session.setActive(any())).thenAnswer((_) async => true);
 
-      when(() => bgmPlayer.setVolume(any())).thenAnswer((_) async {});
+      when(() => bgmPlayer.setVolume(any())).thenAnswer((invocation) async {
+        final volume = invocation.positionalArguments.first as double;
+        bgmVolumeLog.add(volume);
+      });
       when(() => sfxPlayer.setVolume(any())).thenAnswer((_) async {});
       when(() => bgmPlayer.playing).thenAnswer((_) => isPlaying);
       when(() => bgmPlayer.setLoopMode(any())).thenAnswer((_) async {});
       when(() => bgmPlayer.setAsset(any()))
           .thenAnswer((_) async => const Duration(milliseconds: 500));
+      when(() => bgmPlayer.seek(any())).thenAnswer((_) async {});
       when(() => bgmPlayer.play()).thenAnswer((_) async {
         isPlaying = true;
+        bgmPlayCount += 1;
       });
       when(() => bgmPlayer.pause()).thenAnswer((_) async {
         isPlaying = false;
@@ -82,7 +95,9 @@ void main() {
       when(() => sfxPlayer.setAsset(any()))
           .thenAnswer((_) async => const Duration(milliseconds: 200));
       when(() => sfxPlayer.seek(any())).thenAnswer((_) async {});
-      when(() => sfxPlayer.play()).thenAnswer((_) async {});
+      when(() => sfxPlayer.play()).thenAnswer((_) async {
+        sfxPlayCount += 1;
+      });
       when(() => sfxPlayer.dispose()).thenAnswer((_) async {});
 
       controller = AudioController(
@@ -90,6 +105,9 @@ void main() {
         bgmPlayer: bgmPlayer,
         sfxPlayer: sfxPlayer,
         registerLifecycleListener: false,
+        crossfadeDuration: const Duration(milliseconds: 20),
+        sfxThrottle: const Duration(milliseconds: 100),
+        nowProvider: () => currentTime,
       );
     });
 
@@ -119,14 +137,35 @@ void main() {
       verify(() => bgmPlayer.setAsset('assets/audio/music/stream_gurgles.ogg'))
           .called(1);
       verify(() => bgmPlayer.play()).called(1);
+      expect(bgmPlayCount, 1);
+      expect(bgmVolumeLog, isNotEmpty);
+      expect(bgmVolumeLog, contains(0.0));
+      expect(bgmVolumeLog.last, closeTo(0.6, 0.01));
 
       clearInteractions(bgmPlayer);
       clearInteractions(session);
+      bgmVolumeLog.clear();
 
       await controller.playBgm('STREAM_GURGLES');
 
       verifyNever(() => bgmPlayer.setAsset(any()));
       verify(() => bgmPlayer.play()).called(1);
+      expect(bgmVolumeLog.last, closeTo(0.6, 0.01));
+    });
+
+    test('playBgm crossfades when switching tracks', () async {
+      await controller.playBgm('STREAM_GURGLES');
+      bgmVolumeLog.clear();
+
+      await controller.playBgm('WIND_WHISTLES');
+
+      verify(() => bgmPlayer.setAsset('assets/audio/music/wind_whistles.ogg'))
+          .called(1);
+      expect(bgmPlayCount, 2);
+      expect(bgmVolumeLog, isNotEmpty);
+      expect(bgmVolumeLog, contains(0.0));
+      expect(bgmVolumeLog.any((value) => value < 0.6), isTrue);
+      expect(bgmVolumeLog.last, closeTo(0.6, 0.01));
     });
 
     test('stopBgm stops playback and clears resume intent', () async {
@@ -136,6 +175,7 @@ void main() {
 
       await controller.stopBgm();
       verify(() => bgmPlayer.stop()).called(1);
+      expect(bgmVolumeLog.last, closeTo(0.0, 0.01));
 
       clearInteractions(bgmPlayer);
       controller.didChangeAppLifecycleState(AppLifecycleState.resumed);
@@ -151,6 +191,19 @@ void main() {
       verify(() => sfxPlayer.setAsset('assets/audio/sfx/lamp_on.ogg')).called(1);
       verify(() => sfxPlayer.seek(Duration.zero)).called(1);
       verify(() => sfxPlayer.play()).called(1);
+      expect(sfxPlayCount, 1);
+    });
+
+    test('playSfx throttles repeated triggers per key', () async {
+      await controller.playSfx('LAMP_ON');
+      expect(sfxPlayCount, 1);
+
+      await controller.playSfx('LAMP_ON');
+      expect(sfxPlayCount, 1);
+
+      currentTime = currentTime.add(const Duration(milliseconds: 150));
+      await controller.playSfx('LAMP_ON');
+      expect(sfxPlayCount, 2);
     });
 
     test('lifecycle pause/resume pauses and restarts current BGM', () async {
