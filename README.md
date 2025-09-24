@@ -27,6 +27,15 @@ Generate asset tracker (art/audio progress):
 python3 scripts/generate_asset_tracker.py             # writes docs/ASSET_TRACKER.md
 ```
 
+Generate the travel graph (requires Graphviz `dot` to render images):
+
+```bash
+python3 scripts/generate_travel_graph.py --output diagram/travel.dot   # export DOT file
+dot -Tpng diagram/travel.dot -o diagram/travel.png                     # render PNG from DOT
+```
+
+Omit `--output` to print the DOT description to the console instead of writing a file.
+
 The asset tracker lists all locations/objects with expected images/audio and summarizes budgets. See section “Asset Tracker (Art/Audio)” below.
 
 Local save directories (runtime):
