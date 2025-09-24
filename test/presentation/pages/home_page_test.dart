@@ -23,6 +23,7 @@ import 'package:open_adventure/presentation/pages/credits_page.dart';
 import 'package:open_adventure/presentation/pages/home_page.dart';
 import 'package:open_adventure/presentation/pages/saves_page.dart';
 import 'package:open_adventure/presentation/pages/settings_page.dart';
+import 'package:open_adventure/presentation/theme/app_colors.dart';
 import 'package:open_adventure/presentation/theme/app_theme.dart';
 import 'package:open_adventure/presentation/widgets/pixel_canvas.dart';
 
@@ -274,8 +275,12 @@ void main() {
           optionsAccent.decoration! as BoxDecoration;
       expect(optionsDecoration.color, Colors.transparent);
 
+      final BuildContext optionsContext = tester.element(find.text('Options'));
+      final AppActionAccents accents =
+          Theme.of(optionsContext).extension<AppActionAccents>()!;
+
       final Icon optionsIcon = tester.widget(find.byIcon(Icons.tune_rounded));
-      expect(optionsIcon.color, const Color(0xFF616161));
+      expect(optionsIcon.color, accents.meta);
 
       final Container creditsAccent = tester.widget(
         find.byKey(const ValueKey('homeMenuAccent-Crédits')),
@@ -286,7 +291,7 @@ void main() {
 
       final Icon creditsIcon =
           tester.widget(find.byIcon(Icons.info_outline_rounded));
-      expect(creditsIcon.color, const Color(0xFF616161));
+      expect(creditsIcon.color, accents.meta);
     });
 
     testWidgets('disabled accent buttons dim surfaces and typography',

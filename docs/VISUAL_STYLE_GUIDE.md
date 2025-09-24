@@ -57,6 +57,10 @@ Catégories d’actions (accents)
 - `action.interaction` = Light : #1565C0 | Dark : #64B5F6
 - `action.meta`        = Light : #616161 | Dark : #9E9E9E
 
+> Implémentation Flutter : `ThemeData` expose l’extension `AppActionAccents`
+> (travel/interaction/meta) pour fournir ces tokens de manière typée à tous les
+> widgets de présentation.
+
 Lampe — seuils batterie (StatusBar)
 
 - >50%: #4CAF50 | 20–50%: #ED6C02 | <20%: #D32F2F

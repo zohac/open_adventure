@@ -21,6 +21,11 @@ class AppTheme {
       colorScheme: scheme,
       scaffoldBackgroundColor: scheme.surface,
       textTheme: textTheme,
+      extensions: <ThemeExtension<dynamic>>[
+        scheme.brightness == Brightness.dark
+            ? AppActionAccents.dark
+            : AppActionAccents.light,
+      ],
       appBarTheme: AppBarTheme(
         backgroundColor: scheme.surface,
         surfaceTintColor: Colors.transparent,
