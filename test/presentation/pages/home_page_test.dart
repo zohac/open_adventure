@@ -283,6 +283,10 @@ void main() {
           optionsAccent.decoration! as BoxDecoration;
       expect(optionsDecoration.color, Colors.transparent);
 
+      final BuildContext optionsContext = tester.element(find.text('Options'));
+      final AppActionAccents accents =
+          Theme.of(optionsContext).extension<AppActionAccents>()!;
+
       final Icon optionsIcon = tester.widget(find.byIcon(Icons.tune_rounded));
       expect(optionsIcon.color, accents.meta);
 

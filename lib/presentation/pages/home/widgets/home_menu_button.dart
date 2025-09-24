@@ -59,6 +59,7 @@ class HomeMenuButton extends StatelessWidget {
         ? scheme.onSurfaceVariant
         : scheme.onSurface.withValues(alpha: 0.38);
     final bool hasSubtitle = subtitle != null && subtitle!.isNotEmpty;
+
     return Semantics(
       button: true,
       enabled: enabled,
