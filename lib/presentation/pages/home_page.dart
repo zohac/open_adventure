@@ -98,68 +98,83 @@ class _HomePageState extends State<HomePage> {
             }
             return LayoutBuilder(
               builder: (context, constraints) {
-                final content = Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    const _HeroBanner(),
-                    const SizedBox(height: AppSpacing.xl),
-                    _PrimaryMenuButton(
-                      label: 'Nouvelle partie',
-                      subtitle: 'Commencer l\'exploration de la caverne',
-                      icon: Icons.play_arrow_rounded,
-                      accentColor: Theme.of(context).colorScheme.primary,
-                      onPressed: _openAdventure,
-                    ),
-                    const SizedBox(height: AppSpacing.md),
-                    _PrimaryMenuButton(
-                      label: 'Continuer',
-                      subtitle: state.autosave != null
-                          ? 'Dernier tour : ${state.autosave!.turns}, lieu #${state.autosave!.loc}'
-                          : 'Aucune sauvegarde automatique détectée',
-                      icon: Icons.history_rounded,
-                      accentColor: Theme.of(context).colorScheme.secondary,
-                      onPressed: state.autosave != null ? _openAdventure : null,
-                    ),
-                    const SizedBox(height: AppSpacing.md),
-                    _PrimaryMenuButton(
-                      label: 'Charger',
-                      subtitle: 'Accéder aux sauvegardes manuelles',
-                      icon: Icons.folder_open_rounded,
-                      accentColor: Theme.of(context).colorScheme.tertiary,
-                      onPressed: _openSaves,
-                    ),
-                    const SizedBox(height: AppSpacing.md),
-                    _PrimaryMenuButton(
-                      label: 'Options',
-                      subtitle: 'Configurer l\'expérience audio et tactile',
-                      icon: Icons.tune_rounded,
-                      accentColor: Theme.of(context).colorScheme.primary,
-                      onPressed: _openSettings,
-                    ),
-                    const SizedBox(height: AppSpacing.md),
-                    _PrimaryMenuButton(
-                      label: 'Crédits',
-                      subtitle: 'L\'équipe derrière cette aventure',
-                      icon: Icons.info_outline_rounded,
-                      accentColor: Theme.of(context).colorScheme.primary,
-                      onPressed: _openCredits,
-                    ),
-                  ],
-                );
+                final verticalPadding =
+                    constraints.maxHeight > 600 ? AppSpacing.xl : AppSpacing.lg;
 
-                return Align(
-                  alignment: Alignment.topCenter,
-                  child: ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 560),
-                    child: SingleChildScrollView(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: AppSpacing.lg,
-                        vertical: constraints.maxHeight > 600
-                            ? AppSpacing.xl
-                            : AppSpacing.lg,
+                return SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      SizedBox(height: verticalPadding),
+                      const _HeroBanner(),
+                      const SizedBox(height: AppSpacing.xl),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: AppSpacing.lg,
+                        ),
+                        child: Align(
+                          alignment: Alignment.topCenter,
+                          child: ConstrainedBox(
+                            constraints: const BoxConstraints(maxWidth: 560),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                _PrimaryMenuButton(
+                                  label: 'Nouvelle partie',
+                                  subtitle:
+                                      'Commencer l\'exploration de la caverne',
+                                  icon: Icons.play_arrow_rounded,
+                                  accentColor:
+                                      Theme.of(context).colorScheme.primary,
+                                  onPressed: _openAdventure,
+                                ),
+                                const SizedBox(height: AppSpacing.md),
+                                _PrimaryMenuButton(
+                                  label: 'Continuer',
+                                  subtitle: state.autosave != null
+                                      ? 'Dernier tour : ${state.autosave!.turns}, lieu #${state.autosave!.loc}'
+                                      : 'Aucune sauvegarde automatique détectée',
+                                  icon: Icons.history_rounded,
+                                  accentColor:
+                                      Theme.of(context).colorScheme.secondary,
+                                  onPressed:
+                                      state.autosave != null ? _openAdventure : null,
+                                ),
+                                const SizedBox(height: AppSpacing.md),
+                                _PrimaryMenuButton(
+                                  label: 'Charger',
+                                  subtitle: 'Accéder aux sauvegardes manuelles',
+                                  icon: Icons.folder_open_rounded,
+                                  accentColor:
+                                      Theme.of(context).colorScheme.tertiary,
+                                  onPressed: _openSaves,
+                                ),
+                                const SizedBox(height: AppSpacing.md),
+                                _PrimaryMenuButton(
+                                  label: 'Options',
+                                  subtitle:
+                                      'Configurer l\'expérience audio et tactile',
+                                  icon: Icons.tune_rounded,
+                                  accentColor:
+                                      Theme.of(context).colorScheme.primary,
+                                  onPressed: _openSettings,
+                                ),
+                                const SizedBox(height: AppSpacing.md),
+                                _PrimaryMenuButton(
+                                  label: 'Crédits',
+                                  subtitle: 'L\'équipe derrière cette aventure',
+                                  icon: Icons.info_outline_rounded,
+                                  accentColor:
+                                      Theme.of(context).colorScheme.primary,
+                                  onPressed: _openCredits,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
                       ),
-                      child: content,
-                    ),
+                      SizedBox(height: verticalPadding),
+                    ],
                   ),
                 );
               },
