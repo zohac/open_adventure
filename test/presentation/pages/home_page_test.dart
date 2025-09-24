@@ -5,6 +5,7 @@ import 'package:open_adventure/application/controllers/audio_settings_controller
 import 'package:open_adventure/application/controllers/game_controller.dart';
 import 'package:open_adventure/application/controllers/home_controller.dart';
 import 'package:open_adventure/application/services/audio_controller.dart';
+import 'package:open_adventure/domain/entities/audio_settings.dart';
 import 'package:open_adventure/domain/entities/game.dart';
 import 'package:open_adventure/domain/entities/location.dart';
 import 'package:open_adventure/domain/repositories/adventure_repository.dart';
