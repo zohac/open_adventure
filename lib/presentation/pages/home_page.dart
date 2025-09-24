@@ -72,7 +72,6 @@ class _HomePageState extends State<HomePage> {
       MaterialPageRoute<void>(
         builder: (_) => SettingsPage(
           audioSettingsController: widget.audioSettingsController,
-          initializeOnMount: false,
           disposeController: false,
         ),
       ),
