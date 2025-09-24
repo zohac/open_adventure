@@ -197,6 +197,7 @@ void main() {
       );
 
       clearInteractions(observer);
+      await tester.ensureVisible(find.text('Continuer'));
       await tester.tap(find.text('Continuer'));
       await tester.pumpAndSettle();
 
