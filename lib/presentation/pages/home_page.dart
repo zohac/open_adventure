@@ -155,8 +155,6 @@ class _HomePageState extends State<HomePage> {
                                   subtitle:
                                       'Configurer l\'expérience audio et tactile',
                                   icon: Icons.tune_rounded,
-                                  accentColor:
-                                      Theme.of(context).colorScheme.primary,
                                   onPressed: _openSettings,
                                 ),
                                 const SizedBox(height: AppSpacing.md),
@@ -164,8 +162,6 @@ class _HomePageState extends State<HomePage> {
                                   label: 'Crédits',
                                   subtitle: 'L\'équipe derrière cette aventure',
                                   icon: Icons.info_outline_rounded,
-                                  accentColor:
-                                      Theme.of(context).colorScheme.primary,
                                   onPressed: _openCredits,
                                 ),
                               ],
@@ -237,14 +233,14 @@ class _PrimaryMenuButton extends StatelessWidget {
     required this.label,
     required this.subtitle,
     required this.icon,
-    required this.accentColor,
+    this.accentColor,
     required this.onPressed,
   });
 
   final String label;
   final String subtitle;
   final IconData icon;
-  final Color accentColor;
+  final Color? accentColor;
   final VoidCallback? onPressed;
 
   @override
@@ -252,6 +248,19 @@ class _PrimaryMenuButton extends StatelessWidget {
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
     final enabled = onPressed != null;
+    final hasAccent = accentColor != null;
+    final Color inactiveAccent = scheme.outline.withValues(alpha: 0.5);
+    final Color effectiveAccentColor = hasAccent
+        ? (enabled ? accentColor! : inactiveAccent)
+        : Colors.transparent;
+    final Color iconColor = hasAccent
+        ? effectiveAccentColor
+        : (enabled
+            ? scheme.onSurface
+            : scheme.onSurfaceVariant.withValues(alpha: 0.6));
+    final Color subtitleColor = enabled
+        ? scheme.onSurfaceVariant
+        : scheme.onSurfaceVariant.withValues(alpha: 0.6);
     return Semantics(
       button: true,
       enabled: enabled,
@@ -277,22 +286,19 @@ class _PrimaryMenuButton extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(
+                  key: ValueKey('homeMenuAccent-$label'),
                   width: 4,
                   height: 56,
                   decoration: BoxDecoration(
-                    color: enabled
-                        ? accentColor
-                        : scheme.outline.withValues(alpha: 0.5),
+                    color: effectiveAccentColor,
                     borderRadius: BorderRadius.circular(4),
                   ),
                 ),
                 const SizedBox(width: AppSpacing.md),
                 Icon(
                   icon,
-                  size: 28,
-                  color: enabled
-                      ? scheme.onSurface
-                      : scheme.onSurfaceVariant.withValues(alpha: 0.6),
+                  size: 24,
+                  color: iconColor,
                 ),
                 const SizedBox(width: AppSpacing.lg),
                 Expanded(
@@ -310,7 +316,7 @@ class _PrimaryMenuButton extends StatelessWidget {
                       Text(
                         subtitle,
                         style: theme.textTheme.bodySmall?.copyWith(
-                          color: scheme.onSurfaceVariant,
+                          color: subtitleColor,
                         ),
                       ),
                     ],

@@ -200,6 +200,128 @@ void main() {
       expect(find.byType(AdventurePage), findsNothing);
     });
 
+    testWidgets('accented buttons tint icons with their accent color',
+        (tester) async {
+      final gameController = buildGameController(
+        adventureRepository: adventureRepository,
+        listAvailableActions: listAvailableActions,
+        applyTurn: applyTurn,
+        saveRepository: saveRepository,
+      );
+      final homeController = buildHomeController(
+        saveRepository,
+        state: const HomeViewState(
+          isLoading: false,
+          autosave: GameSnapshot(loc: 1, turns: 12, rngSeed: 7),
+        ),
+      );
+      final audioSettingsController = buildAudioSettingsController();
+
+      await pumpHome(
+        tester,
+        gameController: gameController,
+        homeController: homeController,
+        audioSettingsController: audioSettingsController,
+      );
+
+      final newGameContext = tester.element(find.text('Nouvelle partie'));
+      final scheme = Theme.of(newGameContext).colorScheme;
+      final Container accentContainer = tester.widget(
+        find.byKey(const ValueKey('homeMenuAccent-Nouvelle partie')),
+      );
+      final BoxDecoration decoration =
+          accentContainer.decoration! as BoxDecoration;
+      expect(decoration.color, scheme.primary);
+
+      final Icon icon =
+          tester.widget(find.byIcon(Icons.play_arrow_rounded));
+      expect(icon.color, scheme.primary);
+    });
+
+    testWidgets('options and credits render without colored accents',
+        (tester) async {
+      final gameController = buildGameController(
+        adventureRepository: adventureRepository,
+        listAvailableActions: listAvailableActions,
+        applyTurn: applyTurn,
+        saveRepository: saveRepository,
+      );
+      final homeController = buildHomeController(
+        saveRepository,
+        state: const HomeViewState(
+          isLoading: false,
+          autosave: GameSnapshot(loc: 1, turns: 12, rngSeed: 7),
+        ),
+      );
+      final audioSettingsController = buildAudioSettingsController();
+
+      await pumpHome(
+        tester,
+        gameController: gameController,
+        homeController: homeController,
+        audioSettingsController: audioSettingsController,
+      );
+
+      final optionsContext = tester.element(find.text('Options'));
+      final scheme = Theme.of(optionsContext).colorScheme;
+      final Container optionsAccent = tester.widget(
+        find.byKey(const ValueKey('homeMenuAccent-Options')),
+      );
+      final BoxDecoration optionsDecoration =
+          optionsAccent.decoration! as BoxDecoration;
+      expect(optionsDecoration.color, Colors.transparent);
+
+      final Icon optionsIcon = tester.widget(find.byIcon(Icons.tune_rounded));
+      expect(optionsIcon.color, scheme.onSurface);
+
+      final Container creditsAccent = tester.widget(
+        find.byKey(const ValueKey('homeMenuAccent-Crédits')),
+      );
+      final BoxDecoration creditsDecoration =
+          creditsAccent.decoration! as BoxDecoration;
+      expect(creditsDecoration.color, Colors.transparent);
+
+      final Icon creditsIcon =
+          tester.widget(find.byIcon(Icons.info_outline_rounded));
+      expect(creditsIcon.color, scheme.onSurface);
+    });
+
+    testWidgets('disabled accent buttons desaturate icon and stripe',
+        (tester) async {
+      final gameController = buildGameController(
+        adventureRepository: adventureRepository,
+        listAvailableActions: listAvailableActions,
+        applyTurn: applyTurn,
+        saveRepository: saveRepository,
+      );
+      final homeController = buildHomeController(
+        saveRepository,
+        state: const HomeViewState(isLoading: false, autosave: null),
+      );
+      final audioSettingsController = buildAudioSettingsController();
+
+      await pumpHome(
+        tester,
+        gameController: gameController,
+        homeController: homeController,
+        audioSettingsController: audioSettingsController,
+      );
+
+      final continuerContext = tester.element(find.text('Continuer'));
+      final scheme = Theme.of(continuerContext).colorScheme;
+      final expected = scheme.outline.withValues(alpha: 0.5);
+
+      final Container accentContainer = tester.widget(
+        find.byKey(const ValueKey('homeMenuAccent-Continuer')),
+      );
+      final BoxDecoration decoration =
+          accentContainer.decoration! as BoxDecoration;
+      expect(decoration.color, expected);
+
+      final Icon icon = tester.widget(find.byIcon(Icons.history_rounded));
+      expect(icon.color, expected);
+    });
+
     testWidgets('navigates to AdventurePage when Nouvelle partie is tapped',
         (tester) async {
       const initialGame = Game(
