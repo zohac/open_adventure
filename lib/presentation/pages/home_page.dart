@@ -128,25 +128,21 @@ class _HomePageState extends State<HomePage> {
                       accentColor: Theme.of(context).colorScheme.tertiary,
                       onPressed: _openSaves,
                     ),
-                    const SizedBox(height: AppSpacing.xl),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: _SecondaryMenuButton(
-                            label: 'Options',
-                            icon: Icons.tune_rounded,
-                            onPressed: _openSettings,
-                          ),
-                        ),
-                        const SizedBox(width: AppSpacing.md),
-                        Expanded(
-                          child: _SecondaryMenuButton(
-                            label: 'Crédits',
-                            icon: Icons.info_outline_rounded,
-                            onPressed: _openCredits,
-                          ),
-                        ),
-                      ],
+                    const SizedBox(height: AppSpacing.md),
+                    _PrimaryMenuButton(
+                      label: 'Options',
+                      subtitle: 'Configurer l\'expérience audio et tactile',
+                      icon: Icons.tune_rounded,
+                      accentColor: Theme.of(context).colorScheme.primary,
+                      onPressed: _openSettings,
+                    ),
+                    const SizedBox(height: AppSpacing.md),
+                    _PrimaryMenuButton(
+                      label: 'Crédits',
+                      subtitle: 'L\'équipe derrière cette aventure',
+                      icon: Icons.info_outline_rounded,
+                      accentColor: Theme.of(context).colorScheme.primary,
+                      onPressed: _openCredits,
                     ),
                   ],
                 );
@@ -157,6 +153,7 @@ class _HomePageState extends State<HomePage> {
                     constraints: const BoxConstraints(maxWidth: 560),
                     child: SingleChildScrollView(
                       padding: EdgeInsets.symmetric(
+                        horizontal: AppSpacing.lg,
                         vertical: constraints.maxHeight > 600
                             ? AppSpacing.xl
                             : AppSpacing.lg,
@@ -185,7 +182,6 @@ class _HeroBanner extends StatelessWidget {
       aspectRatio: 16 / 9,
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(24),
           gradient: LinearGradient(
             colors: [
               scheme.primaryContainer,
@@ -269,8 +265,9 @@ class _PrimaryMenuButton extends StatelessWidget {
                   width: 4,
                   height: 56,
                   decoration: BoxDecoration(
-                    color:
-                        enabled ? accentColor : scheme.outline.withValues(alpha: 0.5),
+                    color: enabled
+                        ? accentColor
+                        : scheme.outline.withValues(alpha: 0.5),
                     borderRadius: BorderRadius.circular(4),
                   ),
                 ),
@@ -278,8 +275,9 @@ class _PrimaryMenuButton extends StatelessWidget {
                 Icon(
                   icon,
                   size: 28,
-                  color:
-                      enabled ? scheme.onSurface : scheme.onSurfaceVariant.withValues(alpha: 0.6),
+                  color: enabled
+                      ? scheme.onSurface
+                      : scheme.onSurfaceVariant.withValues(alpha: 0.6),
                 ),
                 const SizedBox(width: AppSpacing.lg),
                 Expanded(
@@ -303,34 +301,11 @@ class _PrimaryMenuButton extends StatelessWidget {
                     ],
                   ),
                 ),
-                const Icon(Icons.chevron_right_rounded),
               ],
             ),
           ),
         ),
       ),
-    );
-  }
-}
-
-class _SecondaryMenuButton extends StatelessWidget {
-  const _SecondaryMenuButton({
-    required this.label,
-    required this.icon,
-    required this.onPressed,
-  });
-
-  final String label;
-  final IconData icon;
-  final VoidCallback onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-    return OutlinedButton.icon(
-      onPressed: onPressed,
-      icon: Icon(icon, size: 22, color: scheme.primary),
-      label: Text(label),
     );
   }
 }
