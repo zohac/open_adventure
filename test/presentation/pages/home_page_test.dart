@@ -23,6 +23,8 @@ import 'package:open_adventure/presentation/pages/credits_page.dart';
 import 'package:open_adventure/presentation/pages/home_page.dart';
 import 'package:open_adventure/presentation/pages/saves_page.dart';
 import 'package:open_adventure/presentation/pages/settings_page.dart';
+import 'package:open_adventure/presentation/theme/app_theme.dart';
+import 'package:open_adventure/presentation/widgets/pixel_canvas.dart';
 
 class _MockAdventureRepository extends Mock implements AdventureRepository {}
 
@@ -122,6 +124,8 @@ void main() {
   }) async {
     await tester.pumpWidget(
       MaterialApp(
+        theme: AppTheme.light(),
+        darkTheme: AppTheme.dark(),
         home: HomePage(
           gameController: gameController,
           homeController: homeController,
@@ -238,7 +242,7 @@ void main() {
       expect(icon.color, scheme.primary);
     });
 
-    testWidgets('options and credits render without colored accents',
+    testWidgets('options and credits use meta accent colors',
         (tester) async {
       final gameController = buildGameController(
         adventureRepository: adventureRepository,
@@ -262,31 +266,29 @@ void main() {
         audioSettingsController: audioSettingsController,
       );
 
-      final optionsContext = tester.element(find.text('Options'));
-      final scheme = Theme.of(optionsContext).colorScheme;
       final Container optionsAccent = tester.widget(
         find.byKey(const ValueKey('homeMenuAccent-Options')),
       );
       final BoxDecoration optionsDecoration =
           optionsAccent.decoration! as BoxDecoration;
-      expect(optionsDecoration.color, Colors.transparent);
+      expect(optionsDecoration.color, const Color(0xFF616161));
 
       final Icon optionsIcon = tester.widget(find.byIcon(Icons.tune_rounded));
-      expect(optionsIcon.color, scheme.onSurface);
+      expect(optionsIcon.color, const Color(0xFF616161));
 
       final Container creditsAccent = tester.widget(
         find.byKey(const ValueKey('homeMenuAccent-Crédits')),
       );
       final BoxDecoration creditsDecoration =
           creditsAccent.decoration! as BoxDecoration;
-      expect(creditsDecoration.color, Colors.transparent);
+      expect(creditsDecoration.color, const Color(0xFF616161));
 
       final Icon creditsIcon =
           tester.widget(find.byIcon(Icons.info_outline_rounded));
-      expect(creditsIcon.color, scheme.onSurface);
+      expect(creditsIcon.color, const Color(0xFF616161));
     });
 
-    testWidgets('disabled accent buttons desaturate icon and stripe',
+    testWidgets('disabled accent buttons dim surfaces and typography',
         (tester) async {
       final gameController = buildGameController(
         adventureRepository: adventureRepository,
@@ -309,17 +311,58 @@ void main() {
 
       final continuerContext = tester.element(find.text('Continuer'));
       final scheme = Theme.of(continuerContext).colorScheme;
-      final expected = scheme.outline.withValues(alpha: 0.5);
+      final Color expectedAccent = scheme.secondary.withValues(alpha: 0.3);
+      final Color expectedText = scheme.onSurface.withValues(alpha: 0.38);
+      final Color expectedBackground = scheme.onSurface.withValues(alpha: 0.12);
 
       final Container accentContainer = tester.widget(
         find.byKey(const ValueKey('homeMenuAccent-Continuer')),
       );
       final BoxDecoration decoration =
           accentContainer.decoration! as BoxDecoration;
-      expect(decoration.color, expected);
+      expect(decoration.color, expectedAccent);
 
       final Icon icon = tester.widget(find.byIcon(Icons.history_rounded));
-      expect(icon.color, expected);
+      expect(icon.color, expectedAccent);
+
+      final Ink ink = tester.widget(
+        find.ancestor(
+          of: find.text('Continuer'),
+          matching: find.byType(Ink),
+        ),
+      );
+      final BoxDecoration inkDecoration =
+          ink.decoration! as BoxDecoration;
+      expect(inkDecoration.color, expectedBackground);
+
+      final Text label = tester.widget(find.text('Continuer'));
+      expect(label.style?.color, expectedText);
+    });
+
+    testWidgets('hero banner renders through PixelCanvas', (tester) async {
+      final gameController = buildGameController(
+        adventureRepository: adventureRepository,
+        listAvailableActions: listAvailableActions,
+        applyTurn: applyTurn,
+        saveRepository: saveRepository,
+      );
+      final homeController = buildHomeController(
+        saveRepository,
+        state: const HomeViewState(
+          isLoading: false,
+          autosave: GameSnapshot(loc: 1, turns: 12, rngSeed: 7),
+        ),
+      );
+      final audioSettingsController = buildAudioSettingsController();
+
+      await pumpHome(
+        tester,
+        gameController: gameController,
+        homeController: homeController,
+        audioSettingsController: audioSettingsController,
+      );
+
+      expect(find.byType(PixelCanvas), findsOneWidget);
     });
 
     testWidgets('navigates to AdventurePage when Nouvelle partie is tapped',
