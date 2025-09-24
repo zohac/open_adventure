@@ -179,7 +179,6 @@ class _HomePageState extends State<HomePage> {
         subtitle: 'Configurer l\'expérience audio et tactile',
         icon: Icons.tune_rounded,
         accentColor: accents.meta,
-        showAccentStripe: false,
         onPressed: _openSettings,
       ),
       _MenuConfiguration(
@@ -187,7 +186,6 @@ class _HomePageState extends State<HomePage> {
         subtitle: 'L\'équipe derrière cette aventure',
         icon: Icons.info_outline_rounded,
         accentColor: accents.meta,
-        showAccentStripe: false,
         onPressed: _openCredits,
       ),
     ];
@@ -203,7 +201,6 @@ class _HomePageState extends State<HomePage> {
           subtitle: configuration.subtitle,
           icon: configuration.icon,
           accentColor: configuration.accentColor,
-          showAccentStripe: configuration.showAccentStripe,
           onPressed: configuration.onPressed,
         ),
       );
@@ -221,7 +218,6 @@ class _MenuConfiguration {
     this.subtitle,
     required this.icon,
     required this.accentColor,
-    this.showAccentStripe = true,
     required this.onPressed,
   });
 
@@ -229,6 +225,5 @@ class _MenuConfiguration {
   final String? subtitle;
   final IconData icon;
   final Color? accentColor;
-  final bool showAccentStripe;
   final VoidCallback? onPressed;
 }
