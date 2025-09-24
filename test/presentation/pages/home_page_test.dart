@@ -185,6 +185,7 @@ void main() {
         observer: observer,
       );
 
+      clearInteractions(observer);
       await tester.tap(find.text('Continuer'));
       await tester.pumpAndSettle();
 
@@ -248,6 +249,8 @@ void main() {
         observer: observer,
       );
 
+      clearInteractions(observer);
+      await tester.ensureVisible(find.text('Nouvelle partie'));
       await tester.tap(find.text('Nouvelle partie'));
       await tester.pumpAndSettle();
 
@@ -311,6 +314,8 @@ void main() {
         observer: observer,
       );
 
+      clearInteractions(observer);
+      await tester.ensureVisible(find.text('Continuer'));
       await tester.tap(find.text('Continuer'));
       await tester.pumpAndSettle();
 
@@ -338,6 +343,7 @@ void main() {
         audioSettingsController: audioSettingsController,
       );
 
+      await tester.ensureVisible(find.text('Charger'));
       await tester.tap(find.text('Charger'));
       await tester.pumpAndSettle();
 
@@ -364,6 +370,7 @@ void main() {
         audioSettingsController: audioSettingsController,
       );
 
+      await tester.ensureVisible(find.text('Options'));
       await tester.tap(find.text('Options'));
       await tester.pumpAndSettle();
 
@@ -390,6 +397,7 @@ void main() {
         audioSettingsController: audioSettingsController,
       );
 
+      await tester.ensureVisible(find.text('Crédits'));
       await tester.tap(find.text('Crédits'));
       await tester.pumpAndSettle();
 
