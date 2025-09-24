@@ -23,6 +23,7 @@ import 'package:open_adventure/presentation/pages/credits_page.dart';
 import 'package:open_adventure/presentation/pages/home_page.dart';
 import 'package:open_adventure/presentation/pages/saves_page.dart';
 import 'package:open_adventure/presentation/pages/settings_page.dart';
+import 'package:open_adventure/presentation/theme/app_colors.dart';
 import 'package:open_adventure/presentation/theme/app_theme.dart';
 import 'package:open_adventure/presentation/widgets/pixel_canvas.dart';
 
@@ -203,6 +204,10 @@ void main() {
 
       verifyNever(() => observer.didPush(any(), any()));
       expect(find.byType(AdventurePage), findsNothing);
+      expect(
+        find.text('Aucune sauvegarde automatique détectée'),
+        findsNothing,
+      );
     });
 
     testWidgets('accented buttons tint icons with their accent color',
@@ -267,6 +272,10 @@ void main() {
         audioSettingsController: audioSettingsController,
       );
 
+      final BuildContext optionsContext = tester.element(find.text('Options'));
+      final AppActionAccents accents =
+          Theme.of(optionsContext).extension<AppActionAccents>()!;
+
       final Container optionsAccent = tester.widget(
         find.byKey(const ValueKey('homeMenuAccent-Options')),
       );
@@ -275,7 +284,7 @@ void main() {
       expect(optionsDecoration.color, Colors.transparent);
 
       final Icon optionsIcon = tester.widget(find.byIcon(Icons.tune_rounded));
-      expect(optionsIcon.color, const Color(0xFF616161));
+      expect(optionsIcon.color, accents.meta);
 
       final Container creditsAccent = tester.widget(
         find.byKey(const ValueKey('homeMenuAccent-Crédits')),
@@ -286,7 +295,7 @@ void main() {
 
       final Icon creditsIcon =
           tester.widget(find.byIcon(Icons.info_outline_rounded));
-      expect(creditsIcon.color, const Color(0xFF616161));
+      expect(creditsIcon.color, accents.meta);
     });
 
     testWidgets('disabled accent buttons dim surfaces and typography',
@@ -323,7 +332,7 @@ void main() {
           accentContainer.decoration! as BoxDecoration;
       expect(decoration.color, expectedAccent);
 
-      final Icon icon = tester.widget(find.byIcon(Icons.history_rounded));
+      final Icon icon = tester.widget(find.byIcon(Icons.bookmark_rounded));
       expect(icon.color, expectedAccent);
 
       final Ink ink = tester.widget(
@@ -338,6 +347,10 @@ void main() {
 
       final Text label = tester.widget(find.text('Continuer'));
       expect(label.style?.color, expectedText);
+      expect(
+        find.text('Aucune sauvegarde automatique détectée'),
+        findsNothing,
+      );
     });
 
     testWidgets('hero banner renders through PixelCanvas', (tester) async {
