@@ -156,6 +156,7 @@ class _HomePageState extends State<HomePage> {
         subtitle: 'Commencer l\'exploration de la caverne',
         icon: Icons.play_arrow_rounded,
         accentColor: scheme.primary,
+        showAccentStripe: true,
         onPressed: _openAdventure,
       ),
       _MenuConfiguration(
@@ -165,6 +166,7 @@ class _HomePageState extends State<HomePage> {
             : null,
         icon: Icons.bookmark_rounded,
         accentColor: scheme.secondary,
+        showAccentStripe: true,
         onPressed: state.autosave != null ? _openAdventure : null,
       ),
       _MenuConfiguration(
@@ -172,6 +174,7 @@ class _HomePageState extends State<HomePage> {
         subtitle: 'Accéder aux sauvegardes manuelles',
         icon: Icons.folder_open_rounded,
         accentColor: scheme.tertiary,
+        showAccentStripe: true,
         onPressed: _openSaves,
       ),
       _MenuConfiguration(
@@ -179,6 +182,7 @@ class _HomePageState extends State<HomePage> {
         subtitle: 'Configurer l\'expérience audio et tactile',
         icon: Icons.tune_rounded,
         accentColor: accents.meta,
+        showAccentStripe: false,
         onPressed: _openSettings,
       ),
       _MenuConfiguration(
@@ -186,6 +190,7 @@ class _HomePageState extends State<HomePage> {
         subtitle: 'L\'équipe derrière cette aventure',
         icon: Icons.info_outline_rounded,
         accentColor: accents.meta,
+        showAccentStripe: false,
         onPressed: _openCredits,
       ),
     ];
@@ -201,6 +206,7 @@ class _HomePageState extends State<HomePage> {
           subtitle: configuration.subtitle,
           icon: configuration.icon,
           accentColor: configuration.accentColor,
+          showAccentStripe: configuration.showAccentStripe,
           onPressed: configuration.onPressed,
         ),
       );
@@ -218,6 +224,7 @@ class _MenuConfiguration {
     this.subtitle,
     required this.icon,
     required this.accentColor,
+    required this.showAccentStripe,
     required this.onPressed,
   });
 
@@ -225,5 +232,6 @@ class _MenuConfiguration {
   final String? subtitle;
   final IconData icon;
   final Color? accentColor;
+  final bool showAccentStripe;
   final VoidCallback? onPressed;
 }
