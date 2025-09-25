@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:open_adventure/application/controllers/audio_settings_controller.dart';
 import 'package:open_adventure/application/controllers/game_controller.dart';
 import 'package:open_adventure/application/controllers/home_controller.dart';
@@ -108,8 +109,9 @@ class _HomePageState extends State<HomePage> {
                 final AppActionAccents accents =
                     theme.extension<AppActionAccents>()!;
 
+                final l10n = AppLocalizations.of(context)!;
                 final menuConfigurations =
-                    _menuConfigurations(state, scheme, accents);
+                    _menuConfigurations(state, scheme, accents, l10n);
 
                 return SingleChildScrollView(
                   child: Column(
@@ -149,20 +151,24 @@ class _HomePageState extends State<HomePage> {
     HomeViewState state,
     ColorScheme scheme,
     AppActionAccents accents,
+    AppLocalizations l10n,
   ) {
     return [
       _MenuConfiguration(
-        label: 'Nouvelle partie',
-        subtitle: 'Commencer l\'exploration de la caverne',
+        label: l10n.homeMenuNewGameLabel,
+        subtitle: l10n.homeMenuNewGameSubtitle,
         icon: Icons.play_arrow_rounded,
         accentColor: scheme.primary,
         showAccentStripe: true,
         onPressed: _openAdventure,
       ),
       _MenuConfiguration(
-        label: 'Continuer',
+        label: l10n.homeMenuContinueLabel,
         subtitle: state.autosave != null
-            ? 'Dernier tour : ${state.autosave!.turns}, lieu #${state.autosave!.loc}'
+            ? l10n.homeMenuContinueSubtitle(
+                turns: state.autosave!.turns,
+                location: state.autosave!.loc,
+              )
             : null,
         icon: Icons.bookmark_rounded,
         accentColor: scheme.secondary,
@@ -170,24 +176,24 @@ class _HomePageState extends State<HomePage> {
         onPressed: state.autosave != null ? _openAdventure : null,
       ),
       _MenuConfiguration(
-        label: 'Charger',
-        subtitle: 'Accéder aux sauvegardes manuelles',
+        label: l10n.homeMenuLoadLabel,
+        subtitle: l10n.homeMenuLoadSubtitle,
         icon: Icons.folder_open_rounded,
         accentColor: scheme.tertiary,
         showAccentStripe: true,
         onPressed: _openSaves,
       ),
       _MenuConfiguration(
-        label: 'Options',
-        subtitle: 'Configurer l\'expérience audio et tactile',
+        label: l10n.homeMenuOptionsLabel,
+        subtitle: l10n.homeMenuOptionsSubtitle,
         icon: Icons.tune_rounded,
         accentColor: accents.meta,
         showAccentStripe: true,
         onPressed: _openSettings,
       ),
       _MenuConfiguration(
-        label: 'Crédits',
-        subtitle: 'L\'équipe derrière cette aventure',
+        label: l10n.homeMenuCreditsLabel,
+        subtitle: l10n.homeMenuCreditsSubtitle,
         icon: Icons.info_outline_rounded,
         accentColor: accents.meta,
         showAccentStripe: true,

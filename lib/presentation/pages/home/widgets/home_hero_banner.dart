@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:open_adventure/presentation/theme/app_spacing.dart';
 import 'package:open_adventure/presentation/widgets/pixel_canvas.dart';
 
@@ -9,6 +10,7 @@ class HomeHeroBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final textTheme = Theme.of(context).textTheme;
     final scheme = Theme.of(context).colorScheme;
     return AspectRatio(
@@ -42,7 +44,7 @@ class HomeHeroBanner extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Open Adventure',
+                  l10n.homeHeroTitle,
                   style: textTheme.headlineSmall?.copyWith(
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
@@ -50,7 +52,7 @@ class HomeHeroBanner extends StatelessWidget {
                 ),
                 const SizedBox(height: AppSpacing.sm),
                 Text(
-                  'Partez pour l\'expédition textuelle culte, remasterisée pour mobile.',
+                  l10n.homeHeroSubtitle,
                   style: textTheme.bodyMedium?.copyWith(
                     color: Colors.white.withValues(alpha: 0.85),
                   ),
