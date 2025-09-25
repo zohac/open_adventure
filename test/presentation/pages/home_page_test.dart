@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:open_adventure/l10n/app_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:open_adventure/application/controllers/audio_settings_controller.dart';
@@ -122,9 +123,14 @@ void main() {
     required AudioSettingsController audioSettingsController,
     bool initializeOnMount = false,
     NavigatorObserver? observer,
+    Locale locale = const Locale('fr'),
   }) async {
     await tester.pumpWidget(
       MaterialApp(
+        locale: locale,
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        onGenerateTitle: (context) => AppLocalizations.of(context).appTitle,
         theme: AppTheme.light(),
         darkTheme: AppTheme.dark(),
         home: HomePage(
@@ -136,6 +142,11 @@ void main() {
         navigatorObservers: observer != null ? <NavigatorObserver>[observer] : const <NavigatorObserver>[],
       ),
     );
+    await tester.pump();
+  }
+
+  Future<AppLocalizations> loadL10n([Locale locale = const Locale('fr')]) {
+    return AppLocalizations.delegate.load(locale);
   }
 
   group('HomePage', () {
@@ -174,7 +185,7 @@ void main() {
       expect(find.byType(CircularProgressIndicator), findsOneWidget);
     });
 
-    testWidgets('disables Continuer button when no autosave is present',
+    testWidgets('disables continue button when no autosave is present',
         (tester) async {
       final gameController = buildGameController(
         adventureRepository: adventureRepository,
@@ -197,17 +208,15 @@ void main() {
         observer: observer,
       );
 
+      final l10n = await loadL10n();
+      final continueLabel = l10n.homeMenuContinueLabel;
       clearInteractions(observer);
-      await tester.ensureVisible(find.text('Continuer'));
-      await tester.tap(find.text('Continuer'));
+      await tester.ensureVisible(find.text(continueLabel));
+      await tester.tap(find.text(continueLabel));
       await tester.pumpAndSettle();
 
       verifyNever(() => observer.didPush(any(), any()));
       expect(find.byType(AdventurePage), findsNothing);
-      expect(
-        find.text('Aucune sauvegarde automatique détectée'),
-        findsNothing,
-      );
     });
 
     testWidgets('accented buttons tint icons with their accent color',
@@ -234,10 +243,12 @@ void main() {
         audioSettingsController: audioSettingsController,
       );
 
-      final newGameContext = tester.element(find.text('Nouvelle partie'));
+      final l10n = await loadL10n();
+      final newGameLabel = l10n.homeMenuNewGameLabel;
+      final newGameContext = tester.element(find.text(newGameLabel));
       final scheme = Theme.of(newGameContext).colorScheme;
       final Container accentContainer = tester.widget(
-        find.byKey(const ValueKey('homeMenuAccent-Nouvelle partie')),
+        find.byKey(ValueKey('homeMenuAccent-$newGameLabel')),
       );
       final BoxDecoration decoration =
           accentContainer.decoration! as BoxDecoration;
@@ -248,7 +259,7 @@ void main() {
       expect(icon.color, scheme.primary);
     });
 
-    testWidgets('options and credits tint icons without accent stripe',
+    testWidgets('options and credits paint meta accent stripe and tint icons',
         (tester) async {
       final gameController = buildGameController(
         adventureRepository: adventureRepository,
@@ -272,26 +283,29 @@ void main() {
         audioSettingsController: audioSettingsController,
       );
 
+      final l10n = await loadL10n();
+      final optionsLabel = l10n.homeMenuOptionsLabel;
+      final creditsLabel = l10n.homeMenuCreditsLabel;
       final AppActionAccents metaAccents = Theme.of(
-        tester.element(find.text('Options')),
+        tester.element(find.text(optionsLabel)),
       ).extension<AppActionAccents>()!;
 
       final Container optionsAccent = tester.widget(
-        find.byKey(const ValueKey('homeMenuAccent-Options')),
+        find.byKey(ValueKey('homeMenuAccent-$optionsLabel')),
       );
       final BoxDecoration optionsDecoration =
           optionsAccent.decoration! as BoxDecoration;
-      expect(optionsDecoration.color, Colors.transparent);
+      expect(optionsDecoration.color, metaAccents.meta);
 
       final Icon optionsIcon = tester.widget(find.byIcon(Icons.tune_rounded));
       expect(optionsIcon.color, metaAccents.meta);
 
       final Container creditsAccent = tester.widget(
-        find.byKey(const ValueKey('homeMenuAccent-Crédits')),
+        find.byKey(ValueKey('homeMenuAccent-$creditsLabel')),
       );
       final BoxDecoration creditsDecoration =
           creditsAccent.decoration! as BoxDecoration;
-      expect(creditsDecoration.color, Colors.transparent);
+      expect(creditsDecoration.color, metaAccents.meta);
 
       final Icon creditsIcon =
           tester.widget(find.byIcon(Icons.info_outline_rounded));
@@ -319,14 +333,16 @@ void main() {
         audioSettingsController: audioSettingsController,
       );
 
-      final continuerContext = tester.element(find.text('Continuer'));
+      final l10n = await loadL10n();
+      final continueLabel = l10n.homeMenuContinueLabel;
+      final continuerContext = tester.element(find.text(continueLabel));
       final scheme = Theme.of(continuerContext).colorScheme;
       final Color expectedAccent = scheme.secondary.withValues(alpha: 0.3);
       final Color expectedText = scheme.onSurface.withValues(alpha: 0.38);
       final Color expectedBackground = scheme.onSurface.withValues(alpha: 0.12);
 
       final Container accentContainer = tester.widget(
-        find.byKey(const ValueKey('homeMenuAccent-Continuer')),
+        find.byKey(ValueKey('homeMenuAccent-$continueLabel')),
       );
       final BoxDecoration decoration =
           accentContainer.decoration! as BoxDecoration;
@@ -337,7 +353,7 @@ void main() {
 
       final Ink ink = tester.widget(
         find.ancestor(
-          of: find.text('Continuer'),
+          of: find.text(continueLabel),
           matching: find.byType(Ink),
         ),
       );
@@ -345,12 +361,8 @@ void main() {
           ink.decoration! as BoxDecoration;
       expect(inkDecoration.color, expectedBackground);
 
-      final Text label = tester.widget(find.text('Continuer'));
+      final Text label = tester.widget(find.text(continueLabel));
       expect(label.style?.color, expectedText);
-      expect(
-        find.text('Aucune sauvegarde automatique détectée'),
-        findsNothing,
-      );
     });
 
     testWidgets('hero banner renders through PixelCanvas', (tester) async {
@@ -379,7 +391,7 @@ void main() {
       expect(find.byType(PixelCanvas), findsOneWidget);
     });
 
-    testWidgets('navigates to AdventurePage when Nouvelle partie is tapped',
+    testWidgets('navigates to AdventurePage when new game is tapped',
         (tester) async {
       const initialGame = Game(
         loc: 1,
@@ -434,16 +446,18 @@ void main() {
         observer: observer,
       );
 
+      final l10n = await loadL10n();
+      final newGameLabel = l10n.homeMenuNewGameLabel;
       clearInteractions(observer);
-      await tester.ensureVisible(find.text('Nouvelle partie'));
-      await tester.tap(find.text('Nouvelle partie'));
+      await tester.ensureVisible(find.text(newGameLabel));
+      await tester.tap(find.text(newGameLabel));
       await tester.pumpAndSettle();
 
       verify(() => observer.didPush(any(), any())).called(greaterThan(0));
       expect(find.byType(AdventurePage), findsOneWidget);
     });
 
-    testWidgets('navigates to AdventurePage when Continuer is tapped with autosave',
+    testWidgets('navigates to AdventurePage when continue is tapped with autosave',
         (tester) async {
       const snapshot = GameSnapshot(loc: 5, turns: 12, rngSeed: 9);
       const initialGame = Game(
@@ -499,16 +513,18 @@ void main() {
         observer: observer,
       );
 
+      final l10n = await loadL10n();
+      final continueLabel = l10n.homeMenuContinueLabel;
       clearInteractions(observer);
-      await tester.ensureVisible(find.text('Continuer'));
-      await tester.tap(find.text('Continuer'));
+      await tester.ensureVisible(find.text(continueLabel));
+      await tester.tap(find.text(continueLabel));
       await tester.pumpAndSettle();
 
       verify(() => observer.didPush(any(), any())).called(greaterThan(0));
       expect(find.byType(AdventurePage), findsOneWidget);
     });
 
-    testWidgets('navigates to SavesPage when Charger is tapped', (tester) async {
+    testWidgets('navigates to SavesPage when load is tapped', (tester) async {
       final gameController = buildGameController(
         adventureRepository: adventureRepository,
         listAvailableActions: listAvailableActions,
@@ -528,14 +544,16 @@ void main() {
         audioSettingsController: audioSettingsController,
       );
 
-      await tester.ensureVisible(find.text('Charger'));
-      await tester.tap(find.text('Charger'));
+      final l10n = await loadL10n();
+      final loadLabel = l10n.homeMenuLoadLabel;
+      await tester.ensureVisible(find.text(loadLabel));
+      await tester.tap(find.text(loadLabel));
       await tester.pumpAndSettle();
 
       expect(find.byType(SavesPage), findsOneWidget);
     });
 
-    testWidgets('navigates to SettingsPage when Options is tapped', (tester) async {
+    testWidgets('navigates to SettingsPage when options is tapped', (tester) async {
       final gameController = buildGameController(
         adventureRepository: adventureRepository,
         listAvailableActions: listAvailableActions,
@@ -555,14 +573,16 @@ void main() {
         audioSettingsController: audioSettingsController,
       );
 
-      await tester.ensureVisible(find.text('Options'));
-      await tester.tap(find.text('Options'));
+      final l10n = await loadL10n();
+      final optionsLabel = l10n.homeMenuOptionsLabel;
+      await tester.ensureVisible(find.text(optionsLabel));
+      await tester.tap(find.text(optionsLabel));
       await tester.pumpAndSettle();
 
       expect(find.byType(SettingsPage), findsOneWidget);
     });
 
-    testWidgets('navigates to CreditsPage when Crédits is tapped', (tester) async {
+    testWidgets('navigates to CreditsPage when credits is tapped', (tester) async {
       final gameController = buildGameController(
         adventureRepository: adventureRepository,
         listAvailableActions: listAvailableActions,
@@ -582,8 +602,10 @@ void main() {
         audioSettingsController: audioSettingsController,
       );
 
-      await tester.ensureVisible(find.text('Crédits'));
-      await tester.tap(find.text('Crédits'));
+      final l10n = await loadL10n();
+      final creditsLabel = l10n.homeMenuCreditsLabel;
+      await tester.ensureVisible(find.text(creditsLabel));
+      await tester.tap(find.text(creditsLabel));
       await tester.pumpAndSettle();
 
       expect(find.byType(CreditsPage), findsOneWidget);

@@ -1,0 +1,26 @@
+{
+  "@@locale": "fr",
+  "appTitle": "Open Adventure",
+  "homeHeroTitle": "Open Adventure",
+  "homeHeroSubtitle": "Partez pour l'expédition textuelle culte, remasterisée pour mobile.",
+  "homeMenuNewGameLabel": "Nouvelle partie",
+  "homeMenuNewGameSubtitle": "Commencer l'exploration de la caverne.",
+  "homeMenuContinueLabel": "Continuer",
+  "homeMenuContinueSubtitle": "Dernier tour : {turns}, lieu #{location}",
+  "@homeMenuContinueSubtitle": {
+    "placeholders": {
+      "turns": {
+        "type": "int"
+      },
+      "location": {
+        "type": "int"
+      }
+    }
+  },
+  "homeMenuLoadLabel": "Charger",
+  "homeMenuLoadSubtitle": "Accéder aux sauvegardes manuelles.",
+  "homeMenuOptionsLabel": "Options",
+  "homeMenuOptionsSubtitle": "Configurer l'expérience audio et tactile.",
+  "homeMenuCreditsLabel": "Crédits",
+  "homeMenuCreditsSubtitle": "L'équipe derrière cette aventure."
+}

@@ -1,0 +1,26 @@
+{
+  "@@locale": "en",
+  "appTitle": "Open Adventure",
+  "homeHeroTitle": "Open Adventure",
+  "homeHeroSubtitle": "Embark on the cult text expedition, remastered for mobile.",
+  "homeMenuNewGameLabel": "New game",
+  "homeMenuNewGameSubtitle": "Begin exploring the colossal cavern.",
+  "homeMenuContinueLabel": "Continue",
+  "homeMenuContinueSubtitle": "Last turn: {turns}, location #{location}",
+  "@homeMenuContinueSubtitle": {
+    "placeholders": {
+      "turns": {
+        "type": "int"
+      },
+      "location": {
+        "type": "int"
+      }
+    }
+  },
+  "homeMenuLoadLabel": "Load",
+  "homeMenuLoadSubtitle": "Open manual save slots.",
+  "homeMenuOptionsLabel": "Options",
+  "homeMenuOptionsSubtitle": "Configure audio and tactile feedback.",
+  "homeMenuCreditsLabel": "Credits",
+  "homeMenuCreditsSubtitle": "Meet the team behind this adventure."
+}

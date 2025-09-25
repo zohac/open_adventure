@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';
 import 'dart:async';
 
+import 'package:flutter/material.dart';
+import 'package:open_adventure/l10n/app_localizations.dart';
 import 'package:open_adventure/application/controllers/audio_settings_controller.dart';
 import 'package:open_adventure/application/controllers/game_controller.dart';
 import 'package:open_adventure/application/controllers/home_controller.dart';
@@ -86,10 +87,12 @@ class _OpenAdventureAppState extends State<OpenAdventureApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Open Adventure',
+      onGenerateTitle: (context) => AppLocalizations.of(context).appTitle,
       theme: AppTheme.light(),
       darkTheme: AppTheme.dark(),
       themeMode: ThemeMode.system,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
       home: HomePage(
         gameController: widget.gameController,
         homeController: widget.homeController,
