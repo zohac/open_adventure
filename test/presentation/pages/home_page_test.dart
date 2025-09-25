@@ -142,10 +142,11 @@ void main() {
         navigatorObservers: observer != null ? <NavigatorObserver>[observer] : const <NavigatorObserver>[],
       ),
     );
+    await tester.pump();
   }
 
-  AppLocalizations l10nOf(WidgetTester tester) {
-    return AppLocalizations.of(tester.element(find.byType(HomePage)));
+  Future<AppLocalizations> loadL10n([Locale locale = const Locale('fr')]) {
+    return AppLocalizations.delegate.load(locale);
   }
 
   group('HomePage', () {
@@ -207,7 +208,7 @@ void main() {
         observer: observer,
       );
 
-      final l10n = l10nOf(tester);
+      final l10n = await loadL10n();
       final continueLabel = l10n.homeMenuContinueLabel;
       clearInteractions(observer);
       await tester.ensureVisible(find.text(continueLabel));
@@ -242,7 +243,7 @@ void main() {
         audioSettingsController: audioSettingsController,
       );
 
-      final l10n = l10nOf(tester);
+      final l10n = await loadL10n();
       final newGameLabel = l10n.homeMenuNewGameLabel;
       final newGameContext = tester.element(find.text(newGameLabel));
       final scheme = Theme.of(newGameContext).colorScheme;
@@ -282,7 +283,7 @@ void main() {
         audioSettingsController: audioSettingsController,
       );
 
-      final l10n = l10nOf(tester);
+      final l10n = await loadL10n();
       final optionsLabel = l10n.homeMenuOptionsLabel;
       final creditsLabel = l10n.homeMenuCreditsLabel;
       final AppActionAccents metaAccents = Theme.of(
@@ -332,7 +333,7 @@ void main() {
         audioSettingsController: audioSettingsController,
       );
 
-      final l10n = l10nOf(tester);
+      final l10n = await loadL10n();
       final continueLabel = l10n.homeMenuContinueLabel;
       final continuerContext = tester.element(find.text(continueLabel));
       final scheme = Theme.of(continuerContext).colorScheme;
@@ -445,7 +446,7 @@ void main() {
         observer: observer,
       );
 
-      final l10n = l10nOf(tester);
+      final l10n = await loadL10n();
       final newGameLabel = l10n.homeMenuNewGameLabel;
       clearInteractions(observer);
       await tester.ensureVisible(find.text(newGameLabel));
@@ -512,7 +513,7 @@ void main() {
         observer: observer,
       );
 
-      final l10n = l10nOf(tester);
+      final l10n = await loadL10n();
       final continueLabel = l10n.homeMenuContinueLabel;
       clearInteractions(observer);
       await tester.ensureVisible(find.text(continueLabel));
@@ -543,7 +544,7 @@ void main() {
         audioSettingsController: audioSettingsController,
       );
 
-      final l10n = l10nOf(tester);
+      final l10n = await loadL10n();
       final loadLabel = l10n.homeMenuLoadLabel;
       await tester.ensureVisible(find.text(loadLabel));
       await tester.tap(find.text(loadLabel));
@@ -572,7 +573,7 @@ void main() {
         audioSettingsController: audioSettingsController,
       );
 
-      final l10n = l10nOf(tester);
+      final l10n = await loadL10n();
       final optionsLabel = l10n.homeMenuOptionsLabel;
       await tester.ensureVisible(find.text(optionsLabel));
       await tester.tap(find.text(optionsLabel));
@@ -601,7 +602,7 @@ void main() {
         audioSettingsController: audioSettingsController,
       );
 
-      final l10n = l10nOf(tester);
+      final l10n = await loadL10n();
       final creditsLabel = l10n.homeMenuCreditsLabel;
       await tester.ensureVisible(find.text(creditsLabel));
       await tester.tap(find.text(creditsLabel));
