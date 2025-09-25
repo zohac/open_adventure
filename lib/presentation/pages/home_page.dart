@@ -182,7 +182,7 @@ class _HomePageState extends State<HomePage> {
         subtitle: 'Configurer l\'expérience audio et tactile',
         icon: Icons.tune_rounded,
         accentColor: accents.meta,
-        showAccentStripe: false,
+        showAccentStripe: true,
         onPressed: _openSettings,
       ),
       _MenuConfiguration(
@@ -190,7 +190,7 @@ class _HomePageState extends State<HomePage> {
         subtitle: 'L\'équipe derrière cette aventure',
         icon: Icons.info_outline_rounded,
         accentColor: accents.meta,
-        showAccentStripe: false,
+        showAccentStripe: true,
         onPressed: _openCredits,
       ),
     ];
