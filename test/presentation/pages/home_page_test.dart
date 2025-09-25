@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:open_adventure/l10n/app_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:open_adventure/application/controllers/audio_settings_controller.dart';
@@ -130,7 +130,7 @@ void main() {
         locale: locale,
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
-        onGenerateTitle: (context) => AppLocalizations.of(context)!.appTitle,
+        onGenerateTitle: (context) => AppLocalizations.of(context).appTitle,
         theme: AppTheme.light(),
         darkTheme: AppTheme.dark(),
         home: HomePage(
@@ -145,7 +145,7 @@ void main() {
   }
 
   AppLocalizations l10nOf(WidgetTester tester) {
-    return AppLocalizations.of(tester.element(find.byType(HomePage)))!;
+    return AppLocalizations.of(tester.element(find.byType(HomePage)));
   }
 
   group('HomePage', () {

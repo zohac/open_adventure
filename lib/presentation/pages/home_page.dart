@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:open_adventure/l10n/app_localizations.dart';
 import 'package:open_adventure/application/controllers/audio_settings_controller.dart';
 import 'package:open_adventure/application/controllers/game_controller.dart';
 import 'package:open_adventure/application/controllers/home_controller.dart';
@@ -109,7 +109,7 @@ class _HomePageState extends State<HomePage> {
                 final AppActionAccents accents =
                     theme.extension<AppActionAccents>()!;
 
-                final l10n = AppLocalizations.of(context)!;
+                final l10n = AppLocalizations.of(context);
                 final menuConfigurations =
                     _menuConfigurations(state, scheme, accents, l10n);
 

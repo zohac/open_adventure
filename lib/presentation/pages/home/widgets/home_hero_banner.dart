@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:open_adventure/l10n/app_localizations.dart';
 import 'package:open_adventure/presentation/theme/app_spacing.dart';
 import 'package:open_adventure/presentation/widgets/pixel_canvas.dart';
 
@@ -10,7 +10,7 @@ class HomeHeroBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context);
     final textTheme = Theme.of(context).textTheme;
     final scheme = Theme.of(context).colorScheme;
     return AspectRatio(
