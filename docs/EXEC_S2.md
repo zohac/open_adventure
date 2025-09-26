@@ -324,15 +324,15 @@ Suivi & tickets
   - DoD:
     - [x] Définir `ThemeData` (ColorScheme, TextTheme, spacing scale) et styles de base (boutons/listes);
     - [x] Appliquer les règles 16‑bit: `PixelCanvas`/FilterQuality.none intégrés au layout, pas de lissage;
-    - [ ] Revue CTO validée (archi/qualité/tests);
-    - [ ] Revue Game Designer validée (cohérence visuelle avec VISUAL_STYLE_GUIDE).
-- [ ] ADVT‑S2‑20: HomePage v0 (wireframe UX_SCREENS)
+    - [x] Revue CTO validée (archi/qualité/tests);
+    - [x] Revue Game Designer validée (cohérence visuelle avec VISUAL_STYLE_GUIDE).
+- [x] ADVT‑S2‑20: HomePage v0 (wireframe UX_SCREENS)
   - DoD:
-    - [ ] Menu minimal: [Nouvelle partie] [Continuer] [Charger] [Options] [Crédits]; “Continuer” affiche autosave si présent (sinon disabled);
-    - [ ] Navigation fonctionnelle vers chaque écran (placeholders acceptés); widget tests tap→route OK;
-    - [ ] Revue CTO validée (UI/tests);
-    - [ ] Revue Game Designer validée (structure/wording UX_SCREENS).
-    - [ ] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
+    - [x] Menu minimal: [Nouvelle partie] [Continuer] [Charger] [Options] [Crédits]; “Continuer” affiche autosave si présent (sinon disabled);
+    - [x] Navigation fonctionnelle vers chaque écran (placeholders acceptés); widget tests tap→route OK;
+    - [x] Revue CTO validée (UI/tests);
+    - [x] Revue Game Designer validée (structure/wording UX_SCREENS).
+    - [x] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
 - [ ] ADVT‑S2‑21: Prise en charge du mouvement `BACK/RETURN` (retour arrière) — Domain/Application/UI.
   - DoD:
     - [ ] `ListAvailableActionsTravel` expose une option `category=travel` « Revenir » lorsque `Game.oldLoc` reste accessible et qu’aucune condition `COND_NOBACK` ne bloque la marche arrière;
