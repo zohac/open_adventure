@@ -221,6 +221,8 @@ void main() {
           const <String>['Long start description', 'You cannot go back from here.'],
         ),
       );
+      verify(() => applyTurn(any(), any())).called(1);
+      verifyNever(() => saveRepository.autosave(any()));
     });
 
     test('meta observer replays description without calling applyTurn',
