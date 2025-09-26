@@ -342,11 +342,11 @@ Suivi & tickets
     - [ ] Revue CTO validée (architecture/code/tests);
     - [ ] Revue Game Designer validée (libellés/flow « Revenir »);
     - [ ] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
-- [ ] ADVT‑S2‑22: Tests de non-régression `BACK` — scénarios de retour bloqué/autorisé.
+- [x] ADVT‑S2‑22: Tests de non-régression `BACK` — scénarios de retour bloqué/autorisé.
   - DoD:
-    - [ ] Tests Domain (ApplyTurn) couvrant: retour simple, retour via lieu forcé, retour impossible (`COND_NOBACK`) → message adéquat;
-    - [ ] Tests Application (GameController) vérifiant qu’un retour invalide ne modifie pas l’état et que l’historique est mis à jour sur navigation normale;
-    - [ ] Widget test garantissant qu’aucune option « Revenir » n’apparaît sur un lieu initial sans historique;
+    - [x] Tests Domain (ApplyTurn) couvrant: retour simple, retour via lieu forcé, retour impossible (`COND_NOBACK`) → message adéquat;
+    - [x] Tests Application (GameController) vérifiant qu’un retour invalide ne modifie pas l’état et que l’historique est mis à jour sur navigation normale;
+    - [x] Widget test garantissant qu’aucune option « Revenir » n’apparaît sur un lieu initial sans historique;
     - [ ] Revue CTO validée (architecture/code/tests);
     - [ ] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
 - [ ] ADVT‑S2‑23: Filtrer les incantations (PLUGH, XYZZY…) des actions tant qu’elles ne sont pas découvertes.
