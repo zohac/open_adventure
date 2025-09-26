@@ -162,6 +162,126 @@ void main() {
       expect(find.text('Aller Ouest'), findsOneWidget);
     });
 
+    testWidgets(
+        'shows incantation buttons only after unlock and hides them elsewhere',
+        (tester) async {
+      const baseTravel = ActionOption(
+        id: 'travel:1->2:WEST',
+        category: 'travel',
+        label: 'motion.west.label',
+        verb: 'WEST',
+        objectId: '2',
+      );
+      const incantationOption = ActionOption(
+        id: 'travel:2->5:PLUGH',
+        category: 'travel',
+        label: 'motion.plugh.label',
+        verb: 'PLUGH',
+        objectId: '5',
+      );
+      const exitOption = ActionOption(
+        id: 'travel:2->3:EAST',
+        category: 'travel',
+        label: 'motion.east.label',
+        verb: 'EAST',
+        objectId: '3',
+      );
+      const remoteOption = ActionOption(
+        id: 'travel:3->2:WEST',
+        category: 'travel',
+        label: 'motion.west.label',
+        verb: 'WEST',
+        objectId: '2',
+      );
+
+      const unlockedGame = Game(
+        loc: 2,
+        oldLoc: 1,
+        newLoc: 2,
+        turns: 1,
+        rngSeed: 42,
+        visitedLocations: {1, 2},
+        magicWordsUnlocked: true,
+      );
+      const remoteGame = Game(
+        loc: 3,
+        oldLoc: 2,
+        newLoc: 3,
+        turns: 2,
+        rngSeed: 42,
+        visitedLocations: {1, 2, 3},
+        magicWordsUnlocked: true,
+      );
+
+      when(() => listAvailableActions(unlockedGame)).thenAnswer(
+        (_) async => const [incantationOption, exitOption],
+      );
+      when(() => listAvailableActions(remoteGame)).thenAnswer(
+        (_) async => const [remoteOption],
+      );
+      when(() => applyTurn(any(), any())).thenAnswer((invocation) async {
+        final Command command = invocation.positionalArguments.first as Command;
+        if (command.verb == 'WEST') {
+          return TurnResult(
+            unlockedGame,
+            const <String>['Un bourdonnement magique retentit.'],
+          );
+        }
+        if (command.verb == 'EAST') {
+          return TurnResult(
+            remoteGame,
+            const <String>['Le passage se referme derrière vous.'],
+          );
+        }
+        throw StateError('Unexpected command: ${command.verb}');
+      });
+      when(() => adventureRepository.locationById(2)).thenAnswer(
+        (_) async => const Location(
+          id: 2,
+          name: 'LOC_SHRINE',
+          shortDescription: 'Une salle sacrée.',
+        ),
+      );
+      when(() => adventureRepository.locationById(3)).thenAnswer(
+        (_) async => const Location(
+          id: 3,
+          name: 'LOC_CAVERN',
+          shortDescription: 'Un tunnel sombre.',
+        ),
+      );
+      when(() => saveRepository.autosave(any())).thenAnswer((_) async {});
+
+      await pumpInitialState(
+        tester,
+        actionsOverride: const [baseTravel],
+      );
+
+      expect(find.text('Aller Plugh'), findsNothing);
+
+      await tester.tap(find.text('Aller Ouest'));
+      await tester.pump();
+      await tester.pumpAndSettle();
+
+      expect(find.text('Aller Plugh'), findsOneWidget);
+      verify(
+        () => saveRepository.autosave(
+          const GameSnapshot(loc: 2, turns: 1, rngSeed: 42),
+        ),
+      ).called(1);
+      clearInteractions(saveRepository);
+
+      await tester.tap(find.text('Aller Est'));
+      await tester.pump();
+      await tester.pumpAndSettle();
+
+      expect(find.text('Aller Plugh'), findsNothing);
+      verify(
+        () => saveRepository.autosave(
+          const GameSnapshot(loc: 3, turns: 2, rngSeed: 42),
+        ),
+      ).called(1);
+    });
+
     testWidgets('does not render a back action without navigation history',
         (tester) async {
       await pumpInitialState(tester);
