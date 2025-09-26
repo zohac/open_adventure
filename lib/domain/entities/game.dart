@@ -8,6 +8,9 @@ class Game {
   /// Previous location id before the last move.
   final int oldLoc;
 
+  /// Location id visited before [oldLoc] (used for BACK/RETURN).
+  final int oldLc2;
+
   /// Location id the player is moving to (mirrors [loc] post-move).
   final int newLoc;
 
@@ -24,16 +27,18 @@ class Game {
   const Game({
     required this.loc,
     required this.oldLoc,
+    int? oldLc2,
     required this.newLoc,
     required this.turns,
     required this.rngSeed,
     this.visitedLocations = const {},
-  });
+  }) : oldLc2 = oldLc2 ?? oldLoc;
 
   /// Returns a copy with updated fields.
   Game copyWith({
     int? loc,
     int? oldLoc,
+    int? oldLc2,
     int? newLoc,
     int? turns,
     int? rngSeed,
@@ -42,6 +47,7 @@ class Game {
       Game(
         loc: loc ?? this.loc,
         oldLoc: oldLoc ?? this.oldLoc,
+        oldLc2: oldLc2 ?? this.oldLc2,
         newLoc: newLoc ?? this.newLoc,
         turns: turns ?? this.turns,
         rngSeed: rngSeed ?? this.rngSeed,
@@ -56,6 +62,7 @@ class Game {
     return other is Game &&
         loc == other.loc &&
         oldLoc == other.oldLoc &&
+        oldLc2 == other.oldLc2 &&
         newLoc == other.newLoc &&
         turns == other.turns &&
         rngSeed == other.rngSeed &&
@@ -66,6 +73,7 @@ class Game {
   int get hashCode => Object.hash(
         loc,
         oldLoc,
+        oldLc2,
         newLoc,
         turns,
         rngSeed,

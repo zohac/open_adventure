@@ -160,6 +160,7 @@ class AdventureRepositoryImpl implements AdventureRepository {
     return Game(
       loc: startId,
       oldLoc: startId,
+      oldLc2: startId,
       newLoc: startId,
       turns: 0,
       rngSeed: seed,

@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:open_adventure/data/repositories/adventure_repository_impl.dart';
 import 'package:open_adventure/data/services/motion_normalizer_impl.dart';
 import 'package:open_adventure/domain/entities/game.dart';
@@ -8,6 +9,8 @@ import 'package:open_adventure/domain/entities/travel_rule.dart';
 import 'package:open_adventure/domain/repositories/adventure_repository.dart';
 import 'package:open_adventure/domain/usecases/list_available_actions.dart';
 import 'package:open_adventure/domain/value_objects/action_option.dart';
+
+class _MockAdventureRepository extends Mock implements AdventureRepository {}
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -112,6 +115,80 @@ void main() {
     final repo = _EmptyTravelRepository();
     final usecase = ListAvailableActionsTravel(repo, motion);
     const game = Game(loc: 42, oldLoc: 42, newLoc: 42, turns: 0, rngSeed: 99);
+
+    final options = await usecase(game);
+
+    expect(options, equals(const [observerAction]));
+  });
+
+  test('includes BACK option when history allows it', () async {
+    final repo = _MockAdventureRepository();
+    final usecase = ListAvailableActionsTravel(repo, motion);
+    const game = Game(
+      loc: 5,
+      oldLoc: 4,
+      oldLc2: 3,
+      newLoc: 5,
+      turns: 2,
+      rngSeed: 11,
+    );
+
+    when(() => repo.travelRulesFor(5)).thenAnswer((_) async => const []);
+    when(() => repo.locationById(5))
+        .thenAnswer((_) async => const Location(id: 5, name: 'LOC_FIVE'));
+    when(() => repo.locationById(4))
+        .thenAnswer((_) async => const Location(id: 4, name: 'LOC_FOUR'));
+
+    final options = await usecase(game);
+
+    expect(options, hasLength(1));
+    final back = options.single;
+    expect(back.verb, 'BACK');
+    expect(back.label, 'actions.travel.back');
+    expect(back.objectId, '4');
+    expect(back.icon, 'undo');
+  });
+
+  test('BACK option uses oldLc2 when previous location is forced', () async {
+    final repo = _MockAdventureRepository();
+    final usecase = ListAvailableActionsTravel(repo, motion);
+    const game = Game(
+      loc: 7,
+      oldLoc: 6,
+      oldLc2: 2,
+      newLoc: 7,
+      turns: 4,
+      rngSeed: 3,
+    );
+
+    when(() => repo.travelRulesFor(7)).thenAnswer((_) async => const []);
+    when(() => repo.locationById(7))
+        .thenAnswer((_) async => const Location(id: 7, name: 'LOC_SEVEN'));
+    when(() => repo.locationById(6)).thenAnswer((_) async =>
+        const Location(id: 6, name: 'LOC_FORCED', conditions: {'FORCED': true}));
+    when(() => repo.locationById(2))
+        .thenAnswer((_) async => const Location(id: 2, name: 'LOC_SAFE'));
+
+    final options = await usecase(game);
+    final back = options.singleWhere((option) => option.verb == 'BACK');
+    expect(back.objectId, '2');
+  });
+
+  test('does not offer BACK when current location forbids it', () async {
+    final repo = _MockAdventureRepository();
+    final usecase = ListAvailableActionsTravel(repo, motion);
+    const game = Game(
+      loc: 9,
+      oldLoc: 8,
+      oldLc2: 1,
+      newLoc: 9,
+      turns: 6,
+      rngSeed: 5,
+    );
+
+    when(() => repo.travelRulesFor(9)).thenAnswer((_) async => const []);
+    when(() => repo.locationById(9)).thenAnswer((_) async =>
+        const Location(id: 9, name: 'LOC_BLOCK', conditions: {'NOBACK': true}));
 
     final options = await usecase(game);
 
