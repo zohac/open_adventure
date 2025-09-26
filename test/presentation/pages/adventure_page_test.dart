@@ -233,6 +233,83 @@ void main() {
 
       verifyNever(() => applyTurn(any(), any()));
     });
+
+    testWidgets('shows Revenir button and performs BACK', (tester) async {
+      const historyGame = Game(
+        loc: 2,
+        oldLoc: 1,
+        oldLc2: 1,
+        newLoc: 2,
+        turns: 3,
+        rngSeed: 42,
+        visitedLocations: {1, 2},
+      );
+      final currentLocation = Location(
+        id: 2,
+        name: 'LOC_CHAMBER',
+        longDescription: 'A quiet chamber.',
+      );
+      final previousLocation = Location(
+        id: 1,
+        name: 'LOC_START',
+        shortDescription: 'Back at the start.',
+      );
+      const backAction = ActionOption(
+        id: 'travel:2->1:BACK',
+        category: 'travel',
+        label: 'actions.travel.back',
+        icon: 'undo',
+        verb: 'BACK',
+        objectId: '1',
+      );
+      const returnedGame = Game(
+        loc: 1,
+        oldLoc: 2,
+        oldLc2: 1,
+        newLoc: 1,
+        turns: 4,
+        rngSeed: 42,
+        visitedLocations: {1, 2},
+      );
+
+      when(() => adventureRepository.initialGame())
+          .thenAnswer((_) async => historyGame);
+      when(() => adventureRepository.locationById(2))
+          .thenAnswer((_) async => currentLocation);
+      when(() => listAvailableActions(historyGame))
+          .thenAnswer((_) async => const [backAction]);
+      when(() => saveRepository.autosave(any())).thenAnswer((_) async {});
+
+      await tester.pumpWidget(MaterialApp(
+        home: AdventurePage(controller: controller),
+      ));
+      await tester.pumpAndSettle();
+
+      clearInteractions(saveRepository);
+
+      expect(find.text('Revenir'), findsOneWidget);
+
+      when(() => applyTurn(any(), any())).thenAnswer(
+        (_) async => TurnResult(returnedGame, const ['Back at the start.']),
+      );
+      when(() => adventureRepository.locationById(1))
+          .thenAnswer((_) async => previousLocation);
+      when(() => listAvailableActions(returnedGame))
+          .thenAnswer((_) async => const <ActionOption>[]);
+      when(() => saveRepository.autosave(any())).thenAnswer((_) async {});
+
+      await tester.tap(find.text('Revenir'));
+      await tester.pump();
+      await tester.pumpAndSettle();
+
+      expect(find.text('LOC_START'), findsOneWidget);
+      expect(find.text('Back at the start.'), findsWidgets);
+      verify(() => applyTurn(const Command(verb: 'BACK', target: '1'), historyGame))
+          .called(1);
+      verify(() => saveRepository.autosave(
+            const GameSnapshot(loc: 1, turns: 4, rngSeed: 42),
+          )).called(1);
+    });
   });
 }
 
