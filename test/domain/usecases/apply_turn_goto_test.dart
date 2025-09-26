@@ -252,8 +252,16 @@ void main() {
 
       when(() => mockRepo.locationById(4)).thenAnswer((_) async => currentLocation);
 
-      expect(() => usecase(const Command(verb: 'BACK'), game),
-          throwsA(isA<StateError>()));
+      await expectLater(
+        usecase(const Command(verb: 'BACK'), game),
+        throwsA(
+          isA<StateError>().having(
+            (error) => error.message,
+            'message',
+            contains('Back not allowed from location 4'),
+          ),
+        ),
+      );
     });
   });
 }

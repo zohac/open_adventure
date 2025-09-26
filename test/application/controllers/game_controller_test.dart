@@ -180,10 +180,47 @@ void main() {
       expect(state.locationDescription, equals('Short west description'));
       expect(state.actions, equals(followupActions));
       expect(state.journal.last, equals('Short west description'));
+      expect(
+        state.journal,
+        equals(const <String>['Long start description', 'Short west description']),
+      );
 
       verify(() => applyTurn(any(), any())).called(1);
       verify(() => saveRepository.autosave(
           const GameSnapshot(loc: 2, turns: 1, rngSeed: 42))).called(1);
+    });
+
+    test('keeps state when BACK is rejected and records the journal entry',
+        () async {
+      const backAction = ActionOption(
+        id: 'travel:1->1:BACK',
+        category: 'travel',
+        label: 'actions.travel.back',
+        verb: 'BACK',
+        objectId: '1',
+      );
+
+      when(() => applyTurn(any(), any())).thenAnswer(
+        (_) async =>
+            TurnResult(initialGame, const <String>['You cannot go back from here.']),
+      );
+      when(() => listAvailableActions(initialGame))
+          .thenAnswer((_) async => initialActions);
+      when(() => saveRepository.autosave(any())).thenAnswer((_) async {});
+
+      await controller.perform(backAction);
+
+      final state = controller.value;
+      expect(state.game, equals(initialGame));
+      expect(state.locationTitle, equals('LOC_START'));
+      expect(state.locationDescription, equals('Long start description'));
+      expect(state.journal.last, equals('You cannot go back from here.'));
+      expect(
+        state.journal,
+        equals(
+          const <String>['Long start description', 'You cannot go back from here.'],
+        ),
+      );
     });
 
     test('meta observer replays description without calling applyTurn',

@@ -133,6 +133,13 @@ void main() {
       );
     });
 
+    testWidgets('does not render a back action without navigation history',
+        (tester) async {
+      await pumpInitialState(tester);
+
+      expect(find.text('Revenir'), findsNothing);
+    });
+
     testWidgets('tapping a travel action updates title and description',
         (tester) async {
       await pumpInitialState(tester);
