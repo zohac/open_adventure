@@ -159,15 +159,18 @@ class GameController extends ValueNotifier<GameViewState> {
     final Command command = Command(verb: option.verb, target: option.objectId);
     final TurnResult result = await _applyTurn(command, currentGame);
     final Game newGame = result.newGame;
+    final bool locationChanged = newGame.loc != currentGame.loc;
     final Location location =
         await _adventureRepository.locationById(newGame.loc);
     final List<ActionOption> actions = await _listAvailableActions(newGame);
 
     final List<String> messages =
         result.messages.where((m) => m.isNotEmpty).toList();
-    final String description = messages.isNotEmpty
-        ? messages.last
-        : _selectDescription(location, firstVisit: false);
+    final String description = locationChanged
+        ? (messages.isNotEmpty
+            ? messages.last
+            : _selectDescription(location, firstVisit: false))
+        : value.locationDescription;
     final List<String> updatedJournal = _appendJournal(value.journal, messages);
 
     value = value.copyWith(
@@ -181,7 +184,9 @@ class GameController extends ValueNotifier<GameViewState> {
       isLoading: false,
     );
 
-    await _saveRepository.autosave(_toSnapshot(newGame));
+    if (locationChanged) {
+      await _saveRepository.autosave(_toSnapshot(newGame));
+    }
   }
 
   /// Recomputes the available actions for the current game without changing
