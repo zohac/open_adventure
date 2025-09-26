@@ -11,6 +11,7 @@ import 'package:open_adventure/domain/value_objects/action_option.dart';
 import 'package:open_adventure/domain/value_objects/command.dart';
 import 'package:open_adventure/domain/value_objects/game_snapshot.dart';
 import 'package:open_adventure/domain/value_objects/turn_result.dart';
+import 'package:open_adventure/domain/value_objects/magic_words.dart';
 
 /// Immutable projection of the game state consumed by the Presentation layer.
 class GameViewState {
@@ -112,7 +113,8 @@ class GameController extends ValueNotifier<GameViewState> {
     final Game initialGame = await _adventureRepository.initialGame();
     final Location location =
         await _adventureRepository.locationById(initialGame.loc);
-    final List<ActionOption> actions = await _listAvailableActions(initialGame);
+    final List<ActionOption> actions =
+        _visibleActions(await _listAvailableActions(initialGame), initialGame);
     final String description = _selectDescription(location, firstVisit: true);
     final List<String> journal =
         description.isEmpty ? const <String>[] : <String>[description];
@@ -156,13 +158,19 @@ class GameController extends ValueNotifier<GameViewState> {
       return;
     }
 
+    if (!currentGame.magicWordsUnlocked &&
+        MagicWords.isIncantation(option.verb)) {
+      return;
+    }
+
     final Command command = Command(verb: option.verb, target: option.objectId);
     final TurnResult result = await _applyTurn(command, currentGame);
     final Game newGame = result.newGame;
     final bool locationChanged = newGame.loc != currentGame.loc;
     final Location location =
         await _adventureRepository.locationById(newGame.loc);
-    final List<ActionOption> actions = await _listAvailableActions(newGame);
+    final List<ActionOption> actions =
+        _visibleActions(await _listAvailableActions(newGame), newGame);
 
     final List<String> messages =
         result.messages.where((m) => m.isNotEmpty).toList();
@@ -196,7 +204,8 @@ class GameController extends ValueNotifier<GameViewState> {
     if (game == null) {
       return;
     }
-    final List<ActionOption> actions = await _listAvailableActions(game);
+    final List<ActionOption> actions =
+        _visibleActions(await _listAvailableActions(game), game);
     value = value.copyWith(actions: List.unmodifiable(actions));
   }
 
@@ -225,5 +234,15 @@ class GameController extends ValueNotifier<GameViewState> {
       return location.shortDescription!;
     }
     return location.longDescription ?? '';
+  }
+
+  List<ActionOption> _visibleActions(
+      List<ActionOption> source, Game game) {
+    if (game.magicWordsUnlocked) {
+      return source;
+    }
+    return source
+        .where((action) => !MagicWords.isIncantation(action.verb))
+        .toList();
   }
 }

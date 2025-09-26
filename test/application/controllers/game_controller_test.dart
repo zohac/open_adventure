@@ -104,6 +104,40 @@ void main() {
       verify(() => saveRepository.autosave(
           const GameSnapshot(loc: 1, turns: 0, rngSeed: 42))).called(1);
     });
+
+    test('filters out magic words until unlocked', () async {
+      final location = Location(
+        id: 1,
+        name: 'LOC_START',
+        longDescription: 'Long start description',
+      );
+      const normalAction = ActionOption(
+        id: 'travel:1->2:WEST',
+        category: 'travel',
+        label: 'motion.west.label',
+        verb: 'WEST',
+        objectId: '2',
+      );
+      const magicAction = ActionOption(
+        id: 'travel:1->3:PLUGH',
+        category: 'travel',
+        label: 'motion.plugh.label',
+        verb: 'PLUGH',
+        objectId: '3',
+      );
+
+      when(() => adventureRepository.initialGame())
+          .thenAnswer((_) async => initialGame);
+      when(() => adventureRepository.locationById(1))
+          .thenAnswer((_) async => location);
+      when(() => listAvailableActions(initialGame))
+          .thenAnswer((_) async => const [normalAction, magicAction]);
+      when(() => saveRepository.autosave(any())).thenAnswer((_) async {});
+
+      await controller.init();
+
+      expect(controller.value.actions, equals(const [normalAction]));
+    });
   });
 
   group('perform', () {
@@ -126,6 +160,14 @@ void main() {
         objectId: '1',
       ),
     ];
+
+    const magicAction = ActionOption(
+      id: 'travel:1->3:PLUGH',
+      category: 'travel',
+      label: 'motion.plugh.label',
+      verb: 'PLUGH',
+      objectId: '3',
+    );
 
     const nextGame = Game(
       loc: 2,
@@ -282,6 +324,18 @@ void main() {
         ),
         throwsStateError,
       );
+    });
+
+    test('ignores magic word actions until unlocked', () async {
+      when(() => applyTurn(any(), any())).thenAnswer((_) async =>
+          TurnResult(nextGame, const <String>['Teleported elsewhere']));
+      when(() => listAvailableActions(nextGame))
+          .thenAnswer((_) async => followupActions);
+
+      await controller.perform(magicAction);
+
+      verifyNever(() => applyTurn(any(), any()));
+      expect(controller.value.game, equals(initialGame));
     });
   });
 

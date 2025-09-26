@@ -69,24 +69,28 @@ void main() {
       );
     });
 
-    Future<void> pumpInitialState(WidgetTester tester,
-        {AssetBundle? bundle}) async {
+    Future<void> pumpInitialState(
+      WidgetTester tester, {
+      AssetBundle? bundle,
+      List<ActionOption>? actionsOverride,
+    }) async {
       final location = Location(
         id: 1,
         name: 'LOC_START',
         longDescription: 'Long start description',
         shortDescription: 'Short start description',
       );
-      final actions = <ActionOption>[
-        const ActionOption(
-          id: 'travel:1->2:WEST',
-          category: 'travel',
-          label: 'motion.west.label',
-          verb: 'WEST',
-          objectId: '2',
-          icon: 'arrow_back',
-        ),
-      ];
+      final actions = actionsOverride ??
+          <ActionOption>[
+            const ActionOption(
+              id: 'travel:1->2:WEST',
+              category: 'travel',
+              label: 'motion.west.label',
+              verb: 'WEST',
+              objectId: '2',
+              icon: 'arrow_back',
+            ),
+          ];
 
       when(() => adventureRepository.initialGame())
           .thenAnswer((_) async => initialGame);
@@ -131,6 +135,31 @@ void main() {
         ),
         findsOneWidget,
       );
+    });
+
+    testWidgets('hides incantation actions before unlock', (tester) async {
+      await pumpInitialState(
+        tester,
+        actionsOverride: const [
+          ActionOption(
+            id: 'travel:1->3:PLUGH',
+            category: 'travel',
+            label: 'motion.plugh.label',
+            verb: 'PLUGH',
+            objectId: '3',
+          ),
+          ActionOption(
+            id: 'travel:1->2:WEST',
+            category: 'travel',
+            label: 'motion.west.label',
+            verb: 'WEST',
+            objectId: '2',
+          ),
+        ],
+      );
+
+      expect(find.text('Aller Plugh'), findsNothing);
+      expect(find.text('Aller Ouest'), findsOneWidget);
     });
 
     testWidgets('does not render a back action without navigation history',

@@ -23,6 +23,9 @@ class Game {
   /// Set of visited location IDs.
   final Set<int> visitedLocations;
 
+  /// Whether the player has unlocked the set of magic words.
+  final bool magicWordsUnlocked;
+
   /// Creates an immutable Game state.
   const Game({
     required this.loc,
@@ -32,6 +35,7 @@ class Game {
     required this.turns,
     required this.rngSeed,
     this.visitedLocations = const {},
+    this.magicWordsUnlocked = false,
   }) : oldLc2 = oldLc2 ?? oldLoc;
 
   /// Returns a copy with updated fields.
@@ -43,6 +47,7 @@ class Game {
     int? turns,
     int? rngSeed,
     Set<int>? visitedLocations,
+    bool? magicWordsUnlocked,
   }) =>
       Game(
         loc: loc ?? this.loc,
@@ -52,6 +57,7 @@ class Game {
         turns: turns ?? this.turns,
         rngSeed: rngSeed ?? this.rngSeed,
         visitedLocations: visitedLocations ?? this.visitedLocations,
+        magicWordsUnlocked: magicWordsUnlocked ?? this.magicWordsUnlocked,
       );
 
   static const SetEquality<int> _setEquality = SetEquality<int>();
@@ -66,7 +72,8 @@ class Game {
         newLoc == other.newLoc &&
         turns == other.turns &&
         rngSeed == other.rngSeed &&
-        _setEquality.equals(visitedLocations, other.visitedLocations);
+        _setEquality.equals(visitedLocations, other.visitedLocations) &&
+        magicWordsUnlocked == other.magicWordsUnlocked;
   }
 
   @override
@@ -78,5 +85,6 @@ class Game {
         turns,
         rngSeed,
         _setEquality.hash(visitedLocations),
+        magicWordsUnlocked,
       );
 }

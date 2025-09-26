@@ -9,6 +9,7 @@ import 'package:open_adventure/domain/entities/travel_rule.dart';
 import 'package:open_adventure/domain/repositories/adventure_repository.dart';
 import 'package:open_adventure/domain/usecases/list_available_actions.dart';
 import 'package:open_adventure/domain/value_objects/action_option.dart';
+import 'package:open_adventure/domain/value_objects/magic_words.dart';
 
 class _MockAdventureRepository extends Mock implements AdventureRepository {}
 
@@ -193,6 +194,37 @@ void main() {
     final options = await usecase(game);
 
     expect(options, equals(const [observerAction]));
+  });
+
+  test('filters magic words until the flag is unlocked', () async {
+    final repo = AdventureRepositoryImpl();
+    final usecase = ListAvailableActionsTravel(repo, motion);
+    final locations = await repo.getLocations();
+    final building =
+        locations.firstWhere((location) => location.name == 'LOC_BUILDING');
+    final lockedGame = Game(
+      loc: building.id,
+      oldLoc: building.id,
+      newLoc: building.id,
+      turns: 0,
+      rngSeed: 42,
+    );
+
+    final lockedActions = await usecase(lockedGame);
+
+    expect(
+      lockedActions.any((option) => MagicWords.isIncantation(option.verb)),
+      isFalse,
+    );
+
+    final unlockedActions = await usecase(
+      lockedGame.copyWith(magicWordsUnlocked: true),
+    );
+
+    expect(
+      unlockedActions.any((option) => MagicWords.isIncantation(option.verb)),
+      isTrue,
+    );
   });
 }
 

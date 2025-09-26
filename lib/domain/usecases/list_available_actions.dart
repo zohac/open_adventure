@@ -3,6 +3,7 @@ import 'package:open_adventure/domain/entities/location.dart';
 import 'package:open_adventure/domain/repositories/adventure_repository.dart';
 import 'package:open_adventure/domain/services/motion_canonicalizer.dart';
 import 'package:open_adventure/domain/value_objects/action_option.dart';
+import 'package:open_adventure/domain/value_objects/magic_words.dart';
 
 /// ListAvailableActions (travel only) — calcule les options de déplacement.
 class ListAvailableActionsTravel {
@@ -19,6 +20,9 @@ class ListAvailableActionsTravel {
     for (final r in rules) {
       final canonical = _motion.toCanonical(r.motion);
       if (canonical.isEmpty || canonical == 'UNKNOWN') continue;
+      if (!current.magicWordsUnlocked && MagicWords.isIncantation(canonical)) {
+        continue;
+      }
       var destId = r.destId;
       if (destId == null) {
         nameToId ??= {for (final l in await _repo.getLocations()) l.name: l.id};
