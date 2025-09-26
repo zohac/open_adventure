@@ -165,6 +165,7 @@ class AdventureRepositoryImpl implements AdventureRepository {
       turns: 0,
       rngSeed: seed,
       visitedLocations: {startId},
+      magicWordsUnlocked: false,
     );
   }
 }
