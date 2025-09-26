@@ -226,6 +226,39 @@ void main() {
       isTrue,
     );
   });
+
+  test('surfaces magic words only for eligible locations once unlocked',
+      () async {
+    final repo = _IncantationTravelRepository();
+    final usecase = ListAvailableActionsTravel(repo, motion);
+
+    const incantationChamber = Game(
+      loc: 1,
+      oldLoc: 1,
+      newLoc: 1,
+      turns: 0,
+      rngSeed: 21,
+      magicWordsUnlocked: true,
+    );
+    final chamberActions = await usecase(incantationChamber);
+
+    expect(
+      chamberActions.where((action) => action.verb == 'PLUGH'),
+      isNotEmpty,
+    );
+
+    final remoteCavern = incantationChamber.copyWith(
+      loc: 2,
+      oldLoc: 2,
+      newLoc: 2,
+    );
+    final cavernActions = await usecase(remoteCavern);
+
+    expect(
+      cavernActions.where((action) => action.verb == 'PLUGH'),
+      isEmpty,
+    );
+  });
 }
 
 class _EmptyTravelRepository implements AdventureRepository {
@@ -252,4 +285,68 @@ class _EmptyTravelRepository implements AdventureRepository {
 
   @override
   Future<List<TravelRule>> travelRulesFor(int locationId) async => const [];
+}
+
+class _IncantationTravelRepository implements AdventureRepository {
+  const _IncantationTravelRepository();
+
+  static const _locations = [
+    Location(id: 1, name: 'LOC_CHAMBER'),
+    Location(id: 2, name: 'LOC_CAVERN'),
+  ];
+
+  @override
+  Future<Game> initialGame() async {
+    return const Game(
+      loc: 1,
+      oldLoc: 1,
+      newLoc: 1,
+      turns: 0,
+      rngSeed: 0,
+    );
+  }
+
+  @override
+  Future<List<Location>> getLocations() async => _locations;
+
+  @override
+  Future<List<GameObject>> getGameObjects() {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Location> locationById(int id) async {
+    return _locations.firstWhere((location) => location.id == id);
+  }
+
+  @override
+  Future<List<TravelRule>> travelRulesFor(int locationId) async {
+    if (locationId == 1) {
+      return const [
+        TravelRule(
+          fromId: 1,
+          motion: 'PLUGH',
+          destName: 'LOC_CAVERN',
+          destId: 2,
+        ),
+        TravelRule(
+          fromId: 1,
+          motion: 'WEST',
+          destName: 'LOC_CAVERN',
+          destId: 2,
+        ),
+      ];
+    }
+    if (locationId == 2) {
+      return const [
+        TravelRule(
+          fromId: 2,
+          motion: 'EAST',
+          destName: 'LOC_CHAMBER',
+          destId: 1,
+        ),
+      ];
+    }
+    return const [];
+  }
 }
