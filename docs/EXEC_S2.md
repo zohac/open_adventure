@@ -339,16 +339,16 @@ Suivi & tickets
     - [x] `ApplyTurnGoto` gère `motion=BACK` en suivant l’historique (`oldLoc/oldLc2`) sans passer par `travel.json`, en respectant les règles forcées et les lieux sans retour;
     - [x] `GameController` conserve l’historique requis pour le retour, déclenche `perform()` sur l’action « Revenir », journal mis à jour;
     - [x] Widget tests AdventurePage: présence du bouton « Revenir » dans un cul-de-sac, tap → retour à la salle précédente → autosave invoquée;
-    - [ ] Revue CTO validée (architecture/code/tests);
-    - [ ] Revue Game Designer validée (libellés/flow « Revenir »);
-    - [ ] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
+    - [x] Revue CTO validée (architecture/code/tests);
+    - [x] Revue Game Designer validée (libellés/flow « Revenir »);
+    - [x] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
 - [x] ADVT‑S2‑22: Tests de non-régression `BACK` — scénarios de retour bloqué/autorisé.
   - DoD:
     - [x] Tests Domain (ApplyTurn) couvrant: retour simple, retour via lieu forcé, retour impossible (`COND_NOBACK`) → message adéquat;
     - [x] Tests Application (GameController) vérifiant qu’un retour invalide ne modifie pas l’état et que l’historique est mis à jour sur navigation normale;
     - [x] Widget test garantissant qu’aucune option « Revenir » n’apparaît sur un lieu initial sans historique;
-    - [ ] Revue CTO validée (architecture/code/tests);
-    - [ ] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
+    - [x] Revue CTO validée (architecture/code/tests);
+    - [x] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
 - [ ] ADVT‑S2‑23: Filtrer les incantations (PLUGH, XYZZY…) des actions tant qu’elles ne sont pas découvertes.
   - DoD:
     - [ ] `ListAvailableActionsTravel` exclut par défaut les motions spéciaux (`special`/`magic`) et ne les injecte que si un flag `Game.magicWordsUnlocked` (ou équivalent) est posé par la couche Domain (S3) ;
