@@ -333,12 +333,12 @@ Suivi & tickets
     - [x] Revue CTO validée (UI/tests);
     - [x] Revue Game Designer validée (structure/wording UX_SCREENS).
     - [x] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
-- [ ] ADVT‑S2‑21: Prise en charge du mouvement `BACK/RETURN` (retour arrière) — Domain/Application/UI.
+- [x] ADVT‑S2‑21: Prise en charge du mouvement `BACK/RETURN` (retour arrière) — Domain/Application/UI.
   - DoD:
-    - [ ] `ListAvailableActionsTravel` expose une option `category=travel` « Revenir » lorsque `Game.oldLoc` reste accessible et qu’aucune condition `COND_NOBACK` ne bloque la marche arrière;
-    - [ ] `ApplyTurnGoto` gère `motion=BACK` en suivant l’historique (`oldLoc/oldLc2`) sans passer par `travel.json`, en respectant les règles forcées et les lieux sans retour;
-    - [ ] `GameController` conserve l’historique requis pour le retour, déclenche `perform()` sur l’action « Revenir », journal mis à jour;
-    - [ ] Widget tests AdventurePage: présence du bouton « Revenir » dans un cul-de-sac, tap → retour à la salle précédente → autosave invoquée;
+    - [x] `ListAvailableActionsTravel` expose une option `category=travel` « Revenir » lorsque `Game.oldLoc` reste accessible et qu’aucune condition `COND_NOBACK` ne bloque la marche arrière;
+    - [x] `ApplyTurnGoto` gère `motion=BACK` en suivant l’historique (`oldLoc/oldLc2`) sans passer par `travel.json`, en respectant les règles forcées et les lieux sans retour;
+    - [x] `GameController` conserve l’historique requis pour le retour, déclenche `perform()` sur l’action « Revenir », journal mis à jour;
+    - [x] Widget tests AdventurePage: présence du bouton « Revenir » dans un cul-de-sac, tap → retour à la salle précédente → autosave invoquée;
     - [ ] Revue CTO validée (architecture/code/tests);
     - [ ] Revue Game Designer validée (libellés/flow « Revenir »);
     - [ ] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
