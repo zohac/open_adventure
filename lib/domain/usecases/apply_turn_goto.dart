@@ -24,15 +24,19 @@ class ApplyTurnGoto {
   /// Retourne un [TurnResult] avec le nouvel état et la description du lieu
   /// d'arrivée. Lève un [StateError] si aucune règle ne correspond.
   Future<TurnResult> call(Command command, Game current) async {
+    final verb = _motion.toCanonical(command.verb);
+    if (verb.isEmpty) {
+      throw StateError('Invalid motion verb: ${command.verb}');
+    }
+
+    if (verb == 'BACK') {
+      return _applyBack(current);
+    }
+
     final rawTarget = command.target;
     final destId = int.tryParse(rawTarget ?? '');
     if (destId == null) {
       throw StateError('Invalid destination id: $rawTarget');
-    }
-
-    final verb = _motion.toCanonical(command.verb);
-    if (verb.isEmpty) {
-      throw StateError('Invalid motion verb: ${command.verb}');
     }
 
     final rules = await _repo.travelRulesFor(current.loc);
@@ -42,7 +46,8 @@ class ApplyTurnGoto {
       final canonical = _motion.toCanonical(rule.motion);
       if (canonical != verb) continue;
       final matchesById = rule.destId != null && rule.destId == destLoc.id;
-      final matchesByName = rule.destName.isNotEmpty && rule.destName == destLoc.name;
+      final matchesByName =
+          rule.destName.isNotEmpty && rule.destName == destLoc.name;
       if (matchesById || matchesByName) {
         matched = rule;
         break;
@@ -62,6 +67,54 @@ class ApplyTurnGoto {
     };
 
     final newGame = current.copyWith(
+      oldLc2: current.oldLoc,
+      oldLoc: current.loc,
+      loc: destLoc.id,
+      newLoc: destLoc.id,
+      turns: current.turns + 1,
+      visitedLocations: visitedLocations,
+    );
+
+    final description = alreadyVisited
+        ? (destLoc.shortDescription?.isNotEmpty == true
+            ? destLoc.shortDescription!
+            : destLoc.longDescription ?? '')
+        : (destLoc.longDescription?.isNotEmpty == true
+            ? destLoc.longDescription!
+            : destLoc.shortDescription ?? '');
+
+    return TurnResult(newGame, [description]);
+  }
+
+  Future<TurnResult> _applyBack(Game current) async {
+    final currentLocation = await _repo.locationById(current.loc);
+    if (currentLocation.conditions['NOBACK'] == true) {
+      throw StateError('Back not allowed from location ${current.loc}');
+    }
+
+    final candidate = current.oldLoc;
+    if (candidate == current.loc) {
+      throw StateError('No previous location available for BACK');
+    }
+
+    final previousLocation = await _repo.locationById(candidate);
+    final bool previousForced = previousLocation.conditions['FORCED'] == true;
+
+    final targetId = previousForced ? current.oldLc2 : candidate;
+    if (targetId == current.loc) {
+      throw StateError('BACK would not change the current location');
+    }
+
+    final destLoc = await _repo.locationById(targetId);
+
+    final alreadyVisited = current.visitedLocations.contains(destLoc.id);
+    final visitedLocations = {
+      ...current.visitedLocations,
+      destLoc.id,
+    };
+
+    final newGame = current.copyWith(
+      oldLc2: candidate,
       oldLoc: current.loc,
       loc: destLoc.id,
       newLoc: destLoc.id,

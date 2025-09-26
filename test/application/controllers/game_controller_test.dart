@@ -176,6 +176,8 @@ void main() {
 
       final state = controller.value;
       expect(state.game, equals(nextGame));
+      expect(state.game?.oldLoc, equals(1));
+      expect(state.game?.oldLc2, equals(1));
       expect(state.locationTitle, equals(nextLocation.name));
       expect(state.locationDescription, equals('Short west description'));
       expect(state.actions, equals(followupActions));
@@ -184,6 +186,47 @@ void main() {
       verify(() => applyTurn(any(), any())).called(1);
       verify(() => saveRepository.autosave(
           const GameSnapshot(loc: 2, turns: 1, rngSeed: 42))).called(1);
+    });
+
+    test('does not mutate state when applyTurn throws (e.g. BACK denied)',
+        () async {
+      const backAction = ActionOption(
+        id: 'travel:1->0:BACK',
+        category: 'travel',
+        label: 'actions.travel.back',
+        verb: 'BACK',
+      );
+      final location = Location(
+        id: 1,
+        name: 'LOC_START',
+        longDescription: 'Long start description',
+      );
+      when(() => adventureRepository.initialGame())
+          .thenAnswer((_) async => initialGame);
+      when(() => adventureRepository.locationById(1))
+          .thenAnswer((_) async => location);
+      clearInteractions(saveRepository);
+
+      when(() => applyTurn(any(), any()))
+          .thenThrow(StateError('Back not allowed from location 1'));
+
+      await expectLater(
+        controller.perform(backAction),
+        throwsA(
+          isA<StateError>().having(
+            (error) => error.message,
+            'message',
+            contains('Back not allowed'),
+          ),
+        ),
+      );
+
+      final state = controller.value;
+      expect(state.game, equals(initialGame));
+      expect(state.locationTitle, equals(location.name));
+      expect(state.locationDescription, equals('Long start description'));
+      verify(() => adventureRepository.locationById(1)).called(1);
+      verifyNever(() => saveRepository.autosave(any()));
     });
 
     test('meta observer replays description without calling applyTurn',

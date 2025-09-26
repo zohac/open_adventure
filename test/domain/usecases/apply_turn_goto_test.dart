@@ -171,5 +171,98 @@ void main() {
 
       expect(() => usecase(cmd, game), throwsA(isA<StateError>()));
     });
+
+    test('handles BACK command returning to previous location', () async {
+      const game = Game(
+        loc: 2,
+        oldLoc: 1,
+        oldLc2: 0,
+        newLoc: 2,
+        turns: 5,
+        rngSeed: 42,
+        visitedLocations: {1, 2},
+      );
+      final currentLocation = Location(id: 2, name: 'LOC_CAVE');
+      final previousLocation = Location(
+        id: 1,
+        name: 'LOC_START',
+        shortDescription: 'Short start',
+        longDescription: 'Long start',
+      );
+
+      when(() => mockRepo.locationById(2)).thenAnswer((_) async => currentLocation);
+      when(() => mockRepo.locationById(1)).thenAnswer((_) async => previousLocation);
+
+      final result = await usecase(const Command(verb: 'BACK'), game);
+
+      expect(result.newGame.loc, 1);
+      expect(result.newGame.oldLoc, 2);
+      expect(result.newGame.oldLc2, 1);
+      expect(result.newGame.turns, 6);
+      expect(result.newGame.visitedLocations, {1, 2});
+      expect(result.messages, ['Short start']);
+    });
+
+    test('handles BACK via forced previous location by jumping to oldLc2',
+        () async {
+      const game = Game(
+        loc: 3,
+        oldLoc: 2,
+        oldLc2: 1,
+        newLoc: 3,
+        turns: 10,
+        rngSeed: 99,
+        visitedLocations: {1, 2, 3},
+      );
+      final currentLocation = Location(id: 3, name: 'LOC_NOW');
+      final forcedPrevious = Location(
+        id: 2,
+        name: 'LOC_FORCED',
+        conditions: const {'FORCED': true},
+      );
+      final fallback = Location(
+        id: 1,
+        name: 'LOC_SAFE',
+        shortDescription: 'Safe room',
+      );
+
+      when(() => mockRepo.locationById(3)).thenAnswer((_) async => currentLocation);
+      when(() => mockRepo.locationById(2)).thenAnswer((_) async => forcedPrevious);
+      when(() => mockRepo.locationById(1)).thenAnswer((_) async => fallback);
+
+      final result = await usecase(const Command(verb: 'BACK'), game);
+
+      expect(result.newGame.loc, 1);
+      expect(result.newGame.oldLoc, 3);
+      expect(result.newGame.oldLc2, 2);
+      expect(result.messages, ['Safe room']);
+    });
+
+    test('throws when BACK is blocked by NOBACK condition with message',
+        () async {
+      const game = Game(
+        loc: 4,
+        oldLoc: 3,
+        oldLc2: 2,
+        newLoc: 4,
+        turns: 2,
+        rngSeed: 7,
+      );
+      final currentLocation =
+          Location(id: 4, name: 'LOC_END', conditions: const {'NOBACK': true});
+
+      when(() => mockRepo.locationById(4)).thenAnswer((_) async => currentLocation);
+
+      expect(
+        () => usecase(const Command(verb: 'BACK'), game),
+        throwsA(
+          isA<StateError>().having(
+            (error) => error.message,
+            'message',
+            contains('Back not allowed'),
+          ),
+        ),
+      );
+    });
   });
 }

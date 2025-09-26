@@ -116,6 +116,9 @@ class MotionNormalizerImpl implements MotionCanonicalizer {
 
   @override
   int priority(String canonical) {
+    if (canonical == 'BACK') {
+      return -1;
+    }
     const contextual = {'ENTER', 'IN', 'OUT', 'UP', 'DOWN'};
     const cardinal = {'NORTH', 'EAST', 'SOUTH', 'WEST', 'NE', 'NW', 'SE', 'SW'};
     if (contextual.contains(canonical)) return 0;

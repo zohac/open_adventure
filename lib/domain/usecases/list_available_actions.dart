@@ -1,4 +1,5 @@
 import 'package:open_adventure/domain/entities/game.dart';
+import 'package:open_adventure/domain/entities/location.dart';
 import 'package:open_adventure/domain/repositories/adventure_repository.dart';
 import 'package:open_adventure/domain/services/motion_canonicalizer.dart';
 import 'package:open_adventure/domain/value_objects/action_option.dart';
@@ -14,6 +15,7 @@ class ListAvailableActionsTravel {
     final rules = await _repo.travelRulesFor(current.loc);
     final candidates = <String, _TravelCandidate>{};
     Map<String, int>? nameToId;
+    final currentLocation = await _repo.locationById(current.loc);
     for (final r in rules) {
       final canonical = _motion.toCanonical(r.motion);
       if (canonical.isEmpty || canonical == 'UNKNOWN') continue;
@@ -50,6 +52,20 @@ class ListAvailableActionsTravel {
             ))
         .toList();
 
+    final backTarget = await _resolveBackTarget(current, currentLocation);
+    if (backTarget != null) {
+      options.add(
+        ActionOption(
+          id: 'travel:${current.loc}->$backTarget:BACK',
+          category: 'travel',
+          label: 'actions.travel.back',
+          icon: _motion.iconName('BACK'),
+          verb: 'BACK',
+          objectId: backTarget.toString(),
+        ),
+      );
+    }
+
     options.sort((a, b) {
       final pa = _motion.priority(a.verb);
       final pb = _motion.priority(b.verb);
@@ -73,6 +89,34 @@ class ListAvailableActionsTravel {
     }
 
     return options;
+  }
+
+  Future<int?> _resolveBackTarget(Game current, Location currentLocation) async {
+    if (current.oldLoc == current.loc) {
+      return null;
+    }
+    if (currentLocation.conditions['NOBACK'] == true) {
+      return null;
+    }
+
+    final int candidate = current.oldLoc;
+    final Location previousLocation;
+    try {
+      previousLocation = await _repo.locationById(candidate);
+    } catch (_) {
+      return null;
+    }
+    final bool previousForced = previousLocation.conditions['FORCED'] == true;
+    final int resolved = previousForced ? current.oldLc2 : candidate;
+    if (resolved == current.loc) {
+      return null;
+    }
+    try {
+      await _repo.locationById(resolved);
+    } catch (_) {
+      return null;
+    }
+    return resolved;
   }
 }
 
