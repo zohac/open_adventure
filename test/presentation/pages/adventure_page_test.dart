@@ -237,6 +237,13 @@ void main() {
       );
       when(() => listAvailableActions(movedGame)).thenAnswer(
           (_) async => overflowActions.take(3).toList(growable: false));
+      when(() => adventureRepository.locationById(2)).thenAnswer(
+        (_) async => const Location(
+          id: 2,
+          name: 'LOC_FOREST',
+          shortDescription: 'Un chemin bordé de mousse.',
+        ),
+      );
 
       await pumpInitialState(
         tester,
