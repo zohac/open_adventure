@@ -47,15 +47,15 @@ UI – livrables & DoD
     - [x] Rend une liste de boutons d’actions `category=travel` cohérente avec `ListAvailableActions`;
     - [x] Tap sur un bouton met à jour titre/description du nouveau lieu; pas de jank observable;
     - [x] Journal affiche le dernier message retourné par `TurnResult`;
-    - [ ] Libellés affichés = chaînes localisées (aucune clé ARB brute à l’écran) conformément à DDR-001;
+    - [x] Libellés affichés = chaînes localisées (aucune clé ARB brute à l’écran) conformément à DDR-001;
     - [x] Respect de §17 (UX Mobile): 3–7 actions visibles max; si >7, rendre 6 + bouton `Plus…`; labels/icônes motion normalisés; première visite = `longDescription`, revisites = `shortDescription`.
     - [x] Bouton `Plus…` ouvre une modale listant les actions restantes, boutons cohérents avec la liste principale et accessibilité activée.
-    - [ ] Revue Game Designer (UX): labels/directions conformes, 3–7 actions visibles + overflow « Plus… », long/short corrects, accessibilité de base.
+    - [x] Revue Game Designer (UX): labels/directions conformes, 3–7 actions visibles + overflow « Plus… », long/short corrects, accessibilité de base.
 - [ ] Intégration GameController (injection par constructeur, état immuable)
   - DoD:
     - [x] `init()` remplit l’état initial et `perform()` déclenche navigation + autosave;
     - [x] Widget tests valident le cycle init→tap→render.
-    - [ ] Revue Game Designer (UX): labels/directions conformes, 3–7 actions visibles + overflow « Plus… », long/short corrects, accessibilité de base.
+    - [x] Revue Game Designer (UX): labels/directions conformes, 3–7 actions visibles + overflow « Plus… », long/short corrects, accessibilité de base.
 - [ ] Préparation images de scène (placeholder + mapping)
   - DoD:
     - [x] Slot visuel réservé au-dessus du heading avec `AspectRatio(16/9)` et placeholder statique léger;
@@ -63,7 +63,7 @@ UI – livrables & DoD
     - [x] Si l’image est absente ou la feature désactivée, fallback textuel immédiat (zéro crash, zéro jank);
     - [x] Tests: absence d’asset ne provoque pas d’exception et le layout reste stable.
     - [x] Pixel‑perfect prêt: wrapper `PixelCanvas` (base 320×180) créé et utilisé par la zone visuelle; `FilterQuality.none` appliqué.
-    - [ ] Revue Game Designer (UX): labels/directions conformes, 3–7 actions visibles + overflow « Plus… », long/short corrects, accessibilité de base.
+    - [x] Revue Game Designer (UX): labels/directions conformes, 3–7 actions visibles + overflow « Plus… », long/short corrects, accessibilité de base.
 
 Audio – livrables & DoD (bootstrap)
 
@@ -354,7 +354,7 @@ Suivi & tickets
   - DoD:
     - [x] `ListAvailableActionsTravel` exclut par défaut les motions spéciaux (`special`/`magic`) et ne les injecte que si un flag `Game.magicWordsUnlocked` (ou équivalent) est posé par la couche Domain (S3) ;
     - [x] `GameController` ne relaie aucune action incantation tant que le joueur n’a pas déclenché l’événement d’apprentissage ;
-    - [x] Widget test AdventurePage: absence de boutons « Aller Plugh/Xyzzy » en début de partie ;
+    - [x] Widget test AdventurePage: absence de boutons « Prononcer PLUGH/XYZZY » en début de partie ;
     - [x] Revue CTO validée (architecture/code/tests) ;
     - [x] Revue Game Designer validée (fidélité DDR‑001 Option A) ;
     - [x] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
