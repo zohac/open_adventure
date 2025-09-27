@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:open_adventure/application/controllers/audio_settings_controller.dart';
 import 'package:open_adventure/application/controllers/game_controller.dart';
 import 'package:open_adventure/domain/value_objects/action_option.dart';
+import 'package:open_adventure/l10n/app_localizations.dart';
 import 'package:open_adventure/presentation/theme/app_spacing.dart';
 import 'package:open_adventure/presentation/widgets/location_image.dart';
 import 'package:open_adventure/presentation/pages/settings_page.dart';
@@ -62,8 +63,9 @@ class _AdventurePageState extends State<AdventurePage> {
         title: ValueListenableBuilder<GameViewState>(
           valueListenable: widget.controller,
           builder: (context, state, _) {
+            final l10n = AppLocalizations.of(context);
             final title = state.locationTitle.isEmpty
-                ? 'Open Adventure'
+                ? l10n.appTitle
                 : state.locationTitle;
             return Text(title);
           },
@@ -72,7 +74,8 @@ class _AdventurePageState extends State<AdventurePage> {
           if (widget.audioSettingsController != null)
             IconButton(
               icon: const Icon(Icons.volume_up_outlined),
-              tooltip: 'Réglages audio',
+              tooltip:
+                  AppLocalizations.of(context).adventureAudioSettingsTooltip,
               onPressed: () {
                 final controller = widget.audioSettingsController!;
                 Navigator.of(context).push(
@@ -90,6 +93,7 @@ class _AdventurePageState extends State<AdventurePage> {
       body: ValueListenableBuilder<GameViewState>(
         valueListenable: widget.controller,
         builder: (context, state, _) {
+          final l10n = AppLocalizations.of(context);
           if (state.isLoading) {
             return const Center(child: CircularProgressIndicator());
           }
@@ -114,21 +118,28 @@ class _AdventurePageState extends State<AdventurePage> {
                           name: state.locationTitle,
                           id: state.locationId,
                           semanticsLabel: state.locationTitle.isEmpty
-                              ? 'Illustration du lieu'
+                              ? l10n.adventureLocationImageSemanticsFallback
                               : state.locationTitle,
                         ),
                       );
                     },
                   ),
                   const SizedBox(height: AppSpacing.md),
-                  _DescriptionSection(description: state.locationDescription),
+                  _DescriptionSection(
+                    description: state.locationDescription,
+                    l10n: l10n,
+                  ),
                   const SizedBox(height: AppSpacing.xl),
                   _ActionsSection(
+                    l10n: l10n,
                     actions: state.actions,
                     onActionSelected: widget.controller.perform,
                   ),
                   const SizedBox(height: AppSpacing.xl),
-                  _JournalSection(entries: state.journal),
+                  _JournalSection(
+                    entries: state.journal,
+                    l10n: l10n,
+                  ),
                 ],
               ),
             ),
@@ -140,9 +151,13 @@ class _AdventurePageState extends State<AdventurePage> {
 }
 
 class _DescriptionSection extends StatelessWidget {
-  const _DescriptionSection({required this.description});
+  const _DescriptionSection({
+    required this.description,
+    required this.l10n,
+  });
 
   final String description;
+  final AppLocalizations l10n;
 
   @override
   Widget build(BuildContext context) {
@@ -150,10 +165,12 @@ class _DescriptionSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Description', style: theme.titleMedium),
+        Text(l10n.adventureDescriptionSectionTitle, style: theme.titleMedium),
         const SizedBox(height: 8),
         Text(
-          description.isEmpty ? '...' : description,
+          description.isEmpty
+              ? l10n.adventureDescriptionEmptyPlaceholder
+              : description,
           style: theme.bodyMedium,
         ),
       ],
@@ -163,6 +180,7 @@ class _DescriptionSection extends StatelessWidget {
 
 class _ActionsSection extends StatelessWidget {
   const _ActionsSection({
+    required this.l10n,
     required this.actions,
     required this.onActionSelected,
   });
@@ -170,6 +188,7 @@ class _ActionsSection extends StatelessWidget {
   static const int _maxVisibleWithoutOverflow = 7;
   static const int _visibleBeforeOverflow = 6;
 
+  final AppLocalizations l10n;
   final List<ActionOption> actions;
   final Future<void> Function(ActionOption) onActionSelected;
 
@@ -189,21 +208,22 @@ class _ActionsSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Actions', style: theme.titleMedium),
+        Text(l10n.adventureActionsSectionTitle, style: theme.titleMedium),
         const SizedBox(height: 8),
         if (!hasTravelActions)
           Padding(
             padding: const EdgeInsets.only(bottom: 12),
             child: Text(
-              'Aucune sortie immédiate. Observez les alentours.',
+              l10n.adventureActionsTravelMissingHint,
               style: theme.bodyMedium,
             ),
           ),
         if (actions.isEmpty)
-          Text('No actions available', style: theme.bodyMedium)
+          Text(l10n.adventureActionsEmptyState, style: theme.bodyMedium)
         else
           ...visibleActions.map(
             (action) => _ActionButton(
+              l10n: l10n,
               action: action,
               onActionSelected: onActionSelected,
             ),
@@ -215,7 +235,7 @@ class _ActionsSection extends StatelessWidget {
               width: double.infinity,
               child: ElevatedButton.icon(
                 icon: const Icon(Icons.more_horiz),
-                label: const Text('Plus…'),
+                label: Text(l10n.adventureActionsMoreButtonLabel),
                 onPressed: () {
                   _showOverflowActions(
                     context,
@@ -238,6 +258,7 @@ class _ActionsSection extends StatelessWidget {
     await showModalBottomSheet<void>(
       context: context,
       builder: (bottomSheetContext) {
+        final l10n = AppLocalizations.of(bottomSheetContext);
         return SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(AppSpacing.md),
@@ -246,9 +267,8 @@ class _ActionsSection extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text(
-                  'Actions supplémentaires',
-                  style:
-                      Theme.of(bottomSheetContext).textTheme.titleMedium,
+                  l10n.adventureActionsMoreSheetTitle,
+                  style: Theme.of(bottomSheetContext).textTheme.titleMedium,
                 ),
                 const SizedBox(height: AppSpacing.sm),
                 ListView.separated(
@@ -256,6 +276,7 @@ class _ActionsSection extends StatelessWidget {
                   itemBuilder: (context, index) {
                     final action = overflowActions[index];
                     return _ActionButton(
+                      l10n: l10n,
                       action: action,
                       onActionSelected: (selected) async {
                         Navigator.of(bottomSheetContext).pop();
@@ -276,8 +297,13 @@ class _ActionsSection extends StatelessWidget {
 }
 
 class _ActionButton extends StatelessWidget {
-  const _ActionButton({required this.action, required this.onActionSelected});
+  const _ActionButton({
+    required this.l10n,
+    required this.action,
+    required this.onActionSelected,
+  });
 
+  final AppLocalizations l10n;
   final ActionOption action;
   final Future<void> Function(ActionOption) onActionSelected;
 
@@ -289,7 +315,7 @@ class _ActionButton extends StatelessWidget {
         width: double.infinity,
         child: ElevatedButton.icon(
           icon: Icon(IconsHelper.iconForName(action.icon ?? 'directions_walk')),
-          label: Text(_resolveLabel(action.label)),
+          label: Text(l10n.resolveActionLabel(action.label)),
           onPressed: () => onActionSelected(action),
         ),
       ),
@@ -298,9 +324,13 @@ class _ActionButton extends StatelessWidget {
 }
 
 class _JournalSection extends StatelessWidget {
-  const _JournalSection({required this.entries});
+  const _JournalSection({
+    required this.entries,
+    required this.l10n,
+  });
 
   final List<String> entries;
+  final AppLocalizations l10n;
 
   @override
   Widget build(BuildContext context) {
@@ -308,10 +338,10 @@ class _JournalSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Journal', style: theme.titleMedium),
+        Text(l10n.adventureJournalSectionTitle, style: theme.titleMedium),
         const SizedBox(height: 8),
         if (entries.isEmpty)
-          Text('No events yet', style: theme.bodyMedium)
+          Text(l10n.adventureJournalEmptyState, style: theme.bodyMedium)
         else
           ...entries.asMap().entries.map(
                 (entry) => Padding(
@@ -361,43 +391,4 @@ class IconsHelper {
         return Icons.directions_walk;
     }
   }
-}
-
-String _resolveLabel(String rawLabel) {
-  const mapping = <String, String>{
-    'motion.north.label': 'Aller Nord',
-    'motion.south.label': 'Aller Sud',
-    'motion.east.label': 'Aller Est',
-    'motion.west.label': 'Aller Ouest',
-    'motion.up.label': 'Monter',
-    'motion.down.label': 'Descendre',
-    'motion.enter.label': 'Entrer',
-    'motion.in.label': 'Entrer',
-    'motion.out.label': 'Sortir',
-    'motion.forward.label': 'Avancer',
-    'motion.back.label': 'Revenir',
-    'actions.travel.back': 'Revenir',
-    'motion.ne.label': 'Aller Nord-Est',
-    'motion.se.label': 'Aller Sud-Est',
-    'motion.sw.label': 'Aller Sud-Ouest',
-    'motion.nw.label': 'Aller Nord-Ouest',
-    'actions.observer.label': 'Observer',
-  };
-
-  final resolved = mapping[rawLabel];
-  if (resolved != null) {
-    return resolved;
-  }
-  if (rawLabel.startsWith('motion.') && rawLabel.endsWith('.label')) {
-    final token = rawLabel.substring(7, rawLabel.length - 6);
-    final display = token
-        .replaceAll('_', '-')
-        .split('-')
-        .map((part) => part.isEmpty
-            ? part
-            : '${part[0].toUpperCase()}${part.substring(1).toLowerCase()}')
-        .join('-');
-    return 'Aller $display';
-  }
-  return rawLabel;
 }
