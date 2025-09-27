@@ -14,6 +14,7 @@ import 'package:open_adventure/domain/value_objects/command.dart';
 import 'package:open_adventure/domain/value_objects/game_snapshot.dart';
 import 'package:open_adventure/domain/value_objects/turn_result.dart';
 import 'package:open_adventure/presentation/pages/adventure_page.dart';
+import 'package:open_adventure/l10n/app_localizations.dart';
 
 class _MockAdventureRepository extends Mock implements AdventureRepository {}
 
@@ -101,6 +102,9 @@ void main() {
       when(() => saveRepository.autosave(any())).thenAnswer((_) async {});
 
       Widget app = MaterialApp(
+        locale: const Locale('fr'),
+        supportedLocales: AppLocalizations.supportedLocales,
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
         home: AdventurePage(controller: controller),
       );
       if (bundle != null) {
@@ -489,6 +493,9 @@ void main() {
       when(() => saveRepository.autosave(any())).thenAnswer((_) async {});
 
       await tester.pumpWidget(MaterialApp(
+        locale: const Locale('fr'),
+        supportedLocales: AppLocalizations.supportedLocales,
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
         home: AdventurePage(controller: controller),
       ));
 
@@ -550,6 +557,9 @@ void main() {
       when(() => saveRepository.autosave(any())).thenAnswer((_) async {});
 
       await tester.pumpWidget(MaterialApp(
+        locale: const Locale('fr'),
+        supportedLocales: AppLocalizations.supportedLocales,
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
         home: AdventurePage(controller: controller),
       ));
       await tester.pumpAndSettle();
