@@ -349,20 +349,20 @@ Suivi & tickets
     - [x] Widget test garantissant qu’aucune option « Revenir » n’apparaît sur un lieu initial sans historique;
     - [x] Revue CTO validée (architecture/code/tests);
     - [x] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
-- [ ] ADVT‑S2‑23: Filtrer les incantations (PLUGH, XYZZY…) des actions tant qu’elles ne sont pas découvertes.
+- [x] ADVT‑S2‑23: Filtrer les incantations (PLUGH, XYZZY…) des actions tant qu’elles ne sont pas découvertes.
   - DoD:
-    - [ ] `ListAvailableActionsTravel` exclut par défaut les motions spéciaux (`special`/`magic`) et ne les injecte que si un flag `Game.magicWordsUnlocked` (ou équivalent) est posé par la couche Domain (S3) ;
-    - [ ] `GameController` ne relaie aucune action incantation tant que le joueur n’a pas déclenché l’événement d’apprentissage ;
-    - [ ] Widget test AdventurePage: absence de boutons « Aller Plugh/Xyzzy » en début de partie ;
-    - [ ] Revue CTO validée (architecture/code/tests) ;
-    - [ ] Revue Game Designer validée (fidélité DDR‑001 Option A) ;
-    - [ ] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
-- [ ] ADVT‑S2‑24: Tests de non-régression incantations — visibilité conditionnelle.
+    - [x] `ListAvailableActionsTravel` exclut par défaut les motions spéciaux (`special`/`magic`) et ne les injecte que si un flag `Game.magicWordsUnlocked` (ou équivalent) est posé par la couche Domain (S3) ;
+    - [x] `GameController` ne relaie aucune action incantation tant que le joueur n’a pas déclenché l’événement d’apprentissage ;
+    - [x] Widget test AdventurePage: absence de boutons « Aller Plugh/Xyzzy » en début de partie ;
+    - [x] Revue CTO validée (architecture/code/tests) ;
+    - [x] Revue Game Designer validée (fidélité DDR‑001 Option A) ;
+    - [x] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
+- [x] ADVT‑S2‑24: Tests de non-régression incantations — visibilité conditionnelle.
   - DoD:
-    - [ ] Tests Domain simulant l’apprentissage d’un mot magique → l’action devient disponible uniquement dans les salles concernées ;
-    - [ ] Tests Application/Widget vérifiant l’apparition/disparition dynamique des boutons d’incantation ;
-    - [ ] Revue CTO validée (architecture/code/tests) ;
-    - [ ] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
+    - [x] Tests Domain simulant l’apprentissage d’un mot magique → l’action devient disponible uniquement dans les salles concernées ;
+    - [x] Tests Application/Widget vérifiant l’apparition/disparition dynamique des boutons d’incantation ;
+    - [x] Revue CTO validée (architecture/code/tests) ;
+    - [x] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
 
 Références C (source canonique)
 
