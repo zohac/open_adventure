@@ -354,7 +354,7 @@ Suivi & tickets
   - DoD:
     - [x] `ListAvailableActionsTravel` exclut par défaut les motions spéciaux (`special`/`magic`) et ne les injecte que si un flag `Game.magicWordsUnlocked` (ou équivalent) est posé par la couche Domain (S3) ;
     - [x] `GameController` ne relaie aucune action incantation tant que le joueur n’a pas déclenché l’événement d’apprentissage ;
-    - [x] Widget test AdventurePage: absence de boutons « Aller Plugh/Xyzzy » en début de partie ;
+    - [x] Widget test AdventurePage: absence de boutons « Prononcer PLUGH/XYZZY » en début de partie ;
     - [x] Revue CTO validée (architecture/code/tests) ;
     - [x] Revue Game Designer validée (fidélité DDR‑001 Option A) ;
     - [x] Revue de code CTO: architecture respectée (Domain pur, Data passive, UI sans logique), qualité (lint OK, noms/clarté), tests suffisants.
