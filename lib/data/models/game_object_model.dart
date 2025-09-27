@@ -5,9 +5,6 @@ class GameObjectModel extends GameObject {
   /// Inventory label shown in inventory listing (if any).
   final String? inventory;
 
-  /// Optional list of state keys for the object (e.g., open/closed, on/off).
-  final List<String>? states;
-
   /// Optional descriptions per state or single descriptions.
   /// We keep it as a dynamic list to preserve the source structure.
   final List<dynamic>? descriptions;
@@ -19,7 +16,7 @@ class GameObjectModel extends GameObject {
   final List<String>? changes;
 
   /// Creates an immutable [GameObjectModel].
-  const GameObjectModel({
+  GameObjectModel({
     required super.id,
     required super.name,
     super.words = const [],
@@ -27,11 +24,17 @@ class GameObjectModel extends GameObject {
     super.immovable = false,
     super.isTreasure = false,
     this.inventory,
-    this.states,
+    super.states,
     this.descriptions,
     this.sounds,
     this.changes,
-  });
+  }) : super(
+          stateDescriptions: descriptions == null
+              ? null
+              : List.unmodifiable(
+                  descriptions.whereType<String>().toList(),
+                ),
+        );
 
   /// Constructs a [GameObjectModel] from a flattened JSON map and its [id].
   ///
@@ -58,6 +61,9 @@ class GameObjectModel extends GameObject {
       return null;
     }
 
+    final states = asStringListOrNull(json['states']);
+    final descriptions = asDynamicListOrNull(json['descriptions']);
+
     return GameObjectModel(
       id: id,
       name: (json['name'] ?? 'Unknown') as String,
@@ -68,8 +74,8 @@ class GameObjectModel extends GameObject {
       inventory: (json['inventory'] as String?)?.trim().isEmpty == true
           ? null
           : (json['inventory'] as String?),
-      states: asStringListOrNull(json['states']),
-      descriptions: asDynamicListOrNull(json['descriptions']),
+      states: states,
+      descriptions: descriptions,
       sounds: asStringListOrNull(json['sounds']),
       changes: asStringListOrNull(json['changes']),
     );
@@ -79,7 +85,10 @@ class GameObjectModel extends GameObject {
   factory GameObjectModel.fromEntry(List<dynamic> entry, int id) {
     final name = entry.first as String;
     final data = Map<String, dynamic>.from(entry.last as Map);
-    return GameObjectModel.fromJson(<String, dynamic>{'name': name, ...data}, id);
+    return GameObjectModel.fromJson(<String, dynamic>{
+      'name': name,
+      ...data,
+    }, id);
   }
 
   /// Converts to domain [GameObject] (subset of fields relevant to Domain).
@@ -90,6 +99,8 @@ class GameObjectModel extends GameObject {
         locations: locations,
         immovable: immovable,
         isTreasure: isTreasure,
+        states: states,
+        stateDescriptions: stateDescriptions,
       );
 
   /// Serializes back to a flattened JSON map. Normalizes `locations` to a list.

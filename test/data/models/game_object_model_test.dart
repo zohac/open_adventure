@@ -8,16 +8,20 @@ import 'package:open_adventure/domain/entities/game_object.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
-  List<dynamic>  jsonData = [];
+  List<dynamic> jsonData = [];
 
   setUp(() async {
     final file = File(AssetPaths.objectsJson);
-    expect(await file.exists(), true, reason: 'Le fichier objects.json doit exister');
+    expect(
+      await file.exists(),
+      true,
+      reason: 'Le fichier objects.json doit exister',
+    );
     final jsonString = await file.readAsString();
     jsonData = jsonDecode(jsonString);
   });
 
-  group('GameObjectModel', ()  {
+  group('GameObjectModel', () {
     test('GameObjectModel.fromEntry maps fields with sequential id', () async {
       expect(jsonData, isA<List<dynamic>>());
       expect(jsonData.length, greaterThan(0));
@@ -58,7 +62,10 @@ void main() {
         expect(gameObject.inventory, inventoryDescription);
         expect(gameObject.locations, locations);
         expect(gameObject.states, states.isNotEmpty ? states : null);
-        expect(gameObject.descriptions, descriptions.isNotEmpty ? descriptions : null);
+        expect(
+          gameObject.descriptions,
+          descriptions.isNotEmpty ? descriptions : null,
+        );
         expect(gameObject.sounds, sounds.isNotEmpty ? sounds : null);
         expect(gameObject.changes, changes.isNotEmpty ? changes : null);
         expect(gameObject.immovable, immovable);
@@ -78,7 +85,13 @@ void main() {
       expect(dragonEntity.id, 1);
       expect(dragonEntity.name, 'DRAGON');
       expect(dragonEntity.immovable, isTrue);
-      // Properties like 'states', 'descriptions', etc., are not on the entity.
+      expect(dragonEntity.states, isNotNull);
+      expect(dragonEntity.states, isNotEmpty);
+      expect(dragonEntity.stateDescriptions, isNotNull);
+      expect(
+        dragonEntity.stateDescriptions!.length,
+        dragonEntity.states!.length,
+      );
     });
 
     test('toJson serializes back to a map', () {
