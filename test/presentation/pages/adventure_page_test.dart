@@ -233,7 +233,7 @@ void main() {
       );
 
       when(() => applyTurn(any(), any())).thenAnswer(
-        (_) async => const TurnResult(movedGame, ['Vous avancez.']),
+        (_) async => TurnResult(movedGame, const ['Vous avancez.']),
       );
       when(() => listAvailableActions(movedGame)).thenAnswer(
           (_) async => overflowActions.take(3).toList(growable: false));

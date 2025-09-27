@@ -183,8 +183,9 @@ class _ActionsSection extends StatelessWidget {
         ? math.min(actions.length, _visibleBeforeOverflow)
         : actions.length;
     final visibleActions = actions.take(visibleCount).toList();
-    final overflowActions =
-        hasOverflow ? actions.skip(_visibleBeforeOverflow).toList() : const [];
+    final overflowActions = hasOverflow
+        ? actions.skip(_visibleBeforeOverflow).toList()
+        : const <ActionOption>[];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
