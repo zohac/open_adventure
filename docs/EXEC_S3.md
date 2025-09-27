@@ -36,7 +36,8 @@ Livrables
   - Mappers pour `conditions.json` → `Condition` et pour `actions.json` (synonymes/labels icônes). Pas de logique métier dans Data.
 - Presentation
   - `InventoryPage`: liste des objets portés avec actions contextuelles (poser/utiliser/éteindre/allumer).
-  - `MapPage`: graphe 2D simplifié des lieux découverts (noeuds/arêtes), position courante surlignée.
+- `MapPage`: graphe 2D simplifié des lieux découverts (noeuds/arêtes), position courante surlignée.
+  - `MapPage`: graphe 2D simplifié des lieux découverts (noeuds/arêtes), position courante surlignée. Voir `docs/CTO_DEV_MAP_REQUEST.md` pour le détail des livrables CTO/dev (strates, connecteurs magiques, tests).
   - `JournalView`: fil chronologique des messages avec ancre sur le dernier événement.
   - `AdventurePage` v1: intégration des onglets/bottom bar (Carte, Inventaire, Journal, Menu) et des catégories d’actions.
   - Images de scène: intégration visuelle par lieu au-dessus du heading (si disponible), offline only.
