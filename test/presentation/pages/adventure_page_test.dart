@@ -243,10 +243,17 @@ void main() {
         actionsOverride: overflowActions,
       );
 
-      expect(find.text('Plus…'), findsOneWidget);
+      final plusButtonFinder = find.text('Plus…');
+      expect(plusButtonFinder, findsOneWidget);
       expect(find.text('Aller Nord-Est'), findsNothing);
 
-      await tester.tap(find.text('Plus…'));
+      await tester.dragUntilVisible(
+        plusButtonFinder,
+        find.byType(SingleChildScrollView),
+        const Offset(0, -120),
+      );
+
+      await tester.tap(plusButtonFinder, warnIfMissed: false);
       await tester.pumpAndSettle();
 
       expect(find.text('Actions supplémentaires'), findsOneWidget);

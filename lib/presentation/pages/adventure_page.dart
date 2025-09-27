@@ -247,7 +247,8 @@ class _ActionsSection extends StatelessWidget {
               children: [
                 Text(
                   'Actions supplémentaires',
-                  style: Theme.of(context).textTheme.titleMedium,
+                  style:
+                      Theme.of(bottomSheetContext).textTheme.titleMedium,
                 ),
                 const SizedBox(height: AppSpacing.sm),
                 ListView.separated(
