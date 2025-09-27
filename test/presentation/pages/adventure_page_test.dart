@@ -162,6 +162,117 @@ void main() {
       expect(find.text('Aller Ouest'), findsOneWidget);
     });
 
+    testWidgets('limits visible actions and exposes overflow modal',
+        (tester) async {
+      const overflowActions = [
+        ActionOption(
+          id: 'travel:1->2:NORTH',
+          category: 'travel',
+          label: 'motion.north.label',
+          verb: 'NORTH',
+          objectId: '2',
+        ),
+        ActionOption(
+          id: 'travel:1->3:SOUTH',
+          category: 'travel',
+          label: 'motion.south.label',
+          verb: 'SOUTH',
+          objectId: '3',
+        ),
+        ActionOption(
+          id: 'travel:1->4:EAST',
+          category: 'travel',
+          label: 'motion.east.label',
+          verb: 'EAST',
+          objectId: '4',
+        ),
+        ActionOption(
+          id: 'travel:1->5:WEST',
+          category: 'travel',
+          label: 'motion.west.label',
+          verb: 'WEST',
+          objectId: '5',
+        ),
+        ActionOption(
+          id: 'travel:1->6:UP',
+          category: 'travel',
+          label: 'motion.up.label',
+          verb: 'UP',
+          objectId: '6',
+        ),
+        ActionOption(
+          id: 'travel:1->7:DOWN',
+          category: 'travel',
+          label: 'motion.down.label',
+          verb: 'DOWN',
+          objectId: '7',
+        ),
+        ActionOption(
+          id: 'travel:1->8:NE',
+          category: 'travel',
+          label: 'motion.ne.label',
+          verb: 'NE',
+          objectId: '8',
+        ),
+        ActionOption(
+          id: 'travel:1->9:SW',
+          category: 'travel',
+          label: 'motion.sw.label',
+          verb: 'SW',
+          objectId: '9',
+        ),
+      ];
+
+      const movedGame = Game(
+        loc: 2,
+        oldLoc: 1,
+        newLoc: 2,
+        turns: 1,
+        rngSeed: 42,
+        visitedLocations: {1, 2},
+      );
+
+      when(() => applyTurn(any(), any())).thenAnswer(
+        (_) async => TurnResult(movedGame, const ['Vous avancez.']),
+      );
+      when(() => listAvailableActions(movedGame)).thenAnswer(
+          (_) async => overflowActions.take(3).toList(growable: false));
+      when(() => adventureRepository.locationById(2)).thenAnswer(
+        (_) async => const Location(
+          id: 2,
+          name: 'LOC_FOREST',
+          shortDescription: 'Un chemin bordé de mousse.',
+        ),
+      );
+
+      await pumpInitialState(
+        tester,
+        actionsOverride: overflowActions,
+      );
+
+      final plusButtonFinder = find.text('Plus…');
+      expect(plusButtonFinder, findsOneWidget);
+      expect(find.text('Aller Nord-Est'), findsNothing);
+
+      await tester.dragUntilVisible(
+        plusButtonFinder,
+        find.byType(SingleChildScrollView),
+        const Offset(0, -120),
+      );
+
+      await tester.tap(plusButtonFinder, warnIfMissed: false);
+      await tester.pumpAndSettle();
+
+      expect(find.text('Actions supplémentaires'), findsOneWidget);
+      expect(find.text('Aller Nord-Est'), findsOneWidget);
+
+      await tester.tap(find.text('Aller Nord-Est'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Actions supplémentaires'), findsNothing);
+      verify(() => applyTurn(any(), any())).called(1);
+    });
+
     testWidgets(
         'shows incantation buttons only after unlock and hides them elsewhere',
         (tester) async {
@@ -350,7 +461,8 @@ void main() {
       expect(tester.takeException(), isNull);
     });
 
-    testWidgets('shows observer fallback when no travel actions', (tester) async {
+    testWidgets('shows observer fallback when no travel actions',
+        (tester) async {
       const observerAction = ActionOption(
         id: 'meta:observer',
         category: 'meta',
@@ -372,7 +484,8 @@ void main() {
           .thenAnswer((_) async => location);
       when(() => listAvailableActions(initialGame))
           .thenAnswer((_) async => const [observerAction]);
-      when(() => applyTurn(any(), any())).thenThrow(Exception('Should not be called'));
+      when(() => applyTurn(any(), any()))
+          .thenThrow(Exception('Should not be called'));
       when(() => saveRepository.autosave(any())).thenAnswer((_) async {});
 
       await tester.pumpWidget(MaterialApp(
@@ -460,7 +573,8 @@ void main() {
 
       expect(find.text('LOC_START'), findsOneWidget);
       expect(find.text('Back at the start.'), findsWidgets);
-      verify(() => applyTurn(const Command(verb: 'BACK', target: '1'), historyGame))
+      verify(() =>
+              applyTurn(const Command(verb: 'BACK', target: '1'), historyGame))
           .called(1);
       verify(() => saveRepository.autosave(
             const GameSnapshot(loc: 1, turns: 4, rngSeed: 42),

@@ -49,6 +49,7 @@ UI – livrables & DoD
     - [ ] Journal affiche le dernier message retourné par `TurnResult`;
     - [ ] Libellés affichés = chaînes localisées (aucune clé ARB brute à l’écran) conformément à DDR-001;
     - [ ] Respect de §17 (UX Mobile): 3–7 actions visibles max; si >7, rendre 6 + bouton `Plus…`; labels/icônes motion normalisés; première visite = `longDescription`, revisites = `shortDescription`.
+    - [ ] Bouton `Plus…` ouvre une modale listant les actions restantes, boutons cohérents avec la liste principale et accessibilité activée.
     - [ ] Revue Game Designer (UX): labels/directions conformes, 3–7 actions visibles + overflow « Plus… », long/short corrects, accessibilité de base.
 - [ ] Intégration GameController (injection par constructeur, état immuable)
   - DoD:

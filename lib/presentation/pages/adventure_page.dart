@@ -103,9 +103,10 @@ class _AdventurePageState extends State<AdventurePage> {
                     builder: (context, constraints) {
                       final double maxWidth = constraints.maxWidth;
                       const double ratio = 16 / 9;
-                      final double computedHeight = maxWidth.isFinite && maxWidth > 0
-                          ? math.min(maxWidth / ratio, 240)
-                          : 180.0;
+                      final double computedHeight =
+                          maxWidth.isFinite && maxWidth > 0
+                              ? math.min(maxWidth / ratio, 240)
+                              : 180.0;
                       return SizedBox(
                         height: computedHeight,
                         child: LocationImage(
@@ -161,8 +162,13 @@ class _DescriptionSection extends StatelessWidget {
 }
 
 class _ActionsSection extends StatelessWidget {
-  const _ActionsSection(
-      {required this.actions, required this.onActionSelected});
+  const _ActionsSection({
+    required this.actions,
+    required this.onActionSelected,
+  });
+
+  static const int _maxVisibleWithoutOverflow = 7;
+  static const int _visibleBeforeOverflow = 6;
 
   final List<ActionOption> actions;
   final Future<void> Function(ActionOption) onActionSelected;
@@ -172,6 +178,14 @@ class _ActionsSection extends StatelessWidget {
     final theme = Theme.of(context).textTheme;
     final hasTravelActions =
         actions.any((action) => action.category == 'travel');
+    final hasOverflow = actions.length > _maxVisibleWithoutOverflow;
+    final int visibleCount = hasOverflow
+        ? math.min(actions.length, _visibleBeforeOverflow)
+        : actions.length;
+    final visibleActions = actions.take(visibleCount).toList();
+    final overflowActions = hasOverflow
+        ? actions.skip(_visibleBeforeOverflow).toList()
+        : const <ActionOption>[];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -188,11 +202,75 @@ class _ActionsSection extends StatelessWidget {
         if (actions.isEmpty)
           Text('No actions available', style: theme.bodyMedium)
         else
-          ...actions.map((action) => _ActionButton(
-                action: action,
-                onActionSelected: onActionSelected,
-              )),
+          ...visibleActions.map(
+            (action) => _ActionButton(
+              action: action,
+              onActionSelected: onActionSelected,
+            ),
+          ),
+        if (overflowActions.isNotEmpty)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8),
+            child: SizedBox(
+              width: double.infinity,
+              child: ElevatedButton.icon(
+                icon: const Icon(Icons.more_horiz),
+                label: const Text('Plus…'),
+                onPressed: () {
+                  _showOverflowActions(
+                    context,
+                    overflowActions,
+                    onActionSelected,
+                  );
+                },
+              ),
+            ),
+          ),
       ],
+    );
+  }
+
+  Future<void> _showOverflowActions(
+    BuildContext context,
+    List<ActionOption> overflowActions,
+    Future<void> Function(ActionOption) onActionSelected,
+  ) async {
+    await showModalBottomSheet<void>(
+      context: context,
+      builder: (bottomSheetContext) {
+        return SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(AppSpacing.md),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  'Actions supplémentaires',
+                  style:
+                      Theme.of(bottomSheetContext).textTheme.titleMedium,
+                ),
+                const SizedBox(height: AppSpacing.sm),
+                ListView.separated(
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    final action = overflowActions[index];
+                    return _ActionButton(
+                      action: action,
+                      onActionSelected: (selected) async {
+                        Navigator.of(bottomSheetContext).pop();
+                        await onActionSelected(selected);
+                      },
+                    );
+                  },
+                  separatorBuilder: (_, __) => const SizedBox(height: 0),
+                  itemCount: overflowActions.length,
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }
