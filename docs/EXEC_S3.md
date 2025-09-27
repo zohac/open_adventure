@@ -9,6 +9,8 @@ Definition of Ready (DoR)
 - Direction artistique 16‑bit (palette, typographie) approuvée.
 - `pubspec.yaml` préparé pour lister explicitement toutes les images `assets/images/locations/*.webp` et les audio `assets/audio/{music,sfx}/*.ogg`.
 - DDR pertinentes confirmées dans `docs/Dossier_de_Référence.md` (incantations Option A, comportement PNJ, oracles O1–O3 prêts pour QA).
+- Architecture de la carte validée: `GameController.mapGraph` sérialisable (`nodes`, `edges`, `currentLocationId`, `visitedLayers`) et persistance autosave/saves couvrant l’état de découverte.
+- Fichier statique `assets/data/map_layout.json` planifié (mapping `locationId → {layer, x, y, mapTag}`) avec propriétaire identifié.
 
 Objectif S3
 
@@ -36,8 +38,7 @@ Livrables
   - Mappers pour `conditions.json` → `Condition` et pour `actions.json` (synonymes/labels icônes). Pas de logique métier dans Data.
 - Presentation
   - `InventoryPage`: liste des objets portés avec actions contextuelles (poser/utiliser/éteindre/allumer).
-- `MapPage`: graphe 2D simplifié des lieux découverts (noeuds/arêtes), position courante surlignée.
-  - `MapPage`: graphe 2D simplifié des lieux découverts (noeuds/arêtes), position courante surlignée. Voir `docs/CTO_DEV_MAP_REQUEST.md` pour le détail des livrables CTO/dev (strates, connecteurs magiques, tests).
+- `MapPage`: graphe 2D multi‑couches des lieux découverts (noeuds/arêtes) alimenté par `map_layout.json` + `GameController.mapGraph`; position courante surlignée. Voir `docs/CTO_DEV_MAP_REQUEST.md` pour le détail des livrables CTO/dev (strates, connecteurs magiques, tests).
   - `JournalView`: fil chronologique des messages avec ancre sur le dernier événement.
   - `AdventurePage` v1: intégration des onglets/bottom bar (Carte, Inventaire, Journal, Menu) et des catégories d’actions.
   - Images de scène: intégration visuelle par lieu au-dessus du heading (si disponible), offline only.
@@ -60,9 +61,11 @@ UI – livrables & DoD
     - [ ] Revue Game Designer (UX): labels/directions conformes, 3–7 actions visibles + overflow « Plus… », long/short corrects, accessibilité de base.
 - [ ] MapPage v1
   - DoD:
-    - [ ] Rendu des nœuds/arêtes découverts; lieu courant surligné;
-    - [ ] Golden test stable pour un graphe d’exemple.
-    - [ ] Revue Game Designer (UX): labels/directions conformes, 3–7 actions visibles + overflow « Plus… », long/short corrects, accessibilité de base.
+    - [ ] Chargement de `assets/data/map_layout.json` + fusion avec `GameController.mapGraph` pour n’afficher que les nœuds/arêtes visités (incantations en pointillés révélés après découverte, badge « vous êtes ici » animé);
+    - [ ] CustomPainter (PixelCanvas) respectant le budget art (≤200 KB/couche, max 5 couches) et sélecteur de couches (chips M3) positionné en haut;
+    - [ ] Zoom/drag léger (×0,75–×1,5) en lecture seule, semantics labels sur nœuds, logs debug (#nœuds/#arêtes) activés;
+    - [ ] Golden tests par couche + test widget connecteur pointillé + test de sérialisation `MapGraph`;
+    - [ ] Revue Game Designer/UX: lisibilité tactile confirmée (3–7 choix sur l’onglet, pointillés pour transitions magiques, contraste AA) et diffusion DDR‑001 Option A.
 - [ ] JournalView
   - DoD:
     - [ ] Append des messages, trim au seuil (ex: 200), scroll to bottom sur nouvel ajout;

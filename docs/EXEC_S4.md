@@ -9,6 +9,7 @@ Definition of Ready (DoR)
 - Liste d’assets audio/images finale déclarée dans `pubspec.yaml`.
 - ARB de base créés pour FR/EN (fichiers vides avec clés de structure), checklist accessibilité prête (AA), et plan de tests goldens (si activé) défini.
 - DDR à jour (`docs/Dossier_de_Référence.md`) : incantations Option A confirmée, messages lampe (DDR-003) cadrés, oracles seedés intégrés au plan QA.
+- Sérialisation `GameController.mapGraph` verrouillée (autosave + slots) et golden tests MapPage S3 verts.
 
 Objectif S4
 
@@ -50,6 +51,7 @@ Livrables
   - `AdventurePage` v2 :
     - `StatusBar`: score courant, nombre de tours, nom du lieu, indicateur batterie de lampe.
     - Groupes d’actions avec en‑têtes, scroll performant, focus management.
+  - `MapPage` v2: persistance complète des couches visitées (autosave/saves), préselection couche courante, réglages d’accessibilité (semantics, contraste) et validations GD/UX/QA post‑implémentation.
   - `EndGamePage/Dialog`: affichage du score final, breakdown, classe, options (recommencer, charger, crédits).
   - i18n finalisée via ARB (FR/EN), y compris labels d’actions, pages, dialogues et erreurs.
   - Accessibilité: labels semantics complets, contrastes conformes, navigation au lecteur d’écran testée.
@@ -76,6 +78,11 @@ UI – livrables & DoD
     - [ ] Affiche breakdown complet et classe; actions rejouer/charger/crédits fonctionnelles;
     - [ ] Widget tests valident les boutons et la navigation.
     - [ ] Revue Game Designer (UX/Art/Audio): polish final 16‑bit validé, images nettes et budgets respectés, BGM/SFX équilibrés (ducking, niveaux), i18n/a11y complètes.
+- [ ] MapPage v2
+  - DoD:
+    - [ ] État de découverte (couches, nœuds, arêtes, badge « vous êtes ici ») restauré depuis autosave/saves multiples, incluant transitions magiques révélées;
+    - [ ] Chips de couche, zoom/drag et CustomPainter conformes aux budgets art/accessibilité; logs QA (#nœuds/#arêtes) exposés en debug;
+    - [ ] Golden tests par couche mis à jour + test widget multi-sauvegarde; revue croisée Game Design/UX/QA validant lisibilité tactile.
 - [ ] Images — polish & contrôles
   - DoD:
     - [ ] Préchargement de l’image du prochain lieu (si connu) lors d’un `ApplyTurn` réussi;
