@@ -1,5 +1,7 @@
 import 'package:collection/collection.dart';
 
+import 'game_object_state.dart';
+
 /// Game represents the current world state required en S2.
 class Game {
   /// Current location id (index in `locations.json`).
@@ -26,6 +28,12 @@ class Game {
   /// Whether the player has unlocked the set of magic words.
   final bool magicWordsUnlocked;
 
+  /// Dynamic state of interactive objects indexed by identifier.
+  final Map<int, GameObjectState> objectStates;
+
+  /// Global boolean flags representing abstract conditions.
+  final Set<String> flags;
+
   /// Creates an immutable Game state.
   const Game({
     required this.loc,
@@ -36,6 +44,8 @@ class Game {
     required this.rngSeed,
     this.visitedLocations = const {},
     this.magicWordsUnlocked = false,
+    this.objectStates = const <int, GameObjectState>{},
+    this.flags = const <String>{},
   }) : oldLc2 = oldLc2 ?? oldLoc;
 
   /// Returns a copy with updated fields.
@@ -48,19 +58,25 @@ class Game {
     int? rngSeed,
     Set<int>? visitedLocations,
     bool? magicWordsUnlocked,
-  }) =>
-      Game(
-        loc: loc ?? this.loc,
-        oldLoc: oldLoc ?? this.oldLoc,
-        oldLc2: oldLc2 ?? this.oldLc2,
-        newLoc: newLoc ?? this.newLoc,
-        turns: turns ?? this.turns,
-        rngSeed: rngSeed ?? this.rngSeed,
-        visitedLocations: visitedLocations ?? this.visitedLocations,
-        magicWordsUnlocked: magicWordsUnlocked ?? this.magicWordsUnlocked,
-      );
+    Map<int, GameObjectState>? objectStates,
+    Set<String>? flags,
+  }) => Game(
+    loc: loc ?? this.loc,
+    oldLoc: oldLoc ?? this.oldLoc,
+    oldLc2: oldLc2 ?? this.oldLc2,
+    newLoc: newLoc ?? this.newLoc,
+    turns: turns ?? this.turns,
+    rngSeed: rngSeed ?? this.rngSeed,
+    visitedLocations: visitedLocations ?? this.visitedLocations,
+    magicWordsUnlocked: magicWordsUnlocked ?? this.magicWordsUnlocked,
+    objectStates: objectStates ?? this.objectStates,
+    flags: flags ?? this.flags,
+  );
 
   static const SetEquality<int> _setEquality = SetEquality<int>();
+  static const MapEquality<int, GameObjectState> _objectMapEquality =
+      MapEquality<int, GameObjectState>();
+  static const SetEquality<String> _flagEquality = SetEquality<String>();
 
   @override
   bool operator ==(Object other) {
@@ -73,18 +89,22 @@ class Game {
         turns == other.turns &&
         rngSeed == other.rngSeed &&
         _setEquality.equals(visitedLocations, other.visitedLocations) &&
-        magicWordsUnlocked == other.magicWordsUnlocked;
+        magicWordsUnlocked == other.magicWordsUnlocked &&
+        _objectMapEquality.equals(objectStates, other.objectStates) &&
+        _flagEquality.equals(flags, other.flags);
   }
 
   @override
   int get hashCode => Object.hash(
-        loc,
-        oldLoc,
-        oldLc2,
-        newLoc,
-        turns,
-        rngSeed,
-        _setEquality.hash(visitedLocations),
-        magicWordsUnlocked,
-      );
+    loc,
+    oldLoc,
+    oldLc2,
+    newLoc,
+    turns,
+    rngSeed,
+    _setEquality.hash(visitedLocations),
+    magicWordsUnlocked,
+    _objectMapEquality.hash(objectStates),
+    _flagEquality.hash(flags),
+  );
 }

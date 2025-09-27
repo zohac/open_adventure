@@ -1,9 +1,197 @@
 import 'package:open_adventure/domain/entities/game.dart';
+import 'package:open_adventure/domain/entities/game_object.dart';
 import 'package:open_adventure/domain/entities/location.dart';
 import 'package:open_adventure/domain/repositories/adventure_repository.dart';
 import 'package:open_adventure/domain/services/motion_canonicalizer.dart';
 import 'package:open_adventure/domain/value_objects/action_option.dart';
 import 'package:open_adventure/domain/value_objects/magic_words.dart';
+
+/// Liste complète des actions disponibles (travel + interactions + méta).
+class ListAvailableActions {
+  /// Crée un orchestrateur combinant déplacements, interactions et méta-actions.
+  ListAvailableActions({
+    required AdventureRepository adventureRepository,
+    required ListAvailableActionsTravel travel,
+  }) : _adventureRepository = adventureRepository,
+       _travel = travel;
+
+  final AdventureRepository _adventureRepository;
+  final ListAvailableActionsTravel _travel;
+
+  static const List<ActionOption> _metaActions = <ActionOption>[
+    ActionOption(
+      id: 'meta:inventory',
+      category: 'meta',
+      label: 'actions.inventory.label',
+      icon: 'inventory',
+      verb: 'INVENTORY',
+    ),
+    ActionOption(
+      id: 'meta:observer',
+      category: 'meta',
+      label: 'actions.observer.label',
+      icon: 'visibility',
+      verb: 'OBSERVER',
+    ),
+    ActionOption(
+      id: 'meta:map',
+      category: 'meta',
+      label: 'actions.map.label',
+      icon: 'map',
+      verb: 'MAP',
+    ),
+  ];
+
+  /// Retourne les actions disponibles triées par priorité (sécurité → travel → interaction → méta).
+  Future<List<ActionOption>> call(Game current) async {
+    final List<ActionOption> travelOptions = await _travel(current);
+    final List<ActionOption> interactionOptions =
+        await _buildInteractionOptions(current);
+
+    final Map<String, _PrioritizedOption> unique =
+        <String, _PrioritizedOption>{};
+    var sequence = 0;
+
+    void addOption(ActionOption option) {
+      unique.putIfAbsent(
+        option.id,
+        () => _PrioritizedOption(
+          option: option,
+          priority: _priorityFor(option.category),
+          sequence: sequence++,
+        ),
+      );
+    }
+
+    for (final option in travelOptions) {
+      addOption(option);
+    }
+    for (final option in interactionOptions) {
+      addOption(option);
+    }
+    for (final option in _metaActions) {
+      addOption(option);
+    }
+
+    final sorted = unique.values.toList()
+      ..sort((a, b) {
+        final priorityCompare = a.priority - b.priority;
+        if (priorityCompare != 0) {
+          return priorityCompare;
+        }
+        if (a.option.category == 'travel' && b.option.category == 'travel') {
+          return a.sequence - b.sequence;
+        }
+        final labelCompare = a.option.label.compareTo(b.option.label);
+        if (labelCompare != 0) {
+          return labelCompare;
+        }
+        final objectCompare = (a.option.objectId ?? '').compareTo(
+          b.option.objectId ?? '',
+        );
+        if (objectCompare != 0) {
+          return objectCompare;
+        }
+        return a.sequence - b.sequence;
+      });
+
+    return List<ActionOption>.unmodifiable(sorted.map((entry) => entry.option));
+  }
+
+  Future<List<ActionOption>> _buildInteractionOptions(Game game) async {
+    if (game.objectStates.isEmpty) {
+      return const <ActionOption>[];
+    }
+
+    final List<GameObject> objects = await _adventureRepository
+        .getGameObjects();
+    final Map<int, GameObject> index = <int, GameObject>{
+      for (final object in objects) object.id: object,
+    };
+
+    final List<ActionOption> options = <ActionOption>[];
+
+    for (final state in game.objectStates.values) {
+      final GameObject? object = index[state.id];
+      if (object == null) {
+        continue;
+      }
+      final bool isVisible = state.isCarried || state.isAt(game.loc);
+      if (!isVisible) {
+        continue;
+      }
+      final String objectId = object.id.toString();
+      final String keySuffix = object.name;
+
+      options.add(
+        ActionOption(
+          id: 'interaction:examine:$objectId',
+          category: 'interaction',
+          label: 'actions.interaction.examine.$keySuffix',
+          icon: 'search',
+          verb: 'EXAMINE',
+          objectId: objectId,
+        ),
+      );
+
+      if (state.isCarried) {
+        options.add(
+          ActionOption(
+            id: 'interaction:drop:$objectId',
+            category: 'interaction',
+            label: 'actions.interaction.drop.$keySuffix',
+            icon: 'file_upload',
+            verb: 'DROP',
+            objectId: objectId,
+          ),
+        );
+        continue;
+      }
+
+      if (!object.immovable) {
+        options.add(
+          ActionOption(
+            id: 'interaction:take:$objectId',
+            category: 'interaction',
+            label: 'actions.interaction.take.$keySuffix',
+            icon: 'file_download',
+            verb: 'TAKE',
+            objectId: objectId,
+          ),
+        );
+      }
+    }
+
+    options.sort((a, b) {
+      final labelCompare = a.label.compareTo(b.label);
+      if (labelCompare != 0) {
+        return labelCompare;
+      }
+      final objectCompare = (a.objectId ?? '').compareTo(b.objectId ?? '');
+      if (objectCompare != 0) {
+        return objectCompare;
+      }
+      return a.id.compareTo(b.id);
+    });
+
+    return options;
+  }
+
+  static int _priorityFor(String category) {
+    switch (category) {
+      case 'security':
+        return 0;
+      case 'travel':
+        return 1;
+      case 'interaction':
+        return 2;
+      case 'meta':
+        return 3;
+      default:
+        return 4;
+    }
+  }
+}
 
 /// ListAvailableActions (travel only) — calcule les options de déplacement.
 class ListAvailableActionsTravel {
@@ -46,14 +234,16 @@ class ListAvailableActionsTravel {
     }
 
     final options = candidates.values
-        .map((c) => ActionOption(
-              id: 'travel:${current.loc}->${c.destId}:${c.canonical}',
-              category: 'travel',
-              label: c.label,
-              icon: c.icon,
-              verb: c.canonical,
-              objectId: c.destId.toString(),
-            ))
+        .map(
+          (c) => ActionOption(
+            id: 'travel:${current.loc}->${c.destId}:${c.canonical}',
+            category: 'travel',
+            label: c.label,
+            icon: c.icon,
+            verb: c.canonical,
+            objectId: c.destId.toString(),
+          ),
+        )
         .toList();
 
     final backTarget = await _resolveBackTarget(current, currentLocation);
@@ -95,7 +285,10 @@ class ListAvailableActionsTravel {
     return options;
   }
 
-  Future<int?> _resolveBackTarget(Game current, Location currentLocation) async {
+  Future<int?> _resolveBackTarget(
+    Game current,
+    Location currentLocation,
+  ) async {
     if (current.oldLoc == current.loc) {
       return null;
     }
@@ -149,4 +342,16 @@ class _TravelCandidate {
     }
     return destId - other.destId;
   }
+}
+
+class _PrioritizedOption {
+  const _PrioritizedOption({
+    required this.option,
+    required this.priority,
+    required this.sequence,
+  });
+
+  final ActionOption option;
+  final int priority;
+  final int sequence;
 }
