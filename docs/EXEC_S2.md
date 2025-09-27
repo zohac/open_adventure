@@ -35,47 +35,47 @@ Livrables
 
 UI – livrables & DoD
 
-- [ ] HomePage v0 (accueil)
+- [x] HomePage v0 (accueil)
   - DoD:
-    - [ ] Affiche les boutons: Nouvelle partie, Continuer, Charger, Options, Crédits;
-    - [ ] Bouton Continuer désactivé si autosave absente (`SaveRepository.latest()` retourne null);
-    - [ ] Navigation vers chacun des écrans cible fonctionne; aucun crash si aucun slot.
-    - [ ] Revue Game Designer (UX): labels/directions conformes, 3–7 actions visibles + overflow « Plus… », long/short corrects, accessibilité de base.
+    - [x] Affiche les boutons: Nouvelle partie, Continuer, Charger, Options, Crédits;
+    - [x] Bouton Continuer désactivé si autosave absente (`SaveRepository.latest()` retourne null);
+    - [x] Navigation vers chacun des écrans cible fonctionne; aucun crash si aucun slot.
+    - [x] Revue Game Designer (UX): labels/directions conformes, 3–7 actions visibles + overflow « Plus… », long/short corrects, accessibilité de base.
 - [ ] AdventurePage v0 (description + boutons travel + journal minimal)
   - DoD:
-    - [ ] Affiche le titre et la description du lieu courant;
-    - [ ] Rend une liste de boutons d’actions `category=travel` cohérente avec `ListAvailableActions`;
-    - [ ] Tap sur un bouton met à jour titre/description du nouveau lieu; pas de jank observable;
-    - [ ] Journal affiche le dernier message retourné par `TurnResult`;
+    - [x] Affiche le titre et la description du lieu courant;
+    - [x] Rend une liste de boutons d’actions `category=travel` cohérente avec `ListAvailableActions`;
+    - [x] Tap sur un bouton met à jour titre/description du nouveau lieu; pas de jank observable;
+    - [x] Journal affiche le dernier message retourné par `TurnResult`;
     - [ ] Libellés affichés = chaînes localisées (aucune clé ARB brute à l’écran) conformément à DDR-001;
-    - [ ] Respect de §17 (UX Mobile): 3–7 actions visibles max; si >7, rendre 6 + bouton `Plus…`; labels/icônes motion normalisés; première visite = `longDescription`, revisites = `shortDescription`.
-    - [ ] Bouton `Plus…` ouvre une modale listant les actions restantes, boutons cohérents avec la liste principale et accessibilité activée.
+    - [x] Respect de §17 (UX Mobile): 3–7 actions visibles max; si >7, rendre 6 + bouton `Plus…`; labels/icônes motion normalisés; première visite = `longDescription`, revisites = `shortDescription`.
+    - [x] Bouton `Plus…` ouvre une modale listant les actions restantes, boutons cohérents avec la liste principale et accessibilité activée.
     - [ ] Revue Game Designer (UX): labels/directions conformes, 3–7 actions visibles + overflow « Plus… », long/short corrects, accessibilité de base.
 - [ ] Intégration GameController (injection par constructeur, état immuable)
   - DoD:
-    - [ ] `init()` remplit l’état initial et `perform()` déclenche navigation + autosave;
-    - [ ] Widget tests valident le cycle init→tap→render.
+    - [x] `init()` remplit l’état initial et `perform()` déclenche navigation + autosave;
+    - [x] Widget tests valident le cycle init→tap→render.
     - [ ] Revue Game Designer (UX): labels/directions conformes, 3–7 actions visibles + overflow « Plus… », long/short corrects, accessibilité de base.
 - [ ] Préparation images de scène (placeholder + mapping)
   - DoD:
-    - [ ] Slot visuel réservé au-dessus du heading avec `AspectRatio(16/9)` et placeholder statique léger;
-    - [ ] Utilitaire `locationImageKey(Location)` dans `lib/core/utils/location_image.dart` (prépare la clé: `mapTag` sinon `name` snake_case sinon `id`);
-    - [ ] Si l’image est absente ou la feature désactivée, fallback textuel immédiat (zéro crash, zéro jank);
-    - [ ] Tests: absence d’asset ne provoque pas d’exception et le layout reste stable.
-    - [ ] Pixel‑perfect prêt: wrapper `PixelCanvas` (base 320×180) créé et utilisé par la zone visuelle; `FilterQuality.none` appliqué.
+    - [x] Slot visuel réservé au-dessus du heading avec `AspectRatio(16/9)` et placeholder statique léger;
+    - [x] Utilitaire `locationImageKey(Location)` dans `lib/core/utils/location_image.dart` (prépare la clé: `mapTag` sinon `name` snake_case sinon `id`);
+    - [x] Si l’image est absente ou la feature désactivée, fallback textuel immédiat (zéro crash, zéro jank);
+    - [x] Tests: absence d’asset ne provoque pas d’exception et le layout reste stable.
+    - [x] Pixel‑perfect prêt: wrapper `PixelCanvas` (base 320×180) créé et utilisé par la zone visuelle; `FilterQuality.none` appliqué.
     - [ ] Revue Game Designer (UX): labels/directions conformes, 3–7 actions visibles + overflow « Plus… », long/short corrects, accessibilité de base.
 
 Audio – livrables & DoD (bootstrap)
 
 - [ ] AudioController (service Application) — bootstrap
   - DoD:
-    - [ ] Mise en place `AudioController` (lecture BGM/SFX via `just_audio`) sans réseau, assets embarqués;
-    - [ ] Gestion du cycle de vie (pause/resume sur `AppLifecycleState`), focus audio via `audio_session`;
+    - [x] Mise en place `AudioController` (lecture BGM/SFX via `just_audio`) sans réseau, assets embarqués;
+    - [x] Gestion du cycle de vie (pause/resume sur `AppLifecycleState`), focus audio via `audio_session`;
     - [ ] API: `playBgm(trackKey, {crossfadeMs})`, `stopBgm()`, `playSfx(sfxKey)`, `setVolumes(bgm,sfx)`; logs dev propres.
-- [ ] Settings audio (basique)
+- [x] Settings audio (basique)
   - DoD:
-    - [ ] Deux sliders en Settings: Volume Musique, Volume SFX; persistance simple (SharedPreferences);
-    - [ ] Valeurs appliquées à l’`AudioController` au démarrage et en temps réel.
+    - [x] Deux sliders en Settings: Volume Musique, Volume SFX; persistance simple (SharedPreferences);
+    - [x] Valeurs appliquées à l’`AudioController` au démarrage et en temps réel.
 
 Contrats Domain (normatif)
 
