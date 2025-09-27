@@ -30,8 +30,7 @@ import 'package:open_adventure/presentation/widgets/pixel_canvas.dart';
 
 class _MockAdventureRepository extends Mock implements AdventureRepository {}
 
-class _MockListAvailableActions extends Mock
-    implements ListAvailableActionsTravel {}
+class _MockListAvailableActions extends Mock implements ListAvailableActions {}
 
 class _MockApplyTurnGoto extends Mock implements ApplyTurnGoto {}
 
@@ -60,19 +59,17 @@ void main() {
 
   setUpAll(() {
     registerFallbackValue(const Command(verb: 'NORTH'));
-    registerFallbackValue(const Game(
-      loc: 0,
-      oldLoc: 0,
-      newLoc: 0,
-      turns: 0,
-      rngSeed: 0,
-    ));
+    registerFallbackValue(
+      const Game(loc: 0, oldLoc: 0, newLoc: 0, turns: 0, rngSeed: 0),
+    );
     registerFallbackValue(const GameSnapshot(loc: 0, turns: 0, rngSeed: 0));
     registerFallbackValue(_FakeRoute<dynamic>());
   });
 
-  HomeController buildHomeController(SaveRepository repository,
-      {HomeViewState? state}) {
+  HomeController buildHomeController(
+    SaveRepository repository, {
+    HomeViewState? state,
+  }) {
     final controller = HomeController(saveRepository: repository);
     if (state != null) {
       controller.value = state;
@@ -85,8 +82,12 @@ void main() {
     final load = LoadAudioSettings(repository);
     final save = SaveAudioSettings(repository);
     final audioOutput = _MockAudioOutput();
-    when(() => audioOutput.setVolumes(bgm: any(named: 'bgm'), sfx: any(named: 'sfx')))
-        .thenAnswer((_) async {});
+    when(
+      () => audioOutput.setVolumes(
+        bgm: any(named: 'bgm'),
+        sfx: any(named: 'sfx'),
+      ),
+    ).thenAnswer((_) async {});
     return AudioSettingsController(
       loadAudioSettings: load,
       saveAudioSettings: save,
@@ -96,7 +97,7 @@ void main() {
 
   GameController buildGameController({
     required AdventureRepository adventureRepository,
-    required ListAvailableActionsTravel listAvailableActions,
+    required ListAvailableActions listAvailableActions,
     required ApplyTurnGoto applyTurn,
     required SaveRepository saveRepository,
   }) {
@@ -139,7 +140,9 @@ void main() {
           audioSettingsController: audioSettingsController,
           initializeOnMount: initializeOnMount,
         ),
-        navigatorObservers: observer != null ? <NavigatorObserver>[observer] : const <NavigatorObserver>[],
+        navigatorObservers: observer != null
+            ? <NavigatorObserver>[observer]
+            : const <NavigatorObserver>[],
       ),
     );
     await tester.pump();
@@ -185,8 +188,9 @@ void main() {
       expect(find.byType(CircularProgressIndicator), findsOneWidget);
     });
 
-    testWidgets('disables continue button when no autosave is present',
-        (tester) async {
+    testWidgets('disables continue button when no autosave is present', (
+      tester,
+    ) async {
       final gameController = buildGameController(
         adventureRepository: adventureRepository,
         listAvailableActions: listAvailableActions,
@@ -219,8 +223,9 @@ void main() {
       expect(find.byType(AdventurePage), findsNothing);
     });
 
-    testWidgets('accented buttons tint icons with their accent color',
-        (tester) async {
+    testWidgets('accented buttons tint icons with their accent color', (
+      tester,
+    ) async {
       final gameController = buildGameController(
         adventureRepository: adventureRepository,
         listAvailableActions: listAvailableActions,
@@ -254,13 +259,13 @@ void main() {
           accentContainer.decoration! as BoxDecoration;
       expect(decoration.color, scheme.primary);
 
-      final Icon icon =
-          tester.widget(find.byIcon(Icons.play_arrow_rounded));
+      final Icon icon = tester.widget(find.byIcon(Icons.play_arrow_rounded));
       expect(icon.color, scheme.primary);
     });
 
-    testWidgets('options and credits paint meta accent stripe and tint icons',
-        (tester) async {
+    testWidgets('options and credits paint meta accent stripe and tint icons', (
+      tester,
+    ) async {
       final gameController = buildGameController(
         adventureRepository: adventureRepository,
         listAvailableActions: listAvailableActions,
@@ -307,13 +312,15 @@ void main() {
           creditsAccent.decoration! as BoxDecoration;
       expect(creditsDecoration.color, metaAccents.meta);
 
-      final Icon creditsIcon =
-          tester.widget(find.byIcon(Icons.info_outline_rounded));
+      final Icon creditsIcon = tester.widget(
+        find.byIcon(Icons.info_outline_rounded),
+      );
       expect(creditsIcon.color, metaAccents.meta);
     });
 
-    testWidgets('disabled accent buttons dim surfaces and typography',
-        (tester) async {
+    testWidgets('disabled accent buttons dim surfaces and typography', (
+      tester,
+    ) async {
       final gameController = buildGameController(
         adventureRepository: adventureRepository,
         listAvailableActions: listAvailableActions,
@@ -352,13 +359,9 @@ void main() {
       expect(icon.color, expectedAccent);
 
       final Ink ink = tester.widget(
-        find.ancestor(
-          of: find.text(continueLabel),
-          matching: find.byType(Ink),
-        ),
+        find.ancestor(of: find.text(continueLabel), matching: find.byType(Ink)),
       );
-      final BoxDecoration inkDecoration =
-          ink.decoration! as BoxDecoration;
+      final BoxDecoration inkDecoration = ink.decoration! as BoxDecoration;
       expect(inkDecoration.color, expectedBackground);
 
       final Text label = tester.widget(find.text(continueLabel));
@@ -391,8 +394,9 @@ void main() {
       expect(find.byType(PixelCanvas), findsOneWidget);
     });
 
-    testWidgets('navigates to AdventurePage when new game is tapped',
-        (tester) async {
+    testWidgets('navigates to AdventurePage when new game is tapped', (
+      tester,
+    ) async {
       const initialGame = Game(
         loc: 1,
         oldLoc: 1,
@@ -418,11 +422,15 @@ void main() {
         ),
       ];
 
-      when(() => adventureRepository.initialGame())
-          .thenAnswer((_) async => initialGame);
-      when(() => adventureRepository.locationById(1))
-          .thenAnswer((_) async => location);
-      when(() => listAvailableActions(initialGame)).thenAnswer((_) async => actions);
+      when(
+        () => adventureRepository.initialGame(),
+      ).thenAnswer((_) async => initialGame);
+      when(
+        () => adventureRepository.locationById(1),
+      ).thenAnswer((_) async => location);
+      when(
+        () => listAvailableActions(initialGame),
+      ).thenAnswer((_) async => actions);
       when(() => saveRepository.autosave(any())).thenAnswer((_) async {});
 
       final gameController = buildGameController(
@@ -457,72 +465,78 @@ void main() {
       expect(find.byType(AdventurePage), findsOneWidget);
     });
 
-    testWidgets('navigates to AdventurePage when continue is tapped with autosave',
-        (tester) async {
-      const snapshot = GameSnapshot(loc: 5, turns: 12, rngSeed: 9);
-      const initialGame = Game(
-        loc: 1,
-        oldLoc: 1,
-        newLoc: 1,
-        turns: 0,
-        rngSeed: 42,
-        visitedLocations: {1},
-      );
-      final location = Location(
-        id: 1,
-        name: 'LOC_START',
-        longDescription: 'Long start description',
-      );
-      final actions = <ActionOption>[
-        const ActionOption(
-          id: 'travel:1->2:WEST',
-          category: 'travel',
-          label: 'motion.west.label',
-          verb: 'WEST',
-          objectId: '2',
-          icon: 'arrow_back',
-        ),
-      ];
+    testWidgets(
+      'navigates to AdventurePage when continue is tapped with autosave',
+      (tester) async {
+        const snapshot = GameSnapshot(loc: 5, turns: 12, rngSeed: 9);
+        const initialGame = Game(
+          loc: 1,
+          oldLoc: 1,
+          newLoc: 1,
+          turns: 0,
+          rngSeed: 42,
+          visitedLocations: {1},
+        );
+        final location = Location(
+          id: 1,
+          name: 'LOC_START',
+          longDescription: 'Long start description',
+        );
+        final actions = <ActionOption>[
+          const ActionOption(
+            id: 'travel:1->2:WEST',
+            category: 'travel',
+            label: 'motion.west.label',
+            verb: 'WEST',
+            objectId: '2',
+            icon: 'arrow_back',
+          ),
+        ];
 
-      when(() => adventureRepository.initialGame())
-          .thenAnswer((_) async => initialGame);
-      when(() => adventureRepository.locationById(1))
-          .thenAnswer((_) async => location);
-      when(() => listAvailableActions(initialGame)).thenAnswer((_) async => actions);
-      when(() => saveRepository.autosave(any())).thenAnswer((_) async {});
+        when(
+          () => adventureRepository.initialGame(),
+        ).thenAnswer((_) async => initialGame);
+        when(
+          () => adventureRepository.locationById(1),
+        ).thenAnswer((_) async => location);
+        when(
+          () => listAvailableActions(initialGame),
+        ).thenAnswer((_) async => actions);
+        when(() => saveRepository.autosave(any())).thenAnswer((_) async {});
 
-      final gameController = buildGameController(
-        adventureRepository: adventureRepository,
-        listAvailableActions: listAvailableActions,
-        applyTurn: applyTurn,
-        saveRepository: saveRepository,
-      );
-      final homeController = buildHomeController(
-        saveRepository,
-        state: const HomeViewState(isLoading: false, autosave: snapshot),
-      );
-      final audioSettingsController = buildAudioSettingsController();
-      final observer = _MockNavigatorObserver();
-      when(() => observer.didPush(any(), any())).thenAnswer((_) {});
+        final gameController = buildGameController(
+          adventureRepository: adventureRepository,
+          listAvailableActions: listAvailableActions,
+          applyTurn: applyTurn,
+          saveRepository: saveRepository,
+        );
+        final homeController = buildHomeController(
+          saveRepository,
+          state: const HomeViewState(isLoading: false, autosave: snapshot),
+        );
+        final audioSettingsController = buildAudioSettingsController();
+        final observer = _MockNavigatorObserver();
+        when(() => observer.didPush(any(), any())).thenAnswer((_) {});
 
-      await pumpHome(
-        tester,
-        gameController: gameController,
-        homeController: homeController,
-        audioSettingsController: audioSettingsController,
-        observer: observer,
-      );
+        await pumpHome(
+          tester,
+          gameController: gameController,
+          homeController: homeController,
+          audioSettingsController: audioSettingsController,
+          observer: observer,
+        );
 
-      final l10n = await loadL10n();
-      final continueLabel = l10n.homeMenuContinueLabel;
-      clearInteractions(observer);
-      await tester.ensureVisible(find.text(continueLabel));
-      await tester.tap(find.text(continueLabel));
-      await tester.pumpAndSettle();
+        final l10n = await loadL10n();
+        final continueLabel = l10n.homeMenuContinueLabel;
+        clearInteractions(observer);
+        await tester.ensureVisible(find.text(continueLabel));
+        await tester.tap(find.text(continueLabel));
+        await tester.pumpAndSettle();
 
-      verify(() => observer.didPush(any(), any())).called(greaterThan(0));
-      expect(find.byType(AdventurePage), findsOneWidget);
-    });
+        verify(() => observer.didPush(any(), any())).called(greaterThan(0));
+        expect(find.byType(AdventurePage), findsOneWidget);
+      },
+    );
 
     testWidgets('navigates to SavesPage when load is tapped', (tester) async {
       final gameController = buildGameController(
@@ -553,7 +567,9 @@ void main() {
       expect(find.byType(SavesPage), findsOneWidget);
     });
 
-    testWidgets('navigates to SettingsPage when options is tapped', (tester) async {
+    testWidgets('navigates to SettingsPage when options is tapped', (
+      tester,
+    ) async {
       final gameController = buildGameController(
         adventureRepository: adventureRepository,
         listAvailableActions: listAvailableActions,
@@ -582,7 +598,9 @@ void main() {
       expect(find.byType(SettingsPage), findsOneWidget);
     });
 
-    testWidgets('navigates to CreditsPage when credits is tapped', (tester) async {
+    testWidgets('navigates to CreditsPage when credits is tapped', (
+      tester,
+    ) async {
       final gameController = buildGameController(
         adventureRepository: adventureRepository,
         listAvailableActions: listAvailableActions,

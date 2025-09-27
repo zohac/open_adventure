@@ -1,10 +1,14 @@
+import 'package:open_adventure/domain/constants/interaction_requirements.dart';
 import 'package:open_adventure/domain/entities/game.dart';
 import 'package:open_adventure/domain/entities/game_object.dart';
+import 'package:open_adventure/domain/entities/game_object_state.dart';
 import 'package:open_adventure/domain/entities/location.dart';
 import 'package:open_adventure/domain/repositories/adventure_repository.dart';
 import 'package:open_adventure/domain/services/motion_canonicalizer.dart';
+import 'package:open_adventure/domain/usecases/evaluate_condition.dart';
 import 'package:open_adventure/domain/value_objects/action_option.dart';
 import 'package:open_adventure/domain/value_objects/magic_words.dart';
+import 'package:open_adventure/domain/value_objects/condition.dart';
 
 /// Liste complète des actions disponibles (travel + interactions + méta).
 class ListAvailableActions {
@@ -12,11 +16,14 @@ class ListAvailableActions {
   ListAvailableActions({
     required AdventureRepository adventureRepository,
     required ListAvailableActionsTravel travel,
+    required EvaluateCondition evaluateCondition,
   }) : _adventureRepository = adventureRepository,
-       _travel = travel;
+       _travel = travel,
+       _evaluateCondition = evaluateCondition;
 
   final AdventureRepository _adventureRepository;
   final ListAvailableActionsTravel _travel;
+  final EvaluateCondition _evaluateCondition;
 
   static const List<ActionOption> _metaActions = <ActionOption>[
     ActionOption(
@@ -116,7 +123,10 @@ class ListAvailableActions {
       if (object == null) {
         continue;
       }
-      final bool isVisible = state.isCarried || state.isAt(game.loc);
+      final bool isVisible = _evaluateCondition(
+        Condition.withObject(objectId: state.id),
+        game,
+      );
       if (!isVisible) {
         continue;
       }
@@ -134,7 +144,12 @@ class ListAvailableActions {
         ),
       );
 
-      if (state.isCarried) {
+      final bool isCarried = _evaluateCondition(
+        Condition.carry(objectId: state.id),
+        game,
+      );
+
+      if (isCarried) {
         options.add(
           ActionOption(
             id: 'interaction:drop:$objectId',
@@ -148,7 +163,14 @@ class ListAvailableActions {
         continue;
       }
 
-      if (!object.immovable) {
+      final bool isTakeable =
+          !object.immovable &&
+          _evaluateCondition(
+            Condition.not(Condition.carry(objectId: state.id)),
+            game,
+          );
+
+      if (isTakeable) {
         options.add(
           ActionOption(
             id: 'interaction:take:$objectId',
@@ -159,6 +181,15 @@ class ListAvailableActions {
             objectId: objectId,
           ),
         );
+      }
+
+      final ActionOption? openAction = _buildOpenAction(
+        object: object,
+        state: state,
+        game: game,
+      );
+      if (openAction != null) {
+        options.add(openAction);
       }
     }
 
@@ -190,6 +221,63 @@ class ListAvailableActions {
       default:
         return 4;
     }
+  }
+
+  ActionOption? _buildOpenAction({
+    required GameObject object,
+    required GameObjectState state,
+    required Game game,
+  }) {
+    final List<String>? definedStates = object.states;
+    if (definedStates == null || definedStates.isEmpty) {
+      return null;
+    }
+
+    final int openIndex = _indexWhere(
+      definedStates,
+      (value) => value.contains('OPEN'),
+    );
+    if (openIndex == -1) {
+      return null;
+    }
+
+    final String openStateValue = definedStates[openIndex];
+    final bool alreadyOpen = _evaluateCondition(
+      Condition.state(objectId: object.id, value: openStateValue),
+      game,
+    );
+    if (alreadyOpen) {
+      return null;
+    }
+
+    final int? requiredKeyId = kOpenObjectRequiredKeys[object.name];
+    if (requiredKeyId != null) {
+      final bool hasKey = _evaluateCondition(
+        Condition.carry(objectId: requiredKeyId),
+        game,
+      );
+      if (!hasKey) {
+        return null;
+      }
+    }
+
+    return ActionOption(
+      id: 'interaction:open:${object.id}',
+      category: 'interaction',
+      label: 'actions.interaction.open.${object.name}',
+      icon: 'lock_open',
+      verb: 'OPEN',
+      objectId: object.id.toString(),
+    );
+  }
+
+  int _indexWhere(List<String> values, bool Function(String) predicate) {
+    for (var index = 0; index < values.length; index++) {
+      if (predicate(values[index])) {
+        return index;
+      }
+    }
+    return -1;
   }
 }
 

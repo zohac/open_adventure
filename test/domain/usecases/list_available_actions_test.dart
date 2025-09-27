@@ -4,6 +4,7 @@ import 'package:open_adventure/domain/entities/game.dart';
 import 'package:open_adventure/domain/entities/game_object.dart';
 import 'package:open_adventure/domain/entities/game_object_state.dart';
 import 'package:open_adventure/domain/repositories/adventure_repository.dart';
+import 'package:open_adventure/domain/usecases/evaluate_condition.dart';
 import 'package:open_adventure/domain/usecases/list_available_actions.dart';
 import 'package:open_adventure/domain/value_objects/action_option.dart';
 
@@ -25,12 +26,18 @@ void main() {
     usecase = ListAvailableActions(
       adventureRepository: adventureRepository,
       travel: travel,
+      evaluateCondition: const EvaluateConditionImpl(),
     );
   });
 
   group('ListAvailableActions', () {
-    const carriedState = GameObjectState(id: 1, isCarried: true);
-    const nearbyState = GameObjectState(id: 2, location: 5);
+    const carriedKeys = GameObjectState(id: 1, isCarried: true);
+    const nearbyStone = GameObjectState(id: 2, location: 5);
+    const grateState = GameObjectState(
+      id: 3,
+      location: 5,
+      state: 'GRATE_CLOSED',
+    );
 
     test(
       'combines travel, interactions and meta with priority ordering',
@@ -41,7 +48,7 @@ void main() {
           newLoc: 5,
           turns: 0,
           rngSeed: 42,
-          objectStates: const {1: carriedState, 2: nearbyState},
+          objectStates: const {1: carriedKeys, 2: nearbyStone, 3: grateState},
         );
 
         when(() => travel(game)).thenAnswer(
@@ -65,8 +72,13 @@ void main() {
         when(() => adventureRepository.getGameObjects()).thenAnswer(
           (_) async => const [
             GameObject(id: 0, name: 'OBJ_UNUSED'),
-            GameObject(id: 1, name: 'OBJ_LAMP'),
-            GameObject(id: 2, name: 'OBJ_KEYS'),
+            GameObject(id: 1, name: 'KEYS'),
+            GameObject(id: 2, name: 'OBJ_STONE'),
+            GameObject(
+              id: 3,
+              name: 'GRATE',
+              states: <String>['GRATE_CLOSED', 'GRATE_OPEN'],
+            ),
           ],
         );
 
@@ -97,10 +109,10 @@ void main() {
         final interactionOptions = options
             .where((option) => option.category == 'interaction')
             .toList();
-        expect(interactionOptions.length, greaterThanOrEqualTo(3));
+        expect(interactionOptions.length, greaterThanOrEqualTo(4));
         expect(
           interactionOptions.map((option) => option.verb).toSet(),
-          containsAll({'EXAMINE', 'DROP', 'TAKE'}),
+          containsAll({'EXAMINE', 'DROP', 'TAKE', 'OPEN'}),
         );
 
         final dropAction = interactionOptions.firstWhere(
@@ -111,6 +123,10 @@ void main() {
           (option) => option.id == 'interaction:take:2',
         );
         expect(takeAction.objectId, '2');
+        final openAction = interactionOptions.firstWhere(
+          (option) => option.id == 'interaction:open:3',
+        );
+        expect(openAction.objectId, '3');
 
         final observerCount = options
             .where((option) => option.id == 'meta:observer')
@@ -118,6 +134,40 @@ void main() {
         expect(observerCount, 1);
       },
     );
+
+    test('hides open when required key is not carried', () async {
+      final game = Game(
+        loc: 5,
+        oldLoc: 5,
+        newLoc: 5,
+        turns: 0,
+        rngSeed: 42,
+        objectStates: const {
+          1: GameObjectState(id: 1, location: 8),
+          3: grateState,
+        },
+      );
+
+      when(() => travel(game)).thenAnswer((_) async => const <ActionOption>[]);
+
+      when(() => adventureRepository.getGameObjects()).thenAnswer(
+        (_) async => const [
+          GameObject(id: 1, name: 'KEYS'),
+          GameObject(
+            id: 3,
+            name: 'GRATE',
+            states: <String>['GRATE_CLOSED', 'GRATE_OPEN'],
+          ),
+        ],
+      );
+
+      final options = await usecase(game);
+
+      expect(
+        options.where((option) => option.id == 'interaction:open:3'),
+        isEmpty,
+      );
+    });
 
     test(
       'omits interaction lookup when no object states are tracked',

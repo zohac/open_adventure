@@ -1,3 +1,4 @@
+import 'package:open_adventure/domain/constants/interaction_requirements.dart';
 import 'package:open_adventure/domain/entities/game.dart';
 import 'package:open_adventure/domain/entities/game_object.dart';
 import 'package:open_adventure/domain/entities/game_object_state.dart';
@@ -17,10 +18,6 @@ class OpenObjectImpl implements OpenObject {
     : _adventureRepository = adventureRepository;
 
   final AdventureRepository _adventureRepository;
-
-  static const Map<String, int> _requiredKeysByObject = <String, int>{
-    'GRATE': 1,
-  };
 
   @override
   Future<TurnResult> call(String objectId, Game game) async {
@@ -61,7 +58,7 @@ class OpenObjectImpl implements OpenObject {
       return TurnResult(game, <String>[_messageKey('already', object.name)]);
     }
 
-    final int? requiredKeyId = _requiredKeysByObject[object.name];
+    final int? requiredKeyId = kOpenObjectRequiredKeys[object.name];
     if (requiredKeyId != null) {
       final GameObjectState? keyState = game.objectStates[requiredKeyId];
       final bool hasKey = keyState?.isCarried == true;
