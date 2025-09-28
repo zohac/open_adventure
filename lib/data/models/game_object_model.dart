@@ -29,12 +29,11 @@ class GameObjectModel extends GameObject {
     this.sounds,
     this.changes,
   }) : super(
-          stateDescriptions: descriptions == null
-              ? null
-              : List.unmodifiable(
-                  descriptions.whereType<String>().toList(),
-                ),
-        );
+         stateDescriptions: descriptions == null
+             ? null
+             : List.unmodifiable(descriptions.whereType<String>().toList()),
+         inventoryDescription: inventory,
+       );
 
   /// Constructs a [GameObjectModel] from a flattened JSON map and its [id].
   ///
@@ -93,29 +92,30 @@ class GameObjectModel extends GameObject {
 
   /// Converts to domain [GameObject] (subset of fields relevant to Domain).
   GameObject toEntity() => GameObject(
-        id: id,
-        name: name,
-        words: words,
-        locations: locations,
-        immovable: immovable,
-        isTreasure: isTreasure,
-        states: states,
-        stateDescriptions: stateDescriptions,
-      );
+    id: id,
+    name: name,
+    words: words,
+    locations: locations,
+    immovable: immovable,
+    isTreasure: isTreasure,
+    states: states,
+    stateDescriptions: stateDescriptions,
+    inventoryDescription: inventory,
+  );
 
   /// Serializes back to a flattened JSON map. Normalizes `locations` to a list.
   Map<String, dynamic> toJson() => <String, dynamic>{
-        'name': name,
-        if (words.isNotEmpty) 'words': words,
-        if (inventory != null) 'inventory': inventory,
-        'locations': locations,
-        if (immovable) 'immovable': true,
-        if (isTreasure) 'is_treasure': true,
-        if (states != null) 'states': states,
-        if (descriptions != null) 'descriptions': descriptions,
-        if (sounds != null) 'sounds': sounds,
-        if (changes != null) 'changes': changes,
-      };
+    'name': name,
+    if (words.isNotEmpty) 'words': words,
+    if (inventory != null) 'inventory': inventory,
+    'locations': locations,
+    if (immovable) 'immovable': true,
+    if (isTreasure) 'is_treasure': true,
+    if (states != null) 'states': states,
+    if (descriptions != null) 'descriptions': descriptions,
+    if (sounds != null) 'sounds': sounds,
+    if (changes != null) 'changes': changes,
+  };
 
   static List<String> _normalizeLocations(dynamic locationsRaw) {
     if (locationsRaw == null) return const <String>[];

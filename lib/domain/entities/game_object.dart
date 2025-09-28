@@ -18,6 +18,9 @@ class GameObject {
   /// True if the object is a treasure.
   final bool isTreasure;
 
+  /// Optional inventory label displayed when the item is carried.
+  final String? inventoryDescription;
+
   /// Optional logical states supported by the object (e.g. `GRATE_OPEN`).
   final List<String>? states;
 
@@ -32,6 +35,7 @@ class GameObject {
     this.locations = const [],
     this.immovable = false,
     this.isTreasure = false,
+    this.inventoryDescription,
     this.states,
     this.stateDescriptions,
   });
