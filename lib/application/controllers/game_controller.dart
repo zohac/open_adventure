@@ -219,8 +219,8 @@ class GameController extends ValueNotifier<GameViewState> {
         .toList();
     final String description = locationChanged
         ? (messages.isNotEmpty
-              ? messages.last
-              : _selectDescription(location, firstVisit: false))
+            ? messages.join('\n')
+            : _selectDescription(location, firstVisit: false))
         : value.locationDescription;
     final List<String> updatedJournal = _appendJournal(value.journal, messages);
 

@@ -256,6 +256,37 @@ void main() {
     );
 
     test(
+      'keeps full arrival narration when travel emits multiple messages',
+      () async {
+        const messages = <String>[
+          'Short west description',
+          'There is a shiny brass lamp here.',
+          'There are some keys on the floor.',
+        ];
+
+        when(() => applyTurn(any(), any())).thenAnswer(
+          (_) async => TurnResult(nextGame, messages),
+        );
+        when(
+          () => adventureRepository.locationById(2),
+        ).thenAnswer((_) async => nextLocation);
+        when(
+          () => listAvailableActions(nextGame),
+        ).thenAnswer((_) async => followupActions);
+        when(() => saveRepository.autosave(any())).thenAnswer((_) async {});
+
+        await controller.perform(initialActions.first);
+
+        final state = controller.value;
+        expect(
+          state.locationDescription,
+          equals(messages.join('\n')),
+        );
+        expect(state.journal.sublist(state.journal.length - 3), equals(messages));
+      },
+    );
+
+    test(
       'keeps state when BACK is rejected and records the journal entry',
       () async {
         const backAction = ActionOption(
