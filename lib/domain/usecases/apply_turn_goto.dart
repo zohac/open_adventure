@@ -1,9 +1,11 @@
 import 'package:open_adventure/domain/entities/game.dart';
+import 'package:open_adventure/domain/entities/game_object.dart';
+import 'package:open_adventure/domain/entities/game_object_state.dart';
+import 'package:open_adventure/domain/entities/travel_rule.dart';
 import 'package:open_adventure/domain/repositories/adventure_repository.dart';
 import 'package:open_adventure/domain/services/motion_canonicalizer.dart';
 import 'package:open_adventure/domain/value_objects/command.dart';
 import 'package:open_adventure/domain/value_objects/turn_result.dart';
-import 'package:open_adventure/domain/entities/travel_rule.dart';
 
 /// ApplyTurnGoto — applique une commande de déplacement `goto`.
 ///
@@ -61,10 +63,7 @@ class ApplyTurnGoto {
     }
 
     final alreadyVisited = current.visitedLocations.contains(destLoc.id);
-    final visitedLocations = {
-      ...current.visitedLocations,
-      destLoc.id,
-    };
+    final visitedLocations = {...current.visitedLocations, destLoc.id};
 
     final newGame = current.copyWith(
       oldLc2: current.oldLoc,
@@ -77,13 +76,18 @@ class ApplyTurnGoto {
 
     final description = alreadyVisited
         ? (destLoc.shortDescription?.isNotEmpty == true
-            ? destLoc.shortDescription!
-            : destLoc.longDescription ?? '')
+              ? destLoc.shortDescription!
+              : destLoc.longDescription ?? '')
         : (destLoc.longDescription?.isNotEmpty == true
-            ? destLoc.longDescription!
-            : destLoc.shortDescription ?? '');
+              ? destLoc.longDescription!
+              : destLoc.shortDescription ?? '');
 
-    return TurnResult(newGame, [description]);
+    final List<String> messages = await _appendVisibleObjects(
+      newGame,
+      destLoc.id,
+      description,
+    );
+    return TurnResult(newGame, messages);
   }
 
   Future<TurnResult> _applyBack(Game current) async {
@@ -108,10 +112,7 @@ class ApplyTurnGoto {
     final destLoc = await _repo.locationById(targetId);
 
     final alreadyVisited = current.visitedLocations.contains(destLoc.id);
-    final visitedLocations = {
-      ...current.visitedLocations,
-      destLoc.id,
-    };
+    final visitedLocations = {...current.visitedLocations, destLoc.id};
 
     final newGame = current.copyWith(
       oldLc2: candidate,
@@ -124,12 +125,108 @@ class ApplyTurnGoto {
 
     final description = alreadyVisited
         ? (destLoc.shortDescription?.isNotEmpty == true
-            ? destLoc.shortDescription!
-            : destLoc.longDescription ?? '')
+              ? destLoc.shortDescription!
+              : destLoc.longDescription ?? '')
         : (destLoc.longDescription?.isNotEmpty == true
-            ? destLoc.longDescription!
-            : destLoc.shortDescription ?? '');
+              ? destLoc.longDescription!
+              : destLoc.shortDescription ?? '');
 
-    return TurnResult(newGame, [description]);
+    final List<String> messages = await _appendVisibleObjects(
+      newGame,
+      destLoc.id,
+      description,
+    );
+    return TurnResult(newGame, messages);
+  }
+
+  Future<List<String>> _appendVisibleObjects(
+    Game game,
+    int locationId,
+    String baseDescription,
+  ) async {
+    final List<String> messages = <String>[baseDescription];
+    final List<GameObject> objects = await _repo.getGameObjects();
+    if (objects.isEmpty || game.objectStates.isEmpty) {
+      return messages;
+    }
+
+    final Set<String> seen = <String>{baseDescription};
+    for (final GameObject object in objects) {
+      final GameObjectState? state = game.objectStates[object.id];
+      if (state == null) {
+        continue;
+      }
+      if (state.isCarried) {
+        continue;
+      }
+      if (!state.isAt(locationId)) {
+        continue;
+      }
+
+      final String? description = _resolveObjectDescription(object, state);
+      if (description == null || description.isEmpty) {
+        continue;
+      }
+      final String normalized = description.trim();
+      if (normalized.isEmpty) {
+        continue;
+      }
+      if (seen.add(normalized)) {
+        messages.add(normalized);
+      }
+    }
+    return messages;
+  }
+
+  String? _resolveObjectDescription(GameObject object, GameObjectState state) {
+    final List<String>? descriptions = object.stateDescriptions;
+    final List<String>? states = object.states;
+    if (descriptions != null && descriptions.isNotEmpty) {
+      if (states != null && states.isNotEmpty) {
+        final Object? stateValue = state.state;
+        if (stateValue != null) {
+          final int index = states.indexOf(stateValue.toString());
+          if (index >= 0 && index < descriptions.length) {
+            final String candidate = descriptions[index].trim();
+            if (candidate.isNotEmpty) {
+              return candidate;
+            }
+          }
+        }
+        final Object? propValue = state.prop;
+        if (propValue is int &&
+            propValue >= 0 &&
+            propValue < descriptions.length) {
+          final String candidate = descriptions[propValue].trim();
+          if (candidate.isNotEmpty) {
+            return candidate;
+          }
+        }
+      }
+
+      for (final String candidate in descriptions) {
+        final String trimmed = candidate.trim();
+        if (trimmed.isNotEmpty) {
+          return trimmed;
+        }
+      }
+    }
+
+    final String? label = _normalizeLabel(object.inventoryDescription);
+    return label;
+  }
+
+  String? _normalizeLabel(String? value) {
+    if (value == null) {
+      return null;
+    }
+    final String trimmed = value.trim();
+    if (trimmed.isEmpty) {
+      return null;
+    }
+    if (trimmed.startsWith('*')) {
+      return trimmed.substring(1).trim();
+    }
+    return trimmed;
   }
 }

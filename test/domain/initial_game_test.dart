@@ -14,5 +14,19 @@ void main() {
     expect(game.oldLoc, game.loc);
     expect(game.newLoc, game.loc);
     expect(game.visitedLocations, {game.loc});
+    expect(game.objectStates, isNotEmpty);
+
+    final int? buildingId = repo.locationIdForName('LOC_BUILDING');
+    final int? keysId = repo.objectIdForName('KEYS');
+    final int? lampId = repo.objectIdForName('LAMP');
+    expect(buildingId, isNotNull);
+    expect(keysId, isNotNull);
+    expect(lampId, isNotNull);
+    final keysState = game.objectStates[keysId!];
+    final lampState = game.objectStates[lampId!];
+    expect(keysState?.location, buildingId);
+    expect(keysState?.isCarried, isFalse);
+    expect(lampState?.location, buildingId);
+    expect(lampState?.isCarried, isFalse);
   });
 }

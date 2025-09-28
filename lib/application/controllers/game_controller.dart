@@ -6,6 +6,7 @@ import 'package:open_adventure/domain/entities/location.dart';
 import 'package:open_adventure/domain/repositories/adventure_repository.dart';
 import 'package:open_adventure/domain/repositories/save_repository.dart';
 import 'package:open_adventure/domain/usecases/apply_turn_goto.dart';
+import 'package:open_adventure/domain/usecases/inventory.dart';
 import 'package:open_adventure/domain/usecases/list_available_actions.dart';
 import 'package:open_adventure/domain/value_objects/action_option.dart';
 import 'package:open_adventure/domain/value_objects/command.dart';
@@ -51,15 +52,15 @@ class GameViewState {
   });
 
   factory GameViewState.initial() => const GameViewState(
-        game: null,
-        locationTitle: '',
-        locationMapTag: null,
-        locationId: null,
-        locationDescription: '',
-        actions: <ActionOption>[],
-        journal: <String>[],
-        isLoading: true,
-      );
+    game: null,
+    locationTitle: '',
+    locationMapTag: null,
+    locationId: null,
+    locationDescription: '',
+    actions: <ActionOption>[],
+    journal: <String>[],
+    isLoading: true,
+  );
 
   GameViewState copyWith({
     Game? game,
@@ -88,17 +89,20 @@ class GameViewState {
 class GameController extends ValueNotifier<GameViewState> {
   GameController({
     required AdventureRepository adventureRepository,
-    required ListAvailableActionsTravel listAvailableActions,
+    required ListAvailableActions listAvailableActions,
+    required InventoryUseCase inventoryUseCase,
     required ApplyTurnGoto applyTurn,
     required SaveRepository saveRepository,
-  })  : _adventureRepository = adventureRepository,
-        _listAvailableActions = listAvailableActions,
-        _applyTurn = applyTurn,
-        _saveRepository = saveRepository,
-        super(GameViewState.initial());
+  }) : _adventureRepository = adventureRepository,
+       _listAvailableActions = listAvailableActions,
+       _inventoryUseCase = inventoryUseCase,
+       _applyTurn = applyTurn,
+       _saveRepository = saveRepository,
+       super(GameViewState.initial());
 
   final AdventureRepository _adventureRepository;
-  final ListAvailableActionsTravel _listAvailableActions;
+  final ListAvailableActions _listAvailableActions;
+  final InventoryUseCase _inventoryUseCase;
   final ApplyTurnGoto _applyTurn;
   final SaveRepository _saveRepository;
 
@@ -111,13 +115,17 @@ class GameController extends ValueNotifier<GameViewState> {
     value = value.copyWith(isLoading: true);
 
     final Game initialGame = await _adventureRepository.initialGame();
-    final Location location =
-        await _adventureRepository.locationById(initialGame.loc);
-    final List<ActionOption> actions =
-        _visibleActions(await _listAvailableActions(initialGame), initialGame);
+    final Location location = await _adventureRepository.locationById(
+      initialGame.loc,
+    );
+    final List<ActionOption> actions = _visibleActions(
+      await _listAvailableActions(initialGame),
+      initialGame,
+    );
     final String description = _selectDescription(location, firstVisit: true);
-    final List<String> journal =
-        description.isEmpty ? const <String>[] : <String>[description];
+    final List<String> journal = description.isEmpty
+        ? const <String>[]
+        : <String>[description];
 
     value = GameViewState(
       game: initialGame,
@@ -140,22 +148,53 @@ class GameController extends ValueNotifier<GameViewState> {
       throw StateError('Cannot perform action before init() succeeds.');
     }
 
-    if (option.category == 'meta' && option.verb == 'OBSERVER') {
-      final Location location =
-          await _adventureRepository.locationById(currentGame.loc);
-      final description = location.longDescription?.isNotEmpty == true
-          ? location.longDescription!
-          : location.shortDescription ?? '';
-      final updatedJournal =
-          _appendJournal(value.journal, [description].where((m) => m.isNotEmpty).toList());
-      value = value.copyWith(
-        locationDescription: description,
-        journal: List.unmodifiable(updatedJournal),
-        locationTitle: location.name,
-        locationMapTag: location.mapTag,
-        locationId: location.id,
-      );
-      return;
+    if (option.category == 'meta') {
+      if (option.verb == 'OBSERVER') {
+        final Location location = await _adventureRepository.locationById(
+          currentGame.loc,
+        );
+        final description = location.longDescription?.isNotEmpty == true
+            ? location.longDescription!
+            : location.shortDescription ?? '';
+        final updatedJournal = _appendJournal(
+          value.journal,
+          [description].where((m) => m.isNotEmpty).toList(),
+        );
+        value = value.copyWith(
+          locationDescription: description,
+          journal: List.unmodifiable(updatedJournal),
+          locationTitle: location.name,
+          locationMapTag: location.mapTag,
+          locationId: location.id,
+        );
+        return;
+      }
+
+      if (option.verb == 'MAP') {
+        // Navigation vers la carte gérée côté UI (onglet dédié S3).
+        // Le contrôleur ne déclenche pas de tour ni de mutation domaine.
+        return;
+      }
+
+      if (option.verb == 'INVENTORY') {
+        final TurnResult inventoryResult = await _inventoryUseCase(currentGame);
+        final List<String> messages = inventoryResult.messages
+            .where((message) => message.isNotEmpty)
+            .toList();
+        if (messages.isEmpty) {
+          value = value.copyWith(game: inventoryResult.newGame);
+          return;
+        }
+        final List<String> updatedJournal = _appendJournal(
+          value.journal,
+          messages,
+        );
+        value = value.copyWith(
+          game: inventoryResult.newGame,
+          journal: List.unmodifiable(updatedJournal),
+        );
+        return;
+      }
     }
 
     if (!currentGame.magicWordsUnlocked &&
@@ -167,16 +206,20 @@ class GameController extends ValueNotifier<GameViewState> {
     final TurnResult result = await _applyTurn(command, currentGame);
     final Game newGame = result.newGame;
     final bool locationChanged = newGame.loc != currentGame.loc;
-    final Location location =
-        await _adventureRepository.locationById(newGame.loc);
-    final List<ActionOption> actions =
-        _visibleActions(await _listAvailableActions(newGame), newGame);
+    final Location location = await _adventureRepository.locationById(
+      newGame.loc,
+    );
+    final List<ActionOption> actions = _visibleActions(
+      await _listAvailableActions(newGame),
+      newGame,
+    );
 
-    final List<String> messages =
-        result.messages.where((m) => m.isNotEmpty).toList();
+    final List<String> messages = result.messages
+        .where((m) => m.isNotEmpty)
+        .toList();
     final String description = locationChanged
         ? (messages.isNotEmpty
-            ? messages.last
+            ? messages.join('\n')
             : _selectDescription(location, firstVisit: false))
         : value.locationDescription;
     final List<String> updatedJournal = _appendJournal(value.journal, messages);
@@ -204,8 +247,10 @@ class GameController extends ValueNotifier<GameViewState> {
     if (game == null) {
       return;
     }
-    final List<ActionOption> actions =
-        _visibleActions(await _listAvailableActions(game), game);
+    final List<ActionOption> actions = _visibleActions(
+      await _listAvailableActions(game),
+      game,
+    );
     value = value.copyWith(actions: List.unmodifiable(actions));
   }
 
@@ -236,8 +281,7 @@ class GameController extends ValueNotifier<GameViewState> {
     return location.longDescription ?? '';
   }
 
-  List<ActionOption> _visibleActions(
-      List<ActionOption> source, Game game) {
+  List<ActionOption> _visibleActions(List<ActionOption> source, Game game) {
     if (game.magicWordsUnlocked) {
       return source;
     }

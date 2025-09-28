@@ -1,85 +1,198 @@
 {
   "@@locale": "fr",
-  "appTitle": "Open Adventure",
-  "homeHeroTitle": "Open Adventure",
-  "homeHeroSubtitle": "Partez pour l'expédition textuelle culte, remasterisée pour mobile.",
-  "homeMenuNewGameLabel": "Nouvelle partie",
-  "homeMenuNewGameSubtitle": "Commencer l'exploration de la caverne.",
-  "homeMenuContinueLabel": "Continuer",
-  "homeMenuContinueSubtitle": "Dernier tour : {turns}, lieu #{location}",
-  "@homeMenuContinueSubtitle": {
+  "@actions.interaction.close": {
     "placeholders": {
-      "turns": {
-        "type": "int"
-      },
-      "location": {
-        "type": "int"
-      }
+      "object": {}
     }
   },
-  "homeMenuLoadLabel": "Charger",
-  "homeMenuLoadSubtitle": "Accéder aux sauvegardes manuelles.",
-  "homeMenuOptionsLabel": "Options",
-  "homeMenuOptionsSubtitle": "Configurer l'expérience audio et tactile.",
-  "homeMenuCreditsLabel": "Crédits",
-  "homeMenuCreditsSubtitle": "L'équipe derrière cette aventure.",
-  "adventureAudioSettingsTooltip": "Réglages audio",
-  "adventureDescriptionSectionTitle": "Description",
-  "adventureDescriptionEmptyPlaceholder": "...",
-  "adventureActionsSectionTitle": "Actions",
-  "adventureActionsTravelMissingHint": "Aucune sortie immédiate. Observez les alentours.",
-  "adventureActionsEmptyState": "Aucune action disponible",
-  "adventureActionsMoreButtonLabel": "Plus…",
-  "adventureActionsMoreSheetTitle": "Actions supplémentaires",
-  "adventureJournalSectionTitle": "Journal",
-  "adventureJournalEmptyState": "Aucun événement pour le moment",
-  "adventureLocationImageSemanticsFallback": "Illustration du lieu",
-  "adventureActionMotionMagicWord": "Prononcer {word}",
-  "@adventureActionMotionMagicWord": {
+  "@actions.interaction.drop": {
     "placeholders": {
-      "word": {}
+      "object": {}
     }
   },
-  "adventureActionMotionUnknown": "Explorer les environs",
-  "adventureActionMotionFallback": "Se rendre à {destination}",
+  "@actions.interaction.examine": {
+    "placeholders": {
+      "object": {}
+    }
+  },
+  "@actions.interaction.extinguish": {
+    "placeholders": {
+      "object": {}
+    }
+  },
+  "@actions.interaction.light": {
+    "placeholders": {
+      "object": {}
+    }
+  },
+  "@actions.interaction.open": {
+    "placeholders": {
+      "object": {}
+    }
+  },
+  "@actions.interaction.take": {
+    "placeholders": {
+      "object": {}
+    }
+  },
   "@adventureActionMotionFallback": {
     "placeholders": {
       "destination": {}
     }
   },
-  "actions.travel.back": "Revenir",
+  "@adventureActionMotionMagicWord": {
+    "placeholders": {
+      "word": {}
+    }
+  },
+  "@homeMenuContinueSubtitle": {
+    "placeholders": {
+      "location": {
+        "type": "int"
+      },
+      "turns": {
+        "type": "int"
+      }
+    }
+  },
+  "actions.interaction.close": "Fermer {object}",
+  "actions.interaction.drop": "Déposer {object}",
+  "actions.interaction.examine": "Examiner {object}",
+  "actions.interaction.extinguish": "Éteindre {object}",
+  "actions.interaction.light": "Allumer {object}",
+  "actions.interaction.open": "Ouvrir {object}",
+  "actions.interaction.take": "Prendre {object}",
+  "actions.inventory.label": "Inventaire",
+  "actions.map.label": "Carte",
   "actions.observer.label": "Observer",
-  "motion.north.label": "Aller Nord",
-  "motion.south.label": "Aller Sud",
-  "motion.east.label": "Aller Est",
-  "motion.west.label": "Aller Ouest",
-  "motion.up.label": "Monter",
-  "motion.down.label": "Descendre",
-  "motion.enter.label": "Entrer",
-  "motion.out.label": "Sortir",
-  "motion.forward.label": "Avancer",
+  "actions.travel.back": "Revenir",
+  "adventureActionMotionFallback": "Se rendre à {destination}",
+  "adventureActionMotionMagicWord": "Prononcer {word}",
+  "adventureActionMotionUnknown": "Explorer les environs",
+  "adventureActionsEmptyState": "Aucune action disponible",
+  "adventureActionsMoreButtonLabel": "Plus…",
+  "adventureActionsMoreSheetTitle": "Actions supplémentaires",
+  "adventureActionsSectionTitle": "Actions",
+  "adventureActionsTravelMissingHint": "Aucune sortie immédiate. Observez les alentours.",
+  "adventureAudioSettingsTooltip": "Réglages audio",
+  "adventureDescriptionEmptyPlaceholder": "...",
+  "adventureDescriptionSectionTitle": "Description",
+  "adventureJournalEmptyState": "Aucun événement pour le moment",
+  "adventureJournalSectionTitle": "Journal",
+  "adventureLocationImageSemanticsFallback": "Illustration du lieu",
+  "appTitle": "Open Adventure",
+  "homeHeroSubtitle": "Partez pour l'expédition textuelle culte, remasterisée pour mobile.",
+  "homeHeroTitle": "Open Adventure",
+  "homeMenuContinueLabel": "Continuer",
+  "homeMenuContinueSubtitle": "Dernier tour : {turns}, lieu #{location}",
+  "homeMenuCreditsLabel": "Crédits",
+  "homeMenuCreditsSubtitle": "L'équipe derrière cette aventure.",
+  "homeMenuLoadLabel": "Charger",
+  "homeMenuLoadSubtitle": "Accéder aux sauvegardes manuelles.",
+  "homeMenuNewGameLabel": "Nouvelle partie",
+  "homeMenuNewGameSubtitle": "Commencer l'exploration de la caverne.",
+  "homeMenuOptionsLabel": "Options",
+  "homeMenuOptionsSubtitle": "Configurer l'expérience audio et tactile.",
   "motion.back.label": "Revenir sur ses pas",
-  "motion.ne.label": "Aller Nord-Est",
-  "motion.se.label": "Aller Sud-Est",
-  "motion.sw.label": "Aller Sud-Ouest",
-  "motion.nw.label": "Aller Nord-Ouest",
-  "motion.left.label": "Aller à gauche",
-  "motion.right.label": "Aller à droite",
-  "motion.look.label": "Observer les alentours",
+  "motion.bedquilt.label": "Aller vers Bedquilt",
   "motion.cave.label": "Aller vers la grotte",
   "motion.cavern.label": "Aller vers la caverne",
   "motion.crawl.label": "Ramper",
   "motion.cross.label": "Traverser",
   "motion.depression.label": "Aller vers la dépression",
+  "motion.down.label": "Descendre",
+  "motion.east.label": "Aller Est",
+  "motion.enter.label": "Entrer",
   "motion.entrance.label": "Aller vers l’entrée",
-  "motion.bedquilt.label": "Aller vers Bedquilt",
+  "motion.forward.label": "Avancer",
+  "motion.left.label": "Aller à gauche",
+  "motion.look.label": "Observer les alentours",
+  "motion.ne.label": "Aller Nord-Est",
+  "motion.north.label": "Aller Nord",
+  "motion.nw.label": "Aller Nord-Ouest",
   "motion.office.label": "Aller vers le bureau",
   "motion.oriental.label": "Aller vers la salle orientale",
-  "motion.reservoir.label": "Aller vers le réservoir",
-  "motion.shellroom.label": "Aller vers la salle des coquillages",
-  "motion.stream.label": "Suivre le courant",
+  "motion.out.label": "Sortir",
   "motion.plover.label": "Prononcer PLOVER",
   "motion.plugh.label": "Prononcer PLUGH",
+  "motion.reservoir.label": "Aller vers le réservoir",
+  "motion.right.label": "Aller à droite",
+  "motion.se.label": "Aller Sud-Est",
+  "motion.shellroom.label": "Aller vers la salle des coquillages",
+  "motion.south.label": "Aller Sud",
+  "motion.stream.label": "Suivre le courant",
+  "motion.sw.label": "Aller Sud-Ouest",
+  "motion.unknown.label": "Explorer les environs",
+  "motion.up.label": "Monter",
+  "motion.west.label": "Aller Ouest",
   "motion.xyzzy.label": "Prononcer XYZZY",
-  "motion.unknown.label": "Explorer les environs"
+  "objects.AMBER.label": "Gemme d'ambre",
+  "objects.AXE.label": "Hache de nain",
+  "objects.BATTERY.label": "Piles",
+  "objects.BEAR.label": "Un ours des cavernes féroce vous fixe depuis l'autre bout de la pièce !",
+  "objects.BIRD.label": "Petit oiseau en cage",
+  "objects.BLOOD.label": "sang",
+  "objects.BOTTLE.label": "Petite bouteille",
+  "objects.CAGE.label": "Cage en osier",
+  "objects.CAVITY.label": "cavité",
+  "objects.CHAIN.label": "Chaîne en or",
+  "objects.CHASM.label": "gouffre",
+  "objects.CHEST.label": "Coffre au trésor",
+  "objects.CLAM.label": "Palourde géante >GROGNEMENT !<",
+  "objects.COINS.label": "Pièces rares",
+  "objects.DOOR.label": "porte rouillée",
+  "objects.DRAGON.label": "dragon",
+  "objects.DWARF.label": "Nain",
+  "objects.EGGS.label": "Œufs en or",
+  "objects.EMERALD.label": "Émeraude grosse comme un œuf",
+  "objects.FISSURE.label": "fissure",
+  "objects.FOOD.label": "Nourriture appétissante",
+  "objects.GRATE.label": "grille",
+  "objects.JADE.label": "Collier en jade",
+  "objects.KEYS.label": "Trousseau de clés",
+  "objects.KNIFE.label": "Couteau",
+  "objects.LAMP.label": "Lampe en laiton",
+  "objects.MAGAZINE.label": "Spelunker Aujourd'hui",
+  "objects.MESSAG.label": "message dans le deuxième labyrinthe",
+  "objects.MIRROR.label": "miroir",
+  "objects.NUGGET.label": "Grosse pépite d'or",
+  "objects.OBJ_13.label": "tablette de pierre",
+  "objects.OBJ_26.label": "stalactite",
+  "objects.OBJ_27.label": "silhouette sombre et/ou fenêtre",
+  "objects.OBJ_29.label": "peintures rupestres",
+  "objects.OBJ_30.label": "pirate ou génie",
+  "objects.OBJ_40.label": "tapis et/ou mousse et/ou rideaux",
+  "objects.OBJ_47.label": "boue",
+  "objects.OBJ_48.label": "note",
+  "objects.OBJ_51.label": "Plusieurs diamants",
+  "objects.OBJ_52.label": "Lingots d'argent",
+  "objects.OBJ_53.label": "Bijoux précieux",
+  "objects.OBJ_63.label": "Épices rares",
+  "objects.OBJ_69.label": "Statuette en ébène",
+  "objects.OGRE.label": "ogre",
+  "objects.OIL.label": "Huile dans la bouteille",
+  "objects.OYSTER.label": "Huître géante >GÉMIT !<",
+  "objects.PEARL.label": "Perle étincelante",
+  "objects.PILLOW.label": "Coussin en velours",
+  "objects.PLANT.label": "plante",
+  "objects.PLANT2.label": "fausse plante",
+  "objects.PYRAMID.label": "Pyramide en platine",
+  "objects.RABBITFOOT.label": "Pied de lapin porte-bonheur",
+  "objects.RESER.label": "réservoir",
+  "objects.ROD.label": "Bâton noir",
+  "objects.ROD2.label": "Bâton noir",
+  "objects.RUBY.label": "Rubis géant",
+  "objects.RUG.label": "Tapis persan",
+  "objects.SAPPH.label": "Saphir étoilé",
+  "objects.SIGN.label": "pancarte",
+  "objects.SNAKE.label": "serpent",
+  "objects.STEPS.label": "marches",
+  "objects.TRIDENT.label": "Trident incrusté de bijoux",
+  "objects.TROLL.label": "troll",
+  "objects.TROLL2.label": "faux troll",
+  "objects.URN.label": "urne",
+  "objects.VASE.label": "Vase Ming",
+  "objects.VEND.label": "distributeur automatique",
+  "objects.VOLCANO.label": "volcan et/ou geyser",
+  "objects.WATER.label": "Eau dans la bouteille"
 }

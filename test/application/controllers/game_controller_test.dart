@@ -6,6 +6,7 @@ import 'package:open_adventure/domain/entities/location.dart';
 import 'package:open_adventure/domain/repositories/adventure_repository.dart';
 import 'package:open_adventure/domain/repositories/save_repository.dart';
 import 'package:open_adventure/domain/usecases/apply_turn_goto.dart';
+import 'package:open_adventure/domain/usecases/inventory.dart';
 import 'package:open_adventure/domain/usecases/list_available_actions.dart';
 import 'package:open_adventure/domain/value_objects/action_option.dart';
 import 'package:open_adventure/domain/value_objects/command.dart';
@@ -14,12 +15,13 @@ import 'package:open_adventure/domain/value_objects/turn_result.dart';
 
 class _MockAdventureRepository extends Mock implements AdventureRepository {}
 
-class _MockListAvailableActions extends Mock
-    implements ListAvailableActionsTravel {}
+class _MockListAvailableActions extends Mock implements ListAvailableActions {}
 
 class _MockApplyTurnGoto extends Mock implements ApplyTurnGoto {}
 
 class _MockSaveRepository extends Mock implements SaveRepository {}
+
+class _MockInventoryUseCase extends Mock implements InventoryUseCase {}
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -28,6 +30,7 @@ void main() {
   late _MockListAvailableActions listAvailableActions;
   late _MockApplyTurnGoto applyTurn;
   late _MockSaveRepository saveRepository;
+  late _MockInventoryUseCase inventoryUseCase;
   late GameController controller;
 
   const initialGame = Game(
@@ -41,13 +44,9 @@ void main() {
 
   setUpAll(() {
     registerFallbackValue(const Command(verb: 'WEST', target: '2'));
-    registerFallbackValue(const Game(
-      loc: 0,
-      oldLoc: 0,
-      newLoc: 0,
-      turns: 0,
-      rngSeed: 0,
-    ));
+    registerFallbackValue(
+      const Game(loc: 0, oldLoc: 0, newLoc: 0, turns: 0, rngSeed: 0),
+    );
     registerFallbackValue(const GameSnapshot(loc: 0, turns: 0, rngSeed: 0));
   });
 
@@ -56,10 +55,12 @@ void main() {
     listAvailableActions = _MockListAvailableActions();
     applyTurn = _MockApplyTurnGoto();
     saveRepository = _MockSaveRepository();
+    inventoryUseCase = _MockInventoryUseCase();
 
     controller = GameController(
       adventureRepository: adventureRepository,
       listAvailableActions: listAvailableActions,
+      inventoryUseCase: inventoryUseCase,
       applyTurn: applyTurn,
       saveRepository: saveRepository,
     );
@@ -83,12 +84,15 @@ void main() {
         ),
       ];
 
-      when(() => adventureRepository.initialGame())
-          .thenAnswer((_) async => initialGame);
-      when(() => adventureRepository.locationById(1))
-          .thenAnswer((_) async => location);
-      when(() => listAvailableActions(initialGame))
-          .thenAnswer((_) async => actions);
+      when(
+        () => adventureRepository.initialGame(),
+      ).thenAnswer((_) async => initialGame);
+      when(
+        () => adventureRepository.locationById(1),
+      ).thenAnswer((_) async => location);
+      when(
+        () => listAvailableActions(initialGame),
+      ).thenAnswer((_) async => actions);
       when(() => saveRepository.autosave(any())).thenAnswer((_) async {});
 
       await controller.init();
@@ -101,8 +105,11 @@ void main() {
       expect(state.journal, equals(<String>[location.longDescription!]));
       expect(state.isLoading, isFalse);
 
-      verify(() => saveRepository.autosave(
-          const GameSnapshot(loc: 1, turns: 0, rngSeed: 42))).called(1);
+      verify(
+        () => saveRepository.autosave(
+          const GameSnapshot(loc: 1, turns: 0, rngSeed: 42),
+        ),
+      ).called(1);
     });
 
     test('filters out magic words until unlocked', () async {
@@ -126,12 +133,15 @@ void main() {
         objectId: '3',
       );
 
-      when(() => adventureRepository.initialGame())
-          .thenAnswer((_) async => initialGame);
-      when(() => adventureRepository.locationById(1))
-          .thenAnswer((_) async => location);
-      when(() => listAvailableActions(initialGame))
-          .thenAnswer((_) async => const [normalAction, magicAction]);
+      when(
+        () => adventureRepository.initialGame(),
+      ).thenAnswer((_) async => initialGame);
+      when(
+        () => adventureRepository.locationById(1),
+      ).thenAnswer((_) async => location);
+      when(
+        () => listAvailableActions(initialGame),
+      ).thenAnswer((_) async => const [normalAction, magicAction]);
       when(() => saveRepository.autosave(any())).thenAnswer((_) async {});
 
       await controller.init();
@@ -190,124 +200,232 @@ void main() {
         name: 'LOC_START',
         longDescription: 'Long start description',
       );
-      when(() => adventureRepository.initialGame())
-          .thenAnswer((_) async => initialGame);
-      when(() => adventureRepository.locationById(1))
-          .thenAnswer((_) async => location);
-      when(() => listAvailableActions(initialGame))
-          .thenAnswer((_) async => initialActions);
+      when(
+        () => adventureRepository.initialGame(),
+      ).thenAnswer((_) async => initialGame);
+      when(
+        () => adventureRepository.locationById(1),
+      ).thenAnswer((_) async => location);
+      when(
+        () => listAvailableActions(initialGame),
+      ).thenAnswer((_) async => initialActions);
       when(() => saveRepository.autosave(any())).thenAnswer((_) async {});
       await controller.init();
 
       clearInteractions(saveRepository);
     });
 
-    test('updates state, appends journal, refreshes actions and autosaves',
-        () async {
-      when(() => applyTurn(any(), any())).thenAnswer(
-        (_) async =>
-            TurnResult(nextGame, const <String>['Short west description']),
+    test(
+      'updates state, appends journal, refreshes actions and autosaves',
+      () async {
+        when(() => applyTurn(any(), any())).thenAnswer(
+          (_) async =>
+              TurnResult(nextGame, const <String>['Short west description']),
+        );
+        when(
+          () => adventureRepository.locationById(2),
+        ).thenAnswer((_) async => nextLocation);
+        when(
+          () => listAvailableActions(nextGame),
+        ).thenAnswer((_) async => followupActions);
+        when(() => saveRepository.autosave(any())).thenAnswer((_) async {});
+
+        await controller.perform(initialActions.first);
+
+        final state = controller.value;
+        expect(state.game, equals(nextGame));
+        expect(state.locationTitle, equals(nextLocation.name));
+        expect(state.locationDescription, equals('Short west description'));
+        expect(state.actions, equals(followupActions));
+        expect(state.journal.last, equals('Short west description'));
+        expect(
+          state.journal,
+          equals(const <String>[
+            'Long start description',
+            'Short west description',
+          ]),
+        );
+
+        verify(() => applyTurn(any(), any())).called(1);
+        verify(
+          () => saveRepository.autosave(
+            const GameSnapshot(loc: 2, turns: 1, rngSeed: 42),
+          ),
+        ).called(1);
+      },
+    );
+
+    test(
+      'keeps full arrival narration when travel emits multiple messages',
+      () async {
+        const messages = <String>[
+          'Short west description',
+          'There is a shiny brass lamp here.',
+          'There are some keys on the floor.',
+        ];
+
+        when(() => applyTurn(any(), any())).thenAnswer(
+          (_) async => TurnResult(nextGame, messages),
+        );
+        when(
+          () => adventureRepository.locationById(2),
+        ).thenAnswer((_) async => nextLocation);
+        when(
+          () => listAvailableActions(nextGame),
+        ).thenAnswer((_) async => followupActions);
+        when(() => saveRepository.autosave(any())).thenAnswer((_) async {});
+
+        await controller.perform(initialActions.first);
+
+        final state = controller.value;
+        expect(
+          state.locationDescription,
+          equals(messages.join('\n')),
+        );
+        expect(state.journal.sublist(state.journal.length - 3), equals(messages));
+      },
+    );
+
+    test(
+      'keeps state when BACK is rejected and records the journal entry',
+      () async {
+        const backAction = ActionOption(
+          id: 'travel:1->1:BACK',
+          category: 'travel',
+          label: 'actions.travel.back',
+          verb: 'BACK',
+          objectId: '1',
+        );
+
+        when(() => applyTurn(any(), any())).thenAnswer(
+          (_) async => TurnResult(initialGame, const <String>[
+            'You cannot go back from here.',
+          ]),
+        );
+        when(
+          () => listAvailableActions(initialGame),
+        ).thenAnswer((_) async => initialActions);
+        when(() => saveRepository.autosave(any())).thenAnswer((_) async {});
+
+        await controller.perform(backAction);
+
+        final state = controller.value;
+        expect(state.game, equals(initialGame));
+        expect(state.locationTitle, equals('LOC_START'));
+        expect(state.locationDescription, equals('Long start description'));
+        expect(state.journal.last, equals('You cannot go back from here.'));
+        expect(
+          state.journal,
+          equals(const <String>[
+            'Long start description',
+            'You cannot go back from here.',
+          ]),
+        );
+        verify(() => applyTurn(any(), any())).called(1);
+        verifyNever(() => saveRepository.autosave(any()));
+      },
+    );
+
+    test(
+      'meta observer replays description without calling applyTurn',
+      () async {
+        final location = Location(
+          id: 1,
+          name: 'LOC_START',
+          longDescription: 'Long start description',
+          shortDescription: 'Short start description',
+        );
+        when(
+          () => adventureRepository.initialGame(),
+        ).thenAnswer((_) async => initialGame);
+        when(
+          () => adventureRepository.locationById(1),
+        ).thenAnswer((_) async => location);
+        when(
+          () => listAvailableActions(initialGame),
+        ).thenAnswer((_) async => initialActions);
+        when(() => saveRepository.autosave(any())).thenAnswer((_) async {});
+        await controller.init();
+
+        clearInteractions(saveRepository);
+        clearInteractions(applyTurn);
+
+        const observerAction = ActionOption(
+          id: 'meta:observer',
+          category: 'meta',
+          label: 'actions.observer.label',
+          icon: 'visibility',
+          verb: 'OBSERVER',
+        );
+
+        await controller.perform(observerAction);
+
+        final state = controller.value;
+        expect(state.locationDescription, equals('Long start description'));
+        expect(state.journal.last, equals('Long start description'));
+        verifyNever(() => applyTurn(any(), any()));
+        verifyNever(() => saveRepository.autosave(any()));
+      },
+    );
+
+    test('meta inventory delegates to use case and appends journal', () async {
+      when(() => inventoryUseCase(any())).thenAnswer(
+        (_) async => TurnResult(initialGame, const <String>[
+          'You are carrying:',
+          '• Brass lantern',
+        ]),
       );
-      when(() => adventureRepository.locationById(2))
-          .thenAnswer((_) async => nextLocation);
-      when(() => listAvailableActions(nextGame))
-          .thenAnswer((_) async => followupActions);
-      when(() => saveRepository.autosave(any())).thenAnswer((_) async {});
 
-      await controller.perform(initialActions.first);
-
-      final state = controller.value;
-      expect(state.game, equals(nextGame));
-      expect(state.locationTitle, equals(nextLocation.name));
-      expect(state.locationDescription, equals('Short west description'));
-      expect(state.actions, equals(followupActions));
-      expect(state.journal.last, equals('Short west description'));
-      expect(
-        state.journal,
-        equals(const <String>['Long start description', 'Short west description']),
+      const inventoryAction = ActionOption(
+        id: 'meta:inventory',
+        category: 'meta',
+        label: 'actions.inventory.label',
+        icon: 'inventory',
+        verb: 'INVENTORY',
       );
 
-      verify(() => applyTurn(any(), any())).called(1);
-      verify(() => saveRepository.autosave(
-          const GameSnapshot(loc: 2, turns: 1, rngSeed: 42))).called(1);
-    });
-
-    test('keeps state when BACK is rejected and records the journal entry',
-        () async {
-      const backAction = ActionOption(
-        id: 'travel:1->1:BACK',
-        category: 'travel',
-        label: 'actions.travel.back',
-        verb: 'BACK',
-        objectId: '1',
-      );
-
-      when(() => applyTurn(any(), any())).thenAnswer(
-        (_) async =>
-            TurnResult(initialGame, const <String>['You cannot go back from here.']),
-      );
-      when(() => listAvailableActions(initialGame))
-          .thenAnswer((_) async => initialActions);
-      when(() => saveRepository.autosave(any())).thenAnswer((_) async {});
-
-      await controller.perform(backAction);
+      await controller.perform(inventoryAction);
 
       final state = controller.value;
       expect(state.game, equals(initialGame));
-      expect(state.locationTitle, equals('LOC_START'));
-      expect(state.locationDescription, equals('Long start description'));
-      expect(state.journal.last, equals('You cannot go back from here.'));
       expect(
         state.journal,
-        equals(
-          const <String>['Long start description', 'You cannot go back from here.'],
-        ),
+        equals(const <String>[
+          'Long start description',
+          'You are carrying:',
+          '• Brass lantern',
+        ]),
       );
-      verify(() => applyTurn(any(), any())).called(1);
+      verify(() => inventoryUseCase(any())).called(1);
+      verifyNever(() => applyTurn(any(), any()));
       verifyNever(() => saveRepository.autosave(any()));
     });
 
-    test('meta observer replays description without calling applyTurn',
-        () async {
-      final location = Location(
-        id: 1,
-        name: 'LOC_START',
-        longDescription: 'Long start description',
-        shortDescription: 'Short start description',
-      );
-      when(() => adventureRepository.initialGame())
-          .thenAnswer((_) async => initialGame);
-      when(() => adventureRepository.locationById(1))
-          .thenAnswer((_) async => location);
-      when(() => listAvailableActions(initialGame))
-          .thenAnswer((_) async => initialActions);
-      when(() => saveRepository.autosave(any())).thenAnswer((_) async {});
-      await controller.init();
-
-      clearInteractions(saveRepository);
+    test('meta map defers to presentation layer', () async {
+      final previousState = controller.value;
       clearInteractions(applyTurn);
+      clearInteractions(saveRepository);
 
-      const observerAction = ActionOption(
-        id: 'meta:observer',
+      const mapAction = ActionOption(
+        id: 'meta:map',
         category: 'meta',
-        label: 'actions.observer.label',
-        icon: 'visibility',
-        verb: 'OBSERVER',
+        label: 'actions.map.label',
+        icon: 'map',
+        verb: 'MAP',
       );
 
-      await controller.perform(observerAction);
+      await controller.perform(mapAction);
 
-      final state = controller.value;
-      expect(state.locationDescription, equals('Long start description'));
-      expect(state.journal.last, equals('Long start description'));
+      expect(controller.value, same(previousState));
       verifyNever(() => applyTurn(any(), any()));
-      verifyNever(() => saveRepository.autosave(any()));
+      verifyZeroInteractions(saveRepository);
     });
 
     test('throws StateError if perform is called before init', () async {
       final freshController = GameController(
         adventureRepository: adventureRepository,
         listAvailableActions: listAvailableActions,
+        inventoryUseCase: inventoryUseCase,
         applyTurn: applyTurn,
         saveRepository: saveRepository,
       );
@@ -327,10 +445,13 @@ void main() {
     });
 
     test('ignores magic word actions until unlocked', () async {
-      when(() => applyTurn(any(), any())).thenAnswer((_) async =>
-          TurnResult(nextGame, const <String>['Teleported elsewhere']));
-      when(() => listAvailableActions(nextGame))
-          .thenAnswer((_) async => followupActions);
+      when(() => applyTurn(any(), any())).thenAnswer(
+        (_) async =>
+            TurnResult(nextGame, const <String>['Teleported elsewhere']),
+      );
+      when(
+        () => listAvailableActions(nextGame),
+      ).thenAnswer((_) async => followupActions);
 
       await controller.perform(magicAction);
 
@@ -346,27 +467,31 @@ void main() {
         name: 'LOC_START',
         longDescription: 'Long start description',
       );
-      when(() => adventureRepository.initialGame())
-          .thenAnswer((_) async => initialGame);
-      when(() => adventureRepository.locationById(1))
-          .thenAnswer((_) async => location);
-      when(() => listAvailableActions(initialGame))
-          .thenAnswer((_) async => const <ActionOption>[]);
+      when(
+        () => adventureRepository.initialGame(),
+      ).thenAnswer((_) async => initialGame);
+      when(
+        () => adventureRepository.locationById(1),
+      ).thenAnswer((_) async => location);
+      when(
+        () => listAvailableActions(initialGame),
+      ).thenAnswer((_) async => const <ActionOption>[]);
       when(() => saveRepository.autosave(any())).thenAnswer((_) async {});
       await controller.init();
     });
 
     test('updates only the actions for the current game', () async {
-      when(() => listAvailableActions(initialGame))
-          .thenAnswer((_) async => const <ActionOption>[
-                ActionOption(
-                  id: 'travel:1->2:WEST',
-                  category: 'travel',
-                  label: 'motion.west.label',
-                  verb: 'WEST',
-                  objectId: '2',
-                ),
-              ]);
+      when(() => listAvailableActions(initialGame)).thenAnswer(
+        (_) async => const <ActionOption>[
+          ActionOption(
+            id: 'travel:1->2:WEST',
+            category: 'travel',
+            label: 'motion.west.label',
+            verb: 'WEST',
+            objectId: '2',
+          ),
+        ],
+      );
 
       await controller.refreshActions();
 

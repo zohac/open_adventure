@@ -1,6 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:open_adventure/domain/entities/game.dart';
+import 'package:open_adventure/domain/entities/game_object.dart';
+import 'package:open_adventure/domain/entities/game_object_state.dart';
 import 'package:open_adventure/domain/entities/location.dart';
 import 'package:open_adventure/domain/entities/travel_rule.dart';
 import 'package:open_adventure/domain/repositories/adventure_repository.dart';
@@ -30,40 +32,55 @@ void main() {
       if (verb == 'WEST_ALT') return 'WEST';
       return verb;
     });
+
+    when(
+      () => mockRepo.getGameObjects(),
+    ).thenAnswer((_) async => <GameObject>[]);
   });
 
   group('ApplyTurnGoto', () {
-    test('updates location, increments turns and returns description', () async {
-      final currentLocation = Location(id: 1, name: 'LOC_START');
-      final destinationLocation = Location(
-        id: 2,
-        name: 'LOC_WEST',
-        shortDescription: 'A short description of the west.',
-        longDescription: 'A very long and detailed description of the west.',
-      );
-      final travelRule = TravelRule(
-        fromId: 1,
-        motion: 'WEST',
-        destName: 'LOC_WEST',
-        destId: 2,
-      );
+    test(
+      'updates location, increments turns and returns description',
+      () async {
+        final currentLocation = Location(id: 1, name: 'LOC_START');
+        final destinationLocation = Location(
+          id: 2,
+          name: 'LOC_WEST',
+          shortDescription: 'A short description of the west.',
+          longDescription: 'A very long and detailed description of the west.',
+        );
+        final travelRule = TravelRule(
+          fromId: 1,
+          motion: 'WEST',
+          destName: 'LOC_WEST',
+          destId: 2,
+        );
 
-      when(() => mockRepo.locationById(1)).thenAnswer((_) async => currentLocation);
-      when(() => mockRepo.locationById(2)).thenAnswer((_) async => destinationLocation);
-      when(() => mockRepo.travelRulesFor(1)).thenAnswer((_) async => [travelRule]);
+        when(
+          () => mockRepo.locationById(1),
+        ).thenAnswer((_) async => currentLocation);
+        when(
+          () => mockRepo.locationById(2),
+        ).thenAnswer((_) async => destinationLocation);
+        when(
+          () => mockRepo.travelRulesFor(1),
+        ).thenAnswer((_) async => [travelRule]);
 
-      const game = Game(loc: 1, oldLoc: 1, newLoc: 1, turns: 0, rngSeed: 42);
-      final cmd = Command(verb: 'WEST', target: '2');
+        const game = Game(loc: 1, oldLoc: 1, newLoc: 1, turns: 0, rngSeed: 42);
+        final cmd = Command(verb: 'WEST', target: '2');
 
-      final result = await usecase(cmd, game);
+        final result = await usecase(cmd, game);
 
-      expect(result.newGame.loc, 2);
-      expect(result.newGame.oldLoc, 1);
-      expect(result.newGame.newLoc, 2);
-      expect(result.newGame.turns, 1);
-      expect(result.newGame.visitedLocations, {2}); // First visit, so only 2 is visited
-      expect(result.messages, [destinationLocation.longDescription]);
-    });
+        expect(result.newGame.loc, 2);
+        expect(result.newGame.oldLoc, 1);
+        expect(result.newGame.newLoc, 2);
+        expect(result.newGame.turns, 1);
+        expect(result.newGame.visitedLocations, {
+          2,
+        }); // First visit, so only 2 is visited
+        expect(result.messages, [destinationLocation.longDescription]);
+      },
+    );
 
     test('returns short description on revisit', () async {
       final currentLocation = Location(id: 1, name: 'LOC_START');
@@ -80,11 +97,24 @@ void main() {
         destId: 2,
       );
 
-      when(() => mockRepo.locationById(1)).thenAnswer((_) async => currentLocation);
-      when(() => mockRepo.locationById(2)).thenAnswer((_) async => destinationLocation);
-      when(() => mockRepo.travelRulesFor(1)).thenAnswer((_) async => [travelRule]);
+      when(
+        () => mockRepo.locationById(1),
+      ).thenAnswer((_) async => currentLocation);
+      when(
+        () => mockRepo.locationById(2),
+      ).thenAnswer((_) async => destinationLocation);
+      when(
+        () => mockRepo.travelRulesFor(1),
+      ).thenAnswer((_) async => [travelRule]);
 
-      const game = Game(loc: 1, oldLoc: 1, newLoc: 1, turns: 0, rngSeed: 42, visitedLocations: {2}); // Location 2 already visited
+      const game = Game(
+        loc: 1,
+        oldLoc: 1,
+        newLoc: 1,
+        turns: 0,
+        rngSeed: 42,
+        visitedLocations: {2},
+      ); // Location 2 already visited
       final cmd = Command(verb: 'WEST', target: '2');
 
       final result = await usecase(cmd, game);
@@ -94,41 +124,50 @@ void main() {
       expect(result.messages, [destinationLocation.shortDescription]);
     });
 
-    test('uses the first matching travel rule when multiples resolve', () async {
-      final currentLocation = Location(id: 1, name: 'LOC_START');
-      final destinationLocation = Location(
-        id: 2,
-        name: 'LOC_WEST',
-        shortDescription: 'Short WEST',
-        longDescription: 'Long WEST',
-      );
-      final firstRule = TravelRule(
-        fromId: 1,
-        motion: 'WEST',
-        destName: 'LOC_WEST',
-        destId: 2,
-      );
-      final secondRule = TravelRule(
-        fromId: 1,
-        motion: 'WEST_ALT',
-        destName: 'LOC_WEST',
-        destId: 2,
-      );
+    test(
+      'uses the first matching travel rule when multiples resolve',
+      () async {
+        final currentLocation = Location(id: 1, name: 'LOC_START');
+        final destinationLocation = Location(
+          id: 2,
+          name: 'LOC_WEST',
+          shortDescription: 'Short WEST',
+          longDescription: 'Long WEST',
+        );
+        final firstRule = TravelRule(
+          fromId: 1,
+          motion: 'WEST',
+          destName: 'LOC_WEST',
+          destId: 2,
+        );
+        final secondRule = TravelRule(
+          fromId: 1,
+          motion: 'WEST_ALT',
+          destName: 'LOC_WEST',
+          destId: 2,
+        );
 
-      when(() => mockRepo.locationById(1)).thenAnswer((_) async => currentLocation);
-      when(() => mockRepo.locationById(2)).thenAnswer((_) async => destinationLocation);
-      when(() => mockRepo.travelRulesFor(1)).thenAnswer((_) async => [firstRule, secondRule]);
+        when(
+          () => mockRepo.locationById(1),
+        ).thenAnswer((_) async => currentLocation);
+        when(
+          () => mockRepo.locationById(2),
+        ).thenAnswer((_) async => destinationLocation);
+        when(
+          () => mockRepo.travelRulesFor(1),
+        ).thenAnswer((_) async => [firstRule, secondRule]);
 
-      const game = Game(loc: 1, oldLoc: 1, newLoc: 1, turns: 0, rngSeed: 42);
-      final cmd = Command(verb: 'WEST', target: '2');
+        const game = Game(loc: 1, oldLoc: 1, newLoc: 1, turns: 0, rngSeed: 42);
+        final cmd = Command(verb: 'WEST', target: '2');
 
-      final result = await usecase(cmd, game);
+        final result = await usecase(cmd, game);
 
-      expect(result.newGame.loc, 2);
-      expect(result.newGame.turns, 1);
-      expect(result.messages.first.isNotEmpty, isTrue);
-      verifyNever(() => mockMotion.toCanonical('WEST_ALT'));
-    });
+        expect(result.newGame.loc, 2);
+        expect(result.newGame.turns, 1);
+        expect(result.messages.first.isNotEmpty, isTrue);
+        verifyNever(() => mockMotion.toCanonical('WEST_ALT'));
+      },
+    );
 
     test('canonicalizes command verb aliases', () async {
       final currentLocation = Location(id: 1, name: 'LOC_START');
@@ -140,12 +179,21 @@ void main() {
         destId: 2,
       );
 
-      when(() => mockRepo.locationById(1)).thenAnswer((_) async => currentLocation);
-      when(() => mockRepo.locationById(2)).thenAnswer((_) async => destinationLocation);
-      when(() => mockRepo.travelRulesFor(1)).thenAnswer((_) async => [travelRule]);
+      when(
+        () => mockRepo.locationById(1),
+      ).thenAnswer((_) async => currentLocation);
+      when(
+        () => mockRepo.locationById(2),
+      ).thenAnswer((_) async => destinationLocation);
+      when(
+        () => mockRepo.travelRulesFor(1),
+      ).thenAnswer((_) async => [travelRule]);
 
       const game = Game(loc: 1, oldLoc: 1, newLoc: 1, turns: 0, rngSeed: 42);
-      final cmd = Command(verb: 'MOT_2', target: '2'); // MOT_2 is an alias for WEST
+      final cmd = Command(
+        verb: 'MOT_2',
+        target: '2',
+      ); // MOT_2 is an alias for WEST
 
       final result = await usecase(cmd, game);
 
@@ -155,9 +203,15 @@ void main() {
     test('throws StateError when no matching rule', () async {
       final currentLocation = Location(id: 1, name: 'LOC_START');
       final destinationLocation = Location(id: 2, name: 'LOC_WEST');
-      when(() => mockRepo.locationById(1)).thenAnswer((_) async => currentLocation);
-      when(() => mockRepo.locationById(2)).thenAnswer((_) async => destinationLocation);
-      when(() => mockRepo.travelRulesFor(1)).thenAnswer((_) async => []); // No travel rules
+      when(
+        () => mockRepo.locationById(1),
+      ).thenAnswer((_) async => currentLocation);
+      when(
+        () => mockRepo.locationById(2),
+      ).thenAnswer((_) async => destinationLocation);
+      when(
+        () => mockRepo.travelRulesFor(1),
+      ).thenAnswer((_) async => []); // No travel rules
 
       const game = Game(loc: 1, oldLoc: 1, newLoc: 1, turns: 0, rngSeed: 42);
       final cmd = Command(verb: 'FOO', target: '2');
@@ -170,6 +224,144 @@ void main() {
       final cmd = Command(verb: 'WEST', target: 'invalid');
 
       expect(() => usecase(cmd, game), throwsA(isA<StateError>()));
+    });
+
+    test('includes visible object descriptions in travel result', () async {
+      final currentLocation = Location(id: 1, name: 'LOC_START');
+      final destinationLocation = Location(
+        id: 2,
+        name: 'LOC_BUILDING',
+        shortDescription: 'Building interior.',
+        longDescription: 'You are inside a building.',
+      );
+      final travelRule = TravelRule(
+        fromId: 1,
+        motion: 'WEST',
+        destName: 'LOC_BUILDING',
+        destId: 2,
+      );
+
+      when(
+        () => mockRepo.locationById(1),
+      ).thenAnswer((_) async => currentLocation);
+      when(
+        () => mockRepo.locationById(2),
+      ).thenAnswer((_) async => destinationLocation);
+      when(
+        () => mockRepo.travelRulesFor(1),
+      ).thenAnswer((_) async => [travelRule]);
+      when(() => mockRepo.getGameObjects()).thenAnswer(
+        (_) async => <GameObject>[
+          const GameObject(
+            id: 1,
+            name: 'KEYS',
+            stateDescriptions: <String>[
+              'There are some keys on the ground here.',
+            ],
+          ),
+          const GameObject(
+            id: 2,
+            name: 'LAMP',
+            states: <String>['LAMP_DARK', 'LAMP_BRIGHT'],
+            stateDescriptions: <String>[
+              'There is a shiny brass lamp nearby.',
+              'There is a lamp shining nearby.',
+            ],
+          ),
+        ],
+      );
+
+      const game = Game(
+        loc: 1,
+        oldLoc: 1,
+        newLoc: 1,
+        turns: 0,
+        rngSeed: 42,
+        objectStates: <int, GameObjectState>{
+          1: GameObjectState(id: 1, location: 2),
+          2: GameObjectState(id: 2, location: 2, state: 'LAMP_DARK', prop: 0),
+        },
+      );
+      final cmd = Command(verb: 'WEST', target: '2');
+
+      final result = await usecase(cmd, game);
+
+      expect(result.messages, <String>[
+        destinationLocation.longDescription!,
+        'There are some keys on the ground here.',
+        'There is a shiny brass lamp nearby.',
+      ]);
+    });
+
+    test('skips carried objects when composing travel messages', () async {
+      final currentLocation = Location(id: 1, name: 'LOC_START');
+      final destinationLocation = Location(
+        id: 2,
+        name: 'LOC_BUILDING',
+        shortDescription: 'Building interior.',
+        longDescription: 'You are inside a building.',
+      );
+      final travelRule = TravelRule(
+        fromId: 1,
+        motion: 'WEST',
+        destName: 'LOC_BUILDING',
+        destId: 2,
+      );
+
+      when(
+        () => mockRepo.locationById(1),
+      ).thenAnswer((_) async => currentLocation);
+      when(
+        () => mockRepo.locationById(2),
+      ).thenAnswer((_) async => destinationLocation);
+      when(
+        () => mockRepo.travelRulesFor(1),
+      ).thenAnswer((_) async => [travelRule]);
+      when(() => mockRepo.getGameObjects()).thenAnswer(
+        (_) async => <GameObject>[
+          const GameObject(
+            id: 1,
+            name: 'KEYS',
+            stateDescriptions: <String>[
+              'There are some keys on the ground here.',
+            ],
+          ),
+          const GameObject(
+            id: 2,
+            name: 'LAMP',
+            states: <String>['LAMP_DARK', 'LAMP_BRIGHT'],
+            stateDescriptions: <String>[
+              'There is a shiny brass lamp nearby.',
+              'There is a lamp shining nearby.',
+            ],
+          ),
+        ],
+      );
+
+      const game = Game(
+        loc: 1,
+        oldLoc: 1,
+        newLoc: 1,
+        turns: 0,
+        rngSeed: 42,
+        objectStates: <int, GameObjectState>{
+          1: GameObjectState(id: 1, location: 2),
+          2: GameObjectState(
+            id: 2,
+            isCarried: true,
+            state: 'LAMP_DARK',
+            prop: 0,
+          ),
+        },
+      );
+      final cmd = Command(verb: 'WEST', target: '2');
+
+      final result = await usecase(cmd, game);
+
+      expect(result.messages, <String>[
+        destinationLocation.longDescription!,
+        'There are some keys on the ground here.',
+      ]);
     });
 
     test('handles BACK command returning to previous location', () async {
@@ -190,8 +382,12 @@ void main() {
         longDescription: 'Long start',
       );
 
-      when(() => mockRepo.locationById(2)).thenAnswer((_) async => currentLocation);
-      when(() => mockRepo.locationById(1)).thenAnswer((_) async => previousLocation);
+      when(
+        () => mockRepo.locationById(2),
+      ).thenAnswer((_) async => currentLocation);
+      when(
+        () => mockRepo.locationById(1),
+      ).thenAnswer((_) async => previousLocation);
 
       final result = await usecase(const Command(verb: 'BACK'), game);
 
@@ -203,40 +399,46 @@ void main() {
       expect(result.messages, ['Short start']);
     });
 
-    test('handles BACK via forced previous location by jumping to oldLc2',
-        () async {
-      const game = Game(
-        loc: 3,
-        oldLoc: 2,
-        oldLc2: 1,
-        newLoc: 3,
-        turns: 10,
-        rngSeed: 99,
-        visitedLocations: {1, 2, 3},
-      );
-      final currentLocation = Location(id: 3, name: 'LOC_NOW');
-      final forcedPrevious = Location(
-        id: 2,
-        name: 'LOC_FORCED',
-        conditions: const {'FORCED': true},
-      );
-      final fallback = Location(
-        id: 1,
-        name: 'LOC_SAFE',
-        shortDescription: 'Safe room',
-      );
+    test(
+      'handles BACK via forced previous location by jumping to oldLc2',
+      () async {
+        const game = Game(
+          loc: 3,
+          oldLoc: 2,
+          oldLc2: 1,
+          newLoc: 3,
+          turns: 10,
+          rngSeed: 99,
+          visitedLocations: {1, 2, 3},
+        );
+        final currentLocation = Location(id: 3, name: 'LOC_NOW');
+        final forcedPrevious = Location(
+          id: 2,
+          name: 'LOC_FORCED',
+          conditions: const {'FORCED': true},
+        );
+        final fallback = Location(
+          id: 1,
+          name: 'LOC_SAFE',
+          shortDescription: 'Safe room',
+        );
 
-      when(() => mockRepo.locationById(3)).thenAnswer((_) async => currentLocation);
-      when(() => mockRepo.locationById(2)).thenAnswer((_) async => forcedPrevious);
-      when(() => mockRepo.locationById(1)).thenAnswer((_) async => fallback);
+        when(
+          () => mockRepo.locationById(3),
+        ).thenAnswer((_) async => currentLocation);
+        when(
+          () => mockRepo.locationById(2),
+        ).thenAnswer((_) async => forcedPrevious);
+        when(() => mockRepo.locationById(1)).thenAnswer((_) async => fallback);
 
-      final result = await usecase(const Command(verb: 'BACK'), game);
+        final result = await usecase(const Command(verb: 'BACK'), game);
 
-      expect(result.newGame.loc, 1);
-      expect(result.newGame.oldLoc, 3);
-      expect(result.newGame.oldLc2, 2);
-      expect(result.messages, ['Safe room']);
-    });
+        expect(result.newGame.loc, 1);
+        expect(result.newGame.oldLoc, 3);
+        expect(result.newGame.oldLc2, 2);
+        expect(result.messages, ['Safe room']);
+      },
+    );
 
     test('throws when BACK is blocked by NOBACK condition', () async {
       const game = Game(
@@ -247,10 +449,15 @@ void main() {
         turns: 2,
         rngSeed: 7,
       );
-      final currentLocation =
-          Location(id: 4, name: 'LOC_END', conditions: const {'NOBACK': true});
+      final currentLocation = Location(
+        id: 4,
+        name: 'LOC_END',
+        conditions: const {'NOBACK': true},
+      );
 
-      when(() => mockRepo.locationById(4)).thenAnswer((_) async => currentLocation);
+      when(
+        () => mockRepo.locationById(4),
+      ).thenAnswer((_) async => currentLocation);
 
       await expectLater(
         usecase(const Command(verb: 'BACK'), game),

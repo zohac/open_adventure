@@ -7,6 +7,7 @@ import 'package:open_adventure/data/models/location_model.dart';
 import 'package:open_adventure/data/models/travel_rule_model.dart';
 import 'package:open_adventure/domain/entities/game.dart';
 import 'package:open_adventure/domain/entities/game_object.dart';
+import 'package:open_adventure/domain/entities/game_object_state.dart';
 import 'package:open_adventure/domain/entities/location.dart';
 import 'package:open_adventure/domain/entities/travel_rule.dart';
 import 'package:open_adventure/domain/repositories/adventure_repository.dart';
@@ -21,7 +22,7 @@ class AdventureRepositoryImpl implements AdventureRepository {
   Map<String, int>? _objNameToId;
 
   AdventureRepositoryImpl({AssetDataSource? assets})
-      : _assets = assets ?? BundleAssetDataSource();
+    : _assets = assets ?? BundleAssetDataSource();
 
   @override
   Future<List<Location>> getLocations() async {
@@ -83,8 +84,9 @@ class AdventureRepositoryImpl implements AdventureRepository {
       final raw = await _assets.loadList(AssetPaths.travelJson);
       final rules = <TravelRule>[];
       for (final entry in raw) {
-        final model =
-            TravelRuleModel.fromJson(Map<String, dynamic>.from(entry as Map));
+        final model = TravelRuleModel.fromJson(
+          Map<String, dynamic>.from(entry as Map),
+        );
         if (model.fromId != locationId) continue;
         if (model.stop) continue;
         final condType = model.condType?.toLowerCase();
@@ -99,17 +101,19 @@ class AdventureRepositoryImpl implements AdventureRepository {
           final index = await _ensureLocationIndex();
           resolvedDestId = index[model.destName];
         }
-        rules.add(TravelRule(
-          fromId: model.fromId,
-          motion: model.motion,
-          destName: model.destName,
-          destId: resolvedDestId,
-          condType: model.condType,
-          condArg1: model.condArg1,
-          condArg2: model.condArg2,
-          noDwarves: model.noDwarves,
-          stop: model.stop,
-        ));
+        rules.add(
+          TravelRule(
+            fromId: model.fromId,
+            motion: model.motion,
+            destName: model.destName,
+            destId: resolvedDestId,
+            condType: model.condType,
+            condArg1: model.condArg1,
+            condArg2: model.condArg2,
+            noDwarves: model.noDwarves,
+            stop: model.stop,
+          ),
+        );
       }
       return List.unmodifiable(rules);
     } on AssetDataFormatException catch (e) {
@@ -157,6 +161,42 @@ class AdventureRepositoryImpl implements AdventureRepository {
     if (startId < 0 || startId >= locations.length) {
       startId = 0;
     }
+
+    final Map<String, int> locationIndex = await _ensureLocationIndex();
+    final List<GameObject> objects = await getGameObjects();
+    final Map<int, GameObjectState> objectStates = <int, GameObjectState>{};
+
+    for (final GameObject object in objects) {
+      if (object.id == 0) {
+        // Skip the NO_OBJECT sentinel.
+        continue;
+      }
+
+      final List<String> placement = object.locations;
+      final int? primaryLocation = placement.isNotEmpty
+          ? _resolveLocationId(placement[0], locationIndex)
+          : null;
+      final int? secondaryLocation = placement.length > 1
+          ? _resolveLocationId(placement[1], locationIndex)
+          : null;
+
+      Object? stateValue;
+      Object? propValue;
+      final List<String>? definedStates = object.states;
+      if (definedStates != null && definedStates.isNotEmpty) {
+        stateValue = definedStates.first;
+        propValue = 0;
+      }
+
+      objectStates[object.id] = GameObjectState(
+        id: object.id,
+        location: primaryLocation,
+        fixedLocation: secondaryLocation,
+        state: stateValue,
+        prop: propValue,
+      );
+    }
+
     return Game(
       loc: startId,
       oldLoc: startId,
@@ -166,7 +206,16 @@ class AdventureRepositoryImpl implements AdventureRepository {
       rngSeed: seed,
       visitedLocations: {startId},
       magicWordsUnlocked: false,
+      objectStates: Map.unmodifiable(objectStates),
     );
+  }
+
+  int? _resolveLocationId(String raw, Map<String, int> index) {
+    final int? byName = index[raw];
+    if (byName != null) {
+      return byName;
+    }
+    return int.tryParse(raw);
   }
 }
 
@@ -176,10 +225,10 @@ extension AdventureRepositoryImplIndex on AdventureRepositoryImpl {
   int? objectIdForName(String name) => _objNameToId?[name];
   String? locationNameForId(int id) =>
       (_locations != null && id >= 0 && id < _locations!.length)
-          ? _locations![id].name
-          : null;
+      ? _locations![id].name
+      : null;
   String? objectNameForId(int id) =>
       (_objects != null && id >= 0 && id < _objects!.length)
-          ? _objects![id].name
-          : null;
+      ? _objects![id].name
+      : null;
 }

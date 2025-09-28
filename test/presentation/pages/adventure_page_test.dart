@@ -8,6 +8,7 @@ import 'package:open_adventure/domain/entities/location.dart';
 import 'package:open_adventure/domain/repositories/adventure_repository.dart';
 import 'package:open_adventure/domain/repositories/save_repository.dart';
 import 'package:open_adventure/domain/usecases/apply_turn_goto.dart';
+import 'package:open_adventure/domain/usecases/inventory.dart';
 import 'package:open_adventure/domain/usecases/list_available_actions.dart';
 import 'package:open_adventure/domain/value_objects/action_option.dart';
 import 'package:open_adventure/domain/value_objects/command.dart';
@@ -20,25 +21,22 @@ const _testL10nFr = AppLocalizations(Locale('fr'));
 
 class _MockAdventureRepository extends Mock implements AdventureRepository {}
 
-class _MockListAvailableActions extends Mock
-    implements ListAvailableActionsTravel {}
+class _MockListAvailableActions extends Mock implements ListAvailableActions {}
 
 class _MockApplyTurnGoto extends Mock implements ApplyTurnGoto {}
 
 class _MockSaveRepository extends Mock implements SaveRepository {}
+
+class _MockInventoryUseCase extends Mock implements InventoryUseCase {}
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   setUpAll(() {
     registerFallbackValue(const Command(verb: 'WEST', target: '2'));
-    registerFallbackValue(const Game(
-      loc: 0,
-      oldLoc: 0,
-      newLoc: 0,
-      turns: 0,
-      rngSeed: 0,
-    ));
+    registerFallbackValue(
+      const Game(loc: 0, oldLoc: 0, newLoc: 0, turns: 0, rngSeed: 0),
+    );
     registerFallbackValue(const GameSnapshot(loc: 0, turns: 0, rngSeed: 0));
   });
 
@@ -47,6 +45,7 @@ void main() {
     late _MockListAvailableActions listAvailableActions;
     late _MockApplyTurnGoto applyTurn;
     late _MockSaveRepository saveRepository;
+    late _MockInventoryUseCase inventoryUseCase;
     late GameController controller;
 
     const initialGame = Game(
@@ -64,9 +63,12 @@ void main() {
       applyTurn = _MockApplyTurnGoto();
       saveRepository = _MockSaveRepository();
 
+      inventoryUseCase = _MockInventoryUseCase();
+
       controller = GameController(
         adventureRepository: adventureRepository,
         listAvailableActions: listAvailableActions,
+        inventoryUseCase: inventoryUseCase,
         applyTurn: applyTurn,
         saveRepository: saveRepository,
       );
@@ -95,12 +97,15 @@ void main() {
             ),
           ];
 
-      when(() => adventureRepository.initialGame())
-          .thenAnswer((_) async => initialGame);
-      when(() => adventureRepository.locationById(1))
-          .thenAnswer((_) async => location);
-      when(() => listAvailableActions(initialGame))
-          .thenAnswer((_) async => actions);
+      when(
+        () => adventureRepository.initialGame(),
+      ).thenAnswer((_) async => initialGame);
+      when(
+        () => adventureRepository.locationById(1),
+      ).thenAnswer((_) async => location);
+      when(
+        () => listAvailableActions(initialGame),
+      ).thenAnswer((_) async => actions);
       when(() => saveRepository.autosave(any())).thenAnswer((_) async {});
 
       Widget app = MaterialApp(
@@ -119,9 +124,11 @@ void main() {
 
       expect(tester.takeException(), isNull);
 
-      verify(() => saveRepository.autosave(
-            const GameSnapshot(loc: 1, turns: 0, rngSeed: 42),
-          )).called(1);
+      verify(
+        () => saveRepository.autosave(
+          const GameSnapshot(loc: 1, turns: 0, rngSeed: 42),
+        ),
+      ).called(1);
       clearInteractions(saveRepository);
 
       expect(controller.value.actions, isNotEmpty);
@@ -171,8 +178,9 @@ void main() {
       expect(find.text('Aller Ouest'), findsOneWidget);
     });
 
-    testWidgets('limits visible actions and exposes overflow modal',
-        (tester) async {
+    testWidgets('limits visible actions and exposes overflow modal', (
+      tester,
+    ) async {
       const overflowActions = [
         ActionOption(
           id: 'travel:1->2:NORTH',
@@ -241,11 +249,12 @@ void main() {
         visitedLocations: {1, 2},
       );
 
-      when(() => applyTurn(any(), any())).thenAnswer(
-        (_) async => TurnResult(movedGame, const ['Vous avancez.']),
-      );
+      when(
+        () => applyTurn(any(), any()),
+      ).thenAnswer((_) async => TurnResult(movedGame, const ['Vous avancez.']));
       when(() => listAvailableActions(movedGame)).thenAnswer(
-          (_) async => overflowActions.take(3).toList(growable: false));
+        (_) async => overflowActions.take(3).toList(growable: false),
+      );
       when(() => adventureRepository.locationById(2)).thenAnswer(
         (_) async => const Location(
           id: 2,
@@ -254,10 +263,7 @@ void main() {
         ),
       );
 
-      await pumpInitialState(
-        tester,
-        actionsOverride: overflowActions,
-      );
+      await pumpInitialState(tester, actionsOverride: overflowActions);
 
       final plusButtonFinder = find.text('Plus…');
       expect(plusButtonFinder, findsOneWidget);
@@ -283,143 +289,142 @@ void main() {
     });
 
     testWidgets(
-        'shows incantation buttons only after unlock and hides them elsewhere',
-        (tester) async {
-      const baseTravel = ActionOption(
-        id: 'travel:1->2:WEST',
-        category: 'travel',
-        label: 'motion.west.label',
-        verb: 'WEST',
-        objectId: '2',
-      );
-      const incantationOption = ActionOption(
-        id: 'travel:2->5:PLUGH',
-        category: 'travel',
-        label: 'motion.plugh.label',
-        verb: 'PLUGH',
-        objectId: '5',
-      );
-      const exitOption = ActionOption(
-        id: 'travel:2->3:EAST',
-        category: 'travel',
-        label: 'motion.east.label',
-        verb: 'EAST',
-        objectId: '3',
-      );
-      const remoteOption = ActionOption(
-        id: 'travel:3->2:WEST',
-        category: 'travel',
-        label: 'motion.west.label',
-        verb: 'WEST',
-        objectId: '2',
-      );
+      'shows incantation buttons only after unlock and hides them elsewhere',
+      (tester) async {
+        const baseTravel = ActionOption(
+          id: 'travel:1->2:WEST',
+          category: 'travel',
+          label: 'motion.west.label',
+          verb: 'WEST',
+          objectId: '2',
+        );
+        const incantationOption = ActionOption(
+          id: 'travel:2->5:PLUGH',
+          category: 'travel',
+          label: 'motion.plugh.label',
+          verb: 'PLUGH',
+          objectId: '5',
+        );
+        const exitOption = ActionOption(
+          id: 'travel:2->3:EAST',
+          category: 'travel',
+          label: 'motion.east.label',
+          verb: 'EAST',
+          objectId: '3',
+        );
+        const remoteOption = ActionOption(
+          id: 'travel:3->2:WEST',
+          category: 'travel',
+          label: 'motion.west.label',
+          verb: 'WEST',
+          objectId: '2',
+        );
 
-      const unlockedGame = Game(
-        loc: 2,
-        oldLoc: 1,
-        newLoc: 2,
-        turns: 1,
-        rngSeed: 42,
-        visitedLocations: {1, 2},
-        magicWordsUnlocked: true,
-      );
-      const remoteGame = Game(
-        loc: 3,
-        oldLoc: 2,
-        newLoc: 3,
-        turns: 2,
-        rngSeed: 42,
-        visitedLocations: {1, 2, 3},
-        magicWordsUnlocked: true,
-      );
+        const unlockedGame = Game(
+          loc: 2,
+          oldLoc: 1,
+          newLoc: 2,
+          turns: 1,
+          rngSeed: 42,
+          visitedLocations: {1, 2},
+          magicWordsUnlocked: true,
+        );
+        const remoteGame = Game(
+          loc: 3,
+          oldLoc: 2,
+          newLoc: 3,
+          turns: 2,
+          rngSeed: 42,
+          visitedLocations: {1, 2, 3},
+          magicWordsUnlocked: true,
+        );
 
-      when(() => listAvailableActions(unlockedGame)).thenAnswer(
-        (_) async => const [incantationOption, exitOption],
-      );
-      when(() => listAvailableActions(remoteGame)).thenAnswer(
-        (_) async => const [remoteOption],
-      );
-      when(() => applyTurn(any(), any())).thenAnswer((invocation) async {
-        final Command command = invocation.positionalArguments.first as Command;
-        if (command.verb == 'WEST') {
-          return TurnResult(
-            unlockedGame,
-            const <String>['Un bourdonnement magique retentit.'],
-          );
-        }
-        if (command.verb == 'EAST') {
-          return TurnResult(
-            remoteGame,
-            const <String>['Le passage se referme derrière vous.'],
-          );
-        }
-        throw StateError('Unexpected command: ${command.verb}');
-      });
-      when(() => adventureRepository.locationById(2)).thenAnswer(
-        (_) async => const Location(
-          id: 2,
-          name: 'LOC_SHRINE',
-          shortDescription: 'Une salle sacrée.',
-        ),
-      );
-      when(() => adventureRepository.locationById(3)).thenAnswer(
-        (_) async => const Location(
-          id: 3,
-          name: 'LOC_CAVERN',
-          shortDescription: 'Un tunnel sombre.',
-        ),
-      );
-      when(() => saveRepository.autosave(any())).thenAnswer((_) async {});
+        when(
+          () => listAvailableActions(unlockedGame),
+        ).thenAnswer((_) async => const [incantationOption, exitOption]);
+        when(
+          () => listAvailableActions(remoteGame),
+        ).thenAnswer((_) async => const [remoteOption]);
+        when(() => applyTurn(any(), any())).thenAnswer((invocation) async {
+          final Command command =
+              invocation.positionalArguments.first as Command;
+          if (command.verb == 'WEST') {
+            return TurnResult(unlockedGame, const <String>[
+              'Un bourdonnement magique retentit.',
+            ]);
+          }
+          if (command.verb == 'EAST') {
+            return TurnResult(remoteGame, const <String>[
+              'Le passage se referme derrière vous.',
+            ]);
+          }
+          throw StateError('Unexpected command: ${command.verb}');
+        });
+        when(() => adventureRepository.locationById(2)).thenAnswer(
+          (_) async => const Location(
+            id: 2,
+            name: 'LOC_SHRINE',
+            shortDescription: 'Une salle sacrée.',
+          ),
+        );
+        when(() => adventureRepository.locationById(3)).thenAnswer(
+          (_) async => const Location(
+            id: 3,
+            name: 'LOC_CAVERN',
+            shortDescription: 'Un tunnel sombre.',
+          ),
+        );
+        when(() => saveRepository.autosave(any())).thenAnswer((_) async {});
 
-      await pumpInitialState(
-        tester,
-        actionsOverride: const [baseTravel],
-      );
+        await pumpInitialState(tester, actionsOverride: const [baseTravel]);
 
-      expect(
-        find.text(_testL10nFr.resolveActionLabel('motion.plugh.label')),
-        findsNothing,
-      );
+        expect(
+          find.text(_testL10nFr.resolveActionLabel('motion.plugh.label')),
+          findsNothing,
+        );
 
-      await tester.tap(find.text('Aller Ouest'));
-      await tester.pump();
-      await tester.pumpAndSettle();
+        await tester.tap(find.text('Aller Ouest'));
+        await tester.pump();
+        await tester.pumpAndSettle();
 
-      expect(
-        find.text(_testL10nFr.resolveActionLabel('motion.plugh.label')),
-        findsOneWidget,
-      );
-      verify(
-        () => saveRepository.autosave(
-          const GameSnapshot(loc: 2, turns: 1, rngSeed: 42),
-        ),
-      ).called(1);
-      clearInteractions(saveRepository);
+        expect(
+          find.text(_testL10nFr.resolveActionLabel('motion.plugh.label')),
+          findsOneWidget,
+        );
+        verify(
+          () => saveRepository.autosave(
+            const GameSnapshot(loc: 2, turns: 1, rngSeed: 42),
+          ),
+        ).called(1);
+        clearInteractions(saveRepository);
 
-      await tester.tap(find.text('Aller Est'));
-      await tester.pump();
-      await tester.pumpAndSettle();
+        await tester.tap(find.text('Aller Est'));
+        await tester.pump();
+        await tester.pumpAndSettle();
 
-      expect(
-        find.text(_testL10nFr.resolveActionLabel('motion.plugh.label')),
-        findsNothing,
-      );
-      verify(
-        () => saveRepository.autosave(
-          const GameSnapshot(loc: 3, turns: 2, rngSeed: 42),
-        ),
-      ).called(1);
-    });
+        expect(
+          find.text(_testL10nFr.resolveActionLabel('motion.plugh.label')),
+          findsNothing,
+        );
+        verify(
+          () => saveRepository.autosave(
+            const GameSnapshot(loc: 3, turns: 2, rngSeed: 42),
+          ),
+        ).called(1);
+      },
+    );
 
-    testWidgets('does not render a back action without navigation history',
-        (tester) async {
+    testWidgets('does not render a back action without navigation history', (
+      tester,
+    ) async {
       await pumpInitialState(tester);
 
       expect(find.text('Revenir'), findsNothing);
     });
 
-    testWidgets('tapping a travel action updates title and description',
-        (tester) async {
+    testWidgets('tapping a travel action updates title and description', (
+      tester,
+    ) async {
       await pumpInitialState(tester);
 
       const nextGame = Game(
@@ -450,10 +455,12 @@ void main() {
         (_) async =>
             TurnResult(nextGame, const <String>['Short west description']),
       );
-      when(() => adventureRepository.locationById(2))
-          .thenAnswer((_) async => nextLocation);
-      when(() => listAvailableActions(nextGame))
-          .thenAnswer((_) async => followupActions);
+      when(
+        () => adventureRepository.locationById(2),
+      ).thenAnswer((_) async => nextLocation);
+      when(
+        () => listAvailableActions(nextGame),
+      ).thenAnswer((_) async => followupActions);
       when(() => saveRepository.autosave(any())).thenAnswer((_) async {});
 
       await tester.tap(find.text('Aller Ouest'));
@@ -464,13 +471,16 @@ void main() {
       expect(find.text('Short west description'), findsWidgets);
       expect(find.text('Aller Est'), findsOneWidget);
 
-      verify(() => saveRepository.autosave(
-            const GameSnapshot(loc: 2, turns: 1, rngSeed: 42),
-          )).called(1);
+      verify(
+        () => saveRepository.autosave(
+          const GameSnapshot(loc: 2, turns: 1, rngSeed: 42),
+        ),
+      ).called(1);
     });
 
-    testWidgets('renders placeholder when asset is missing without errors',
-        (tester) async {
+    testWidgets('renders placeholder when asset is missing without errors', (
+      tester,
+    ) async {
       await pumpInitialState(tester, bundle: _FailingAssetBundle());
 
       await tester.pump();
@@ -479,8 +489,9 @@ void main() {
       expect(tester.takeException(), isNull);
     });
 
-    testWidgets('shows observer fallback when no travel actions',
-        (tester) async {
+    testWidgets('shows observer fallback when no travel actions', (
+      tester,
+    ) async {
       const observerAction = ActionOption(
         id: 'meta:observer',
         category: 'meta',
@@ -496,22 +507,28 @@ void main() {
         shortDescription: 'Short start description',
       );
 
-      when(() => adventureRepository.initialGame())
-          .thenAnswer((_) async => initialGame);
-      when(() => adventureRepository.locationById(1))
-          .thenAnswer((_) async => location);
-      when(() => listAvailableActions(initialGame))
-          .thenAnswer((_) async => const [observerAction]);
-      when(() => applyTurn(any(), any()))
-          .thenThrow(Exception('Should not be called'));
+      when(
+        () => adventureRepository.initialGame(),
+      ).thenAnswer((_) async => initialGame);
+      when(
+        () => adventureRepository.locationById(1),
+      ).thenAnswer((_) async => location);
+      when(
+        () => listAvailableActions(initialGame),
+      ).thenAnswer((_) async => const [observerAction]);
+      when(
+        () => applyTurn(any(), any()),
+      ).thenThrow(Exception('Should not be called'));
       when(() => saveRepository.autosave(any())).thenAnswer((_) async {});
 
-      await tester.pumpWidget(MaterialApp(
-        locale: const Locale('fr'),
-        supportedLocales: AppLocalizations.supportedLocales,
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        home: AdventurePage(controller: controller),
-      ));
+      await tester.pumpWidget(
+        MaterialApp(
+          locale: const Locale('fr'),
+          supportedLocales: AppLocalizations.supportedLocales,
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          home: AdventurePage(controller: controller),
+        ),
+      );
 
       await tester.pumpAndSettle();
 
@@ -562,20 +579,25 @@ void main() {
         visitedLocations: {1, 2},
       );
 
-      when(() => adventureRepository.initialGame())
-          .thenAnswer((_) async => historyGame);
-      when(() => adventureRepository.locationById(2))
-          .thenAnswer((_) async => currentLocation);
-      when(() => listAvailableActions(historyGame))
-          .thenAnswer((_) async => const [backAction]);
+      when(
+        () => adventureRepository.initialGame(),
+      ).thenAnswer((_) async => historyGame);
+      when(
+        () => adventureRepository.locationById(2),
+      ).thenAnswer((_) async => currentLocation);
+      when(
+        () => listAvailableActions(historyGame),
+      ).thenAnswer((_) async => const [backAction]);
       when(() => saveRepository.autosave(any())).thenAnswer((_) async {});
 
-      await tester.pumpWidget(MaterialApp(
-        locale: const Locale('fr'),
-        supportedLocales: AppLocalizations.supportedLocales,
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        home: AdventurePage(controller: controller),
-      ));
+      await tester.pumpWidget(
+        MaterialApp(
+          locale: const Locale('fr'),
+          supportedLocales: AppLocalizations.supportedLocales,
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          home: AdventurePage(controller: controller),
+        ),
+      );
       await tester.pumpAndSettle();
 
       clearInteractions(saveRepository);
@@ -585,10 +607,12 @@ void main() {
       when(() => applyTurn(any(), any())).thenAnswer(
         (_) async => TurnResult(returnedGame, const ['Back at the start.']),
       );
-      when(() => adventureRepository.locationById(1))
-          .thenAnswer((_) async => previousLocation);
-      when(() => listAvailableActions(returnedGame))
-          .thenAnswer((_) async => const <ActionOption>[]);
+      when(
+        () => adventureRepository.locationById(1),
+      ).thenAnswer((_) async => previousLocation);
+      when(
+        () => listAvailableActions(returnedGame),
+      ).thenAnswer((_) async => const <ActionOption>[]);
       when(() => saveRepository.autosave(any())).thenAnswer((_) async {});
 
       await tester.tap(find.text('Revenir'));
@@ -597,12 +621,14 @@ void main() {
 
       expect(find.text('LOC_START'), findsOneWidget);
       expect(find.text('Back at the start.'), findsWidgets);
-      verify(() =>
-              applyTurn(const Command(verb: 'BACK', target: '1'), historyGame))
-          .called(1);
-      verify(() => saveRepository.autosave(
-            const GameSnapshot(loc: 1, turns: 4, rngSeed: 42),
-          )).called(1);
+      verify(
+        () => applyTurn(const Command(verb: 'BACK', target: '1'), historyGame),
+      ).called(1);
+      verify(
+        () => saveRepository.autosave(
+          const GameSnapshot(loc: 1, turns: 4, rngSeed: 42),
+        ),
+      ).called(1);
     });
   });
 }
