@@ -370,6 +370,26 @@ void main() {
       verifyNever(() => saveRepository.autosave(any()));
     });
 
+    test('meta map defers to presentation layer', () async {
+      final previousState = controller.value;
+      clearInteractions(applyTurn);
+      clearInteractions(saveRepository);
+
+      const mapAction = ActionOption(
+        id: 'meta:map',
+        category: 'meta',
+        label: 'actions.map.label',
+        icon: 'map',
+        verb: 'MAP',
+      );
+
+      await controller.perform(mapAction);
+
+      expect(controller.value, same(previousState));
+      verifyNever(() => applyTurn(any(), any()));
+      verifyZeroInteractions(saveRepository);
+    });
+
     test('throws StateError if perform is called before init', () async {
       final freshController = GameController(
         adventureRepository: adventureRepository,

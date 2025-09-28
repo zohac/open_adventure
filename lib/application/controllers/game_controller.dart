@@ -170,6 +170,12 @@ class GameController extends ValueNotifier<GameViewState> {
         return;
       }
 
+      if (option.verb == 'MAP') {
+        // Navigation vers la carte gérée côté UI (onglet dédié S3).
+        // Le contrôleur ne déclenche pas de tour ni de mutation domaine.
+        return;
+      }
+
       if (option.verb == 'INVENTORY') {
         final TurnResult inventoryResult = await _inventoryUseCase(currentGame);
         final List<String> messages = inventoryResult.messages
