@@ -209,47 +209,47 @@ Risques & mitigations (S3)
 
 Suivi & tickets
 
-- [ ] ADVT‑S3‑01: Implémenter `EvaluateCondition` (types: carry, with, not, at, state, prop, have) + tests de vérité.
+- [x] ADVT‑S3‑01: Implémenter `EvaluateCondition` (types: carry, with, not, at, state, prop, have) + tests de vérité.
   - DoD:
-    - [ ] Chaque type retourne vrai/faux correct sur scénarios contrôlés; cas de combinaison `not` couvert; couverture ≥ 90% sur ce module.
-    - [ ] Revue de code CTO: séparation stricte (Domain vs UI), interactions/conditions encapsulées en use cases, tests Domain ≥ 85%.
-- [ ] ADVT‑S3‑02: Étendre `ListAvailableActions` — catégories `interaction` et `meta` (Inventaire/Observer/Carte) + tests.
+    - [x] Chaque type retourne vrai/faux correct sur scénarios contrôlés; cas de combinaison `not` couvert; couverture ≥ 90% sur ce module.
+    - [x] Revue de code CTO: séparation stricte (Domain vs UI), interactions/conditions encapsulées en use cases, tests Domain ≥ 85%.
+- [x] ADVT‑S3‑02: Étendre `ListAvailableActions` — catégories `interaction` et `meta` (Inventaire/Observer/Carte) + tests.
   - DoD:
-    - [ ] Options contextuelles visibles uniquement quand applicables; pas de doublons; tri par priorité (sécurité > travel > interaction > méta);
-    - [ ] Tests: présence de `Inventaire/Observer/Carte` et d’au moins 2 interactions valides.
-    - [ ] Revue de code CTO: séparation stricte (Domain vs UI), interactions/conditions encapsulées en use cases, tests Domain ≥ 85%.
-- [ ] ADVT‑S3‑03: Use case `TakeObject` — maj inventaire/lieu, interdits (immovable), messages + tests.
+    - [x] Options contextuelles visibles uniquement quand applicables; pas de doublons; tri par priorité (sécurité > travel > interaction > méta);
+    - [x] Tests: présence de `Inventaire/Observer/Carte` et d’au moins 2 interactions valides.
+    - [x] Revue de code CTO: séparation stricte (Domain vs UI), interactions/conditions encapsulées en use cases, tests Domain ≥ 85%.
+- [x] ADVT‑S3‑03: Use case `TakeObject` — maj inventaire/lieu, interdits (immovable), messages + tests.
   - DoD:
-    - [ ] Objet passe de lieu → inventaire; immovable interdit avec message spécifique; tests succès/échec.
-    - [ ] Revue de code CTO: séparation stricte (Domain vs UI), interactions/conditions encapsulées en use cases, tests Domain ≥ 85%.
-- [ ] ADVT‑S3‑04: Use case `DropObject` — maj inventaire/lieu, messages + tests.
+    - [x] Objet passe de lieu → inventaire; immovable interdit avec message spécifique; tests succès/échec.
+    - [x] Revue de code CTO: séparation stricte (Domain vs UI), interactions/conditions encapsulées en use cases, tests Domain ≥ 85%.
+- [x] ADVT‑S3‑04: Use case `DropObject` — maj inventaire/lieu, messages + tests.
   - DoD:
-    - [ ] Objet retiré de l’inventaire et visible au lieu courant; message ajouté au journal; tests verts.
-    - [ ] Revue de code CTO: séparation stricte (Domain vs UI), interactions/conditions encapsulées en use cases, tests Domain ≥ 85%.
-- [ ] ADVT‑S3‑05: Use case `OpenObject` — gestion états simples via `states/descriptions`, contraintes triviales + tests.
+    - [x] Objet retiré de l’inventaire et visible au lieu courant; message ajouté au journal; tests verts.
+    - [x] Revue de code CTO: séparation stricte (Domain vs UI), interactions/conditions encapsulées en use cases, tests Domain ≥ 85%.
+- [x] ADVT‑S3‑05: Use case `OpenObject` — gestion états simples via `states/descriptions`, contraintes triviales + tests.
   - DoD:
-    - [ ] État bascule open; description cohérente; échec si condition non satisfaite (clé manquante) — S3: cas trivials seulement.
-    - [ ] Revue de code CTO: séparation stricte (Domain vs UI), interactions/conditions encapsulées en use cases, tests Domain ≥ 85%.
-- [ ] ADVT‑S3‑06: Use case `CloseObject` — états inverses + tests.
+    - [x] État bascule open; description cohérente; échec si condition non satisfaite (clé manquante) — S3: cas trivials seulement.
+    - [x] Revue de code CTO: séparation stricte (Domain vs UI), interactions/conditions encapsulées en use cases, tests Domain ≥ 85%.
+- [x] ADVT‑S3‑06: Use case `CloseObject` — états inverses + tests.
   - DoD:
-    - [ ] État bascule closed; messages corrects; tests couverts.
-    - [ ] Revue de code CTO: séparation stricte (Domain vs UI), interactions/conditions encapsulées en use cases, tests Domain ≥ 85%.
-- [ ] ADVT‑S3‑07: Use case `LightLamp` — prérequis batterie, flags, messages + tests (incl. échec).
+    - [x] État bascule closed; messages corrects; tests couverts.
+    - [x] Revue de code CTO: séparation stricte (Domain vs UI), interactions/conditions encapsulées en use cases, tests Domain ≥ 85%.
+- [x] ADVT‑S3‑07: Use case `LightLamp` — prérequis batterie, flags, messages + tests (incl. échec).
   - DoD:
-    - [ ] Lampe passe à allumée; compteur non négatif; message d’avertissement quand seuil; test d’échec batterie vide.
-    - [ ] Revue de code CTO: séparation stricte (Domain vs UI), interactions/conditions encapsulées en use cases, tests Domain ≥ 85%.
-- [ ] ADVT‑S3‑08: Use case `ExtinguishLamp` — transitions + tests.
+    - [x] Lampe passe à allumée; compteur non négatif; message d’avertissement quand seuil; test d’échec batterie vide.
+    - [x] Revue de code CTO: séparation stricte (Domain vs UI), interactions/conditions encapsulées en use cases, tests Domain ≥ 85%.
+- [x] ADVT‑S3‑08: Use case `ExtinguishLamp` — transitions + tests.
   - DoD:
-    - [ ] Lampe éteinte; pas de décrément au tour suivant; tests verts.
-    - [ ] Revue de code CTO: séparation stricte (Domain vs UI), interactions/conditions encapsulées en use cases, tests Domain ≥ 85%.
-- [ ] ADVT‑S3‑09: Use case `Examine` — description contextuelle (courte/longue) + tests.
+    - [x] Lampe éteinte; pas de décrément au tour suivant; tests verts.
+    - [x] Revue de code CTO: séparation stricte (Domain vs UI), interactions/conditions encapsulées en use cases, tests Domain ≥ 85%.
+- [x] ADVT‑S3‑09: Use case `Examine` — description contextuelle (courte/longue) + tests.
   - DoD:
-    - [ ] Retourne description adaptée au contexte (porté/en vue); message non vide; tests.
-    - [ ] Revue de code CTO: séparation stricte (Domain vs UI), interactions/conditions encapsulées en use cases, tests Domain ≥ 85%.
-- [ ] ADVT‑S3‑10: `InventoryUseCase` — rendu texte de l’inventaire pour journal/UI + tests.
+    - [x] Retourne description adaptée au contexte (porté/en vue); message non vide; tests.
+    - [x] Revue de code CTO: séparation stricte (Domain vs UI), interactions/conditions encapsulées en use cases, tests Domain ≥ 85%.
+- [x] ADVT‑S3‑10: `InventoryUseCase` — rendu texte de l’inventaire pour journal/UI + tests.
   - DoD:
-    - [ ] Liste formatée stable; test d’objets multiples, ordre défini.
-    - [ ] Revue de code CTO: séparation stricte (Domain vs UI), interactions/conditions encapsulées en use cases, tests Domain ≥ 85%.
+    - [x] Liste formatée stable; test d’objets multiples, ordre défini.
+    - [x] Revue de code CTO: séparation stricte (Domain vs UI), interactions/conditions encapsulées en use cases, tests Domain ≥ 85%.
 - [ ] ADVT‑S3‑11: `DwarfSystem.tick` (minimal) — apparition/déplacement, messages, déterminisme par seed + tests.
   - DoD:
     - [ ] Avec seed fixe, séquence de messages stable; aucune modification d’objets/chemins en S3; tests 100%.
