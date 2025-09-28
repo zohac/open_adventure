@@ -6,6 +6,7 @@ import 'package:open_adventure/domain/entities/location.dart';
 import 'package:open_adventure/domain/repositories/adventure_repository.dart';
 import 'package:open_adventure/domain/repositories/save_repository.dart';
 import 'package:open_adventure/domain/usecases/apply_turn_goto.dart';
+import 'package:open_adventure/domain/usecases/inventory.dart';
 import 'package:open_adventure/domain/usecases/list_available_actions.dart';
 import 'package:open_adventure/domain/value_objects/action_option.dart';
 import 'package:open_adventure/domain/value_objects/command.dart';
@@ -20,6 +21,8 @@ class _MockApplyTurnGoto extends Mock implements ApplyTurnGoto {}
 
 class _MockSaveRepository extends Mock implements SaveRepository {}
 
+class _MockInventoryUseCase extends Mock implements InventoryUseCase {}
+
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
@@ -27,6 +30,7 @@ void main() {
   late _MockListAvailableActions listAvailableActions;
   late _MockApplyTurnGoto applyTurn;
   late _MockSaveRepository saveRepository;
+  late _MockInventoryUseCase inventoryUseCase;
   late GameController controller;
 
   const initialGame = Game(
@@ -51,10 +55,12 @@ void main() {
     listAvailableActions = _MockListAvailableActions();
     applyTurn = _MockApplyTurnGoto();
     saveRepository = _MockSaveRepository();
+    inventoryUseCase = _MockInventoryUseCase();
 
     controller = GameController(
       adventureRepository: adventureRepository,
       listAvailableActions: listAvailableActions,
+      inventoryUseCase: inventoryUseCase,
       applyTurn: applyTurn,
       saveRepository: saveRepository,
     );
@@ -331,10 +337,44 @@ void main() {
       },
     );
 
+    test('meta inventory delegates to use case and appends journal', () async {
+      when(() => inventoryUseCase(any())).thenAnswer(
+        (_) async => TurnResult(initialGame, const <String>[
+          'You are carrying:',
+          '• Brass lantern',
+        ]),
+      );
+
+      const inventoryAction = ActionOption(
+        id: 'meta:inventory',
+        category: 'meta',
+        label: 'actions.inventory.label',
+        icon: 'inventory',
+        verb: 'INVENTORY',
+      );
+
+      await controller.perform(inventoryAction);
+
+      final state = controller.value;
+      expect(state.game, equals(initialGame));
+      expect(
+        state.journal,
+        equals(const <String>[
+          'Long start description',
+          'You are carrying:',
+          '• Brass lantern',
+        ]),
+      );
+      verify(() => inventoryUseCase(any())).called(1);
+      verifyNever(() => applyTurn(any(), any()));
+      verifyNever(() => saveRepository.autosave(any()));
+    });
+
     test('throws StateError if perform is called before init', () async {
       final freshController = GameController(
         adventureRepository: adventureRepository,
         listAvailableActions: listAvailableActions,
+        inventoryUseCase: inventoryUseCase,
         applyTurn: applyTurn,
         saveRepository: saveRepository,
       );

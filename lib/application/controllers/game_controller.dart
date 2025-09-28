@@ -6,6 +6,7 @@ import 'package:open_adventure/domain/entities/location.dart';
 import 'package:open_adventure/domain/repositories/adventure_repository.dart';
 import 'package:open_adventure/domain/repositories/save_repository.dart';
 import 'package:open_adventure/domain/usecases/apply_turn_goto.dart';
+import 'package:open_adventure/domain/usecases/inventory.dart';
 import 'package:open_adventure/domain/usecases/list_available_actions.dart';
 import 'package:open_adventure/domain/value_objects/action_option.dart';
 import 'package:open_adventure/domain/value_objects/command.dart';
@@ -89,16 +90,19 @@ class GameController extends ValueNotifier<GameViewState> {
   GameController({
     required AdventureRepository adventureRepository,
     required ListAvailableActions listAvailableActions,
+    required InventoryUseCase inventoryUseCase,
     required ApplyTurnGoto applyTurn,
     required SaveRepository saveRepository,
   }) : _adventureRepository = adventureRepository,
        _listAvailableActions = listAvailableActions,
+       _inventoryUseCase = inventoryUseCase,
        _applyTurn = applyTurn,
        _saveRepository = saveRepository,
        super(GameViewState.initial());
 
   final AdventureRepository _adventureRepository;
   final ListAvailableActions _listAvailableActions;
+  final InventoryUseCase _inventoryUseCase;
   final ApplyTurnGoto _applyTurn;
   final SaveRepository _saveRepository;
 
@@ -144,25 +148,47 @@ class GameController extends ValueNotifier<GameViewState> {
       throw StateError('Cannot perform action before init() succeeds.');
     }
 
-    if (option.category == 'meta' && option.verb == 'OBSERVER') {
-      final Location location = await _adventureRepository.locationById(
-        currentGame.loc,
-      );
-      final description = location.longDescription?.isNotEmpty == true
-          ? location.longDescription!
-          : location.shortDescription ?? '';
-      final updatedJournal = _appendJournal(
-        value.journal,
-        [description].where((m) => m.isNotEmpty).toList(),
-      );
-      value = value.copyWith(
-        locationDescription: description,
-        journal: List.unmodifiable(updatedJournal),
-        locationTitle: location.name,
-        locationMapTag: location.mapTag,
-        locationId: location.id,
-      );
-      return;
+    if (option.category == 'meta') {
+      if (option.verb == 'OBSERVER') {
+        final Location location = await _adventureRepository.locationById(
+          currentGame.loc,
+        );
+        final description = location.longDescription?.isNotEmpty == true
+            ? location.longDescription!
+            : location.shortDescription ?? '';
+        final updatedJournal = _appendJournal(
+          value.journal,
+          [description].where((m) => m.isNotEmpty).toList(),
+        );
+        value = value.copyWith(
+          locationDescription: description,
+          journal: List.unmodifiable(updatedJournal),
+          locationTitle: location.name,
+          locationMapTag: location.mapTag,
+          locationId: location.id,
+        );
+        return;
+      }
+
+      if (option.verb == 'INVENTORY') {
+        final TurnResult inventoryResult = await _inventoryUseCase(currentGame);
+        final List<String> messages = inventoryResult.messages
+            .where((message) => message.isNotEmpty)
+            .toList();
+        if (messages.isEmpty) {
+          value = value.copyWith(game: inventoryResult.newGame);
+          return;
+        }
+        final List<String> updatedJournal = _appendJournal(
+          value.journal,
+          messages,
+        );
+        value = value.copyWith(
+          game: inventoryResult.newGame,
+          journal: List.unmodifiable(updatedJournal),
+        );
+        return;
+      }
     }
 
     if (!currentGame.magicWordsUnlocked &&

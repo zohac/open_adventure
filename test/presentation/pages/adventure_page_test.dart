@@ -8,6 +8,7 @@ import 'package:open_adventure/domain/entities/location.dart';
 import 'package:open_adventure/domain/repositories/adventure_repository.dart';
 import 'package:open_adventure/domain/repositories/save_repository.dart';
 import 'package:open_adventure/domain/usecases/apply_turn_goto.dart';
+import 'package:open_adventure/domain/usecases/inventory.dart';
 import 'package:open_adventure/domain/usecases/list_available_actions.dart';
 import 'package:open_adventure/domain/value_objects/action_option.dart';
 import 'package:open_adventure/domain/value_objects/command.dart';
@@ -26,6 +27,8 @@ class _MockApplyTurnGoto extends Mock implements ApplyTurnGoto {}
 
 class _MockSaveRepository extends Mock implements SaveRepository {}
 
+class _MockInventoryUseCase extends Mock implements InventoryUseCase {}
+
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
@@ -42,6 +45,7 @@ void main() {
     late _MockListAvailableActions listAvailableActions;
     late _MockApplyTurnGoto applyTurn;
     late _MockSaveRepository saveRepository;
+    late _MockInventoryUseCase inventoryUseCase;
     late GameController controller;
 
     const initialGame = Game(
@@ -59,9 +63,12 @@ void main() {
       applyTurn = _MockApplyTurnGoto();
       saveRepository = _MockSaveRepository();
 
+      inventoryUseCase = _MockInventoryUseCase();
+
       controller = GameController(
         adventureRepository: adventureRepository,
         listAvailableActions: listAvailableActions,
+        inventoryUseCase: inventoryUseCase,
         applyTurn: applyTurn,
         saveRepository: saveRepository,
       );
@@ -78,8 +85,7 @@ void main() {
         longDescription: 'Long start description',
         shortDescription: 'Short start description',
       );
-      final actions =
-          actionsOverride ??
+      final actions = actionsOverride ??
           <ActionOption>[
             const ActionOption(
               id: 'travel:1->2:WEST',

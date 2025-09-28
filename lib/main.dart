@@ -13,6 +13,7 @@ import 'package:open_adventure/data/services/motion_normalizer_impl.dart';
 import 'package:open_adventure/domain/usecases/load_audio_settings.dart';
 import 'package:open_adventure/domain/usecases/apply_turn_goto.dart';
 import 'package:open_adventure/domain/usecases/evaluate_condition.dart';
+import 'package:open_adventure/domain/usecases/inventory.dart';
 import 'package:open_adventure/domain/usecases/list_available_actions.dart';
 import 'package:open_adventure/domain/usecases/save_audio_settings.dart';
 import 'package:open_adventure/presentation/pages/home_page.dart';
@@ -33,6 +34,9 @@ Future<void> main() async {
     travel: listAvailableActionsTravel,
     evaluateCondition: evaluateCondition,
   );
+  final inventoryUseCase = InventoryUseCaseImpl(
+    adventureRepository: adventureRepository,
+  );
   final applyTurn = ApplyTurnGoto(adventureRepository, motionNormalizer);
   final saveRepository = SaveRepositoryImpl();
 
@@ -50,6 +54,7 @@ Future<void> main() async {
   final controller = GameController(
     adventureRepository: adventureRepository,
     listAvailableActions: listAvailableActions,
+    inventoryUseCase: inventoryUseCase,
     applyTurn: applyTurn,
     saveRepository: saveRepository,
   );
