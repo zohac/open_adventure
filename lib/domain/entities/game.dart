@@ -34,6 +34,18 @@ class Game {
   /// Global boolean flags representing abstract conditions.
   final Set<String> flags;
 
+  /// Remaining number of turns the lamp can stay lit. `-1` once depleted.
+  final int limit;
+
+  /// Clock #1 mirror from the original adventure logic (used for events).
+  final int clock1;
+
+  /// Clock #2 mirror from the original adventure logic (used for events).
+  final int clock2;
+
+  /// Whether the low-lamp warning has already been surfaced to the player.
+  final bool lampWarningIssued;
+
   /// Creates an immutable Game state.
   const Game({
     required this.loc,
@@ -46,6 +58,10 @@ class Game {
     this.magicWordsUnlocked = false,
     this.objectStates = const <int, GameObjectState>{},
     this.flags = const <String>{},
+    this.limit = 0,
+    this.clock1 = 0,
+    this.clock2 = 0,
+    this.lampWarningIssued = false,
   }) : oldLc2 = oldLc2 ?? oldLoc;
 
   /// Returns a copy with updated fields.
@@ -60,6 +76,10 @@ class Game {
     bool? magicWordsUnlocked,
     Map<int, GameObjectState>? objectStates,
     Set<String>? flags,
+    int? limit,
+    int? clock1,
+    int? clock2,
+    bool? lampWarningIssued,
   }) => Game(
     loc: loc ?? this.loc,
     oldLoc: oldLoc ?? this.oldLoc,
@@ -71,6 +91,10 @@ class Game {
     magicWordsUnlocked: magicWordsUnlocked ?? this.magicWordsUnlocked,
     objectStates: objectStates ?? this.objectStates,
     flags: flags ?? this.flags,
+    limit: limit ?? this.limit,
+    clock1: clock1 ?? this.clock1,
+    clock2: clock2 ?? this.clock2,
+    lampWarningIssued: lampWarningIssued ?? this.lampWarningIssued,
   );
 
   static const SetEquality<int> _setEquality = SetEquality<int>();
@@ -91,7 +115,11 @@ class Game {
         _setEquality.equals(visitedLocations, other.visitedLocations) &&
         magicWordsUnlocked == other.magicWordsUnlocked &&
         _objectMapEquality.equals(objectStates, other.objectStates) &&
-        _flagEquality.equals(flags, other.flags);
+        _flagEquality.equals(flags, other.flags) &&
+        limit == other.limit &&
+        clock1 == other.clock1 &&
+        clock2 == other.clock2 &&
+        lampWarningIssued == other.lampWarningIssued;
   }
 
   @override
@@ -106,5 +134,9 @@ class Game {
     magicWordsUnlocked,
     _objectMapEquality.hash(objectStates),
     _flagEquality.hash(flags),
+    limit,
+    clock1,
+    clock2,
+    lampWarningIssued,
   );
 }
