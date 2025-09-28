@@ -160,27 +160,26 @@ class ListAvailableActions {
             objectId: objectId,
           ),
         );
-        continue;
-      }
+      } else {
+        final bool isTakeable =
+            !object.immovable &&
+            _evaluateCondition(
+              Condition.not(Condition.carry(objectId: state.id)),
+              game,
+            );
 
-      final bool isTakeable =
-          !object.immovable &&
-          _evaluateCondition(
-            Condition.not(Condition.carry(objectId: state.id)),
-            game,
+        if (isTakeable) {
+          options.add(
+            ActionOption(
+              id: 'interaction:take:$objectId',
+              category: 'interaction',
+              label: 'actions.interaction.take.$keySuffix',
+              icon: 'file_download',
+              verb: 'TAKE',
+              objectId: objectId,
+            ),
           );
-
-      if (isTakeable) {
-        options.add(
-          ActionOption(
-            id: 'interaction:take:$objectId',
-            category: 'interaction',
-            label: 'actions.interaction.take.$keySuffix',
-            icon: 'file_download',
-            verb: 'TAKE',
-            objectId: objectId,
-          ),
-        );
+        }
       }
 
       if (object.name == 'LAMP') {
@@ -328,6 +327,11 @@ class ListAvailableActions {
       game,
     );
     if (alreadyOpen) {
+      return null;
+    }
+
+    final bool isAccessible = state.isCarried || state.isAt(game.loc);
+    if (!isAccessible) {
       return null;
     }
 

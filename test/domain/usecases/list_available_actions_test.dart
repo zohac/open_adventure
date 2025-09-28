@@ -311,6 +311,71 @@ void main() {
       expect(closeOption.objectId, '3');
     });
 
+    test('retains carried interactions beyond drop', () async {
+      const carriedLamp = GameObjectState(
+        id: 4,
+        isCarried: true,
+        state: 'LAMP_DARK',
+        prop: 50,
+      );
+      const carriedChest = GameObjectState(
+        id: 5,
+        isCarried: true,
+        state: 'CHEST_CLOSED',
+      );
+
+      final game = Game(
+        loc: 5,
+        oldLoc: 5,
+        newLoc: 5,
+        turns: 0,
+        rngSeed: 42,
+        objectStates: const {
+          4: carriedLamp,
+          5: carriedChest,
+        },
+        limit: 40,
+      );
+
+      when(() => travel(game)).thenAnswer((_) async => const <ActionOption>[]);
+
+      when(() => adventureRepository.getGameObjects()).thenAnswer(
+        (_) async => const [
+          GameObject(
+            id: 4,
+            name: 'LAMP',
+            states: <String>['LAMP_DARK', 'LAMP_BRIGHT'],
+          ),
+          GameObject(
+            id: 5,
+            name: 'CHEST',
+            states: <String>['CHEST_CLOSED', 'CHEST_OPEN'],
+          ),
+        ],
+      );
+
+      final options = await usecase(game);
+
+      final interactionOptions = options
+          .where((option) => option.category == 'interaction')
+          .toList();
+
+      expect(
+        interactionOptions.map((option) => option.id).toSet(),
+        containsAll(<String>{
+          'interaction:drop:4',
+          'interaction:light:4',
+          'interaction:drop:5',
+          'interaction:open:5',
+        }),
+      );
+
+      expect(
+        interactionOptions.map((option) => option.id),
+        isNot(contains('interaction:take:4')),
+      );
+    });
+
     test(
       'omits interaction lookup when no object states are tracked',
       () async {
