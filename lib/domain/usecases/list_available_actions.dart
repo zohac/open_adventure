@@ -183,6 +183,16 @@ class ListAvailableActions {
         );
       }
 
+      if (object.name == 'LAMP') {
+        options.addAll(
+          _buildLampActions(
+            object: object,
+            state: state,
+            game: game,
+          ),
+        );
+      }
+
       final ActionOption? openAction = _buildOpenAction(
         object: object,
         state: state,
@@ -215,6 +225,68 @@ class ListAvailableActions {
     });
 
     return options;
+  }
+
+  List<ActionOption> _buildLampActions({
+    required GameObject object,
+    required GameObjectState state,
+    required Game game,
+  }) {
+    final List<String>? definedStates = object.states;
+    if (definedStates == null || definedStates.isEmpty) {
+      return const <ActionOption>[];
+    }
+
+    final int brightIndex = _indexWhere(
+      definedStates,
+      (value) => value.contains('BRIGHT'),
+    );
+    final int darkIndex = _indexWhere(
+      definedStates,
+      (value) => value.contains('DARK'),
+    );
+    if (brightIndex == -1 || darkIndex == -1) {
+      return const <ActionOption>[];
+    }
+
+    final String brightStateValue = definedStates[brightIndex];
+    final bool isAccessible = state.isCarried || state.isAt(game.loc);
+    if (!isAccessible) {
+      return const <ActionOption>[];
+    }
+
+    final List<ActionOption> lampOptions = <ActionOption>[];
+    final bool isLit = _evaluateCondition(
+      Condition.state(objectId: object.id, value: brightStateValue),
+      game,
+    );
+    if (!isLit && game.limit > 0) {
+      lampOptions.add(
+        ActionOption(
+          id: 'interaction:light:${object.id}',
+          category: 'interaction',
+          label: 'actions.interaction.light.${object.name}',
+          icon: 'flash_on',
+          verb: 'LIGHT',
+          objectId: object.id.toString(),
+        ),
+      );
+    }
+
+    if (isLit) {
+      lampOptions.add(
+        ActionOption(
+          id: 'interaction:extinguish:${object.id}',
+          category: 'interaction',
+          label: 'actions.interaction.extinguish.${object.name}',
+          icon: 'flash_off',
+          verb: 'EXTINGUISH',
+          objectId: object.id.toString(),
+        ),
+      );
+    }
+
+    return lampOptions;
   }
 
   static int _priorityFor(String category) {

@@ -33,6 +33,12 @@ void main() {
   group('ListAvailableActions', () {
     const carriedKeys = GameObjectState(id: 1, isCarried: true);
     const nearbyStone = GameObjectState(id: 2, location: 5);
+    const lampState = GameObjectState(
+      id: 4,
+      location: 5,
+      state: 'LAMP_DARK',
+      prop: 0,
+    );
     const grateState = GameObjectState(
       id: 3,
       location: 5,
@@ -48,7 +54,13 @@ void main() {
           newLoc: 5,
           turns: 0,
           rngSeed: 42,
-          objectStates: const {1: carriedKeys, 2: nearbyStone, 3: grateState},
+          objectStates: const {
+            1: carriedKeys,
+            2: nearbyStone,
+            3: grateState,
+            4: lampState,
+          },
+          limit: 120,
         );
 
         when(() => travel(game)).thenAnswer(
@@ -78,6 +90,11 @@ void main() {
               id: 3,
               name: 'GRATE',
               states: <String>['GRATE_CLOSED', 'GRATE_OPEN'],
+            ),
+            GameObject(
+              id: 4,
+              name: 'LAMP',
+              states: <String>['LAMP_DARK', 'LAMP_BRIGHT'],
             ),
           ],
         );
@@ -109,10 +126,10 @@ void main() {
         final interactionOptions = options
             .where((option) => option.category == 'interaction')
             .toList();
-        expect(interactionOptions.length, greaterThanOrEqualTo(4));
+        expect(interactionOptions.length, greaterThanOrEqualTo(5));
         expect(
           interactionOptions.map((option) => option.verb).toSet(),
-          containsAll({'EXAMINE', 'DROP', 'TAKE', 'OPEN'}),
+          containsAll({'EXAMINE', 'DROP', 'TAKE', 'OPEN', 'LIGHT'}),
         );
 
         final dropAction = interactionOptions.firstWhere(
@@ -127,6 +144,11 @@ void main() {
           (option) => option.id == 'interaction:open:3',
         );
         expect(openAction.objectId, '3');
+
+        final lightAction = interactionOptions.firstWhere(
+          (option) => option.id == 'interaction:light:4',
+        );
+        expect(lightAction.objectId, '4');
 
         final observerCount = options
             .where((option) => option.id == 'meta:observer')
@@ -165,6 +187,87 @@ void main() {
 
       expect(
         options.where((option) => option.id == 'interaction:open:3'),
+        isEmpty,
+      );
+    });
+
+    test('shows extinguish when lamp is lit and accessible', () async {
+      final game = Game(
+        loc: 5,
+        oldLoc: 5,
+        newLoc: 5,
+        turns: 0,
+        rngSeed: 42,
+        objectStates: const {
+          4: GameObjectState(
+            id: 4,
+            location: 5,
+            state: 'LAMP_BRIGHT',
+            prop: 1,
+          ),
+        },
+        limit: 100,
+      );
+
+      when(() => travel(game)).thenAnswer((_) async => const <ActionOption>[]);
+
+      when(() => adventureRepository.getGameObjects()).thenAnswer(
+        (_) async => const [
+          GameObject(
+            id: 4,
+            name: 'LAMP',
+            states: <String>['LAMP_DARK', 'LAMP_BRIGHT'],
+          ),
+        ],
+      );
+
+      final options = await usecase(game);
+
+      final extinguishOptions = options.where(
+        (option) => option.id == 'interaction:extinguish:4',
+      );
+      expect(extinguishOptions.length, 1);
+      expect(extinguishOptions.first.verb, 'EXTINGUISH');
+    });
+
+    test('hides light when lamp battery depleted', () async {
+      final game = Game(
+        loc: 5,
+        oldLoc: 5,
+        newLoc: 5,
+        turns: 0,
+        rngSeed: 42,
+        objectStates: const {
+          4: GameObjectState(
+            id: 4,
+            location: 5,
+            state: 'LAMP_DARK',
+            prop: 0,
+          ),
+        },
+        limit: 0,
+      );
+
+      when(() => travel(game)).thenAnswer((_) async => const <ActionOption>[]);
+
+      when(() => adventureRepository.getGameObjects()).thenAnswer(
+        (_) async => const [
+          GameObject(
+            id: 4,
+            name: 'LAMP',
+            states: <String>['LAMP_DARK', 'LAMP_BRIGHT'],
+          ),
+        ],
+      );
+
+      final options = await usecase(game);
+
+      expect(
+        options.where((option) => option.id == 'interaction:light:4'),
+        isEmpty,
+      );
+      expect(
+        options.where((option) => option.id == 'interaction:extinguish:4'),
         isEmpty,
       );
     });
