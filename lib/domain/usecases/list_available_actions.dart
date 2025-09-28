@@ -191,6 +191,15 @@ class ListAvailableActions {
       if (openAction != null) {
         options.add(openAction);
       }
+
+      final ActionOption? closeAction = _buildCloseAction(
+        object: object,
+        state: state,
+        game: game,
+      );
+      if (closeAction != null) {
+        options.add(closeAction);
+      }
     }
 
     options.sort((a, b) {
@@ -267,6 +276,48 @@ class ListAvailableActions {
       label: 'actions.interaction.open.${object.name}',
       icon: 'lock_open',
       verb: 'OPEN',
+      objectId: object.id.toString(),
+    );
+  }
+
+  ActionOption? _buildCloseAction({
+    required GameObject object,
+    required GameObjectState state,
+    required Game game,
+  }) {
+    final List<String>? definedStates = object.states;
+    if (definedStates == null || definedStates.isEmpty) {
+      return null;
+    }
+
+    final int closeIndex = _indexWhere(
+      definedStates,
+      (value) => value.contains('CLOSE'),
+    );
+    if (closeIndex == -1) {
+      return null;
+    }
+
+    final String closeStateValue = definedStates[closeIndex];
+    final bool alreadyClosed = _evaluateCondition(
+      Condition.state(objectId: object.id, value: closeStateValue),
+      game,
+    );
+    if (alreadyClosed) {
+      return null;
+    }
+
+    final bool isAccessible = state.isCarried || state.isAt(game.loc);
+    if (!isAccessible) {
+      return null;
+    }
+
+    return ActionOption(
+      id: 'interaction:close:${object.id}',
+      category: 'interaction',
+      label: 'actions.interaction.close.${object.name}',
+      icon: 'lock',
+      verb: 'CLOSE',
       objectId: object.id.toString(),
     );
   }

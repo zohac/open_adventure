@@ -169,6 +169,45 @@ void main() {
       );
     });
 
+    test('exposes close when object is open and accessible', () async {
+      final game = Game(
+        loc: 5,
+        oldLoc: 5,
+        newLoc: 5,
+        turns: 0,
+        rngSeed: 42,
+        objectStates: const {
+          3: GameObjectState(id: 3, location: 5, state: 'GRATE_OPEN'),
+        },
+      );
+
+      when(() => travel(game)).thenAnswer((_) async => const <ActionOption>[]);
+
+      when(() => adventureRepository.getGameObjects()).thenAnswer(
+        (_) async => const [
+          GameObject(
+            id: 3,
+            name: 'GRATE',
+            states: <String>['GRATE_CLOSED', 'GRATE_OPEN'],
+          ),
+        ],
+      );
+
+      final options = await usecase(game);
+
+      expect(
+        options.where((option) => option.id == 'interaction:open:3'),
+        isEmpty,
+      );
+
+      final closeOption = options.firstWhere(
+        (option) => option.id == 'interaction:close:3',
+      );
+      expect(closeOption.category, 'interaction');
+      expect(closeOption.verb, 'CLOSE');
+      expect(closeOption.objectId, '3');
+    });
+
     test(
       'omits interaction lookup when no object states are tracked',
       () async {
