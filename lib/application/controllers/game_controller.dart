@@ -245,7 +245,8 @@ class GameController extends ValueNotifier<GameViewState> {
               : _selectDescription(location, firstVisit: false))
         : value.locationDescription;
     final List<String> updatedJournal = _appendJournal(value.journal, messages);
-    final String? flashMessage = messages.isNotEmpty ? messages.last : null;
+    final String? flashMessage =
+        messages.isNotEmpty ? messages.join('\n') : null;
 
     value = value.copyWith(
       game: newGame,

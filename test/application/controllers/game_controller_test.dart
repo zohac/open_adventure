@@ -336,7 +336,7 @@ void main() {
           state.journal.sublist(state.journal.length - 3),
           equals(messages),
         );
-        expect(state.flashMessage, equals('There are some keys on the floor.'));
+        expect(state.flashMessage, equals(messages.join('\n')));
       },
     );
 
@@ -371,7 +371,10 @@ void main() {
           'A dwarf watches you.',
         ]),
       );
-      expect(state.flashMessage, equals('A dwarf watches you.'));
+      expect(
+        state.flashMessage,
+        equals('Short west description\nA dwarf watches you.'),
+      );
       verify(() => dwarfSystem.tick(nextGame)).called(1);
       verify(
         () => saveRepository.autosave(
@@ -525,7 +528,10 @@ void main() {
       expect(game.limit, equals(30));
       expect(game.lampWarningIssued, isTrue);
       expect(state.journal.last, equals('Lamp dim message'));
-      expect(state.flashMessage, equals('Lamp dim message'));
+      expect(
+        state.flashMessage,
+        equals('Nothing happens.\nLamp dim message'),
+      );
       verify(
         () => adventureRepository.arbitraryMessage(
           'LAMP_DIM',
@@ -599,7 +605,10 @@ void main() {
       expect(game.lampWarningIssued, isTrue);
       expect(game.objectStates[7], equals(depletedLamp));
       expect(state.journal.last, equals('Lamp out message'));
-      expect(state.flashMessage, equals('Lamp out message'));
+      expect(
+        state.flashMessage,
+        equals('Nothing happens.\nLamp out message'),
+      );
       verify(
         () => adventureRepository.arbitraryMessage(
           'LAMP_OUT',

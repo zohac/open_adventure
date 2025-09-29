@@ -577,6 +577,55 @@ void main() {
       );
     });
 
+    testWidgets('aggregates multi-line flash message when provided', (
+      tester,
+    ) async {
+      await pumpInitialState(tester);
+
+      const nextGame = Game(
+        loc: 2,
+        oldLoc: 1,
+        newLoc: 2,
+        turns: 1,
+        rngSeed: 42,
+        visitedLocations: {1, 2},
+      );
+      final nextLocation = Location(
+        id: 2,
+        name: 'LOC_WEST',
+        shortDescription: 'Short west description',
+      );
+      const messages = <String>[
+        'Short west description',
+        'There is a shiny brass lamp nearby.',
+        'There are some keys on the floor.',
+      ];
+      when(() => applyTurn(any(), any())).thenAnswer(
+        (_) async => TurnResult(nextGame, messages),
+      );
+      when(
+        () => adventureRepository.locationById(2),
+      ).thenAnswer((_) async => nextLocation);
+      when(
+        () => listAvailableActions(nextGame),
+      ).thenAnswer((_) async => const <ActionOption>[]);
+      when(() => saveRepository.autosave(any())).thenAnswer((_) async {});
+
+      await tester.tap(find.text('Aller Ouest'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 200));
+
+      final overlayFinder = find.byKey(FlashMessageListener.flashMessageKey);
+      expect(overlayFinder, findsOneWidget);
+      expect(
+        find.descendant(
+          of: overlayFinder,
+          matching: find.text(messages.join('\n')),
+        ),
+        findsOneWidget,
+      );
+    });
+
     testWidgets('renders placeholder when asset is missing without errors', (
       tester,
     ) async {
