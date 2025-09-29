@@ -192,6 +192,16 @@ class ListAvailableActions {
         );
       }
 
+      if (object.name == 'BOTTLE') {
+        options.addAll(
+          _buildBottleActions(
+            object: object,
+            state: state,
+            game: game,
+          ),
+        );
+      }
+
       final ActionOption? openAction = _buildOpenAction(
         object: object,
         state: state,
@@ -286,6 +296,49 @@ class ListAvailableActions {
     }
 
     return lampOptions;
+  }
+
+  List<ActionOption> _buildBottleActions({
+    required GameObject object,
+    required GameObjectState state,
+    required Game game,
+  }) {
+    final List<String>? definedStates = object.states;
+    if (definedStates == null || definedStates.isEmpty) {
+      return const <ActionOption>[];
+    }
+
+    final int waterIndex = _indexWhere(
+      definedStates,
+      (value) => value.contains('WATER'),
+    );
+    if (waterIndex == -1) {
+      return const <ActionOption>[];
+    }
+
+    final bool isAccessible = state.isCarried || state.isAt(game.loc);
+    if (!isAccessible) {
+      return const <ActionOption>[];
+    }
+
+    final bool hasWater = _evaluateCondition(
+      Condition.state(objectId: object.id, value: definedStates[waterIndex]),
+      game,
+    );
+    if (!hasWater) {
+      return const <ActionOption>[];
+    }
+
+    return <ActionOption>[
+      ActionOption(
+        id: 'interaction:drink:${object.id}',
+        category: 'interaction',
+        label: 'actions.interaction.drink.${object.name}',
+        icon: 'local_drink',
+        verb: 'DRINK',
+        objectId: object.id.toString(),
+      ),
+    ];
   }
 
   static int _priorityFor(String category) {

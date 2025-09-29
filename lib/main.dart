@@ -17,6 +17,7 @@ import 'package:open_adventure/domain/usecases/drop_object.dart';
 import 'package:open_adventure/domain/usecases/evaluate_condition.dart';
 import 'package:open_adventure/domain/usecases/examine.dart';
 import 'package:open_adventure/domain/usecases/extinguish_lamp.dart';
+import 'package:open_adventure/domain/usecases/drink_liquid.dart';
 import 'package:open_adventure/domain/usecases/light_lamp.dart';
 import 'package:open_adventure/domain/usecases/list_available_actions.dart';
 import 'package:open_adventure/domain/usecases/load_audio_settings.dart';
@@ -51,6 +52,9 @@ Future<void> main() async {
   final extinguishLamp = ExtinguishLampImpl(
     adventureRepository: adventureRepository,
   );
+  final drinkLiquid = DrinkLiquidImpl(
+    adventureRepository: adventureRepository,
+  );
   final applyTurnGoto = ApplyTurnGoto(adventureRepository, motionNormalizer);
   final applyTurn = ApplyTurn(
     travel: applyTurnGoto,
@@ -61,6 +65,7 @@ Future<void> main() async {
     closeObject: closeObject,
     lightLamp: lightLamp,
     extinguishLamp: extinguishLamp,
+    drinkLiquid: drinkLiquid,
   );
   final saveRepository = SaveRepositoryImpl();
   final dwarfSystem = DwarfSystem(adventureRepository);

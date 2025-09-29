@@ -44,6 +44,12 @@ void main() {
       location: 5,
       state: 'GRATE_CLOSED',
     );
+    const bottleState = GameObjectState(
+      id: 5,
+      isCarried: true,
+      state: 'WATER_BOTTLE',
+      prop: 0,
+    );
 
     test(
       'combines travel, interactions and meta with priority ordering',
@@ -59,6 +65,7 @@ void main() {
             2: nearbyStone,
             3: grateState,
             4: lampState,
+            5: bottleState,
           },
           limit: 120,
         );
@@ -96,6 +103,15 @@ void main() {
               name: 'LAMP',
               states: <String>['LAMP_DARK', 'LAMP_BRIGHT'],
             ),
+            GameObject(
+              id: 5,
+              name: 'BOTTLE',
+              states: <String>[
+                'WATER_BOTTLE',
+                'EMPTY_BOTTLE',
+                'OIL_BOTTLE',
+              ],
+            ),
           ],
         );
 
@@ -126,10 +142,10 @@ void main() {
         final interactionOptions = options
             .where((option) => option.category == 'interaction')
             .toList();
-        expect(interactionOptions.length, greaterThanOrEqualTo(5));
+        expect(interactionOptions.length, greaterThanOrEqualTo(6));
         expect(
           interactionOptions.map((option) => option.verb).toSet(),
-          containsAll({'EXAMINE', 'DROP', 'TAKE', 'OPEN', 'LIGHT'}),
+          containsAll({'EXAMINE', 'DROP', 'TAKE', 'OPEN', 'LIGHT', 'DRINK'}),
         );
 
         final dropAction = interactionOptions.firstWhere(
@@ -149,6 +165,11 @@ void main() {
           (option) => option.id == 'interaction:light:4',
         );
         expect(lightAction.objectId, '4');
+
+        final drinkAction = interactionOptions.firstWhere(
+          (option) => option.id == 'interaction:drink:5',
+        );
+        expect(drinkAction.objectId, '5');
 
         final observerCount = options
             .where((option) => option.id == 'meta:observer')
@@ -187,6 +208,45 @@ void main() {
 
       expect(
         options.where((option) => option.id == 'interaction:open:3'),
+        isEmpty,
+      );
+    });
+
+    test('omits drink when bottle is empty', () async {
+      final game = Game(
+        loc: 5,
+        oldLoc: 5,
+        newLoc: 5,
+        turns: 0,
+        rngSeed: 24,
+        objectStates: const {
+          5: GameObjectState(
+            id: 5,
+            isCarried: true,
+            state: 'EMPTY_BOTTLE',
+            prop: 1,
+          ),
+        },
+      );
+
+      when(() => travel(game)).thenAnswer((_) async => const <ActionOption>[]);
+      when(() => adventureRepository.getGameObjects()).thenAnswer(
+        (_) async => const [
+          GameObject(
+            id: 5,
+            name: 'BOTTLE',
+            states: <String>[
+              'WATER_BOTTLE',
+              'EMPTY_BOTTLE',
+            ],
+          ),
+        ],
+      );
+
+      final options = await usecase(game);
+
+      expect(
+        options.where((option) => option.id == 'interaction:drink:5'),
         isEmpty,
       );
     });

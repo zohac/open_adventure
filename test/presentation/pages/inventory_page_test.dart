@@ -190,6 +190,50 @@ void main() {
     expect(content.data, equals('Drop Brass lantern'));
   });
 
+  testWidgets('displays drink action for bottle with water', (tester) async {
+    const drinkAction = ActionOption(
+      id: 'interaction:drink:11',
+      category: 'interaction',
+      label: 'actions.interaction.drink.BOTTLE',
+      icon: 'local_drink',
+      verb: 'DRINK',
+      objectId: '11',
+    );
+
+    controller.debugSeedObjectIndex(const <GameObject>[
+      GameObject(id: 11, name: 'BOTTLE'),
+    ]);
+    controller.value = GameViewState(
+      game: const Game(
+        loc: 1,
+        oldLoc: 1,
+        newLoc: 1,
+        turns: 0,
+        rngSeed: 42,
+        objectStates: {
+          11: GameObjectState(id: 11, isCarried: true),
+        },
+      ),
+      locationTitle: 'LOC_START',
+      locationMapTag: null,
+      locationId: 1,
+      locationDescription: 'desc',
+      actions: const <ActionOption>[drinkAction],
+      journal: const <String>[],
+      isLoading: false,
+      flashMessageLabel: null,
+    );
+
+    await pumpInventoryPage(tester);
+
+    expect(find.text('Drink Small bottle'), findsOneWidget);
+
+    await tester.tap(find.text('Drink Small bottle'));
+    await tester.pump();
+
+    expect(controller.performed, equals(drinkAction));
+  });
+
   testWidgets('shows empty placeholder when nothing is carried', (
     tester,
   ) async {

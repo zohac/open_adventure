@@ -12,6 +12,7 @@ import 'package:open_adventure/domain/usecases/close_object.dart';
 import 'package:open_adventure/domain/usecases/drop_object.dart';
 import 'package:open_adventure/domain/usecases/examine.dart';
 import 'package:open_adventure/domain/usecases/extinguish_lamp.dart';
+import 'package:open_adventure/domain/usecases/drink_liquid.dart';
 import 'package:open_adventure/domain/usecases/light_lamp.dart';
 import 'package:open_adventure/domain/usecases/open_object.dart';
 import 'package:open_adventure/domain/usecases/take_object.dart';
@@ -63,6 +64,7 @@ ApplyTurn _createApplyTurn({
     closeObject: CloseObjectImpl(adventureRepository: repository),
     lightLamp: LightLampImpl(adventureRepository: repository),
     extinguishLamp: ExtinguishLampImpl(adventureRepository: repository),
+    drinkLiquid: DrinkLiquidImpl(adventureRepository: repository),
   );
 }
 
@@ -187,6 +189,55 @@ void main() {
       expect(state.state, equals('LAMP_BRIGHT'));
       expect(state.prop, equals(1));
       expect(result.messages, contains('journal.lamp.success'));
+      verifyZeroInteractions(travel);
+    });
+
+    test('delegates DRINK interaction to DrinkLiquid', () async {
+      final repository = _FakeAdventureRepository(
+        objects: const <GameObject>[
+          GameObject(
+            id: 5,
+            name: 'BOTTLE',
+            states: <String>[
+              'WATER_BOTTLE',
+              'EMPTY_BOTTLE',
+            ],
+          ),
+        ],
+      );
+      final travel = _MockApplyTurnGoto();
+      final applyTurn = _createApplyTurn(
+        repository: repository,
+        travel: travel,
+      );
+      const ActionOption action = ActionOption(
+        id: 'interaction:drink:5',
+        category: 'interaction',
+        label: 'actions.interaction.drink.BOTTLE',
+        verb: 'DRINK',
+        objectId: '5',
+      );
+      const Game game = Game(
+        loc: 2,
+        oldLoc: 2,
+        newLoc: 2,
+        turns: 5,
+        rngSeed: 77,
+        objectStates: {
+          5: GameObjectState(
+            id: 5,
+            isCarried: true,
+            state: 'WATER_BOTTLE',
+            prop: 0,
+          ),
+        },
+      );
+
+      final TurnResult result = await applyTurn(action, game);
+
+      final GameObjectState updated = result.newGame.objectStates[5]!;
+      expect(updated.state, 'EMPTY_BOTTLE');
+      expect(result.messages, equals(const ['journal.drink.success.BOTTLE']));
       verifyZeroInteractions(travel);
     });
   });

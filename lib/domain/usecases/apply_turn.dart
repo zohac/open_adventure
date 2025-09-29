@@ -4,6 +4,7 @@ import 'package:open_adventure/domain/usecases/close_object.dart';
 import 'package:open_adventure/domain/usecases/drop_object.dart';
 import 'package:open_adventure/domain/usecases/examine.dart';
 import 'package:open_adventure/domain/usecases/extinguish_lamp.dart';
+import 'package:open_adventure/domain/usecases/drink_liquid.dart';
 import 'package:open_adventure/domain/usecases/light_lamp.dart';
 import 'package:open_adventure/domain/usecases/open_object.dart';
 import 'package:open_adventure/domain/usecases/take_object.dart';
@@ -28,6 +29,7 @@ class ApplyTurn {
     required CloseObject closeObject,
     required LightLamp lightLamp,
     required ExtinguishLamp extinguishLamp,
+    required DrinkLiquid drinkLiquid,
   }) : _travel = travel,
        _examine = examine,
        _takeObject = takeObject,
@@ -35,7 +37,8 @@ class ApplyTurn {
        _openObject = openObject,
        _closeObject = closeObject,
        _lightLamp = lightLamp,
-       _extinguishLamp = extinguishLamp;
+       _extinguishLamp = extinguishLamp,
+       _drinkLiquid = drinkLiquid;
 
   final ApplyTurnGoto _travel;
   final Examine _examine;
@@ -45,6 +48,7 @@ class ApplyTurn {
   final CloseObject _closeObject;
   final LightLamp _lightLamp;
   final ExtinguishLamp _extinguishLamp;
+  final DrinkLiquid _drinkLiquid;
 
   /// Applies the given [option] to [game] and returns the resulting turn.
   ///
@@ -82,6 +86,8 @@ class ApplyTurn {
         return _lightLamp(game);
       case 'EXTINGUISH':
         return _extinguishLamp(game);
+      case 'DRINK':
+        return _drinkLiquid(option.objectId, game);
       default:
         throw StateError('Unsupported interaction verb: ${option.verb}');
     }

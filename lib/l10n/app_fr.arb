@@ -62,6 +62,7 @@
   "actions.interaction.light": "Allumer {object}",
   "actions.interaction.open": "Ouvrir {object}",
   "actions.interaction.take": "Prendre {object}",
+  "actions.interaction.drink": "Boire {object}",
   "actions.inventory.label": "Inventaire",
   "actions.map.label": "Carte",
   "actions.observer.label": "Observer",
