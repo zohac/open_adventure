@@ -10,6 +10,7 @@ import 'package:open_adventure/presentation/widgets/icon_helper.dart';
 import 'package:open_adventure/presentation/widgets/location_image.dart';
 import 'package:open_adventure/presentation/pages/inventory_page.dart';
 import 'package:open_adventure/presentation/pages/settings_page.dart';
+import 'package:open_adventure/presentation/widgets/flash_message_listener.dart';
 
 /// First iteration of the Adventure screen (S2) showing description, travel
 /// buttons and a minimal journal backed by the [GameController].
@@ -60,10 +61,12 @@ class _AdventurePageState extends State<AdventurePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: ValueListenableBuilder<GameViewState>(
-          valueListenable: widget.controller,
+    return FlashMessageListener(
+      controller: widget.controller,
+      child: Scaffold(
+        appBar: AppBar(
+          title: ValueListenableBuilder<GameViewState>(
+            valueListenable: widget.controller,
           builder: (context, state, _) {
             final l10n = AppLocalizations.of(context);
             final title = state.locationTitle.isEmpty
@@ -93,58 +96,59 @@ class _AdventurePageState extends State<AdventurePage> {
             ),
         ],
       ),
-      body: ValueListenableBuilder<GameViewState>(
-        valueListenable: widget.controller,
-        builder: (context, state, _) {
-          final l10n = AppLocalizations.of(context);
-          if (state.isLoading) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          return Padding(
-            padding: const EdgeInsets.all(AppSpacing.md),
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  LayoutBuilder(
-                    builder: (context, constraints) {
-                      final double maxWidth = constraints.maxWidth;
-                      const double ratio = 16 / 9;
-                      final double computedHeight =
-                          maxWidth.isFinite && maxWidth > 0
-                          ? math.min(maxWidth / ratio, 240)
-                          : 180.0;
-                      return SizedBox(
-                        height: computedHeight,
-                        child: LocationImage(
-                          mapTag: state.locationMapTag,
-                          name: state.locationTitle,
-                          id: state.locationId,
-                          semanticsLabel: state.locationTitle.isEmpty
-                              ? l10n.adventureLocationImageSemanticsFallback
-                              : state.locationTitle,
-                        ),
-                      );
-                    },
-                  ),
-                  const SizedBox(height: AppSpacing.md),
-                  _DescriptionSection(
-                    description: state.locationDescription,
-                    l10n: l10n,
-                  ),
-                  const SizedBox(height: AppSpacing.xl),
-                  _ActionsSection(
-                    l10n: l10n,
-                    actions: state.actions,
-                    onActionSelected: _handleAction,
-                  ),
-                  const SizedBox(height: AppSpacing.xl),
-                  _JournalSection(entries: state.journal, l10n: l10n),
-                ],
+        body: ValueListenableBuilder<GameViewState>(
+          valueListenable: widget.controller,
+          builder: (context, state, _) {
+            final l10n = AppLocalizations.of(context);
+            if (state.isLoading) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            return Padding(
+              padding: const EdgeInsets.all(AppSpacing.md),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    LayoutBuilder(
+                      builder: (context, constraints) {
+                        final double maxWidth = constraints.maxWidth;
+                        const double ratio = 16 / 9;
+                        final double computedHeight =
+                            maxWidth.isFinite && maxWidth > 0
+                            ? math.min(maxWidth / ratio, 240)
+                            : 180.0;
+                        return SizedBox(
+                          height: computedHeight,
+                          child: LocationImage(
+                            mapTag: state.locationMapTag,
+                            name: state.locationTitle,
+                            id: state.locationId,
+                            semanticsLabel: state.locationTitle.isEmpty
+                                ? l10n.adventureLocationImageSemanticsFallback
+                                : state.locationTitle,
+                          ),
+                        );
+                      },
+                    ),
+                    const SizedBox(height: AppSpacing.md),
+                    _DescriptionSection(
+                      description: state.locationDescription,
+                      l10n: l10n,
+                    ),
+                    const SizedBox(height: AppSpacing.xl),
+                    _ActionsSection(
+                      l10n: l10n,
+                      actions: state.actions,
+                      onActionSelected: _handleAction,
+                    ),
+                    const SizedBox(height: AppSpacing.xl),
+                    _JournalSection(entries: state.journal, l10n: l10n),
+                  ],
+                ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }

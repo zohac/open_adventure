@@ -302,6 +302,7 @@ void main() {
       expect(find.text('Aller Nord-Est'), findsOneWidget);
 
       await tester.tap(find.text('Aller Nord-Est'));
+      await tester.pump();
       await tester.pumpAndSettle();
 
       expect(find.text('Actions supplémentaires'), findsNothing);
@@ -440,7 +441,7 @@ void main() {
 
         await tester.tap(find.text('Aller Ouest'));
         await tester.pump();
-        await tester.pumpAndSettle();
+        await tester.pump(const Duration(milliseconds: 200));
 
         expect(
           find.text(_testL10nFr.resolveActionLabel('motion.plugh.label')),
@@ -455,7 +456,7 @@ void main() {
 
         await tester.tap(find.text('Aller Est'));
         await tester.pump();
-        await tester.pumpAndSettle();
+        await tester.pump(const Duration(milliseconds: 200));
 
         expect(
           find.text(_testL10nFr.resolveActionLabel('motion.plugh.label')),
@@ -520,7 +521,7 @@ void main() {
 
       await tester.tap(find.text('Aller Ouest'));
       await tester.pump();
-      await tester.pumpAndSettle();
+      await tester.pump(const Duration(milliseconds: 200));
 
       expect(find.text('LOC_WEST'), findsOneWidget);
       expect(find.text('Short west description'), findsWidgets);
@@ -531,6 +532,44 @@ void main() {
           const GameSnapshot(loc: 2, turns: 1, rngSeed: 42),
         ),
       ).called(1);
+    });
+
+    testWidgets('displays flash message when action is performed', (tester) async {
+      await pumpInitialState(tester);
+
+      const nextGame = Game(
+        loc: 2,
+        oldLoc: 1,
+        newLoc: 2,
+        turns: 1,
+        rngSeed: 42,
+        visitedLocations: {1, 2},
+      );
+      final nextLocation = Location(
+        id: 2,
+        name: 'LOC_WEST',
+        shortDescription: 'Short west description',
+      );
+      when(() => applyTurn(any(), any())).thenAnswer(
+        (_) async => TurnResult(nextGame, const <String>['Short west description']),
+      );
+      when(() => adventureRepository.locationById(2)).thenAnswer(
+        (_) async => nextLocation,
+      );
+      when(() => listAvailableActions(nextGame)).thenAnswer(
+        (_) async => const <ActionOption>[],
+      );
+      when(() => saveRepository.autosave(any())).thenAnswer((_) async {});
+
+      await tester.tap(find.text('Aller Ouest'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 200));
+
+      final snackFinder = find.byType(SnackBar);
+      expect(snackFinder, findsOneWidget);
+      final SnackBar snackBar = tester.widget(snackFinder);
+      final Text content = snackBar.content as Text;
+      expect(content.data, equals('Aller Ouest'));
     });
 
     testWidgets('renders placeholder when asset is missing without errors', (
@@ -591,7 +630,7 @@ void main() {
 
       await tester.tap(find.text('Observer'));
       await tester.pump();
-      await tester.pumpAndSettle();
+      await tester.pump(const Duration(milliseconds: 200));
 
       verifyNever(() => applyTurn(any(), any()));
     });
@@ -672,7 +711,7 @@ void main() {
 
       await tester.tap(find.text('Revenir'));
       await tester.pump();
-      await tester.pumpAndSettle();
+      await tester.pump(const Duration(milliseconds: 200));
 
       expect(find.text('LOC_START'), findsOneWidget);
       expect(find.text('Back at the start.'), findsWidgets);

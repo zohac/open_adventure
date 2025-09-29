@@ -123,6 +123,7 @@ void main() {
       expect(state.actions, equals(actions));
       expect(state.journal, equals(<String>[location.longDescription!]));
       expect(state.isLoading, isFalse);
+      expect(state.flashMessageLabel, isNull);
 
       verify(
         () => saveRepository.autosave(
@@ -166,6 +167,7 @@ void main() {
       await controller.init();
 
       expect(controller.value.actions, equals(const [normalAction]));
+      expect(controller.value.flashMessageLabel, isNull);
     });
 
     test('exposes cached objects for presentation', () async {
@@ -192,6 +194,7 @@ void main() {
 
       expect(controller.objectById(5), isNotNull);
       expect(controller.objectById(5)!.name, equals('LAMP'));
+      expect(controller.value.flashMessageLabel, isNull);
     });
   });
 
@@ -291,6 +294,10 @@ void main() {
             'Short west description',
           ]),
         );
+        expect(state.flashMessageLabel, equals(initialActions.first.label));
+
+        controller.clearFlashMessage();
+        expect(controller.value.flashMessageLabel, isNull);
 
         verify(() => applyTurn(any(), any())).called(1);
         verify(
@@ -330,6 +337,7 @@ void main() {
           state.journal.sublist(state.journal.length - 3),
           equals(messages),
         );
+        expect(state.flashMessageLabel, equals(initialActions.first.label));
       },
     );
 
@@ -364,6 +372,7 @@ void main() {
           'A dwarf watches you.',
         ]),
       );
+      expect(state.flashMessageLabel, equals(initialActions.first.label));
       verify(() => dwarfSystem.tick(nextGame)).called(1);
       verify(
         () => saveRepository.autosave(
@@ -407,6 +416,7 @@ void main() {
             'You cannot go back from here.',
           ]),
         );
+        expect(state.flashMessageLabel, equals(backAction.label));
         verify(() => applyTurn(any(), any())).called(1);
         verifyNever(() => saveRepository.autosave(any()));
         verifyNever(() => dwarfSystem.tick(any()));
@@ -461,6 +471,7 @@ void main() {
         controller.value.journal.last,
         equals('journal.take.success.KEYS'),
       );
+      expect(controller.value.flashMessageLabel, equals(takeAction.label));
     });
 
     test('decrements lamp limit and warns when threshold is reached', () async {
@@ -512,6 +523,7 @@ void main() {
       expect(game.limit, equals(30));
       expect(game.lampWarningIssued, isTrue);
       expect(state.journal.last, equals('Lamp dim message'));
+      expect(state.flashMessageLabel, equals(initialActions.first.label));
       verify(
         () => adventureRepository.arbitraryMessage(
           'LAMP_DIM',
@@ -585,6 +597,7 @@ void main() {
       expect(game.lampWarningIssued, isTrue);
       expect(game.objectStates[7], equals(depletedLamp));
       expect(state.journal.last, equals('Lamp out message'));
+      expect(state.flashMessageLabel, equals(initialActions.first.label));
       verify(
         () => adventureRepository.arbitraryMessage(
           'LAMP_OUT',
@@ -629,9 +642,10 @@ void main() {
 
         await controller.perform(observerAction);
 
-        final state = controller.value;
-        expect(state.locationDescription, equals('Long start description'));
-        expect(state.journal.last, equals('Long start description'));
+      final state = controller.value;
+      expect(state.locationDescription, equals('Long start description'));
+      expect(state.journal.last, equals('Long start description'));
+      expect(state.flashMessageLabel, equals(observerAction.label));
         verifyNever(() => applyTurn(any(), any()));
         verifyNever(() => saveRepository.autosave(any()));
         verifyNever(() => dwarfSystem.tick(any()));
@@ -655,6 +669,7 @@ void main() {
       await controller.perform(mapAction);
 
       expect(controller.value, same(previousState));
+      expect(controller.value.flashMessageLabel, isNull);
       verifyNever(() => applyTurn(any(), any()));
       verifyZeroInteractions(saveRepository);
       verifyNever(() => dwarfSystem.tick(any()));
@@ -698,6 +713,7 @@ void main() {
       verifyNever(() => applyTurn(any(), any()));
       verifyNever(() => dwarfSystem.tick(any()));
       expect(controller.value.game, equals(initialGame));
+      expect(controller.value.flashMessageLabel, isNull);
     });
   });
 
@@ -737,6 +753,7 @@ void main() {
       await controller.refreshActions();
 
       expect(controller.value.actions, hasLength(1));
+      expect(controller.value.flashMessageLabel, isNull);
     });
   });
 }

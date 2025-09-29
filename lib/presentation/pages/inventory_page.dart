@@ -6,6 +6,7 @@ import 'package:open_adventure/domain/value_objects/action_option.dart';
 import 'package:open_adventure/l10n/app_localizations.dart';
 import 'package:open_adventure/presentation/theme/app_spacing.dart';
 import 'package:open_adventure/presentation/widgets/icon_helper.dart';
+import 'package:open_adventure/presentation/widgets/flash_message_listener.dart';
 
 /// InventoryPage renders the list of carried objects alongside contextual
 /// actions that reuse the domain [ActionOption] contracts.
@@ -19,48 +20,51 @@ class InventoryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.inventoryTitle)),
-      body: ValueListenableBuilder<GameViewState>(
-        valueListenable: controller,
-        builder: (context, state, _) {
-          final Game? game = state.game;
-          if (state.isLoading || game == null) {
-            return const Center(child: CircularProgressIndicator());
-          }
+    return FlashMessageListener(
+      controller: controller,
+      child: Scaffold(
+        appBar: AppBar(title: Text(l10n.inventoryTitle)),
+        body: ValueListenableBuilder<GameViewState>(
+          valueListenable: controller,
+          builder: (context, state, _) {
+            final Game? game = state.game;
+            if (state.isLoading || game == null) {
+              return const Center(child: CircularProgressIndicator());
+            }
 
-          final List<_InventoryEntry> inventory = _buildInventory(
-            game: game,
-            actions: state.actions,
-            l10n: l10n,
-          );
-
-          if (inventory.isEmpty) {
-            return Center(
-              child: Padding(
-                padding: const EdgeInsets.all(AppSpacing.lg),
-                child: Text(
-                  l10n.inventoryEmptyState,
-                  style: Theme.of(context).textTheme.bodyLarge,
-                  textAlign: TextAlign.center,
-                ),
-              ),
+            final List<_InventoryEntry> inventory = _buildInventory(
+              game: game,
+              actions: state.actions,
+              l10n: l10n,
             );
-          }
 
-          return ListView.separated(
-            padding: const EdgeInsets.all(AppSpacing.md),
-            itemCount: inventory.length,
-            separatorBuilder: (_, __) => const SizedBox(height: AppSpacing.md),
-            itemBuilder: (context, index) {
-              final entry = inventory[index];
-              return _InventoryCard(
-                entry: entry,
-                onActionSelected: controller.perform,
+            if (inventory.isEmpty) {
+              return Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(AppSpacing.lg),
+                  child: Text(
+                    l10n.inventoryEmptyState,
+                    style: Theme.of(context).textTheme.bodyLarge,
+                    textAlign: TextAlign.center,
+                  ),
+                ),
               );
-            },
-          );
-        },
+            }
+
+            return ListView.separated(
+              padding: const EdgeInsets.all(AppSpacing.md),
+              itemCount: inventory.length,
+              separatorBuilder: (_, __) => const SizedBox(height: AppSpacing.md),
+              itemBuilder: (context, index) {
+                final entry = inventory[index];
+                return _InventoryCard(
+                  entry: entry,
+                  onActionSelected: controller.perform,
+                );
+              },
+            );
+          },
+        ),
       ),
     );
   }

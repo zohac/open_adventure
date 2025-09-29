@@ -41,6 +41,7 @@ class _TestGameController extends GameController {
   @override
   Future<void> perform(ActionOption option) async {
     performed = option;
+    value = value.copyWith(flashMessageLabel: option.label);
   }
 }
 
@@ -166,6 +167,7 @@ void main() {
       actions: const <ActionOption>[dropAction, lightAction, extinguishAction],
       journal: const <String>[],
       isLoading: false,
+      flashMessageLabel: null,
     );
 
     await pumpInventoryPage(tester);
@@ -178,8 +180,14 @@ void main() {
 
     await tester.tap(find.text('Drop Brass lantern'));
     await tester.pump();
+    await tester.pump(const Duration(milliseconds: 200));
 
     expect(controller.performed, equals(dropAction));
+    final snackFinder = find.byType(SnackBar);
+    expect(snackFinder, findsOneWidget);
+    final SnackBar snackBar = tester.widget(snackFinder);
+    final Text content = snackBar.content as Text;
+    expect(content.data, equals('Drop Brass lantern'));
   });
 
   testWidgets('shows empty placeholder when nothing is carried', (
@@ -201,6 +209,7 @@ void main() {
       actions: const <ActionOption>[],
       journal: const <String>[],
       isLoading: false,
+      flashMessageLabel: null,
     );
 
     await pumpInventoryPage(tester);
@@ -230,6 +239,7 @@ void main() {
       actions: const <ActionOption>[],
       journal: const <String>[],
       isLoading: false,
+      flashMessageLabel: null,
     );
 
     await pumpInventoryPage(tester);
