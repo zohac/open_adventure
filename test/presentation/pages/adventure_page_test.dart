@@ -532,7 +532,7 @@ void main() {
       ).called(1);
     });
 
-    testWidgets('displays flash message when action is performed', (
+    testWidgets('displays supplemental flash message when action is performed', (
       tester,
     ) async {
       await pumpInitialState(tester);
@@ -551,8 +551,10 @@ void main() {
         shortDescription: 'Short west description',
       );
       when(() => applyTurn(any(), any())).thenAnswer(
-        (_) async =>
-            TurnResult(nextGame, const <String>['Short west description']),
+        (_) async => TurnResult(nextGame, const <String>[
+          'Short west description',
+          'There is a shiny brass lamp nearby.',
+        ]),
       );
       when(
         () => adventureRepository.locationById(2),
@@ -571,7 +573,7 @@ void main() {
       expect(
         find.descendant(
           of: overlayFinder,
-          matching: find.text('Short west description'),
+          matching: find.text('There is a shiny brass lamp nearby.'),
         ),
         findsOneWidget,
       );
@@ -620,7 +622,9 @@ void main() {
       expect(
         find.descendant(
           of: overlayFinder,
-          matching: find.text(messages.join('\n')),
+          matching: find.text(
+            messages.sublist(1).join('\n'),
+          ),
         ),
         findsOneWidget,
       );

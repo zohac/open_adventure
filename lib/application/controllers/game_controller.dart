@@ -232,6 +232,8 @@ class GameController extends ValueNotifier<GameViewState> {
     }
 
     final bool locationChanged = newGame.loc != currentGame.loc;
+    final bool firstVisit =
+        !currentGame.visitedLocations.contains(newGame.loc);
     final Location location = await _adventureRepository.locationById(
       newGame.loc,
     );
@@ -239,14 +241,20 @@ class GameController extends ValueNotifier<GameViewState> {
       await _listAvailableActions(newGame),
       newGame,
     );
-    final String description = locationChanged
-        ? (messages.isNotEmpty
-              ? messages.join('\n')
-              : _selectDescription(location, firstVisit: false))
-        : value.locationDescription;
+    String description = value.locationDescription;
+    String? flashMessage;
+    if (locationChanged) {
+      final String baseDescription = messages.isNotEmpty
+          ? messages.first
+          : _selectDescription(location, firstVisit: firstVisit);
+      description = baseDescription;
+      if (messages.length > 1) {
+        flashMessage = messages.sublist(1).join('\n');
+      }
+    } else if (messages.isNotEmpty) {
+      flashMessage = messages.join('\n');
+    }
     final List<String> updatedJournal = _appendJournal(value.journal, messages);
-    final String? flashMessage =
-        messages.isNotEmpty ? messages.join('\n') : null;
 
     value = value.copyWith(
       game: newGame,

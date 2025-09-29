@@ -293,7 +293,7 @@ void main() {
             'Short west description',
           ]),
         );
-        expect(state.flashMessage, equals('Short west description'));
+        expect(state.flashMessage, isNull);
 
         controller.clearFlashMessage();
         expect(controller.value.flashMessage, isNull);
@@ -331,12 +331,12 @@ void main() {
         await controller.perform(initialActions.first);
 
         final state = controller.value;
-        expect(state.locationDescription, equals(messages.join('\n')));
+        expect(state.locationDescription, equals(messages.first));
         expect(
           state.journal.sublist(state.journal.length - 3),
           equals(messages),
         );
-        expect(state.flashMessage, equals(messages.join('\n')));
+        expect(state.flashMessage, equals(messages.sublist(1).join('\n')));
       },
     );
 
@@ -371,10 +371,7 @@ void main() {
           'A dwarf watches you.',
         ]),
       );
-      expect(
-        state.flashMessage,
-        equals('Short west description\nA dwarf watches you.'),
-      );
+      expect(state.flashMessage, equals('A dwarf watches you.'));
       verify(() => dwarfSystem.tick(nextGame)).called(1);
       verify(
         () => saveRepository.autosave(
