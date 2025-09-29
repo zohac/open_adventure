@@ -68,7 +68,14 @@ class _FlashMessageListenerState extends State<FlashMessageListener> {
     }
     _lastHandledMessage = message;
     _showMessage(message);
-    widget.controller.clearFlashMessage();
+    scheduleMicrotask(() {
+      if (!mounted) {
+        return;
+      }
+      if (widget.controller.value.flashMessage == message) {
+        widget.controller.clearFlashMessage();
+      }
+    });
   }
 
   void _showMessage(String message) {
@@ -122,34 +129,30 @@ class _FlashMessageListenerState extends State<FlashMessageListener> {
                     switchOutCurve: Curves.easeInCubic,
                     transitionBuilder:
                         (Widget child, Animation<double> animation) {
-                      final slideAnimation = animation.drive(
-                        Tween<Offset>(
-                          begin: const Offset(0, -0.1),
-                          end: Offset.zero,
-                        ).chain(
-                          CurveTween(curve: Curves.easeOutCubic),
-                        ),
-                      );
-                      return FadeTransition(
-                        opacity: animation,
-                        child: SlideTransition(
-                          position: slideAnimation,
-                          child: child,
-                        ),
-                      );
-                    },
-                    layoutBuilder: (
-                      Widget? currentChild,
-                      List<Widget> previousChildren,
-                    ) {
-                      return Stack(
-                        alignment: Alignment.topCenter,
-                        children: <Widget>[
-                          ...previousChildren,
-                          if (currentChild != null) currentChild,
-                        ],
-                      );
-                    },
+                          final slideAnimation = animation.drive(
+                            Tween<Offset>(
+                              begin: const Offset(0, -0.1),
+                              end: Offset.zero,
+                            ).chain(CurveTween(curve: Curves.easeOutCubic)),
+                          );
+                          return FadeTransition(
+                            opacity: animation,
+                            child: SlideTransition(
+                              position: slideAnimation,
+                              child: child,
+                            ),
+                          );
+                        },
+                    layoutBuilder:
+                        (Widget? currentChild, List<Widget> previousChildren) {
+                          return Stack(
+                            alignment: Alignment.topCenter,
+                            children: <Widget>[
+                              ...previousChildren,
+                              if (currentChild != null) currentChild,
+                            ],
+                          );
+                        },
                     child: message == null
                         ? const SizedBox.shrink()
                         : _FloatingFlashBanner(
@@ -197,24 +200,13 @@ class _FloatingFlashBanner extends StatelessWidget {
           liveRegion: true,
           container: true,
           child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 16,
-              vertical: 12,
-            ),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             child: Row(
               mainAxisSize: MainAxisSize.max,
               children: <Widget>[
-                Expanded(
-                  child: Text(
-                    message,
-                    style: textTheme.bodyMedium,
-                  ),
-                ),
+                Expanded(child: Text(message, style: textTheme.bodyMedium)),
                 const SizedBox(width: 12),
-                TextButton(
-                  onPressed: onDismissed,
-                  child: Text(dismissLabel),
-                ),
+                TextButton(onPressed: onDismissed, child: Text(dismissLabel)),
               ],
             ),
           ),
