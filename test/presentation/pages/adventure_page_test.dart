@@ -17,6 +17,7 @@ import 'package:open_adventure/domain/value_objects/turn_result.dart';
 import 'package:open_adventure/domain/value_objects/dwarf_tick_result.dart';
 import 'package:open_adventure/presentation/pages/adventure_page.dart';
 import 'package:open_adventure/presentation/pages/inventory_page.dart';
+import 'package:open_adventure/presentation/widgets/flash_message_listener.dart';
 import 'package:open_adventure/l10n/app_localizations.dart';
 
 const _testL10nFr = AppLocalizations(Locale('fr'));
@@ -103,8 +104,7 @@ void main() {
         longDescription: 'Long start description',
         shortDescription: 'Short start description',
       );
-      final actions =
-          actionsOverride ??
+      final actions = actionsOverride ??
           <ActionOption>[
             const ActionOption(
               id: 'travel:1->2:WEST',
@@ -566,11 +566,15 @@ void main() {
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 200));
 
-      final bannerFinder = find.byType(MaterialBanner);
-      expect(bannerFinder, findsOneWidget);
-      final MaterialBanner banner = tester.widget(bannerFinder);
-      final Text content = banner.content as Text;
-      expect(content.data, equals('Short west description'));
+      final overlayFinder = find.byKey(FlashMessageListener.flashMessageKey);
+      expect(overlayFinder, findsOneWidget);
+      expect(
+        find.descendant(
+          of: overlayFinder,
+          matching: find.text('Short west description'),
+        ),
+        findsOneWidget,
+      );
     });
 
     testWidgets('renders placeholder when asset is missing without errors', (

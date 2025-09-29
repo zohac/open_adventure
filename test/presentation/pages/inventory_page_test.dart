@@ -15,6 +15,7 @@ import 'package:open_adventure/domain/value_objects/dwarf_tick_result.dart';
 import 'package:open_adventure/domain/value_objects/game_snapshot.dart';
 import 'package:open_adventure/l10n/app_localizations.dart';
 import 'package:open_adventure/presentation/pages/inventory_page.dart';
+import 'package:open_adventure/presentation/widgets/flash_message_listener.dart';
 
 class _MockAdventureRepository extends Mock implements AdventureRepository {}
 
@@ -182,11 +183,15 @@ void main() {
     await tester.pump(const Duration(milliseconds: 200));
 
     expect(controller.performed, equals(dropAction));
-    final bannerFinder = find.byType(MaterialBanner);
-    expect(bannerFinder, findsOneWidget);
-    final MaterialBanner banner = tester.widget(bannerFinder);
-    final Text content = banner.content as Text;
-    expect(content.data, equals('Journal entry for DROP'));
+    final overlayFinder = find.byKey(FlashMessageListener.flashMessageKey);
+    expect(overlayFinder, findsOneWidget);
+    expect(
+      find.descendant(
+        of: overlayFinder,
+        matching: find.text('Journal entry for DROP'),
+      ),
+      findsOneWidget,
+    );
   });
 
   testWidgets('displays drink action for bottle with water', (tester) async {
