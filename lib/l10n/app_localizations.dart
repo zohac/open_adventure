@@ -23,11 +23,11 @@ class AppLocalizations {
   /// Localizations delegates required to wire the bundle in a [MaterialApp].
   static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
       <LocalizationsDelegate<dynamic>>[
-        delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-      ];
+    delegate,
+    GlobalMaterialLocalizations.delegate,
+    GlobalCupertinoLocalizations.delegate,
+    GlobalWidgetsLocalizations.delegate,
+  ];
 
   /// Supported locales exposed to the Flutter framework.
   static const List<Locale> supportedLocales = <Locale>[
@@ -138,6 +138,9 @@ class AppLocalizations {
   String get adventureLocationImageSemanticsFallback =>
       _string('adventureLocationImageSemanticsFallback');
 
+  /// Label displayed on the flash message dismiss action button.
+  String get flashDismissLabel => _string('flash.dismiss');
+
   /// Returns a localized label for the provided action [rawLabel] key.
   String resolveActionLabel(String rawLabel) {
     final direct = _maybeString(rawLabel);
@@ -204,8 +207,7 @@ class AppLocalizations {
   }
 
   String? _maybeString(String key) {
-    final table =
-        _localizedValues[locale.languageCode] ??
+    final table = _localizedValues[locale.languageCode] ??
         _localizedValues[supportedLocales.first.languageCode]!;
     return table[key];
   }
@@ -249,8 +251,8 @@ class _AppLocalizationsDelegate
   bool shouldReload(_AppLocalizationsDelegate old) => false;
 }
 
-const Map<String, Map<String, String>>
-_localizedValues = <String, Map<String, String>>{
+const Map<String, Map<String, String>> _localizedValues =
+    <String, Map<String, String>>{
   'en': {
     'actions.interaction.close': 'Close {object}',
     'actions.interaction.drop': 'Drop {object}',
@@ -278,6 +280,7 @@ _localizedValues = <String, Map<String, String>>{
     'adventureJournalEmptyState': 'No events yet',
     'adventureJournalSectionTitle': 'Journal',
     'adventureLocationImageSemanticsFallback': 'Location illustration',
+    'flash.dismiss': 'Dismiss',
     'appTitle': 'Open Adventure',
     'homeHeroSubtitle':
         'Embark on the cult text expedition, remastered for mobile.',
@@ -426,6 +429,7 @@ _localizedValues = <String, Map<String, String>>{
     'adventureJournalEmptyState': 'Aucun événement pour le moment',
     'adventureJournalSectionTitle': 'Journal',
     'adventureLocationImageSemanticsFallback': 'Illustration du lieu',
+    'flash.dismiss': 'Fermer',
     'appTitle': 'Open Adventure',
     'homeHeroSubtitle':
         'Partez pour l\'expédition textuelle culte, remasterisée pour mobile.',

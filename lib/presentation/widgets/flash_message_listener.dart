@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:open_adventure/application/controllers/game_controller.dart';
 import 'package:open_adventure/l10n/app_localizations.dart';
@@ -22,7 +24,8 @@ class FlashMessageListener extends StatefulWidget {
 }
 
 class _FlashMessageListenerState extends State<FlashMessageListener> {
-  String? _lastDisplayedLabel;
+  String? _lastDisplayedMessage;
+  Timer? _autoDismissTimer;
 
   @override
   void initState() {
@@ -35,7 +38,8 @@ class _FlashMessageListenerState extends State<FlashMessageListener> {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.controller != widget.controller) {
       oldWidget.controller.removeListener(_handleStateChange);
-      _lastDisplayedLabel = null;
+      _lastDisplayedMessage = null;
+      _cancelAutoDismiss();
       widget.controller.addListener(_handleStateChange);
     }
   }
@@ -43,19 +47,21 @@ class _FlashMessageListenerState extends State<FlashMessageListener> {
   @override
   void dispose() {
     widget.controller.removeListener(_handleStateChange);
+    _cancelAutoDismiss();
     super.dispose();
   }
 
   void _handleStateChange() {
-    final String? label = widget.controller.value.flashMessageLabel;
-    if (label == null) {
-      _lastDisplayedLabel = null;
+    final String? message = widget.controller.value.flashMessage;
+    if (message == null) {
+      _lastDisplayedMessage = null;
+      _cancelAutoDismiss();
       return;
     }
-    if (label == _lastDisplayedLabel) {
+    if (message == _lastDisplayedMessage) {
       return;
     }
-    _lastDisplayedLabel = label;
+    _lastDisplayedMessage = message;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) {
         return;
@@ -65,12 +71,45 @@ class _FlashMessageListenerState extends State<FlashMessageListener> {
         return;
       }
       final l10n = AppLocalizations.of(context);
-      messenger.hideCurrentSnackBar(reason: SnackBarClosedReason.hide);
-      messenger.showSnackBar(
-        SnackBar(content: Text(l10n.resolveActionLabel(label))),
+      messenger.hideCurrentMaterialBanner(
+        reason: MaterialBannerClosedReason.hide,
       );
+      messenger.showMaterialBanner(
+        MaterialBanner(
+          content: Text(message),
+          backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
+          contentTextStyle: Theme.of(context).textTheme.bodyMedium,
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                messenger.hideCurrentMaterialBanner(
+                  reason: MaterialBannerClosedReason.dismiss,
+                );
+              },
+              child: Text(l10n.flashDismissLabel),
+            ),
+          ],
+        ),
+      );
+      _cancelAutoDismiss();
+      _autoDismissTimer = Timer(const Duration(seconds: 4), () {
+        if (!mounted) {
+          return;
+        }
+        messenger.hideCurrentMaterialBanner(
+          reason: MaterialBannerClosedReason.hide,
+        );
+      });
       widget.controller.clearFlashMessage();
     });
+  }
+
+  void _cancelAutoDismiss() {
+    if (_autoDismissTimer?.isActive ?? false) {
+      _autoDismissTimer!.cancel();
+    }
+    _autoDismissTimer = null;
   }
 
   @override

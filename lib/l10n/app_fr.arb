@@ -81,6 +81,7 @@
   "adventureJournalEmptyState": "Aucun événement pour le moment",
   "adventureJournalSectionTitle": "Journal",
   "adventureLocationImageSemanticsFallback": "Illustration du lieu",
+  "flash.dismiss": "Fermer",
   "appTitle": "Open Adventure",
   "homeHeroSubtitle": "Partez pour l'expédition textuelle culte, remasterisée pour mobile.",
   "homeHeroTitle": "Open Adventure",

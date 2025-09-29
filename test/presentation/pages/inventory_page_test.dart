@@ -24,7 +24,6 @@ class _MockApplyTurn extends Mock implements ApplyTurn {}
 
 class _MockSaveRepository extends Mock implements SaveRepository {}
 
-
 class _MockDwarfSystem extends Mock implements DwarfSystem {}
 
 class _TestGameController extends GameController {
@@ -41,7 +40,7 @@ class _TestGameController extends GameController {
   @override
   Future<void> perform(ActionOption option) async {
     performed = option;
-    value = value.copyWith(flashMessageLabel: option.label);
+    value = value.copyWith(flashMessage: 'Journal entry for ${option.verb}');
   }
 }
 
@@ -167,7 +166,7 @@ void main() {
       actions: const <ActionOption>[dropAction, lightAction, extinguishAction],
       journal: const <String>[],
       isLoading: false,
-      flashMessageLabel: null,
+      flashMessage: null,
     );
 
     await pumpInventoryPage(tester);
@@ -183,11 +182,11 @@ void main() {
     await tester.pump(const Duration(milliseconds: 200));
 
     expect(controller.performed, equals(dropAction));
-    final snackFinder = find.byType(SnackBar);
-    expect(snackFinder, findsOneWidget);
-    final SnackBar snackBar = tester.widget(snackFinder);
-    final Text content = snackBar.content as Text;
-    expect(content.data, equals('Drop Brass lantern'));
+    final bannerFinder = find.byType(MaterialBanner);
+    expect(bannerFinder, findsOneWidget);
+    final MaterialBanner banner = tester.widget(bannerFinder);
+    final Text content = banner.content as Text;
+    expect(content.data, equals('Journal entry for DROP'));
   });
 
   testWidgets('displays drink action for bottle with water', (tester) async {
@@ -210,9 +209,7 @@ void main() {
         newLoc: 1,
         turns: 0,
         rngSeed: 42,
-        objectStates: {
-          11: GameObjectState(id: 11, isCarried: true),
-        },
+        objectStates: {11: GameObjectState(id: 11, isCarried: true)},
       ),
       locationTitle: 'LOC_START',
       locationMapTag: null,
@@ -221,7 +218,7 @@ void main() {
       actions: const <ActionOption>[drinkAction],
       journal: const <String>[],
       isLoading: false,
-      flashMessageLabel: null,
+      flashMessage: null,
     );
 
     await pumpInventoryPage(tester);
@@ -253,7 +250,7 @@ void main() {
       actions: const <ActionOption>[],
       journal: const <String>[],
       isLoading: false,
-      flashMessageLabel: null,
+      flashMessage: null,
     );
 
     await pumpInventoryPage(tester);
@@ -283,7 +280,7 @@ void main() {
       actions: const <ActionOption>[],
       journal: const <String>[],
       isLoading: false,
-      flashMessageLabel: null,
+      flashMessage: null,
     );
 
     await pumpInventoryPage(tester);

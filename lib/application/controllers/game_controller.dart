@@ -43,8 +43,8 @@ class GameViewState {
   /// Loading flag toggled while `init()` is running.
   final bool isLoading;
 
-  /// Pending flash message label to surface via the presentation layer.
-  final String? flashMessageLabel;
+  /// Pending flash message content surfaced via the presentation layer.
+  final String? flashMessage;
 
   const GameViewState({
     required this.game,
@@ -55,7 +55,7 @@ class GameViewState {
     required this.actions,
     required this.journal,
     required this.isLoading,
-    required this.flashMessageLabel,
+    required this.flashMessage,
   });
 
   factory GameViewState.initial() => const GameViewState(
@@ -67,7 +67,7 @@ class GameViewState {
     actions: <ActionOption>[],
     journal: <String>[],
     isLoading: true,
-    flashMessageLabel: null,
+    flashMessage: null,
   );
 
   GameViewState copyWith({
@@ -79,7 +79,7 @@ class GameViewState {
     List<ActionOption>? actions,
     List<String>? journal,
     bool? isLoading,
-    Object? flashMessageLabel = _flashMessageSentinel,
+    Object? flashMessage = _flashMessageSentinel,
   }) {
     return GameViewState(
       game: game ?? this.game,
@@ -90,9 +90,9 @@ class GameViewState {
       actions: actions ?? this.actions,
       journal: journal ?? this.journal,
       isLoading: isLoading ?? this.isLoading,
-      flashMessageLabel: identical(flashMessageLabel, _flashMessageSentinel)
-          ? this.flashMessageLabel
-          : flashMessageLabel as String?,
+      flashMessage: identical(flashMessage, _flashMessageSentinel)
+          ? this.flashMessage
+          : flashMessage as String?,
     );
   }
 }
@@ -158,7 +158,7 @@ class GameController extends ValueNotifier<GameViewState> {
       actions: List.unmodifiable(actions),
       journal: List.unmodifiable(journal),
       isLoading: false,
-      flashMessageLabel: null,
+      flashMessage: null,
     );
 
     await _saveRepository.autosave(_toSnapshot(initialGame));
@@ -189,7 +189,7 @@ class GameController extends ValueNotifier<GameViewState> {
           locationTitle: location.name,
           locationMapTag: location.mapTag,
           locationId: location.id,
-          flashMessageLabel: option.label,
+          flashMessage: description.isNotEmpty ? description : null,
         );
         return;
       }
@@ -245,6 +245,7 @@ class GameController extends ValueNotifier<GameViewState> {
               : _selectDescription(location, firstVisit: false))
         : value.locationDescription;
     final List<String> updatedJournal = _appendJournal(value.journal, messages);
+    final String? flashMessage = messages.isNotEmpty ? messages.last : null;
 
     value = value.copyWith(
       game: newGame,
@@ -255,7 +256,7 @@ class GameController extends ValueNotifier<GameViewState> {
       actions: List.unmodifiable(actions),
       journal: List.unmodifiable(updatedJournal),
       isLoading: false,
-      flashMessageLabel: option.label,
+      flashMessage: flashMessage,
     );
 
     if (newGame != currentGame) {
@@ -279,8 +280,8 @@ class GameController extends ValueNotifier<GameViewState> {
 
   /// Clears the pending flash message if the presentation layer consumed it.
   void clearFlashMessage() {
-    if (value.flashMessageLabel != null) {
-      value = value.copyWith(flashMessageLabel: null);
+    if (value.flashMessage != null) {
+      value = value.copyWith(flashMessage: null);
     }
   }
 

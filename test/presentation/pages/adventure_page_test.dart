@@ -29,7 +29,6 @@ class _MockApplyTurn extends Mock implements ApplyTurn {}
 
 class _MockSaveRepository extends Mock implements SaveRepository {}
 
-
 class _MockDwarfSystem extends Mock implements DwarfSystem {}
 
 void main() {
@@ -309,40 +308,39 @@ void main() {
       verify(() => applyTurn(any(), any())).called(1);
     });
 
-    testWidgets(
-      'tapping inventory meta action navigates to InventoryPage',
-      (tester) async {
-        const inventoryAction = ActionOption(
-          id: 'meta:inventory',
-          category: 'meta',
-          label: 'actions.inventory.label',
-          icon: 'inventory',
-          verb: 'INVENTORY',
-        );
+    testWidgets('tapping inventory meta action navigates to InventoryPage', (
+      tester,
+    ) async {
+      const inventoryAction = ActionOption(
+        id: 'meta:inventory',
+        category: 'meta',
+        label: 'actions.inventory.label',
+        icon: 'inventory',
+        verb: 'INVENTORY',
+      );
 
-        await pumpInitialState(
-          tester,
-          actionsOverride: const <ActionOption>[
-            ActionOption(
-              id: 'travel:1->2:WEST',
-              category: 'travel',
-              label: 'motion.west.label',
-              verb: 'WEST',
-              objectId: '2',
-            ),
-            inventoryAction,
-          ],
-        );
+      await pumpInitialState(
+        tester,
+        actionsOverride: const <ActionOption>[
+          ActionOption(
+            id: 'travel:1->2:WEST',
+            category: 'travel',
+            label: 'motion.west.label',
+            verb: 'WEST',
+            objectId: '2',
+          ),
+          inventoryAction,
+        ],
+      );
 
-        clearInteractions(applyTurn);
+      clearInteractions(applyTurn);
 
-        await tester.tap(find.text('Inventaire'));
-        await tester.pumpAndSettle();
+      await tester.tap(find.text('Inventaire'));
+      await tester.pumpAndSettle();
 
-        expect(find.byType(InventoryPage), findsOneWidget);
-        verifyNever(() => applyTurn(any(), any()));
-      },
-    );
+      expect(find.byType(InventoryPage), findsOneWidget);
+      verifyNever(() => applyTurn(any(), any()));
+    });
 
     testWidgets(
       'shows incantation buttons only after unlock and hides them elsewhere',
@@ -534,7 +532,9 @@ void main() {
       ).called(1);
     });
 
-    testWidgets('displays flash message when action is performed', (tester) async {
+    testWidgets('displays flash message when action is performed', (
+      tester,
+    ) async {
       await pumpInitialState(tester);
 
       const nextGame = Game(
@@ -551,25 +551,26 @@ void main() {
         shortDescription: 'Short west description',
       );
       when(() => applyTurn(any(), any())).thenAnswer(
-        (_) async => TurnResult(nextGame, const <String>['Short west description']),
+        (_) async =>
+            TurnResult(nextGame, const <String>['Short west description']),
       );
-      when(() => adventureRepository.locationById(2)).thenAnswer(
-        (_) async => nextLocation,
-      );
-      when(() => listAvailableActions(nextGame)).thenAnswer(
-        (_) async => const <ActionOption>[],
-      );
+      when(
+        () => adventureRepository.locationById(2),
+      ).thenAnswer((_) async => nextLocation);
+      when(
+        () => listAvailableActions(nextGame),
+      ).thenAnswer((_) async => const <ActionOption>[]);
       when(() => saveRepository.autosave(any())).thenAnswer((_) async {});
 
       await tester.tap(find.text('Aller Ouest'));
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 200));
 
-      final snackFinder = find.byType(SnackBar);
-      expect(snackFinder, findsOneWidget);
-      final SnackBar snackBar = tester.widget(snackFinder);
-      final Text content = snackBar.content as Text;
-      expect(content.data, equals('Aller Ouest'));
+      final bannerFinder = find.byType(MaterialBanner);
+      expect(bannerFinder, findsOneWidget);
+      final MaterialBanner banner = tester.widget(bannerFinder);
+      final Text content = banner.content as Text;
+      expect(content.data, equals('Short west description'));
     });
 
     testWidgets('renders placeholder when asset is missing without errors', (
