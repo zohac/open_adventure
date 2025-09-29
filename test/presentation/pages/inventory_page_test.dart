@@ -9,12 +9,10 @@ import 'package:open_adventure/domain/repositories/adventure_repository.dart';
 import 'package:open_adventure/domain/repositories/save_repository.dart';
 import 'package:open_adventure/domain/services/dwarf_system.dart';
 import 'package:open_adventure/domain/usecases/apply_turn.dart';
-import 'package:open_adventure/domain/usecases/inventory.dart';
 import 'package:open_adventure/domain/usecases/list_available_actions.dart';
 import 'package:open_adventure/domain/value_objects/action_option.dart';
 import 'package:open_adventure/domain/value_objects/dwarf_tick_result.dart';
 import 'package:open_adventure/domain/value_objects/game_snapshot.dart';
-import 'package:open_adventure/domain/value_objects/turn_result.dart';
 import 'package:open_adventure/l10n/app_localizations.dart';
 import 'package:open_adventure/presentation/pages/inventory_page.dart';
 
@@ -26,7 +24,6 @@ class _MockApplyTurn extends Mock implements ApplyTurn {}
 
 class _MockSaveRepository extends Mock implements SaveRepository {}
 
-class _MockInventoryUseCase extends Mock implements InventoryUseCase {}
 
 class _MockDwarfSystem extends Mock implements DwarfSystem {}
 
@@ -34,7 +31,6 @@ class _TestGameController extends GameController {
   _TestGameController({
     required super.adventureRepository,
     required super.listAvailableActions,
-    required super.inventoryUseCase,
     required super.applyTurn,
     required super.saveRepository,
     required super.dwarfSystem,
@@ -71,7 +67,6 @@ void main() {
   late _MockListAvailableActions listAvailableActions;
   late _MockApplyTurn applyTurn;
   late _MockSaveRepository saveRepository;
-  late _MockInventoryUseCase inventoryUseCase;
   late _MockDwarfSystem dwarfSystem;
   late _TestGameController controller;
 
@@ -80,7 +75,6 @@ void main() {
     listAvailableActions = _MockListAvailableActions();
     applyTurn = _MockApplyTurn();
     saveRepository = _MockSaveRepository();
-    inventoryUseCase = _MockInventoryUseCase();
     dwarfSystem = _MockDwarfSystem();
 
     when(
@@ -97,10 +91,6 @@ void main() {
       () => listAvailableActions(any()),
     ).thenAnswer((_) async => const <ActionOption>[]);
     when(() => saveRepository.autosave(any())).thenAnswer((_) async {});
-    when(() => inventoryUseCase(any())).thenAnswer((invocation) async {
-      final Game game = invocation.positionalArguments.first as Game;
-      return TurnResult(game, const <String>[]);
-    });
     when(() => dwarfSystem.tick(any())).thenAnswer((invocation) async {
       final Game game = invocation.positionalArguments.first as Game;
       return DwarfTickResult(game: game);
@@ -109,7 +99,6 @@ void main() {
     controller = _TestGameController(
       adventureRepository: adventureRepository,
       listAvailableActions: listAvailableActions,
-      inventoryUseCase: inventoryUseCase,
       applyTurn: applyTurn,
       saveRepository: saveRepository,
       dwarfSystem: dwarfSystem,

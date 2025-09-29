@@ -8,6 +8,7 @@ import 'package:open_adventure/l10n/app_localizations.dart';
 import 'package:open_adventure/presentation/theme/app_spacing.dart';
 import 'package:open_adventure/presentation/widgets/icon_helper.dart';
 import 'package:open_adventure/presentation/widgets/location_image.dart';
+import 'package:open_adventure/presentation/pages/inventory_page.dart';
 import 'package:open_adventure/presentation/pages/settings_page.dart';
 
 /// First iteration of the Adventure screen (S2) showing description, travel
@@ -135,7 +136,7 @@ class _AdventurePageState extends State<AdventurePage> {
                   _ActionsSection(
                     l10n: l10n,
                     actions: state.actions,
-                    onActionSelected: widget.controller.perform,
+                    onActionSelected: _handleAction,
                   ),
                   const SizedBox(height: AppSpacing.xl),
                   _JournalSection(entries: state.journal, l10n: l10n),
@@ -146,6 +147,19 @@ class _AdventurePageState extends State<AdventurePage> {
         },
       ),
     );
+  }
+
+  Future<void> _handleAction(ActionOption option) async {
+    if (option.category == 'meta' && option.verb == 'INVENTORY') {
+      await Navigator.of(context).push(
+        MaterialPageRoute<void>(
+          builder: (_) => InventoryPage(controller: widget.controller),
+        ),
+      );
+      return;
+    }
+
+    await widget.controller.perform(option);
   }
 }
 

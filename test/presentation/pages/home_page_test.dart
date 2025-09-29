@@ -14,14 +14,12 @@ import 'package:open_adventure/domain/repositories/adventure_repository.dart';
 import 'package:open_adventure/domain/repositories/audio_settings_repository.dart';
 import 'package:open_adventure/domain/repositories/save_repository.dart';
 import 'package:open_adventure/domain/usecases/apply_turn.dart';
-import 'package:open_adventure/domain/usecases/inventory.dart';
 import 'package:open_adventure/domain/usecases/list_available_actions.dart';
 import 'package:open_adventure/domain/usecases/load_audio_settings.dart';
 import 'package:open_adventure/domain/usecases/save_audio_settings.dart';
 import 'package:open_adventure/domain/services/dwarf_system.dart';
 import 'package:open_adventure/domain/value_objects/action_option.dart';
 import 'package:open_adventure/domain/value_objects/game_snapshot.dart';
-import 'package:open_adventure/domain/value_objects/turn_result.dart';
 import 'package:open_adventure/domain/value_objects/dwarf_tick_result.dart';
 import 'package:open_adventure/presentation/pages/adventure_page.dart';
 import 'package:open_adventure/presentation/pages/credits_page.dart';
@@ -40,7 +38,6 @@ class _MockApplyTurn extends Mock implements ApplyTurn {}
 
 class _MockSaveRepository extends Mock implements SaveRepository {}
 
-class _MockInventoryUseCase extends Mock implements InventoryUseCase {}
 
 class _MockNavigatorObserver extends Mock implements NavigatorObserver {}
 
@@ -116,20 +113,11 @@ void main() {
     required ListAvailableActions listAvailableActions,
     required ApplyTurn applyTurn,
     required SaveRepository saveRepository,
-    InventoryUseCase? inventoryUseCase,
     DwarfSystem? dwarfSystem,
   }) {
     when(
       () => adventureRepository.getGameObjects(),
     ).thenAnswer((_) async => const <GameObject>[]);
-    final InventoryUseCase useCase =
-        inventoryUseCase ?? _MockInventoryUseCase();
-    if (useCase is _MockInventoryUseCase) {
-      when(() => useCase(any())).thenAnswer((invocation) async {
-        final Game game = invocation.positionalArguments.first as Game;
-        return TurnResult(game, const <String>[]);
-      });
-    }
     final DwarfSystem dwarf = dwarfSystem ?? _MockDwarfSystem();
     if (dwarf is _MockDwarfSystem) {
       when(() => dwarf.tick(any())).thenAnswer((invocation) async {
@@ -140,7 +128,6 @@ void main() {
     return GameController(
       adventureRepository: adventureRepository,
       listAvailableActions: listAvailableActions,
-      inventoryUseCase: useCase,
       applyTurn: applyTurn,
       saveRepository: saveRepository,
       dwarfSystem: dwarf,

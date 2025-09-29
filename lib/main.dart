@@ -17,7 +17,6 @@ import 'package:open_adventure/domain/usecases/drop_object.dart';
 import 'package:open_adventure/domain/usecases/evaluate_condition.dart';
 import 'package:open_adventure/domain/usecases/examine.dart';
 import 'package:open_adventure/domain/usecases/extinguish_lamp.dart';
-import 'package:open_adventure/domain/usecases/inventory.dart';
 import 'package:open_adventure/domain/usecases/light_lamp.dart';
 import 'package:open_adventure/domain/usecases/list_available_actions.dart';
 import 'package:open_adventure/domain/usecases/load_audio_settings.dart';
@@ -42,9 +41,6 @@ Future<void> main() async {
     adventureRepository: adventureRepository,
     travel: listAvailableActionsTravel,
     evaluateCondition: evaluateCondition,
-  );
-  final inventoryUseCase = InventoryUseCaseImpl(
-    adventureRepository: adventureRepository,
   );
   final examine = ExamineImpl(adventureRepository: adventureRepository);
   final takeObject = TakeObjectImpl(adventureRepository: adventureRepository);
@@ -83,7 +79,6 @@ Future<void> main() async {
   final controller = GameController(
     adventureRepository: adventureRepository,
     listAvailableActions: listAvailableActions,
-    inventoryUseCase: inventoryUseCase,
     applyTurn: applyTurn,
     saveRepository: saveRepository,
     dwarfSystem: dwarfSystem,

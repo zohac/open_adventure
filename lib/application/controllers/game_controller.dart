@@ -10,7 +10,6 @@ import 'package:open_adventure/domain/repositories/adventure_repository.dart';
 import 'package:open_adventure/domain/repositories/save_repository.dart';
 import 'package:open_adventure/domain/services/dwarf_system.dart';
 import 'package:open_adventure/domain/usecases/apply_turn.dart';
-import 'package:open_adventure/domain/usecases/inventory.dart';
 import 'package:open_adventure/domain/usecases/list_available_actions.dart';
 import 'package:open_adventure/domain/value_objects/action_option.dart';
 import 'package:open_adventure/domain/value_objects/game_snapshot.dart';
@@ -94,13 +93,11 @@ class GameController extends ValueNotifier<GameViewState> {
   GameController({
     required AdventureRepository adventureRepository,
     required ListAvailableActions listAvailableActions,
-    required InventoryUseCase inventoryUseCase,
     required ApplyTurn applyTurn,
     required SaveRepository saveRepository,
     required DwarfSystem dwarfSystem,
   }) : _adventureRepository = adventureRepository,
        _listAvailableActions = listAvailableActions,
-       _inventoryUseCase = inventoryUseCase,
        _applyTurn = applyTurn,
        _saveRepository = saveRepository,
        _dwarfSystem = dwarfSystem,
@@ -108,7 +105,6 @@ class GameController extends ValueNotifier<GameViewState> {
 
   final AdventureRepository _adventureRepository;
   final ListAvailableActions _listAvailableActions;
-  final InventoryUseCase _inventoryUseCase;
   final ApplyTurn _applyTurn;
   final SaveRepository _saveRepository;
   final DwarfSystem _dwarfSystem;
@@ -192,22 +188,7 @@ class GameController extends ValueNotifier<GameViewState> {
       }
 
       if (option.verb == 'INVENTORY') {
-        final TurnResult inventoryResult = await _inventoryUseCase(currentGame);
-        final List<String> messages = inventoryResult.messages
-            .where((message) => message.isNotEmpty)
-            .toList();
-        if (messages.isEmpty) {
-          value = value.copyWith(game: inventoryResult.newGame);
-          return;
-        }
-        final List<String> updatedJournal = _appendJournal(
-          value.journal,
-          messages,
-        );
-        value = value.copyWith(
-          game: inventoryResult.newGame,
-          journal: List.unmodifiable(updatedJournal),
-        );
+        // Navigation vers l'inventaire gérée côté UI (scène dédiée S3).
         return;
       }
     }

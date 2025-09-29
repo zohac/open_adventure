@@ -8,7 +8,6 @@ import 'package:open_adventure/domain/entities/location.dart';
 import 'package:open_adventure/domain/repositories/adventure_repository.dart';
 import 'package:open_adventure/domain/repositories/save_repository.dart';
 import 'package:open_adventure/domain/usecases/apply_turn.dart';
-import 'package:open_adventure/domain/usecases/inventory.dart';
 import 'package:open_adventure/domain/usecases/list_available_actions.dart';
 import 'package:open_adventure/domain/services/dwarf_system.dart';
 import 'package:open_adventure/domain/value_objects/action_option.dart';
@@ -24,7 +23,6 @@ class _MockApplyTurn extends Mock implements ApplyTurn {}
 
 class _MockSaveRepository extends Mock implements SaveRepository {}
 
-class _MockInventoryUseCase extends Mock implements InventoryUseCase {}
 
 class _MockDwarfSystem extends Mock implements DwarfSystem {}
 
@@ -35,7 +33,6 @@ void main() {
   late _MockListAvailableActions listAvailableActions;
   late _MockApplyTurn applyTurn;
   late _MockSaveRepository saveRepository;
-  late _MockInventoryUseCase inventoryUseCase;
   late _MockDwarfSystem dwarfSystem;
   late GameController controller;
 
@@ -69,7 +66,6 @@ void main() {
     listAvailableActions = _MockListAvailableActions();
     applyTurn = _MockApplyTurn();
     saveRepository = _MockSaveRepository();
-    inventoryUseCase = _MockInventoryUseCase();
     dwarfSystem = _MockDwarfSystem();
 
     when(
@@ -83,7 +79,6 @@ void main() {
     controller = GameController(
       adventureRepository: adventureRepository,
       listAvailableActions: listAvailableActions,
-      inventoryUseCase: inventoryUseCase,
       applyTurn: applyTurn,
       saveRepository: saveRepository,
       dwarfSystem: dwarfSystem,
@@ -643,40 +638,6 @@ void main() {
       },
     );
 
-    test('meta inventory delegates to use case and appends journal', () async {
-      when(() => inventoryUseCase(any())).thenAnswer(
-        (_) async => TurnResult(initialGame, const <String>[
-          'You are carrying:',
-          '• Brass lantern',
-        ]),
-      );
-
-      const inventoryAction = ActionOption(
-        id: 'meta:inventory',
-        category: 'meta',
-        label: 'actions.inventory.label',
-        icon: 'inventory',
-        verb: 'INVENTORY',
-      );
-
-      await controller.perform(inventoryAction);
-
-      final state = controller.value;
-      expect(state.game, equals(initialGame));
-      expect(
-        state.journal,
-        equals(const <String>[
-          'Long start description',
-          'You are carrying:',
-          '• Brass lantern',
-        ]),
-      );
-      verify(() => inventoryUseCase(any())).called(1);
-      verifyNever(() => applyTurn(any(), any()));
-      verifyNever(() => saveRepository.autosave(any()));
-      verifyNever(() => dwarfSystem.tick(any()));
-    });
-
     test('meta map defers to presentation layer', () async {
       final previousState = controller.value;
       clearInteractions(applyTurn);
@@ -703,7 +664,6 @@ void main() {
       final freshController = GameController(
         adventureRepository: adventureRepository,
         listAvailableActions: listAvailableActions,
-        inventoryUseCase: inventoryUseCase,
         applyTurn: applyTurn,
         saveRepository: saveRepository,
         dwarfSystem: dwarfSystem,

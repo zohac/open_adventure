@@ -9,7 +9,6 @@ import 'package:open_adventure/domain/entities/location.dart';
 import 'package:open_adventure/domain/repositories/adventure_repository.dart';
 import 'package:open_adventure/domain/repositories/save_repository.dart';
 import 'package:open_adventure/domain/usecases/apply_turn.dart';
-import 'package:open_adventure/domain/usecases/inventory.dart';
 import 'package:open_adventure/domain/usecases/list_available_actions.dart';
 import 'package:open_adventure/domain/services/dwarf_system.dart';
 import 'package:open_adventure/domain/value_objects/action_option.dart';
@@ -17,6 +16,7 @@ import 'package:open_adventure/domain/value_objects/game_snapshot.dart';
 import 'package:open_adventure/domain/value_objects/turn_result.dart';
 import 'package:open_adventure/domain/value_objects/dwarf_tick_result.dart';
 import 'package:open_adventure/presentation/pages/adventure_page.dart';
+import 'package:open_adventure/presentation/pages/inventory_page.dart';
 import 'package:open_adventure/l10n/app_localizations.dart';
 
 const _testL10nFr = AppLocalizations(Locale('fr'));
@@ -29,7 +29,6 @@ class _MockApplyTurn extends Mock implements ApplyTurn {}
 
 class _MockSaveRepository extends Mock implements SaveRepository {}
 
-class _MockInventoryUseCase extends Mock implements InventoryUseCase {}
 
 class _MockDwarfSystem extends Mock implements DwarfSystem {}
 
@@ -57,7 +56,6 @@ void main() {
     late _MockListAvailableActions listAvailableActions;
     late _MockApplyTurn applyTurn;
     late _MockSaveRepository saveRepository;
-    late _MockInventoryUseCase inventoryUseCase;
     late _MockDwarfSystem dwarfSystem;
     late GameController controller;
 
@@ -76,7 +74,6 @@ void main() {
       applyTurn = _MockApplyTurn();
       saveRepository = _MockSaveRepository();
 
-      inventoryUseCase = _MockInventoryUseCase();
       dwarfSystem = _MockDwarfSystem();
 
       when(
@@ -90,7 +87,6 @@ void main() {
       controller = GameController(
         adventureRepository: adventureRepository,
         listAvailableActions: listAvailableActions,
-        inventoryUseCase: inventoryUseCase,
         applyTurn: applyTurn,
         saveRepository: saveRepository,
         dwarfSystem: dwarfSystem,
@@ -311,6 +307,41 @@ void main() {
       expect(find.text('Actions supplémentaires'), findsNothing);
       verify(() => applyTurn(any(), any())).called(1);
     });
+
+    testWidgets(
+      'tapping inventory meta action navigates to InventoryPage',
+      (tester) async {
+        const inventoryAction = ActionOption(
+          id: 'meta:inventory',
+          category: 'meta',
+          label: 'actions.inventory.label',
+          icon: 'inventory',
+          verb: 'INVENTORY',
+        );
+
+        await pumpInitialState(
+          tester,
+          actionsOverride: const <ActionOption>[
+            ActionOption(
+              id: 'travel:1->2:WEST',
+              category: 'travel',
+              label: 'motion.west.label',
+              verb: 'WEST',
+              objectId: '2',
+            ),
+            inventoryAction,
+          ],
+        );
+
+        clearInteractions(applyTurn);
+
+        await tester.tap(find.text('Inventaire'));
+        await tester.pumpAndSettle();
+
+        expect(find.byType(InventoryPage), findsOneWidget);
+        verifyNever(() => applyTurn(any(), any()));
+      },
+    );
 
     testWidgets(
       'shows incantation buttons only after unlock and hides them elsewhere',
