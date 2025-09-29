@@ -23,11 +23,11 @@ class AppLocalizations {
   /// Localizations delegates required to wire the bundle in a [MaterialApp].
   static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
       <LocalizationsDelegate<dynamic>>[
-    delegate,
-    GlobalMaterialLocalizations.delegate,
-    GlobalCupertinoLocalizations.delegate,
-    GlobalWidgetsLocalizations.delegate,
-  ];
+        delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ];
 
   /// Supported locales exposed to the Flutter framework.
   static const List<Locale> supportedLocales = <Locale>[
@@ -59,9 +59,9 @@ class AppLocalizations {
 
   /// Subtitle for the "continue" menu entry, formatted with save metadata.
   String homeMenuContinueSubtitle({required int turns, required int location}) {
-    return _string('homeMenuContinueSubtitle')
-        .replaceAll('{turns}', '$turns')
-        .replaceAll('{location}', '$location');
+    return _string(
+      'homeMenuContinueSubtitle',
+    ).replaceAll('{turns}', '$turns').replaceAll('{location}', '$location');
   }
 
   /// Label of the "load" menu entry.
@@ -75,6 +75,18 @@ class AppLocalizations {
 
   /// Subtitle of the "options" menu entry.
   String get homeMenuOptionsSubtitle => _string('homeMenuOptionsSubtitle');
+
+  /// Title displayed at the top of the inventory page.
+  String get inventoryTitle => _string('inventory.title');
+
+  /// Placeholder rendered when the inventory is empty.
+  String get inventoryEmptyState => _string('inventory.empty');
+
+  /// Placeholder rendered when an item exposes no contextual action.
+  String get inventoryNoActions => _string('inventory.noActions');
+
+  /// Resolves the localized label for an inventory item.
+  String inventoryItemLabel(String objectKey) => _resolveObjectLabel(objectKey);
 
   /// Label of the "credits" menu entry.
   String get homeMenuCreditsLabel => _string('homeMenuCreditsLabel');
@@ -159,8 +171,9 @@ class AppLocalizations {
         return override;
       }
       if (magicWords.contains(canonical)) {
-        return _string('adventureActionMotionMagicWord')
-            .replaceAll('{word}', canonical);
+        return _string(
+          'adventureActionMotionMagicWord',
+        ).replaceAll('{word}', canonical);
       }
       if (canonical == 'UNKNOWN') {
         return _string('adventureActionMotionUnknown');
@@ -175,8 +188,9 @@ class AppLocalizations {
                 '${part[0].toUpperCase()}${part.substring(1).toLowerCase()}',
           )
           .join(' ');
-      return _string('adventureActionMotionFallback')
-          .replaceAll('{destination}', beautified);
+      return _string(
+        'adventureActionMotionFallback',
+      ).replaceAll('{destination}', beautified);
     }
     return rawLabel;
   }
@@ -190,7 +204,8 @@ class AppLocalizations {
   }
 
   String? _maybeString(String key) {
-    final table = _localizedValues[locale.languageCode] ??
+    final table =
+        _localizedValues[locale.languageCode] ??
         _localizedValues[supportedLocales.first.languageCode]!;
     return table[key];
   }
@@ -220,8 +235,9 @@ class _AppLocalizationsDelegate
 
   @override
   bool isSupported(Locale locale) {
-    return AppLocalizations.supportedLocales
-        .any((supported) => supported.languageCode == locale.languageCode);
+    return AppLocalizations.supportedLocales.any(
+      (supported) => supported.languageCode == locale.languageCode,
+    );
   }
 
   @override
@@ -233,7 +249,8 @@ class _AppLocalizationsDelegate
   bool shouldReload(_AppLocalizationsDelegate old) => false;
 }
 
-const Map<String, Map<String, String>> _localizedValues = <String, Map<String, String>>{
+const Map<String, Map<String, String>>
+_localizedValues = <String, Map<String, String>>{
   'en': {
     'actions.interaction.close': 'Close {object}',
     'actions.interaction.drop': 'Drop {object}',
@@ -253,7 +270,8 @@ const Map<String, Map<String, String>> _localizedValues = <String, Map<String, S
     'adventureActionsMoreButtonLabel': 'More…',
     'adventureActionsMoreSheetTitle': 'Additional actions',
     'adventureActionsSectionTitle': 'Actions',
-    'adventureActionsTravelMissingHint': 'No immediate exits. Observe your surroundings.',
+    'adventureActionsTravelMissingHint':
+        'No immediate exits. Observe your surroundings.',
     'adventureAudioSettingsTooltip': 'Audio settings',
     'adventureDescriptionEmptyPlaceholder': '...',
     'adventureDescriptionSectionTitle': 'Description',
@@ -261,7 +279,8 @@ const Map<String, Map<String, String>> _localizedValues = <String, Map<String, S
     'adventureJournalSectionTitle': 'Journal',
     'adventureLocationImageSemanticsFallback': 'Location illustration',
     'appTitle': 'Open Adventure',
-    'homeHeroSubtitle': 'Embark on the cult text expedition, remastered for mobile.',
+    'homeHeroSubtitle':
+        'Embark on the cult text expedition, remastered for mobile.',
     'homeHeroTitle': 'Open Adventure',
     'homeMenuContinueLabel': 'Continue',
     'homeMenuContinueSubtitle': 'Last turn: {turns}, location #{location}',
@@ -273,6 +292,9 @@ const Map<String, Map<String, String>> _localizedValues = <String, Map<String, S
     'homeMenuNewGameSubtitle': 'Begin exploring the colossal cavern.',
     'homeMenuOptionsLabel': 'Options',
     'homeMenuOptionsSubtitle': 'Configure audio and tactile feedback.',
+    'inventory.title': 'Inventory',
+    'inventory.empty': 'You are not carrying anything.',
+    'inventory.noActions': 'No contextual actions available',
     'motion.back.label': 'Retrace steps',
     'motion.bedquilt.label': 'Go to Bedquilt',
     'motion.cave.label': 'Go to the cave',
@@ -309,7 +331,8 @@ const Map<String, Map<String, String>> _localizedValues = <String, Map<String, S
     'objects.AMBER.label': 'Amber gemstone',
     'objects.AXE.label': 'Dwarf\'s axe',
     'objects.BATTERY.label': 'Batteries',
-    'objects.BEAR.label': 'There is a ferocious cave bear eyeing you from the far end of the room!',
+    'objects.BEAR.label':
+        'There is a ferocious cave bear eyeing you from the far end of the room!',
     'objects.BIRD.label': 'Little bird in cage',
     'objects.BLOOD.label': 'blood',
     'objects.BOTTLE.label': 'Small bottle',
@@ -395,7 +418,8 @@ const Map<String, Map<String, String>> _localizedValues = <String, Map<String, S
     'adventureActionsMoreButtonLabel': 'Plus…',
     'adventureActionsMoreSheetTitle': 'Actions supplémentaires',
     'adventureActionsSectionTitle': 'Actions',
-    'adventureActionsTravelMissingHint': 'Aucune sortie immédiate. Observez les alentours.',
+    'adventureActionsTravelMissingHint':
+        'Aucune sortie immédiate. Observez les alentours.',
     'adventureAudioSettingsTooltip': 'Réglages audio',
     'adventureDescriptionEmptyPlaceholder': '...',
     'adventureDescriptionSectionTitle': 'Description',
@@ -403,7 +427,8 @@ const Map<String, Map<String, String>> _localizedValues = <String, Map<String, S
     'adventureJournalSectionTitle': 'Journal',
     'adventureLocationImageSemanticsFallback': 'Illustration du lieu',
     'appTitle': 'Open Adventure',
-    'homeHeroSubtitle': 'Partez pour l\'expédition textuelle culte, remasterisée pour mobile.',
+    'homeHeroSubtitle':
+        'Partez pour l\'expédition textuelle culte, remasterisée pour mobile.',
     'homeHeroTitle': 'Open Adventure',
     'homeMenuContinueLabel': 'Continuer',
     'homeMenuContinueSubtitle': 'Dernier tour : {turns}, lieu #{location}',
@@ -415,6 +440,9 @@ const Map<String, Map<String, String>> _localizedValues = <String, Map<String, S
     'homeMenuNewGameSubtitle': 'Commencer l\'exploration de la caverne.',
     'homeMenuOptionsLabel': 'Options',
     'homeMenuOptionsSubtitle': 'Configurer l\'expérience audio et tactile.',
+    'inventory.title': 'Inventaire',
+    'inventory.empty': 'Vous ne portez rien.',
+    'inventory.noActions': 'Aucune action contextuelle disponible',
     'motion.back.label': 'Revenir sur ses pas',
     'motion.bedquilt.label': 'Aller vers Bedquilt',
     'motion.cave.label': 'Aller vers la grotte',
@@ -451,7 +479,8 @@ const Map<String, Map<String, String>> _localizedValues = <String, Map<String, S
     'objects.AMBER.label': 'Amber gemstone',
     'objects.AXE.label': 'Dwarf\'s axe',
     'objects.BATTERY.label': 'Batteries',
-    'objects.BEAR.label': 'There is a ferocious cave bear eyeing you from the far end of the room!',
+    'objects.BEAR.label':
+        'There is a ferocious cave bear eyeing you from the far end of the room!',
     'objects.BIRD.label': 'Little bird in cage',
     'objects.BLOOD.label': 'blood',
     'objects.BOTTLE.label': 'Small bottle',

@@ -46,7 +46,8 @@ class GameObjectModel extends GameObject {
     final words = (json['words'] as List?)?.cast<String>() ?? const <String>[];
     final locations = _normalizeLocations(json['locations']);
     final immovable = (json['immovable'] as bool?) ?? false;
-    final isTreasure = (json['is_treasure'] as bool?) ?? false;
+    final isTreasure =
+        (json['is_treasure'] as bool?) ?? (json['treasure'] as bool?) ?? false;
 
     List<String>? asStringListOrNull(dynamic v) {
       if (v == null) return null;

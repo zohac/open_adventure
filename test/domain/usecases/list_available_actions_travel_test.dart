@@ -112,7 +112,8 @@ void main() {
     expect(motion.iconName('OUT'), equals('logout'));
   });
 
-  test('returns observer fallback when no travel actions are available', () async {
+  test('returns observer fallback when no travel actions are available',
+      () async {
     final repo = _EmptyTravelRepository();
     final usecase = ListAvailableActionsTravel(repo, motion);
     const game = Game(loc: 42, oldLoc: 42, newLoc: 42, turns: 0, rngSeed: 99);
@@ -165,8 +166,8 @@ void main() {
     when(() => repo.travelRulesFor(7)).thenAnswer((_) async => const []);
     when(() => repo.locationById(7))
         .thenAnswer((_) async => const Location(id: 7, name: 'LOC_SEVEN'));
-    when(() => repo.locationById(6)).thenAnswer((_) async =>
-        const Location(id: 6, name: 'LOC_FORCED', conditions: {'FORCED': true}));
+    when(() => repo.locationById(6)).thenAnswer((_) async => const Location(
+        id: 6, name: 'LOC_FORCED', conditions: {'FORCED': true}));
     when(() => repo.locationById(2))
         .thenAnswer((_) async => const Location(id: 2, name: 'LOC_SAFE'));
 
@@ -285,6 +286,9 @@ class _EmptyTravelRepository implements AdventureRepository {
 
   @override
   Future<List<TravelRule>> travelRulesFor(int locationId) async => const [];
+
+  @override
+  Future<String> arbitraryMessage(String key, {int? count}) async => '';
 }
 
 class _IncantationTravelRepository implements AdventureRepository {
@@ -349,4 +353,7 @@ class _IncantationTravelRepository implements AdventureRepository {
     }
     return const [];
   }
+
+  @override
+  Future<String> arbitraryMessage(String key, {int? count}) async => '';
 }

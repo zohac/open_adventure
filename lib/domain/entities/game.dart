@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 
+import 'dwarf_state.dart';
 import 'game_object_state.dart';
 
 /// Game represents the current world state required en S2.
@@ -21,6 +22,9 @@ class Game {
 
   /// Seed used for deterministic RNG.
   final int rngSeed;
+
+  /// Current dwarf subsystem state (activation, positions, etc.).
+  final DwarfState dwarfState;
 
   /// Set of visited location IDs.
   final Set<int> visitedLocations;
@@ -55,6 +59,7 @@ class Game {
     required this.turns,
     required this.rngSeed,
     this.visitedLocations = const {},
+    this.dwarfState = const DwarfState(),
     this.magicWordsUnlocked = false,
     this.objectStates = const <int, GameObjectState>{},
     this.flags = const <String>{},
@@ -72,6 +77,7 @@ class Game {
     int? newLoc,
     int? turns,
     int? rngSeed,
+    DwarfState? dwarfState,
     Set<int>? visitedLocations,
     bool? magicWordsUnlocked,
     Map<int, GameObjectState>? objectStates,
@@ -87,6 +93,7 @@ class Game {
     newLoc: newLoc ?? this.newLoc,
     turns: turns ?? this.turns,
     rngSeed: rngSeed ?? this.rngSeed,
+    dwarfState: dwarfState ?? this.dwarfState,
     visitedLocations: visitedLocations ?? this.visitedLocations,
     magicWordsUnlocked: magicWordsUnlocked ?? this.magicWordsUnlocked,
     objectStates: objectStates ?? this.objectStates,
@@ -112,6 +119,7 @@ class Game {
         newLoc == other.newLoc &&
         turns == other.turns &&
         rngSeed == other.rngSeed &&
+        dwarfState == other.dwarfState &&
         _setEquality.equals(visitedLocations, other.visitedLocations) &&
         magicWordsUnlocked == other.magicWordsUnlocked &&
         _objectMapEquality.equals(objectStates, other.objectStates) &&
@@ -130,6 +138,7 @@ class Game {
     newLoc,
     turns,
     rngSeed,
+    dwarfState,
     _setEquality.hash(visitedLocations),
     magicWordsUnlocked,
     _objectMapEquality.hash(objectStates),

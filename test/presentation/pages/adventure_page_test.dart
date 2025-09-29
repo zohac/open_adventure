@@ -4,16 +4,18 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:open_adventure/application/controllers/game_controller.dart';
 import 'package:open_adventure/domain/entities/game.dart';
+import 'package:open_adventure/domain/entities/game_object.dart';
 import 'package:open_adventure/domain/entities/location.dart';
 import 'package:open_adventure/domain/repositories/adventure_repository.dart';
 import 'package:open_adventure/domain/repositories/save_repository.dart';
-import 'package:open_adventure/domain/usecases/apply_turn_goto.dart';
+import 'package:open_adventure/domain/usecases/apply_turn.dart';
 import 'package:open_adventure/domain/usecases/inventory.dart';
 import 'package:open_adventure/domain/usecases/list_available_actions.dart';
+import 'package:open_adventure/domain/services/dwarf_system.dart';
 import 'package:open_adventure/domain/value_objects/action_option.dart';
-import 'package:open_adventure/domain/value_objects/command.dart';
 import 'package:open_adventure/domain/value_objects/game_snapshot.dart';
 import 'package:open_adventure/domain/value_objects/turn_result.dart';
+import 'package:open_adventure/domain/value_objects/dwarf_tick_result.dart';
 import 'package:open_adventure/presentation/pages/adventure_page.dart';
 import 'package:open_adventure/l10n/app_localizations.dart';
 
@@ -23,17 +25,27 @@ class _MockAdventureRepository extends Mock implements AdventureRepository {}
 
 class _MockListAvailableActions extends Mock implements ListAvailableActions {}
 
-class _MockApplyTurnGoto extends Mock implements ApplyTurnGoto {}
+class _MockApplyTurn extends Mock implements ApplyTurn {}
 
 class _MockSaveRepository extends Mock implements SaveRepository {}
 
 class _MockInventoryUseCase extends Mock implements InventoryUseCase {}
 
+class _MockDwarfSystem extends Mock implements DwarfSystem {}
+
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   setUpAll(() {
-    registerFallbackValue(const Command(verb: 'WEST', target: '2'));
+    registerFallbackValue(
+      const ActionOption(
+        id: 'travel:1->2:WEST',
+        category: 'travel',
+        label: 'motion.west.label',
+        verb: 'WEST',
+        objectId: '2',
+      ),
+    );
     registerFallbackValue(
       const Game(loc: 0, oldLoc: 0, newLoc: 0, turns: 0, rngSeed: 0),
     );
@@ -43,9 +55,10 @@ void main() {
   group('AdventurePage', () {
     late _MockAdventureRepository adventureRepository;
     late _MockListAvailableActions listAvailableActions;
-    late _MockApplyTurnGoto applyTurn;
+    late _MockApplyTurn applyTurn;
     late _MockSaveRepository saveRepository;
     late _MockInventoryUseCase inventoryUseCase;
+    late _MockDwarfSystem dwarfSystem;
     late GameController controller;
 
     const initialGame = Game(
@@ -60,10 +73,19 @@ void main() {
     setUp(() {
       adventureRepository = _MockAdventureRepository();
       listAvailableActions = _MockListAvailableActions();
-      applyTurn = _MockApplyTurnGoto();
+      applyTurn = _MockApplyTurn();
       saveRepository = _MockSaveRepository();
 
       inventoryUseCase = _MockInventoryUseCase();
+      dwarfSystem = _MockDwarfSystem();
+
+      when(
+        () => adventureRepository.getGameObjects(),
+      ).thenAnswer((_) async => const <GameObject>[]);
+      when(() => dwarfSystem.tick(any())).thenAnswer((invocation) async {
+        final Game game = invocation.positionalArguments.first as Game;
+        return DwarfTickResult(game: game);
+      });
 
       controller = GameController(
         adventureRepository: adventureRepository,
@@ -71,6 +93,7 @@ void main() {
         inventoryUseCase: inventoryUseCase,
         applyTurn: applyTurn,
         saveRepository: saveRepository,
+        dwarfSystem: dwarfSystem,
       );
     });
 
@@ -85,7 +108,8 @@ void main() {
         longDescription: 'Long start description',
         shortDescription: 'Short start description',
       );
-      final actions = actionsOverride ??
+      final actions =
+          actionsOverride ??
           <ActionOption>[
             const ActionOption(
               id: 'travel:1->2:WEST',
@@ -346,19 +370,19 @@ void main() {
           () => listAvailableActions(remoteGame),
         ).thenAnswer((_) async => const [remoteOption]);
         when(() => applyTurn(any(), any())).thenAnswer((invocation) async {
-          final Command command =
-              invocation.positionalArguments.first as Command;
-          if (command.verb == 'WEST') {
+          final ActionOption option =
+              invocation.positionalArguments.first as ActionOption;
+          if (option.verb == 'WEST') {
             return TurnResult(unlockedGame, const <String>[
               'Un bourdonnement magique retentit.',
             ]);
           }
-          if (command.verb == 'EAST') {
+          if (option.verb == 'EAST') {
             return TurnResult(remoteGame, const <String>[
               'Le passage se referme derrière vous.',
             ]);
           }
-          throw StateError('Unexpected command: ${command.verb}');
+          throw StateError('Unexpected action: ${option.verb}');
         });
         when(() => adventureRepository.locationById(2)).thenAnswer(
           (_) async => const Location(
@@ -621,9 +645,7 @@ void main() {
 
       expect(find.text('LOC_START'), findsOneWidget);
       expect(find.text('Back at the start.'), findsWidgets);
-      verify(
-        () => applyTurn(const Command(verb: 'BACK', target: '1'), historyGame),
-      ).called(1);
+      verify(() => applyTurn(backAction, historyGame)).called(1);
       verify(
         () => saveRepository.autosave(
           const GameSnapshot(loc: 1, turns: 4, rngSeed: 42),

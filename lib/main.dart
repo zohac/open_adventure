@@ -10,12 +10,21 @@ import 'package:open_adventure/data/repositories/adventure_repository_impl.dart'
 import 'package:open_adventure/data/repositories/audio_settings_repository_impl.dart';
 import 'package:open_adventure/data/repositories/save_repository_impl.dart';
 import 'package:open_adventure/data/services/motion_normalizer_impl.dart';
-import 'package:open_adventure/domain/usecases/load_audio_settings.dart';
+import 'package:open_adventure/domain/usecases/apply_turn.dart';
 import 'package:open_adventure/domain/usecases/apply_turn_goto.dart';
+import 'package:open_adventure/domain/usecases/close_object.dart';
+import 'package:open_adventure/domain/usecases/drop_object.dart';
 import 'package:open_adventure/domain/usecases/evaluate_condition.dart';
+import 'package:open_adventure/domain/usecases/examine.dart';
+import 'package:open_adventure/domain/usecases/extinguish_lamp.dart';
 import 'package:open_adventure/domain/usecases/inventory.dart';
+import 'package:open_adventure/domain/usecases/light_lamp.dart';
 import 'package:open_adventure/domain/usecases/list_available_actions.dart';
+import 'package:open_adventure/domain/usecases/load_audio_settings.dart';
+import 'package:open_adventure/domain/usecases/open_object.dart';
 import 'package:open_adventure/domain/usecases/save_audio_settings.dart';
+import 'package:open_adventure/domain/usecases/take_object.dart';
+import 'package:open_adventure/domain/services/dwarf_system.dart';
 import 'package:open_adventure/presentation/pages/home_page.dart';
 import 'package:open_adventure/presentation/theme/app_theme.dart';
 
@@ -37,8 +46,28 @@ Future<void> main() async {
   final inventoryUseCase = InventoryUseCaseImpl(
     adventureRepository: adventureRepository,
   );
-  final applyTurn = ApplyTurnGoto(adventureRepository, motionNormalizer);
+  final examine = ExamineImpl(adventureRepository: adventureRepository);
+  final takeObject = TakeObjectImpl(adventureRepository: adventureRepository);
+  final dropObject = DropObjectImpl(adventureRepository: adventureRepository);
+  final openObject = OpenObjectImpl(adventureRepository: adventureRepository);
+  final closeObject = CloseObjectImpl(adventureRepository: adventureRepository);
+  final lightLamp = LightLampImpl(adventureRepository: adventureRepository);
+  final extinguishLamp = ExtinguishLampImpl(
+    adventureRepository: adventureRepository,
+  );
+  final applyTurnGoto = ApplyTurnGoto(adventureRepository, motionNormalizer);
+  final applyTurn = ApplyTurn(
+    travel: applyTurnGoto,
+    examine: examine,
+    takeObject: takeObject,
+    dropObject: dropObject,
+    openObject: openObject,
+    closeObject: closeObject,
+    lightLamp: lightLamp,
+    extinguishLamp: extinguishLamp,
+  );
   final saveRepository = SaveRepositoryImpl();
+  final dwarfSystem = DwarfSystem(adventureRepository);
 
   final audioController = AudioController();
   final audioSettingsRepository = AudioSettingsRepositoryImpl();
@@ -57,6 +86,7 @@ Future<void> main() async {
     inventoryUseCase: inventoryUseCase,
     applyTurn: applyTurn,
     saveRepository: saveRepository,
+    dwarfSystem: dwarfSystem,
   );
   final homeController = HomeController(saveRepository: saveRepository);
 
