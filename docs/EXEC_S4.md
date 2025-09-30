@@ -228,8 +228,14 @@ Suivi & tickets
     - [ ] Breakdown complet; actions mènent aux écrans attendus; tests widgets verts.
     - [ ] Revue de code CTO: scoring conforme `score.c`, fins de jeu stables, multi‑saves robustes, perfs/coverage aux seuils.
     - [ ] Revue Game Designer validée (UX de fin, textes et classements).
-- [ ] ADVT‑S4‑09: i18n finale — ARB FR/EN, extraction/validation des clés, test « clés manquantes ».
+- [ ] ADVT‑S4‑09: i18n finale — ARB FR/EN exhaustifs, automatisation d’extraction des messages, validation CI « clés manquantes ».
   - DoD:
+    - [ ] Script `scripts/extract_localization.dart` (ou équivalent) qui parcourt `assets/data/**/*` et génère un inventaire des chaînes sources (id, contexte, texte d’origine) sans heuristique manuelle.
+    - [ ] Chaque JSON `assets/data/**.json` enrichi d’un champ `i18nKey` (ou structure équivalente) référencé par le script, pour que l’UI n’affiche jamais une chaîne raw; mise à jour documentée dans `docs/CONVERSION_SPEC.md`.
+    - [ ] Fichiers `lib/l10n/app_en.arb` (source) et `lib/l10n/app_fr.arb` (cible) complets, triés, générés/validés via `flutter gen-l10n`; aucune clé manquante ni non traduite.
+    - [ ] Respect strict des bonnes pratiques ARB: un fichier par locale `app_<locale>.arb` avec `app_en.arb` source; nommage snake_case cohérent; clés descriptives (jamais basées sur la valeur) et structurées par contexte; aucune chaîne codée en dur dans le code; métadonnées `@key` systématiques (description, type, placeholders) avec placeholders nommés/documentés; fichiers triés/indentés; validation automatisée via `flutter gen-l10n`/lint CI.
+    - [ ] Test automatisé (widget ou `flutter test`) qui échoue si une clé est absente, si une traduction manque, ou si le script détecte un décalage entre assets et ARB; branché dans la CI.
+    - [ ] Documentation « handoff traducteur » (README section ou doc dédiée) expliquant le flux: exécution du script, génération de `app_<locale>.arb`, guidelines placeholders/genre, export CSV/XLIFF facultatif.
     - [ ] Aucun placeholder dur dans l’UI; script de validation garantit l’existence des clés; tests de locale passent.
     - [ ] Revue de code CTO: scoring conforme `score.c`, fins de jeu stables, multi‑saves robustes, perfs/coverage aux seuils.
     - [ ] Revue Game Designer validée (traductions/tonalité FR/EN).

@@ -250,27 +250,27 @@ Suivi & tickets
   - DoD:
     - [x] Liste formatée stable; test d’objets multiples, ordre défini.
     - [x] Revue de code CTO: séparation stricte (Domain vs UI), interactions/conditions encapsulées en use cases, tests Domain ≥ 85%.
-- [ ] ADVT‑S3‑11: `DwarfSystem.tick` (minimal) — apparition/déplacement, messages, déterminisme par seed + tests.
+- [x] ADVT‑S3‑11: `DwarfSystem.tick` (minimal) — apparition/déplacement, messages, déterminisme par seed + tests.
   - DoD:
-    - [ ] Avec seed fixe, séquence de messages stable; aucune modification d’objets/chemins en S3; tests 100%.
-    - [ ] Revue de code CTO: séparation stricte (Domain vs UI), interactions/conditions encapsulées en use cases, tests Domain ≥ 85%.
-- [ ] ADVT‑S3‑12: `ComputeScore(partiel)` — trésors/exploration/pénalités + tests.
+    - [x] Avec seed fixe, séquence de messages stable; aucune modification d’objets/chemins en S3; tests 100%.
+    - [x] Revue de code CTO: séparation stricte (Domain vs UI), interactions/conditions encapsulées en use cases, tests Domain ≥ 85%.
+- [x] ADVT‑S3‑12: `ComputeScore(partiel)` — trésors/exploration/pénalités + tests.
   - DoD:
-    - [ ] Calcule total = trésors + exploration − pénalités; valeurs attendues sur scénarios unitaires; tests verts.
-    - [ ] Revue de code CTO: séparation stricte (Domain vs UI), interactions/conditions encapsulées en use cases, tests Domain ≥ 85%.
-- [ ] ADVT‑S3‑13: Intégrer interactions dans `ApplyTurn` (routing) + autosave après mutation + tests d’intégration.
+    - [x] Calcule total = trésors + exploration − pénalités; valeurs attendues sur scénarios unitaires; tests verts.
+    - [x] Revue de code CTO: séparation stricte (Domain vs UI), interactions/conditions encapsulées en use cases, tests Domain ≥ 85%.
+- [x] ADVT‑S3‑13: Intégrer interactions dans `ApplyTurn` (routing) + autosave après mutation + tests d’intégration.
   - DoD:
-    - [ ] `ApplyTurn` route par `category`; autosave appelée une fois par tour; tests d’intégration couvrent 2 interactions.
-    - [ ] Revue de code CTO: séparation stricte (Domain vs UI), interactions/conditions encapsulées en use cases, tests Domain ≥ 85%.
-- [ ] ADVT‑S3‑14: Mettre à jour `GameController` — journal append, timers lampe par tour, hook nains + tests.
+    - [x] `ApplyTurn` route par `category`; autosave appelée une fois par tour; tests d’intégration couvrent 2 interactions.
+    - [x] Revue de code CTO: séparation stricte (Domain vs UI), interactions/conditions encapsulées en use cases, tests Domain ≥ 85%.
+- [x] ADVT‑S3‑14: Mettre à jour `GameController` — journal append, timers lampe par tour, hook nains + tests.
   - DoD:
-    - [ ] Journal conserve les 200 derniers messages; timers décrémentés si lampe allumée; nains hook exécuté; tests.
-    - [ ] Revue de code CTO: séparation stricte (Domain vs UI), interactions/conditions encapsulées en use cases, tests Domain ≥ 85%.
-- [ ] ADVT‑S3‑15: `InventoryPage` — liste + actions contextuelles + widget tests.
+    - [x] Journal conserve les 200 derniers messages; timers décrémentés si lampe allumée; nains hook exécuté; tests.
+    - [x] Revue de code CTO: séparation stricte (Domain vs UI), interactions/conditions encapsulées en use cases, tests Domain ≥ 85%.
+- [x] ADVT‑S3‑15: `InventoryPage` — liste + actions contextuelles + widget tests.
   - DoD:
-    - [ ] Affiche objets portés; actions par item fonctionnelles; widget tests tap→perform OK.
-    - [ ] Revue de code CTO: séparation stricte (Domain vs UI), interactions/conditions encapsulées en use cases, tests Domain ≥ 85%.
-    - [ ] Revue Game Designer validée (UX/labels/interactions).
+    - [x] Affiche objets portés; actions par item fonctionnelles; widget tests tap→perform OK.
+    - [x] Revue de code CTO: séparation stricte (Domain vs UI), interactions/conditions encapsulées en use cases, tests Domain ≥ 85%.
+    - [x] Revue Game Designer validée (UX/labels/interactions).
 - [ ] ADVT‑S3‑16: `MapPage` v1 — graphe des lieux découverts + goldens.
   - DoD:
     - [ ] Noeuds/arêtes rendus pour lieux visités; lieu courant mis en évidence; golden test stable.

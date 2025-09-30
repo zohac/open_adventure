@@ -1,11 +1,13 @@
 # Demande MapPage Semaine 3 — À adresser CTO & Dev
 
 ## Contexte
+
 - Persona: Maya Greenwood (Game Design) acte la MapPage comme atlas multi-strates révélant uniquement les lieux et chemins déjà explorés.
 - Source de vérité: `GameController.mapGraph` (Domain/Application) expose nœuds/arêtes visités. Aucun spoil, aucune mutation côté UI.
 - Référence historique: stratification confirmée par Tristan Maher-Kent (historien Colossal Cave) : Surface & Well House → Upper Cave → Hall of Mists → Labyrinthes & Rivière → Sanctuaire & Endgame.
 
 ## Attentes côté CTO
+
 1. **Valider l’architecture de données**
    - Confirmer que `GameController` délivre un `MapGraph` sérialisable (autosave) contenant `nodes`, `edges`, `currentLocationId`, `visitedLayers`.
    - Garantir la persistance offline: autosave + slots manuels doivent inclure l’état de découverte de la carte.
@@ -18,6 +20,7 @@
    - Programmer la revue croisée Game Design/UX après implémentation pour vérifier la lisibilité tactile (3–7 choix, pointillés pour sauts magiques).
 
 ## Attentes côté Développeur Flutter (S3)
+
 1. **Implémentation MapPage v1**
    - Charger `map_layout.json` (layer + coordonnées) et fusionner avec `GameController.mapGraph` pour n’afficher que les nœuds `visited=true`.
    - Dessiner via `CustomPainter` (PixelCanvas style 16-bit) :
@@ -35,6 +38,6 @@
    - Ajouter métriques de logs (debug) pour nombre de nœuds/arêtes rendus par couche afin d’aider QA.
 
 ## Livrables attendus en fin de S3
+
 - PR Flutter incluant `MapPage`, tests widget/golden, fichier `map_layout.json`, hook autosave `MapGraph`.
 - Compte rendu court (1 paragraphe) confirmant validation par CTO (archi + tests) et revue Game Design.
-
