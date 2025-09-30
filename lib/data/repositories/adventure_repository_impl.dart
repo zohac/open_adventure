@@ -20,9 +20,10 @@ class AdventureRepositoryImpl implements AdventureRepository {
   List<GameObject>? _objects;
   Map<String, int>? _locNameToId;
   Map<String, int>? _objNameToId;
+  Map<String, String?>? _arbitraryMessages;
 
   AdventureRepositoryImpl({AssetDataSource? assets})
-    : _assets = assets ?? BundleAssetDataSource();
+      : _assets = assets ?? BundleAssetDataSource();
 
   @override
   Future<List<Location>> getLocations() async {
@@ -121,6 +122,50 @@ class AdventureRepositoryImpl implements AdventureRepository {
     } on FormatException catch (e) {
       throw DataFailure('Invalid JSON format for travel', cause: e);
     }
+  }
+
+  Future<Map<String, String?>> _ensureArbitraryMessages() async {
+    final cached = _arbitraryMessages;
+    if (cached != null) {
+      return cached;
+    }
+    try {
+      final raw = await _assets.loadList(AssetPaths.arbitraryMessagesJson);
+      final map = <String, String?>{};
+      for (final entry in raw) {
+        if (entry is List && entry.length == 2) {
+          final key = entry[0];
+          final value = entry[1];
+          if (key is String) {
+            map[key] = value?.toString();
+            continue;
+          }
+        }
+        throw const AssetDataFormatException(
+          'Invalid arbitrary message entry: expected [String, String?] pair',
+          assetPath: AssetPaths.arbitraryMessagesJson,
+        );
+      }
+      _arbitraryMessages = map;
+      return map;
+    } on AssetDataFormatException catch (e) {
+      throw DataFailure('Invalid arbitrary messages asset', cause: e);
+    } on FormatException catch (e) {
+      throw DataFailure('Invalid JSON format for arbitrary messages', cause: e);
+    }
+  }
+
+  @override
+  Future<String> arbitraryMessage(String key, {int? count}) async {
+    final messages = await _ensureArbitraryMessages();
+    final template = messages[key];
+    if (template == null) {
+      return '';
+    }
+    if (count != null && template.contains('%d')) {
+      return template.replaceAll('%d', count.toString());
+    }
+    return template;
   }
 
   Future<Map<String, int>> _ensureLocationIndex() async {
@@ -225,10 +270,10 @@ extension AdventureRepositoryImplIndex on AdventureRepositoryImpl {
   int? objectIdForName(String name) => _objNameToId?[name];
   String? locationNameForId(int id) =>
       (_locations != null && id >= 0 && id < _locations!.length)
-      ? _locations![id].name
-      : null;
+          ? _locations![id].name
+          : null;
   String? objectNameForId(int id) =>
       (_objects != null && id >= 0 && id < _objects!.length)
-      ? _objects![id].name
-      : null;
+          ? _objects![id].name
+          : null;
 }

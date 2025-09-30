@@ -11,6 +11,7 @@ import 'package:open_adventure/presentation/pages/saves_page.dart';
 import 'package:open_adventure/presentation/pages/settings_page.dart';
 import 'package:open_adventure/presentation/theme/app_colors.dart';
 import 'package:open_adventure/presentation/theme/app_spacing.dart';
+import 'package:open_adventure/presentation/widgets/flash_message_listener.dart';
 
 /// HomePage v0 — presents the entry menu for starting or resuming the adventure.
 class HomePage extends StatefulWidget {
@@ -92,56 +93,59 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: ValueListenableBuilder<HomeViewState>(
-          valueListenable: widget.homeController,
-          builder: (context, state, _) {
-            if (state.isLoading) {
-              return const Center(child: CircularProgressIndicator());
-            }
-            return LayoutBuilder(
-              builder: (context, constraints) {
-                final verticalPadding =
-                    constraints.maxHeight > 600 ? AppSpacing.xl : AppSpacing.lg;
-                final theme = Theme.of(context);
-                final scheme = theme.colorScheme;
-                final AppActionAccents accents =
-                    theme.extension<AppActionAccents>()!;
+    return FlashMessageListener(
+      controller: widget.gameController,
+      child: Scaffold(
+        body: SafeArea(
+          child: ValueListenableBuilder<HomeViewState>(
+            valueListenable: widget.homeController,
+            builder: (context, state, _) {
+              if (state.isLoading) {
+                return const Center(child: CircularProgressIndicator());
+              }
+              return LayoutBuilder(
+                builder: (context, constraints) {
+                  final verticalPadding =
+                      constraints.maxHeight > 600 ? AppSpacing.xl : AppSpacing.lg;
+                  final theme = Theme.of(context);
+                  final scheme = theme.colorScheme;
+                  final AppActionAccents accents =
+                      theme.extension<AppActionAccents>()!;
 
-                final l10n = AppLocalizations.of(context);
-                final menuConfigurations =
-                    _menuConfigurations(state, scheme, accents, l10n);
+                  final l10n = AppLocalizations.of(context);
+                  final menuConfigurations =
+                      _menuConfigurations(state, scheme, accents, l10n);
 
-                return SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      SizedBox(height: verticalPadding),
-                      const HomeHeroBanner(),
-                      const SizedBox(height: AppSpacing.xl),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: AppSpacing.lg,
-                        ),
-                        child: Align(
-                          alignment: Alignment.topCenter,
-                          child: ConstrainedBox(
-                            constraints: const BoxConstraints(maxWidth: 560),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: _buildMenu(menuConfigurations),
+                  return SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        SizedBox(height: verticalPadding),
+                        const HomeHeroBanner(),
+                        const SizedBox(height: AppSpacing.xl),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: AppSpacing.lg,
+                          ),
+                          child: Align(
+                            alignment: Alignment.topCenter,
+                            child: ConstrainedBox(
+                              constraints: const BoxConstraints(maxWidth: 560),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: _buildMenu(menuConfigurations),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      SizedBox(height: verticalPadding),
-                    ],
-                  ),
-                );
-              },
-            );
-          },
+                        SizedBox(height: verticalPadding),
+                      ],
+                    ),
+                  );
+                },
+              );
+            },
+          ),
         ),
       ),
     );

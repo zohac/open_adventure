@@ -1,18 +1,21 @@
 import 'dart:async';
 
+import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:open_adventure/domain/entities/game.dart';
 import 'package:open_adventure/domain/entities/location.dart';
+import 'package:open_adventure/domain/entities/game_object.dart';
+import 'package:open_adventure/domain/entities/game_object_state.dart';
 import 'package:open_adventure/domain/repositories/adventure_repository.dart';
 import 'package:open_adventure/domain/repositories/save_repository.dart';
-import 'package:open_adventure/domain/usecases/apply_turn_goto.dart';
-import 'package:open_adventure/domain/usecases/inventory.dart';
+import 'package:open_adventure/domain/services/dwarf_system.dart';
+import 'package:open_adventure/domain/usecases/apply_turn.dart';
 import 'package:open_adventure/domain/usecases/list_available_actions.dart';
 import 'package:open_adventure/domain/value_objects/action_option.dart';
-import 'package:open_adventure/domain/value_objects/command.dart';
 import 'package:open_adventure/domain/value_objects/game_snapshot.dart';
 import 'package:open_adventure/domain/value_objects/turn_result.dart';
 import 'package:open_adventure/domain/value_objects/magic_words.dart';
+import 'package:open_adventure/domain/value_objects/dwarf_tick_result.dart';
 
 /// Immutable projection of the game state consumed by the Presentation layer.
 class GameViewState {
@@ -40,6 +43,9 @@ class GameViewState {
   /// Loading flag toggled while `init()` is running.
   final bool isLoading;
 
+  /// Pending flash message content surfaced via the presentation layer.
+  final String? flashMessage;
+
   const GameViewState({
     required this.game,
     required this.locationTitle,
@@ -49,6 +55,7 @@ class GameViewState {
     required this.actions,
     required this.journal,
     required this.isLoading,
+    required this.flashMessage,
   });
 
   factory GameViewState.initial() => const GameViewState(
@@ -60,6 +67,7 @@ class GameViewState {
     actions: <ActionOption>[],
     journal: <String>[],
     isLoading: true,
+    flashMessage: null,
   );
 
   GameViewState copyWith({
@@ -71,6 +79,7 @@ class GameViewState {
     List<ActionOption>? actions,
     List<String>? journal,
     bool? isLoading,
+    Object? flashMessage = _flashMessageSentinel,
   }) {
     return GameViewState(
       game: game ?? this.game,
@@ -81,38 +90,51 @@ class GameViewState {
       actions: actions ?? this.actions,
       journal: journal ?? this.journal,
       isLoading: isLoading ?? this.isLoading,
+      flashMessage: identical(flashMessage, _flashMessageSentinel)
+          ? this.flashMessage
+          : flashMessage as String?,
     );
   }
 }
+
+const Object _flashMessageSentinel = Object();
 
 /// S2 game orchestrator bridging domain use cases and persistence.
 class GameController extends ValueNotifier<GameViewState> {
   GameController({
     required AdventureRepository adventureRepository,
     required ListAvailableActions listAvailableActions,
-    required InventoryUseCase inventoryUseCase,
-    required ApplyTurnGoto applyTurn,
+    required ApplyTurn applyTurn,
     required SaveRepository saveRepository,
+    required DwarfSystem dwarfSystem,
   }) : _adventureRepository = adventureRepository,
        _listAvailableActions = listAvailableActions,
-       _inventoryUseCase = inventoryUseCase,
        _applyTurn = applyTurn,
        _saveRepository = saveRepository,
+       _dwarfSystem = dwarfSystem,
        super(GameViewState.initial());
 
   final AdventureRepository _adventureRepository;
   final ListAvailableActions _listAvailableActions;
-  final InventoryUseCase _inventoryUseCase;
-  final ApplyTurnGoto _applyTurn;
+  final ApplyTurn _applyTurn;
   final SaveRepository _saveRepository;
+  final DwarfSystem _dwarfSystem;
+  Map<int, GameObject> _objectIndex = const <int, GameObject>{};
 
   static const int _maxJournalEntries = 200;
+  static const int _lampWarningThreshold = 30;
 
   /// Initializes the controller by loading the initial game and computing
   /// the first batch of actions. Also triggers an autosave so "Continue"
   /// can resume immediately.
   Future<void> init() async {
     value = value.copyWith(isLoading: true);
+
+    final List<GameObject> objects = await _adventureRepository
+        .getGameObjects();
+    _objectIndex = Map<int, GameObject>.unmodifiable(<int, GameObject>{
+      for (final object in objects) object.id: object,
+    });
 
     final Game initialGame = await _adventureRepository.initialGame();
     final Location location = await _adventureRepository.locationById(
@@ -136,6 +158,7 @@ class GameController extends ValueNotifier<GameViewState> {
       actions: List.unmodifiable(actions),
       journal: List.unmodifiable(journal),
       isLoading: false,
+      flashMessage: null,
     );
 
     await _saveRepository.autosave(_toSnapshot(initialGame));
@@ -166,6 +189,7 @@ class GameController extends ValueNotifier<GameViewState> {
           locationTitle: location.name,
           locationMapTag: location.mapTag,
           locationId: location.id,
+          flashMessage: description.isNotEmpty ? description : null,
         );
         return;
       }
@@ -177,22 +201,7 @@ class GameController extends ValueNotifier<GameViewState> {
       }
 
       if (option.verb == 'INVENTORY') {
-        final TurnResult inventoryResult = await _inventoryUseCase(currentGame);
-        final List<String> messages = inventoryResult.messages
-            .where((message) => message.isNotEmpty)
-            .toList();
-        if (messages.isEmpty) {
-          value = value.copyWith(game: inventoryResult.newGame);
-          return;
-        }
-        final List<String> updatedJournal = _appendJournal(
-          value.journal,
-          messages,
-        );
-        value = value.copyWith(
-          game: inventoryResult.newGame,
-          journal: List.unmodifiable(updatedJournal),
-        );
+        // Navigation vers l'inventaire gérée côté UI (scène dédiée S3).
         return;
       }
     }
@@ -202,10 +211,29 @@ class GameController extends ValueNotifier<GameViewState> {
       return;
     }
 
-    final Command command = Command(verb: option.verb, target: option.objectId);
-    final TurnResult result = await _applyTurn(command, currentGame);
-    final Game newGame = result.newGame;
+    final TurnResult result = await _applyTurn(option, currentGame);
+    Game newGame = result.newGame;
+    final List<String> messages = result.messages
+        .where((m) => m.isNotEmpty)
+        .toList(growable: true);
+
+    if (newGame != currentGame) {
+      final DwarfTickResult dwarfTick = await _dwarfSystem.tick(newGame);
+      newGame = dwarfTick.game;
+      messages.addAll(
+        dwarfTick.messages.where((message) => message.isNotEmpty),
+      );
+
+      final _LampTickOutcome lampOutcome = await _applyLampTimers(newGame);
+      newGame = lampOutcome.game;
+      messages.addAll(
+        lampOutcome.messages.where((message) => message.isNotEmpty),
+      );
+    }
+
     final bool locationChanged = newGame.loc != currentGame.loc;
+    final bool firstVisit =
+        !currentGame.visitedLocations.contains(newGame.loc);
     final Location location = await _adventureRepository.locationById(
       newGame.loc,
     );
@@ -213,15 +241,23 @@ class GameController extends ValueNotifier<GameViewState> {
       await _listAvailableActions(newGame),
       newGame,
     );
-
-    final List<String> messages = result.messages
-        .where((m) => m.isNotEmpty)
-        .toList();
-    final String description = locationChanged
-        ? (messages.isNotEmpty
-            ? messages.join('\n')
-            : _selectDescription(location, firstVisit: false))
-        : value.locationDescription;
+    String description = value.locationDescription;
+    String? flashMessage;
+    if (locationChanged) {
+      if (messages.isNotEmpty) {
+        description = messages.join('\n');
+        if (messages.length > 1) {
+          flashMessage = messages.sublist(1).join('\n');
+        } else {
+          flashMessage = null;
+        }
+      } else {
+        description = _selectDescription(location, firstVisit: firstVisit);
+        flashMessage = null;
+      }
+    } else if (messages.isNotEmpty) {
+      flashMessage = messages.join('\n');
+    }
     final List<String> updatedJournal = _appendJournal(value.journal, messages);
 
     value = value.copyWith(
@@ -233,9 +269,10 @@ class GameController extends ValueNotifier<GameViewState> {
       actions: List.unmodifiable(actions),
       journal: List.unmodifiable(updatedJournal),
       isLoading: false,
+      flashMessage: flashMessage,
     );
 
-    if (locationChanged) {
+    if (newGame != currentGame) {
       await _saveRepository.autosave(_toSnapshot(newGame));
     }
   }
@@ -254,6 +291,13 @@ class GameController extends ValueNotifier<GameViewState> {
     value = value.copyWith(actions: List.unmodifiable(actions));
   }
 
+  /// Clears the pending flash message if the presentation layer consumed it.
+  void clearFlashMessage() {
+    if (value.flashMessage != null) {
+      value = value.copyWith(flashMessage: null);
+    }
+  }
+
   GameSnapshot _toSnapshot(Game game) =>
       GameSnapshot(loc: game.loc, turns: game.turns, rngSeed: game.rngSeed);
 
@@ -264,6 +308,52 @@ class GameController extends ValueNotifier<GameViewState> {
       return combined;
     }
     return combined.sublist(combined.length - _maxJournalEntries);
+  }
+
+  Future<_LampTickOutcome> _applyLampTimers(Game game) async {
+    final MapEntry<int, GameObjectState>? lampEntry = game.objectStates.entries
+        .firstWhereOrNull((entry) {
+          final Object? state = entry.value.state;
+          return state == 'LAMP_BRIGHT' || state == 'LAMP_DARK';
+        });
+    if (lampEntry == null) {
+      return _LampTickOutcome(game: game);
+    }
+
+    final GameObjectState lampState = lampEntry.value;
+    if (lampState.state != 'LAMP_BRIGHT') {
+      return _LampTickOutcome(game: game);
+    }
+
+    Game updatedGame = game;
+    final List<String> messages = <String>[];
+    var remaining = game.limit;
+
+    if (remaining > 0) {
+      remaining -= 1;
+      updatedGame = updatedGame.copyWith(limit: remaining);
+    }
+
+    if (remaining > 0 &&
+        remaining <= _lampWarningThreshold &&
+        !updatedGame.lampWarningIssued) {
+      updatedGame = updatedGame.copyWith(lampWarningIssued: true);
+      messages.add(await _adventureRepository.arbitraryMessage('LAMP_DIM'));
+    }
+
+    if (remaining == 0) {
+      final Map<int, GameObjectState> updatedStates =
+          Map<int, GameObjectState>.from(updatedGame.objectStates)
+            ..[lampEntry.key] = lampState.copyWith(state: 'LAMP_DARK', prop: 0);
+      updatedGame = updatedGame.copyWith(
+        objectStates: Map.unmodifiable(updatedStates),
+        limit: -1,
+        lampWarningIssued: true,
+      );
+      messages.add(await _adventureRepository.arbitraryMessage('LAMP_OUT'));
+    }
+
+    return _LampTickOutcome(game: updatedGame, messages: messages);
   }
 
   String _selectDescription(Location location, {required bool firstVisit}) {
@@ -289,4 +379,25 @@ class GameController extends ValueNotifier<GameViewState> {
         .where((action) => !MagicWords.isIncantation(action.verb))
         .toList();
   }
+
+  /// Returns the [GameObject] matching [id] when known.
+  GameObject? objectById(int id) => _objectIndex[id];
+
+  /// Overrides the internal object index for testing purposes.
+  @visibleForTesting
+  void debugSeedObjectIndex(Iterable<GameObject> objects) {
+    _objectIndex = Map<int, GameObject>.unmodifiable(<int, GameObject>{
+      for (final object in objects) object.id: object,
+    });
+  }
+}
+
+class _LampTickOutcome {
+  _LampTickOutcome({
+    required this.game,
+    List<String> messages = const <String>[],
+  }) : messages = List<String>.unmodifiable(messages);
+
+  final Game game;
+  final List<String> messages;
 }

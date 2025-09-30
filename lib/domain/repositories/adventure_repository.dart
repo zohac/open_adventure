@@ -19,5 +19,7 @@ abstract class AdventureRepository {
 
   /// Returns travel rules for the given source location id.
   Future<List<TravelRule>> travelRulesFor(int locationId);
-}
 
+  /// Returns a formatted arbitrary message identified by [key].
+  Future<String> arbitraryMessage(String key, {int? count});
+}

@@ -6,8 +6,11 @@ import 'package:open_adventure/application/controllers/game_controller.dart';
 import 'package:open_adventure/domain/value_objects/action_option.dart';
 import 'package:open_adventure/l10n/app_localizations.dart';
 import 'package:open_adventure/presentation/theme/app_spacing.dart';
+import 'package:open_adventure/presentation/widgets/icon_helper.dart';
 import 'package:open_adventure/presentation/widgets/location_image.dart';
+import 'package:open_adventure/presentation/pages/inventory_page.dart';
 import 'package:open_adventure/presentation/pages/settings_page.dart';
+import 'package:open_adventure/presentation/widgets/flash_message_listener.dart';
 
 /// First iteration of the Adventure screen (S2) showing description, travel
 /// buttons and a minimal journal backed by the [GameController].
@@ -58,10 +61,12 @@ class _AdventurePageState extends State<AdventurePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: ValueListenableBuilder<GameViewState>(
-          valueListenable: widget.controller,
+    return FlashMessageListener(
+      controller: widget.controller,
+      child: Scaffold(
+        appBar: AppBar(
+          title: ValueListenableBuilder<GameViewState>(
+            valueListenable: widget.controller,
           builder: (context, state, _) {
             final l10n = AppLocalizations.of(context);
             final title = state.locationTitle.isEmpty
@@ -74,8 +79,9 @@ class _AdventurePageState extends State<AdventurePage> {
           if (widget.audioSettingsController != null)
             IconButton(
               icon: const Icon(Icons.volume_up_outlined),
-              tooltip:
-                  AppLocalizations.of(context).adventureAudioSettingsTooltip,
+              tooltip: AppLocalizations.of(
+                context,
+              ).adventureAudioSettingsTooltip,
               onPressed: () {
                 final controller = widget.audioSettingsController!;
                 Navigator.of(context).push(
@@ -90,71 +96,79 @@ class _AdventurePageState extends State<AdventurePage> {
             ),
         ],
       ),
-      body: ValueListenableBuilder<GameViewState>(
-        valueListenable: widget.controller,
-        builder: (context, state, _) {
-          final l10n = AppLocalizations.of(context);
-          if (state.isLoading) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          return Padding(
-            padding: const EdgeInsets.all(AppSpacing.md),
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  LayoutBuilder(
-                    builder: (context, constraints) {
-                      final double maxWidth = constraints.maxWidth;
-                      const double ratio = 16 / 9;
-                      final double computedHeight =
-                          maxWidth.isFinite && maxWidth > 0
-                              ? math.min(maxWidth / ratio, 240)
-                              : 180.0;
-                      return SizedBox(
-                        height: computedHeight,
-                        child: LocationImage(
-                          mapTag: state.locationMapTag,
-                          name: state.locationTitle,
-                          id: state.locationId,
-                          semanticsLabel: state.locationTitle.isEmpty
-                              ? l10n.adventureLocationImageSemanticsFallback
-                              : state.locationTitle,
-                        ),
-                      );
-                    },
-                  ),
-                  const SizedBox(height: AppSpacing.md),
-                  _DescriptionSection(
-                    description: state.locationDescription,
-                    l10n: l10n,
-                  ),
-                  const SizedBox(height: AppSpacing.xl),
-                  _ActionsSection(
-                    l10n: l10n,
-                    actions: state.actions,
-                    onActionSelected: widget.controller.perform,
-                  ),
-                  const SizedBox(height: AppSpacing.xl),
-                  _JournalSection(
-                    entries: state.journal,
-                    l10n: l10n,
-                  ),
-                ],
+        body: ValueListenableBuilder<GameViewState>(
+          valueListenable: widget.controller,
+          builder: (context, state, _) {
+            final l10n = AppLocalizations.of(context);
+            if (state.isLoading) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            return Padding(
+              padding: const EdgeInsets.all(AppSpacing.md),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    LayoutBuilder(
+                      builder: (context, constraints) {
+                        final double maxWidth = constraints.maxWidth;
+                        const double ratio = 16 / 9;
+                        final double computedHeight =
+                            maxWidth.isFinite && maxWidth > 0
+                            ? math.min(maxWidth / ratio, 240)
+                            : 180.0;
+                        return SizedBox(
+                          height: computedHeight,
+                          child: LocationImage(
+                            mapTag: state.locationMapTag,
+                            name: state.locationTitle,
+                            id: state.locationId,
+                            semanticsLabel: state.locationTitle.isEmpty
+                                ? l10n.adventureLocationImageSemanticsFallback
+                                : state.locationTitle,
+                          ),
+                        );
+                      },
+                    ),
+                    const SizedBox(height: AppSpacing.md),
+                    _DescriptionSection(
+                      description: state.locationDescription,
+                      l10n: l10n,
+                    ),
+                    const SizedBox(height: AppSpacing.xl),
+                    _ActionsSection(
+                      l10n: l10n,
+                      actions: state.actions,
+                      onActionSelected: _handleAction,
+                    ),
+                    const SizedBox(height: AppSpacing.xl),
+                    _JournalSection(entries: state.journal, l10n: l10n),
+                  ],
+                ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
+  }
+
+  Future<void> _handleAction(ActionOption option) async {
+    if (option.category == 'meta' && option.verb == 'INVENTORY') {
+      await Navigator.of(context).push(
+        MaterialPageRoute<void>(
+          builder: (_) => InventoryPage(controller: widget.controller),
+        ),
+      );
+      return;
+    }
+
+    await widget.controller.perform(option);
   }
 }
 
 class _DescriptionSection extends StatelessWidget {
-  const _DescriptionSection({
-    required this.description,
-    required this.l10n,
-  });
+  const _DescriptionSection({required this.description, required this.l10n});
 
   final String description;
   final AppLocalizations l10n;
@@ -195,8 +209,9 @@ class _ActionsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).textTheme;
-    final hasTravelActions =
-        actions.any((action) => action.category == 'travel');
+    final hasTravelActions = actions.any(
+      (action) => action.category == 'travel',
+    );
     final hasOverflow = actions.length > _maxVisibleWithoutOverflow;
     final int visibleCount = hasOverflow
         ? math.min(actions.length, _visibleBeforeOverflow)
@@ -324,10 +339,7 @@ class _ActionButton extends StatelessWidget {
 }
 
 class _JournalSection extends StatelessWidget {
-  const _JournalSection({
-    required this.entries,
-    required this.l10n,
-  });
+  const _JournalSection({required this.entries, required this.l10n});
 
   final List<String> entries;
   final AppLocalizations l10n;
@@ -344,51 +356,14 @@ class _JournalSection extends StatelessWidget {
           Text(l10n.adventureJournalEmptyState, style: theme.bodyMedium)
         else
           ...entries.asMap().entries.map(
-                (entry) => Padding(
-                  padding: const EdgeInsets.only(bottom: 4),
-                  child: Text(
-                    entry.value,
-                    style: theme.bodySmall,
-                  ),
-                ),
-              ),
+            (entry) => Padding(
+              padding: const EdgeInsets.only(bottom: 4),
+              child: Text(entry.value, style: theme.bodySmall),
+            ),
+          ),
       ],
     );
   }
 }
 
 /// Helper bridging icon names from the domain to Material icons for S2.
-class IconsHelper {
-  static IconData iconForName(String iconName) {
-    switch (iconName) {
-      case 'arrow_upward':
-        return Icons.arrow_upward;
-      case 'arrow_downward':
-        return Icons.arrow_downward;
-      case 'arrow_forward':
-        return Icons.arrow_forward;
-      case 'arrow_back':
-        return Icons.arrow_back;
-      case 'login':
-        return Icons.login;
-      case 'logout':
-        return Icons.logout;
-      case 'undo':
-        return Icons.undo;
-      case 'redo':
-        return Icons.redo;
-      case 'north_east':
-        return Icons.north_east;
-      case 'north_west':
-        return Icons.north_west;
-      case 'south_east':
-        return Icons.south_east;
-      case 'south_west':
-        return Icons.south_west;
-      case 'visibility':
-        return Icons.visibility;
-      default:
-        return Icons.directions_walk;
-    }
-  }
-}

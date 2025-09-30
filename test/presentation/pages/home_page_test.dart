@@ -8,19 +8,19 @@ import 'package:open_adventure/application/controllers/home_controller.dart';
 import 'package:open_adventure/application/services/audio_controller.dart';
 import 'package:open_adventure/domain/entities/audio_settings.dart';
 import 'package:open_adventure/domain/entities/game.dart';
+import 'package:open_adventure/domain/entities/game_object.dart';
 import 'package:open_adventure/domain/entities/location.dart';
 import 'package:open_adventure/domain/repositories/adventure_repository.dart';
 import 'package:open_adventure/domain/repositories/audio_settings_repository.dart';
 import 'package:open_adventure/domain/repositories/save_repository.dart';
-import 'package:open_adventure/domain/usecases/apply_turn_goto.dart';
-import 'package:open_adventure/domain/usecases/inventory.dart';
+import 'package:open_adventure/domain/usecases/apply_turn.dart';
 import 'package:open_adventure/domain/usecases/list_available_actions.dart';
 import 'package:open_adventure/domain/usecases/load_audio_settings.dart';
 import 'package:open_adventure/domain/usecases/save_audio_settings.dart';
+import 'package:open_adventure/domain/services/dwarf_system.dart';
 import 'package:open_adventure/domain/value_objects/action_option.dart';
-import 'package:open_adventure/domain/value_objects/command.dart';
 import 'package:open_adventure/domain/value_objects/game_snapshot.dart';
-import 'package:open_adventure/domain/value_objects/turn_result.dart';
+import 'package:open_adventure/domain/value_objects/dwarf_tick_result.dart';
 import 'package:open_adventure/presentation/pages/adventure_page.dart';
 import 'package:open_adventure/presentation/pages/credits_page.dart';
 import 'package:open_adventure/presentation/pages/home_page.dart';
@@ -34,17 +34,18 @@ class _MockAdventureRepository extends Mock implements AdventureRepository {}
 
 class _MockListAvailableActions extends Mock implements ListAvailableActions {}
 
-class _MockApplyTurnGoto extends Mock implements ApplyTurnGoto {}
+class _MockApplyTurn extends Mock implements ApplyTurn {}
 
 class _MockSaveRepository extends Mock implements SaveRepository {}
 
-class _MockInventoryUseCase extends Mock implements InventoryUseCase {}
 
 class _MockNavigatorObserver extends Mock implements NavigatorObserver {}
 
 class _FakeRoute<T> extends Fake implements Route<T> {}
 
 class _MockAudioOutput extends Mock implements AudioOutput {}
+
+class _MockDwarfSystem extends Mock implements DwarfSystem {}
 
 class _InMemoryAudioSettingsRepository implements AudioSettingsRepository {
   AudioSettings _settings = AudioSettings.defaults();
@@ -62,7 +63,15 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   setUpAll(() {
-    registerFallbackValue(const Command(verb: 'NORTH'));
+    registerFallbackValue(
+      const ActionOption(
+        id: 'travel:1->2:NORTH',
+        category: 'travel',
+        label: 'motion.north.label',
+        verb: 'NORTH',
+        objectId: '2',
+      ),
+    );
     registerFallbackValue(
       const Game(loc: 0, oldLoc: 0, newLoc: 0, turns: 0, rngSeed: 0),
     );
@@ -102,24 +111,26 @@ void main() {
   GameController buildGameController({
     required AdventureRepository adventureRepository,
     required ListAvailableActions listAvailableActions,
-    required ApplyTurnGoto applyTurn,
+    required ApplyTurn applyTurn,
     required SaveRepository saveRepository,
-    InventoryUseCase? inventoryUseCase,
+    DwarfSystem? dwarfSystem,
   }) {
-    final InventoryUseCase useCase =
-        inventoryUseCase ?? _MockInventoryUseCase();
-    if (useCase is _MockInventoryUseCase) {
-      when(() => useCase(any())).thenAnswer((invocation) async {
+    when(
+      () => adventureRepository.getGameObjects(),
+    ).thenAnswer((_) async => const <GameObject>[]);
+    final DwarfSystem dwarf = dwarfSystem ?? _MockDwarfSystem();
+    if (dwarf is _MockDwarfSystem) {
+      when(() => dwarf.tick(any())).thenAnswer((invocation) async {
         final Game game = invocation.positionalArguments.first as Game;
-        return TurnResult(game, const <String>[]);
+        return DwarfTickResult(game: game);
       });
     }
     return GameController(
       adventureRepository: adventureRepository,
       listAvailableActions: listAvailableActions,
-      inventoryUseCase: useCase,
       applyTurn: applyTurn,
       saveRepository: saveRepository,
+      dwarfSystem: dwarf,
     );
   }
 
@@ -169,13 +180,13 @@ void main() {
   group('HomePage', () {
     late _MockAdventureRepository adventureRepository;
     late _MockListAvailableActions listAvailableActions;
-    late _MockApplyTurnGoto applyTurn;
+    late _MockApplyTurn applyTurn;
     late _MockSaveRepository saveRepository;
 
     setUp(() {
       adventureRepository = _MockAdventureRepository();
       listAvailableActions = _MockListAvailableActions();
-      applyTurn = _MockApplyTurnGoto();
+      applyTurn = _MockApplyTurn();
       saveRepository = _MockSaveRepository();
     });
 

@@ -54,7 +54,7 @@ void main() {
         final sounds = List<String>.from(data['sounds'] ?? []);
         final changes = List<String>.from(data['changes'] ?? []);
         final immovable = data['immovable'] ?? false;
-        final isTreasure = data['is_treasure'] ?? false;
+        final isTreasure = (data['is_treasure'] ?? data['treasure']) ?? false;
 
         expect(gameObject.id, i);
         expect(gameObject.name, name);

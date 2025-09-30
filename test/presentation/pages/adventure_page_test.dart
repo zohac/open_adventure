@@ -4,17 +4,20 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:open_adventure/application/controllers/game_controller.dart';
 import 'package:open_adventure/domain/entities/game.dart';
+import 'package:open_adventure/domain/entities/game_object.dart';
 import 'package:open_adventure/domain/entities/location.dart';
 import 'package:open_adventure/domain/repositories/adventure_repository.dart';
 import 'package:open_adventure/domain/repositories/save_repository.dart';
-import 'package:open_adventure/domain/usecases/apply_turn_goto.dart';
-import 'package:open_adventure/domain/usecases/inventory.dart';
+import 'package:open_adventure/domain/usecases/apply_turn.dart';
 import 'package:open_adventure/domain/usecases/list_available_actions.dart';
+import 'package:open_adventure/domain/services/dwarf_system.dart';
 import 'package:open_adventure/domain/value_objects/action_option.dart';
-import 'package:open_adventure/domain/value_objects/command.dart';
 import 'package:open_adventure/domain/value_objects/game_snapshot.dart';
 import 'package:open_adventure/domain/value_objects/turn_result.dart';
+import 'package:open_adventure/domain/value_objects/dwarf_tick_result.dart';
 import 'package:open_adventure/presentation/pages/adventure_page.dart';
+import 'package:open_adventure/presentation/pages/inventory_page.dart';
+import 'package:open_adventure/presentation/widgets/flash_message_listener.dart';
 import 'package:open_adventure/l10n/app_localizations.dart';
 
 const _testL10nFr = AppLocalizations(Locale('fr'));
@@ -23,17 +26,25 @@ class _MockAdventureRepository extends Mock implements AdventureRepository {}
 
 class _MockListAvailableActions extends Mock implements ListAvailableActions {}
 
-class _MockApplyTurnGoto extends Mock implements ApplyTurnGoto {}
+class _MockApplyTurn extends Mock implements ApplyTurn {}
 
 class _MockSaveRepository extends Mock implements SaveRepository {}
 
-class _MockInventoryUseCase extends Mock implements InventoryUseCase {}
+class _MockDwarfSystem extends Mock implements DwarfSystem {}
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   setUpAll(() {
-    registerFallbackValue(const Command(verb: 'WEST', target: '2'));
+    registerFallbackValue(
+      const ActionOption(
+        id: 'travel:1->2:WEST',
+        category: 'travel',
+        label: 'motion.west.label',
+        verb: 'WEST',
+        objectId: '2',
+      ),
+    );
     registerFallbackValue(
       const Game(loc: 0, oldLoc: 0, newLoc: 0, turns: 0, rngSeed: 0),
     );
@@ -43,9 +54,9 @@ void main() {
   group('AdventurePage', () {
     late _MockAdventureRepository adventureRepository;
     late _MockListAvailableActions listAvailableActions;
-    late _MockApplyTurnGoto applyTurn;
+    late _MockApplyTurn applyTurn;
     late _MockSaveRepository saveRepository;
-    late _MockInventoryUseCase inventoryUseCase;
+    late _MockDwarfSystem dwarfSystem;
     late GameController controller;
 
     const initialGame = Game(
@@ -60,17 +71,25 @@ void main() {
     setUp(() {
       adventureRepository = _MockAdventureRepository();
       listAvailableActions = _MockListAvailableActions();
-      applyTurn = _MockApplyTurnGoto();
+      applyTurn = _MockApplyTurn();
       saveRepository = _MockSaveRepository();
 
-      inventoryUseCase = _MockInventoryUseCase();
+      dwarfSystem = _MockDwarfSystem();
+
+      when(
+        () => adventureRepository.getGameObjects(),
+      ).thenAnswer((_) async => const <GameObject>[]);
+      when(() => dwarfSystem.tick(any())).thenAnswer((invocation) async {
+        final Game game = invocation.positionalArguments.first as Game;
+        return DwarfTickResult(game: game);
+      });
 
       controller = GameController(
         adventureRepository: adventureRepository,
         listAvailableActions: listAvailableActions,
-        inventoryUseCase: inventoryUseCase,
         applyTurn: applyTurn,
         saveRepository: saveRepository,
+        dwarfSystem: dwarfSystem,
       );
     });
 
@@ -282,10 +301,45 @@ void main() {
       expect(find.text('Aller Nord-Est'), findsOneWidget);
 
       await tester.tap(find.text('Aller Nord-Est'));
+      await tester.pump();
       await tester.pumpAndSettle();
 
       expect(find.text('Actions supplémentaires'), findsNothing);
       verify(() => applyTurn(any(), any())).called(1);
+    });
+
+    testWidgets('tapping inventory meta action navigates to InventoryPage', (
+      tester,
+    ) async {
+      const inventoryAction = ActionOption(
+        id: 'meta:inventory',
+        category: 'meta',
+        label: 'actions.inventory.label',
+        icon: 'inventory',
+        verb: 'INVENTORY',
+      );
+
+      await pumpInitialState(
+        tester,
+        actionsOverride: const <ActionOption>[
+          ActionOption(
+            id: 'travel:1->2:WEST',
+            category: 'travel',
+            label: 'motion.west.label',
+            verb: 'WEST',
+            objectId: '2',
+          ),
+          inventoryAction,
+        ],
+      );
+
+      clearInteractions(applyTurn);
+
+      await tester.tap(find.text('Inventaire'));
+      await tester.pumpAndSettle();
+
+      expect(find.byType(InventoryPage), findsOneWidget);
+      verifyNever(() => applyTurn(any(), any()));
     });
 
     testWidgets(
@@ -346,19 +400,19 @@ void main() {
           () => listAvailableActions(remoteGame),
         ).thenAnswer((_) async => const [remoteOption]);
         when(() => applyTurn(any(), any())).thenAnswer((invocation) async {
-          final Command command =
-              invocation.positionalArguments.first as Command;
-          if (command.verb == 'WEST') {
+          final ActionOption option =
+              invocation.positionalArguments.first as ActionOption;
+          if (option.verb == 'WEST') {
             return TurnResult(unlockedGame, const <String>[
               'Un bourdonnement magique retentit.',
             ]);
           }
-          if (command.verb == 'EAST') {
+          if (option.verb == 'EAST') {
             return TurnResult(remoteGame, const <String>[
               'Le passage se referme derrière vous.',
             ]);
           }
-          throw StateError('Unexpected command: ${command.verb}');
+          throw StateError('Unexpected action: ${option.verb}');
         });
         when(() => adventureRepository.locationById(2)).thenAnswer(
           (_) async => const Location(
@@ -385,7 +439,7 @@ void main() {
 
         await tester.tap(find.text('Aller Ouest'));
         await tester.pump();
-        await tester.pumpAndSettle();
+        await tester.pump(const Duration(milliseconds: 200));
 
         expect(
           find.text(_testL10nFr.resolveActionLabel('motion.plugh.label')),
@@ -400,7 +454,7 @@ void main() {
 
         await tester.tap(find.text('Aller Est'));
         await tester.pump();
-        await tester.pumpAndSettle();
+        await tester.pump(const Duration(milliseconds: 200));
 
         expect(
           find.text(_testL10nFr.resolveActionLabel('motion.plugh.label')),
@@ -465,7 +519,7 @@ void main() {
 
       await tester.tap(find.text('Aller Ouest'));
       await tester.pump();
-      await tester.pumpAndSettle();
+      await tester.pump(const Duration(milliseconds: 200));
 
       expect(find.text('LOC_WEST'), findsOneWidget);
       expect(find.text('Short west description'), findsWidgets);
@@ -476,6 +530,109 @@ void main() {
           const GameSnapshot(loc: 2, turns: 1, rngSeed: 42),
         ),
       ).called(1);
+    });
+
+    testWidgets('displays supplemental flash message when action is performed', (
+      tester,
+    ) async {
+      await pumpInitialState(tester);
+
+      const nextGame = Game(
+        loc: 2,
+        oldLoc: 1,
+        newLoc: 2,
+        turns: 1,
+        rngSeed: 42,
+        visitedLocations: {1, 2},
+      );
+      final nextLocation = Location(
+        id: 2,
+        name: 'LOC_WEST',
+        shortDescription: 'Short west description',
+      );
+      when(() => applyTurn(any(), any())).thenAnswer(
+        (_) async => TurnResult(nextGame, const <String>[
+          'Short west description',
+          'There is a shiny brass lamp nearby.',
+        ]),
+      );
+      when(
+        () => adventureRepository.locationById(2),
+      ).thenAnswer((_) async => nextLocation);
+      when(
+        () => listAvailableActions(nextGame),
+      ).thenAnswer((_) async => const <ActionOption>[]);
+      when(() => saveRepository.autosave(any())).thenAnswer((_) async {});
+
+      await tester.tap(find.text('Aller Ouest'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 200));
+
+      expect(
+        find.text('Short west description\nThere is a shiny brass lamp nearby.'),
+        findsOneWidget,
+      );
+      final overlayFinder = find.byKey(FlashMessageListener.flashMessageKey);
+      expect(overlayFinder, findsOneWidget);
+      expect(
+        find.descendant(
+          of: overlayFinder,
+          matching: find.text('There is a shiny brass lamp nearby.'),
+        ),
+        findsOneWidget,
+      );
+    });
+
+    testWidgets('aggregates multi-line flash message when provided', (
+      tester,
+    ) async {
+      await pumpInitialState(tester);
+
+      const nextGame = Game(
+        loc: 2,
+        oldLoc: 1,
+        newLoc: 2,
+        turns: 1,
+        rngSeed: 42,
+        visitedLocations: {1, 2},
+      );
+      final nextLocation = Location(
+        id: 2,
+        name: 'LOC_WEST',
+        shortDescription: 'Short west description',
+      );
+      const messages = <String>[
+        'Short west description',
+        'There is a shiny brass lamp nearby.',
+        'There are some keys on the floor.',
+      ];
+      when(() => applyTurn(any(), any())).thenAnswer(
+        (_) async => TurnResult(nextGame, messages),
+      );
+      when(
+        () => adventureRepository.locationById(2),
+      ).thenAnswer((_) async => nextLocation);
+      when(
+        () => listAvailableActions(nextGame),
+      ).thenAnswer((_) async => const <ActionOption>[]);
+      when(() => saveRepository.autosave(any())).thenAnswer((_) async {});
+
+      await tester.tap(find.text('Aller Ouest'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 200));
+
+      expect(find.text(messages.join('\n')), findsOneWidget);
+      final overlayFinder = find.byKey(FlashMessageListener.flashMessageKey);
+      expect(overlayFinder, findsOneWidget);
+      expect(
+        find.descendant(
+          of: overlayFinder,
+          matching: find.text(
+            messages.sublist(1).join('\n'),
+          ),
+        ),
+        findsOneWidget,
+      );
     });
 
     testWidgets('renders placeholder when asset is missing without errors', (
@@ -536,7 +693,7 @@ void main() {
 
       await tester.tap(find.text('Observer'));
       await tester.pump();
-      await tester.pumpAndSettle();
+      await tester.pump(const Duration(milliseconds: 200));
 
       verifyNever(() => applyTurn(any(), any()));
     });
@@ -617,13 +774,11 @@ void main() {
 
       await tester.tap(find.text('Revenir'));
       await tester.pump();
-      await tester.pumpAndSettle();
+      await tester.pump(const Duration(milliseconds: 200));
 
       expect(find.text('LOC_START'), findsOneWidget);
       expect(find.text('Back at the start.'), findsWidgets);
-      verify(
-        () => applyTurn(const Command(verb: 'BACK', target: '1'), historyGame),
-      ).called(1);
+      verify(() => applyTurn(backAction, historyGame)).called(1);
       verify(
         () => saveRepository.autosave(
           const GameSnapshot(loc: 1, turns: 4, rngSeed: 42),
