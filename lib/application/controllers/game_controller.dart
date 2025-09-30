@@ -244,12 +244,16 @@ class GameController extends ValueNotifier<GameViewState> {
     String description = value.locationDescription;
     String? flashMessage;
     if (locationChanged) {
-      final String baseDescription = messages.isNotEmpty
-          ? messages.first
-          : _selectDescription(location, firstVisit: firstVisit);
-      description = baseDescription;
-      if (messages.length > 1) {
-        flashMessage = messages.sublist(1).join('\n');
+      if (messages.isNotEmpty) {
+        description = messages.join('\n');
+        if (messages.length > 1) {
+          flashMessage = messages.sublist(1).join('\n');
+        } else {
+          flashMessage = null;
+        }
+      } else {
+        description = _selectDescription(location, firstVisit: firstVisit);
+        flashMessage = null;
       }
     } else if (messages.isNotEmpty) {
       flashMessage = messages.join('\n');

@@ -331,7 +331,7 @@ void main() {
         await controller.perform(initialActions.first);
 
         final state = controller.value;
-        expect(state.locationDescription, equals(messages.first));
+        expect(state.locationDescription, equals(messages.join('\n')));
         expect(
           state.journal.sublist(state.journal.length - 3),
           equals(messages),

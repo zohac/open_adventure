@@ -568,6 +568,10 @@ void main() {
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 200));
 
+      expect(
+        find.text('Short west description\nThere is a shiny brass lamp nearby.'),
+        findsOneWidget,
+      );
       final overlayFinder = find.byKey(FlashMessageListener.flashMessageKey);
       expect(overlayFinder, findsOneWidget);
       expect(
@@ -617,6 +621,7 @@ void main() {
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 200));
 
+      expect(find.text(messages.join('\n')), findsOneWidget);
       final overlayFinder = find.byKey(FlashMessageListener.flashMessageKey);
       expect(overlayFinder, findsOneWidget);
       expect(
