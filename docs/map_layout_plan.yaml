@@ -1,5 +1,6 @@
-_notes: Assign each location to a layer and provide x/y coordinates in Flutter logical
-  pixels. Replace 'unassigned' with one of the layer identifiers.
+_notes: Assign each location to a layer, coordinates, and optional cluster metadata.
+  Use cluster_id (FOREST/MAZE_A/MAZE_B) for non-euclidean blobs; clustered nodes set
+  is_ambiguous=true and may omit coordinates.
 canvas:
   height: 768
   width: 1024
@@ -189,11 +190,15 @@ nodes:
       x: 0.0
       y: 0.0
   LOC_BUILDING:
-    layer: unassigned
+    layer: surface
     map_tag: LOC_BUILDING
     position:
-      x: 0.0
-      y: 0.0
+      x: 600.0
+      y: 420.0
+    cluster_id: null
+    is_ambiguous: false
+    anchor_tag: BUILDING
+    jitter_seed: null
   LOC_BUILDING1:
     layer: unassigned
     map_tag: Middle of plant.
@@ -207,11 +212,15 @@ nodes:
       x: 0.0
       y: 0.0
   LOC_CLIFF:
-    layer: unassigned
+    layer: surface
     map_tag: LOC_CLIFF
     position:
-      x: 0.0
-      y: 0.0
+      x: 220.0
+      y: 360.0
+    cluster_id: null
+    is_ambiguous: false
+    anchor_tag: CLIFF
+    jitter_seed: null
   LOC_CLIFFACE:
     layer: unassigned
     map_tag: Vertical cliff.
@@ -453,137 +462,225 @@ nodes:
       x: 0.0
       y: 0.0
   LOC_FOREST1:
-    layer: unassigned
+    layer: surface
     map_tag: Forest.
     position:
       x: 0.0
       y: 0.0
+    cluster_id: FOREST
+    is_ambiguous: true
+    anchor_tag: null
+    jitter_seed: LOC_FOREST1
   LOC_FOREST10:
-    layer: unassigned
+    layer: surface
     map_tag: Forest.
     position:
       x: 0.0
       y: 0.0
+    cluster_id: FOREST
+    is_ambiguous: true
+    anchor_tag: null
+    jitter_seed: LOC_FOREST10
   LOC_FOREST11:
-    layer: unassigned
+    layer: surface
     map_tag: Forest.
     position:
       x: 0.0
       y: 0.0
+    cluster_id: FOREST
+    is_ambiguous: true
+    anchor_tag: null
+    jitter_seed: LOC_FOREST11
   LOC_FOREST12:
-    layer: unassigned
+    layer: surface
     map_tag: Forest.
     position:
       x: 0.0
       y: 0.0
+    cluster_id: FOREST
+    is_ambiguous: true
+    anchor_tag: null
+    jitter_seed: LOC_FOREST12
   LOC_FOREST13:
-    layer: unassigned
+    layer: surface
     map_tag: Forest.
     position:
       x: 0.0
       y: 0.0
+    cluster_id: FOREST
+    is_ambiguous: true
+    anchor_tag: null
+    jitter_seed: LOC_FOREST13
   LOC_FOREST14:
-    layer: unassigned
+    layer: surface
     map_tag: Forest.
     position:
       x: 0.0
       y: 0.0
+    cluster_id: FOREST
+    is_ambiguous: true
+    anchor_tag: null
+    jitter_seed: LOC_FOREST14
   LOC_FOREST15:
-    layer: unassigned
+    layer: surface
     map_tag: Forest.
     position:
       x: 0.0
       y: 0.0
+    cluster_id: FOREST
+    is_ambiguous: true
+    anchor_tag: null
+    jitter_seed: LOC_FOREST15
   LOC_FOREST16:
-    layer: unassigned
+    layer: surface
     map_tag: Forest.
     position:
       x: 0.0
       y: 0.0
+    cluster_id: FOREST
+    is_ambiguous: true
+    anchor_tag: null
+    jitter_seed: LOC_FOREST16
   LOC_FOREST17:
-    layer: unassigned
+    layer: surface
     map_tag: Forest.
     position:
       x: 0.0
       y: 0.0
+    cluster_id: FOREST
+    is_ambiguous: true
+    anchor_tag: null
+    jitter_seed: LOC_FOREST17
   LOC_FOREST18:
-    layer: unassigned
+    layer: surface
     map_tag: Forest.
     position:
       x: 0.0
       y: 0.0
+    cluster_id: FOREST
+    is_ambiguous: true
+    anchor_tag: null
+    jitter_seed: LOC_FOREST18
   LOC_FOREST19:
-    layer: unassigned
+    layer: surface
     map_tag: Forest.
     position:
       x: 0.0
       y: 0.0
+    cluster_id: FOREST
+    is_ambiguous: true
+    anchor_tag: null
+    jitter_seed: LOC_FOREST19
   LOC_FOREST2:
-    layer: unassigned
+    layer: surface
     map_tag: Forest.
     position:
       x: 0.0
       y: 0.0
+    cluster_id: FOREST
+    is_ambiguous: true
+    anchor_tag: null
+    jitter_seed: LOC_FOREST2
   LOC_FOREST20:
-    layer: unassigned
+    layer: surface
     map_tag: Forest.
     position:
       x: 0.0
       y: 0.0
+    cluster_id: FOREST
+    is_ambiguous: true
+    anchor_tag: null
+    jitter_seed: LOC_FOREST20
   LOC_FOREST21:
-    layer: unassigned
+    layer: surface
     map_tag: Forest.
     position:
       x: 0.0
       y: 0.0
+    cluster_id: FOREST
+    is_ambiguous: true
+    anchor_tag: null
+    jitter_seed: LOC_FOREST21
   LOC_FOREST22:
-    layer: unassigned
+    layer: surface
     map_tag: Forest.
     position:
       x: 0.0
       y: 0.0
+    cluster_id: FOREST
+    is_ambiguous: true
+    anchor_tag: null
+    jitter_seed: LOC_FOREST22
   LOC_FOREST3:
-    layer: unassigned
+    layer: surface
     map_tag: Forest.
     position:
       x: 0.0
       y: 0.0
+    cluster_id: FOREST
+    is_ambiguous: true
+    anchor_tag: null
+    jitter_seed: LOC_FOREST3
   LOC_FOREST4:
-    layer: unassigned
+    layer: surface
     map_tag: Forest.
     position:
       x: 0.0
       y: 0.0
+    cluster_id: FOREST
+    is_ambiguous: true
+    anchor_tag: null
+    jitter_seed: LOC_FOREST4
   LOC_FOREST5:
-    layer: unassigned
+    layer: surface
     map_tag: Forest.
     position:
       x: 0.0
       y: 0.0
+    cluster_id: FOREST
+    is_ambiguous: true
+    anchor_tag: null
+    jitter_seed: LOC_FOREST5
   LOC_FOREST6:
-    layer: unassigned
+    layer: surface
     map_tag: Forest.
     position:
       x: 0.0
       y: 0.0
+    cluster_id: FOREST
+    is_ambiguous: true
+    anchor_tag: null
+    jitter_seed: LOC_FOREST6
   LOC_FOREST7:
-    layer: unassigned
+    layer: surface
     map_tag: Forest.
     position:
       x: 0.0
       y: 0.0
+    cluster_id: FOREST
+    is_ambiguous: true
+    anchor_tag: null
+    jitter_seed: LOC_FOREST7
   LOC_FOREST8:
-    layer: unassigned
+    layer: surface
     map_tag: Forest.
     position:
       x: 0.0
       y: 0.0
+    cluster_id: FOREST
+    is_ambiguous: true
+    anchor_tag: null
+    jitter_seed: LOC_FOREST8
   LOC_FOREST9:
-    layer: unassigned
+    layer: surface
     map_tag: Forest.
     position:
       x: 0.0
       y: 0.0
+    cluster_id: FOREST
+    is_ambiguous: true
+    anchor_tag: null
+    jitter_seed: LOC_FOREST9
   LOC_FORK:
     layer: unassigned
     map_tag: LOC_FORK
@@ -597,11 +694,15 @@ nodes:
       x: 0.0
       y: 0.0
   LOC_GRATE:
-    layer: unassigned
+    layer: surface
     map_tag: LOC_GRATE
     position:
-      x: 0.0
-      y: 0.0
+      x: 760.0
+      y: 520.0
+    cluster_id: null
+    is_ambiguous: false
+    anchor_tag: GRATE
+    jitter_seed: null
   LOC_GRUESOME:
     layer: unassigned
     map_tag: LOC_GRUESOME
@@ -609,11 +710,15 @@ nodes:
       x: 0.0
       y: 0.0
   LOC_HILL:
-    layer: unassigned
+    layer: surface
     map_tag: LOC_HILL
     position:
-      x: 0.0
-      y: 0.0
+      x: 520.0
+      y: 210.0
+    cluster_id: null
+    is_ambiguous: false
+    anchor_tag: HILL
+    jitter_seed: null
   LOC_IMMENSE:
     layer: unassigned
     map_tag: Immense passage end.
@@ -873,11 +978,15 @@ nodes:
       x: 0.0
       y: 0.0
   LOC_ROADEND:
-    layer: unassigned
+    layer: surface
     map_tag: LOC_ROADEND
     position:
-      x: 0.0
-      y: 0.0
+      x: 780.0
+      y: 380.0
+    cluster_id: null
+    is_ambiguous: false
+    anchor_tag: ROADEND
+    jitter_seed: null
   LOC_ROUGHHEWN:
     layer: unassigned
     map_tag: Rough-hewn corridor
@@ -939,11 +1048,15 @@ nodes:
       x: 0.0
       y: 0.0
   LOC_SLIT:
-    layer: unassigned
+    layer: surface
     map_tag: LOC_SLIT
     position:
-      x: 0.0
-      y: 0.0
+      x: 320.0
+      y: 560.0
+    cluster_id: null
+    is_ambiguous: false
+    anchor_tag: SLIT
+    jitter_seed: null
   LOC_SLOPING1:
     layer: unassigned
     map_tag: Sloping corridor
@@ -981,11 +1094,15 @@ nodes:
       x: 0.0
       y: 0.0
   LOC_START:
-    layer: unassigned
+    layer: surface
     map_tag: LOC_START
     position:
-      x: 0.0
-      y: 0.0
+      x: 640.0
+      y: 460.0
+    cluster_id: null
+    is_ambiguous: false
+    anchor_tag: START
+    jitter_seed: null
   LOC_STEEP:
     layer: unassigned
     map_tag: Steep incline
@@ -1047,11 +1164,15 @@ nodes:
       x: 0.0
       y: 0.0
   LOC_VALLEY:
-    layer: unassigned
+    layer: surface
     map_tag: LOC_VALLEY
     position:
-      x: 0.0
-      y: 0.0
+      x: 280.0
+      y: 470.0
+    cluster_id: null
+    is_ambiguous: false
+    anchor_tag: VALLEY
+    jitter_seed: null
   LOC_WARMWALLS:
     layer: unassigned
     map_tag: Warm junction

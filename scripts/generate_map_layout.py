@@ -10,10 +10,11 @@ This script merges three sources of truth:
 * Optional canvas metadata (width/height) defined in the same plan file.
 
 The output is a deterministic JSON document (`assets/data/map_layout.json`) that
-exposes, for every location, the layer identifier, absolute coordinates in
-Flutter logical pixels, and the heritage label to render on the map. The JSON is
-strictly a data artefact; it does not contain gameplay state, edges, or
-discoverability flags (those are handled at runtime by `GameController.mapGraph`).
+exposes, for every location, the layer identifier, absolute coordinates (when
+applicable), optional cluster metadata (`cluster_id`, `is_ambiguous`,
+`jitter_seed`), and the heritage label to render on the map. The JSON is strictly
+a data artefact; it does not contain gameplay state, edges, or discoverability
+flags (those are handled at runtime by `GameController.mapGraph`).
 
 The plan file can be generated in scaffold form via `--write-plan-skeleton` and
 edited by UX/Game Design to position elements precisely. The script validates
@@ -29,6 +30,8 @@ import sys
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Mapping, MutableMapping, Optional
+
+import re
 
 import yaml
 
@@ -60,22 +63,34 @@ class Layer:
 
 @dataclass(frozen=True)
 class NodeLayout:
-    """Curated position for a location node.
+    """Curated presentation metadata for a location node.
 
     Attributes:
         location_id: Canonical location identifier (e.g., ``"LOC_START"``).
         layer_id: Identifier of the layer hosting the node.
-        x: Horizontal coordinate in Flutter logical pixels.
-        y: Vertical coordinate in Flutter logical pixels.
+        x: Optional horizontal coordinate in Flutter logical pixels; ``None``
+            when the node belongs to a non-euclidean cluster.
+        y: Optional vertical coordinate mirroring ``x``.
         map_tag: Heritage label to render; falls back to the JSON ``maptag`` or
             the location name when omitted in the plan.
+        cluster_id: Optional cluster grouping (FOREST, MAZE_A, MAZE_B).
+        is_ambiguous: True when the node is rendered as part of a cluster blob
+            instead of a specific coordinate.
+        anchor_tag: Optional short label for surface anchors (GRATE, VALLEY,
+            ...).
+        jitter_seed: Optional deterministic seed controlling the visual jitter
+            within a cluster.
     """
 
     location_id: str
     layer_id: str
-    x: float
-    y: float
+    x: Optional[float]
+    y: Optional[float]
     map_tag: str
+    cluster_id: Optional[str]
+    is_ambiguous: bool
+    anchor_tag: Optional[str]
+    jitter_seed: Optional[str]
 
 
 def load_locations() -> List[Dict[str, Any]]:
@@ -176,6 +191,22 @@ def derive_map_tag(location_payload: Mapping[str, Any]) -> str:
     return "Unknown"
 
 
+FOREST_PATTERN = re.compile(r"^LOC_FOREST\d+$")
+
+
+def _normalise_optional_str(value: Any, *, upper: bool = False) -> Optional[str]:
+    if value is None:
+        return None
+    if isinstance(value, str):
+        stripped = value.strip()
+        result = stripped or None
+    else:
+        result = str(value)
+    if result is not None and upper:
+        result = result.upper()
+    return result
+
+
 def _node_from_plan(
     location_id: str,
     location_payload: Mapping[str, Any],
@@ -198,7 +229,42 @@ def _node_from_plan(
             f"Location {location_id} references unknown layer '{layer_id}'. "
             f"Available layers: {available}."
         )
+    raw_cluster = plan_entry.get("cluster_id")
+    cluster_id = _normalise_optional_str(raw_cluster, upper=True)
+    auto_cluster = False
+    if cluster_id is None and FOREST_PATTERN.match(location_id):
+        cluster_id = "FOREST"
+        auto_cluster = True
+
+    raw_is_ambiguous = plan_entry.get("is_ambiguous")
+    if raw_is_ambiguous is None:
+        is_ambiguous = bool(cluster_id)
+    else:
+        if isinstance(raw_is_ambiguous, bool):
+            is_ambiguous = raw_is_ambiguous
+        else:
+            raise LayoutValidationError(
+                f"Location {location_id} 'is_ambiguous' must be a boolean when provided."
+            )
+    if cluster_id is not None and not is_ambiguous:
+        # Enforce design rule: any clustered node is ambiguous.
+        is_ambiguous = True
+
+    raw_anchor = plan_entry.get("anchor_tag")
+    anchor_tag = _normalise_optional_str(raw_anchor, upper=True)
+    if cluster_id is not None and anchor_tag is not None:
+        raise LayoutValidationError(
+            f"Location {location_id} cannot define both cluster_id and anchor_tag."
+        )
+
+    raw_jitter = plan_entry.get("jitter_seed")
+    jitter_seed = _normalise_optional_str(raw_jitter)
+    if cluster_id is not None and jitter_seed is None:
+        jitter_seed = location_id
+
     position = plan_entry.get("position")
+    x_coord: Optional[float] = None
+    y_coord: Optional[float] = None
     if isinstance(position, Mapping):
         x_val = position.get("x")
         y_val = position.get("y")
@@ -210,27 +276,46 @@ def _node_from_plan(
             )
         x_val, y_val = pos_list
     else:
-        raise LayoutValidationError(
-            f"Location {location_id} must define a 'position' mapping or sequence."
-        )
-    try:
-        x_coord = float(x_val)
-        y_coord = float(y_val)
-    except (TypeError, ValueError) as exc:
-        raise LayoutValidationError(
-            f"Location {location_id} has non-numeric coordinates: {position!r}."
-        ) from exc
+        x_val = None
+        y_val = None
+
+    requires_coordinates = not is_ambiguous
+
+    if x_val is None or y_val is None:
+        if requires_coordinates:
+            raise LayoutValidationError(
+                f"Location {location_id} must define numeric coordinates when not ambiguous."
+            )
+    else:
+        try:
+            x_coord = float(x_val)
+            y_coord = float(y_val)
+        except (TypeError, ValueError) as exc:
+            raise LayoutValidationError(
+                f"Location {location_id} has non-numeric coordinates: {position!r}."
+            ) from exc
+        if not requires_coordinates and cluster_id is not None:
+            # Coordinates are irrelevant in clusters; discard to avoid false precision.
+            x_coord = None
+            y_coord = None
+
     tag = plan_entry.get("map_tag")
     if isinstance(tag, str) and tag.strip():
         map_tag = tag.strip()
     else:
         map_tag = derive_map_tag({"name": location_id, **location_payload})
+    if cluster_id is not None:
+        cluster_id = cluster_id.upper()
     return NodeLayout(
         location_id=location_id,
         layer_id=layer_id,
         x=x_coord,
         y=y_coord,
         map_tag=map_tag,
+        cluster_id=cluster_id,
+        is_ambiguous=is_ambiguous,
+        anchor_tag=anchor_tag,
+        jitter_seed=jitter_seed,
     )
 
 
@@ -316,6 +401,10 @@ def build_layout(plan: Mapping[str, Any]) -> Dict[str, Any]:
                 "layer": node.layer_id,
                 "position": {"x": node.x, "y": node.y},
                 "map_tag": node.map_tag,
+                "cluster_id": node.cluster_id,
+                "is_ambiguous": node.is_ambiguous,
+                "anchor_tag": node.anchor_tag,
+                "jitter_seed": node.jitter_seed,
             }
             for node in node_layouts
         },
@@ -361,8 +450,9 @@ def write_plan_skeleton(path: Path, force: bool = False) -> None:
         },
         "nodes": {},
         "_notes": (
-            "Assign each location to a layer and provide x/y coordinates in Flutter "
-            "logical pixels. Replace 'unassigned' with one of the layer identifiers."
+            "Assign each location to a layer, coordinates, and optional cluster metadata. "
+            "Use cluster_id (FOREST/MAZE_A/MAZE_B) for non-euclidean blobs; clustered nodes "
+            "set is_ambiguous=true and may omit coordinates."
         ),
     }
 
@@ -374,11 +464,25 @@ def write_plan_skeleton(path: Path, force: bool = False) -> None:
         location_id, payload = entry
         if location_id == "LOC_NOWHERE":
             continue
-        scaffold["nodes"][location_id] = {
+        default_node = {
             "layer": "unassigned",
             "position": {"x": 0.0, "y": 0.0},
             "map_tag": derive_map_tag({"name": location_id, **payload}),
+            "cluster_id": None,
+            "is_ambiguous": False,
+            "anchor_tag": None,
+            "jitter_seed": None,
         }
+        if FOREST_PATTERN.match(location_id):
+            default_node.update(
+                {
+                    "layer": "surface",
+                    "cluster_id": "FOREST",
+                    "is_ambiguous": True,
+                    "jitter_seed": location_id,
+                }
+            )
+        scaffold["nodes"][location_id] = default_node
 
     with path.open("w", encoding="utf-8") as handle:
         yaml.safe_dump(scaffold, handle, sort_keys=True, allow_unicode=True)
