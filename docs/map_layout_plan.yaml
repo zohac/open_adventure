@@ -21,170 +21,180 @@ layers:
     name: Upper Cave
     order: 1
 nodes:
+  LOC_NOWHERE:
+    layer: sanctuary_endgame
+    map_tag: Nowhere
+    position:
+      x: 0.0
+      y: 0.0
+    cluster_id: null
+    is_ambiguous: true
+    anchor_tag: null
+    jitter_seed: null
   LOC_ALCOVE:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: LOC_ALCOVE
     position:
       x: 0.0
       y: 0.0
   LOC_ALIKE1:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: Maze all alike.
     position:
       x: 0.0
       y: 0.0
   LOC_ALIKE10:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: Maze all alike.
     position:
       x: 0.0
       y: 0.0
   LOC_ALIKE11:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: Maze all alike.
     position:
       x: 0.0
       y: 0.0
   LOC_ALIKE12:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: Maze all alike.
     position:
       x: 0.0
       y: 0.0
   LOC_ALIKE13:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: Maze all alike.
     position:
       x: 0.0
       y: 0.0
   LOC_ALIKE14:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: Maze all alike.
     position:
       x: 0.0
       y: 0.0
   LOC_ALIKE2:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: Maze all alike.
     position:
       x: 0.0
       y: 0.0
   LOC_ALIKE3:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: Maze all alike.
     position:
       x: 0.0
       y: 0.0
   LOC_ALIKE4:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: Maze all alike.
     position:
       x: 0.0
       y: 0.0
   LOC_ALIKE5:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: Maze all alike.
     position:
       x: 0.0
       y: 0.0
   LOC_ALIKE6:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: Maze all alike.
     position:
       x: 0.0
       y: 0.0
   LOC_ALIKE7:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: Maze all alike.
     position:
       x: 0.0
       y: 0.0
   LOC_ALIKE8:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: Maze all alike.
     position:
       x: 0.0
       y: 0.0
   LOC_ALIKE9:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: Maze all alike.
     position:
       x: 0.0
       y: 0.0
   LOC_ANTEROOM:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: LOC_ANTEROOM
     position:
       x: 0.0
       y: 0.0
   LOC_ARCHED:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: LOC_ARCHED
     position:
       x: 0.0
       y: 0.0
   LOC_AWKWARD:
-    layer: unassigned
+    layer: upper_cave
     map_tag: Awkward canyon.
     position:
       x: 0.0
       y: 0.0
   LOC_BADDIRECTION:
-    layer: unassigned
+    layer: sanctuary_endgame
     map_tag: LOC_BADDIRECTION
     position:
       x: 0.0
       y: 0.0
   LOC_BARRENFRONT:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: LOC_BARRENFRONT
     position:
       x: 0.0
       y: 0.0
   LOC_BARRENROOM:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: LOC_BARRENROOM
     position:
       x: 0.0
       y: 0.0
   LOC_BEDQUILT:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: LOC_BEDQUILT
     position:
       x: 0.0
       y: 0.0
   LOC_BELOWGRATE:
-    layer: unassigned
+    layer: upper_cave
     map_tag: LOC_BELOWGRATE
     position:
       x: 0.0
       y: 0.0
   LOC_BIRDCHAMBER:
-    layer: unassigned
+    layer: upper_cave
     map_tag: LOC_BIRDCHAMBER
     position:
       x: 0.0
       y: 0.0
   LOC_BOULDERS1:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: Boulders
     position:
       x: 0.0
       y: 0.0
   LOC_BOULDERS2:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: LOC_BOULDERS2
     position:
       x: 0.0
       y: 0.0
   LOC_BREATHTAKING:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: LOC_BREATHTAKING
     position:
       x: 0.0
       y: 0.0
   LOC_BROKEN:
-    layer: unassigned
+    layer: hall_of_mists
     map_tag: LOC_BROKEN
     position:
       x: 0.0
@@ -200,13 +210,13 @@ nodes:
     anchor_tag: BUILDING
     jitter_seed: null
   LOC_BUILDING1:
-    layer: unassigned
+    layer: upper_cave
     map_tag: Middle of plant.
     position:
       x: 0.0
       y: 0.0
   LOC_CAVEIN:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: Cave-in blockage
     position:
       x: 0.0
@@ -222,241 +232,241 @@ nodes:
     anchor_tag: CLIFF
     jitter_seed: null
   LOC_CLIFFACE:
-    layer: unassigned
+    layer: sanctuary_endgame
     map_tag: Vertical cliff.
     position:
       x: 0.0
       y: 0.0
   LOC_CLIFFBASE:
-    layer: unassigned
+    layer: sanctuary_endgame
     map_tag: LOC_CLIFFBASE
     position:
       x: 0.0
       y: 0.0
   LOC_CLIFFLEDGE:
-    layer: unassigned
+    layer: sanctuary_endgame
     map_tag: Clifftop
     position:
       x: 0.0
       y: 0.0
   LOC_CLIFFTOP:
-    layer: unassigned
+    layer: sanctuary_endgame
     map_tag: LOC_CLIFFTOP
     position:
       x: 0.0
       y: 0.0
   LOC_CLIMBSTALK:
-    layer: unassigned
+    layer: upper_cave
     map_tag: LOC_CLIMBSTALK
     position:
       x: 0.0
       y: 0.0
   LOC_COBBLE:
-    layer: unassigned
+    layer: upper_cave
     map_tag: LOC_COBBLE
     position:
       x: 0.0
       y: 0.0
   LOC_COMPLEX:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: LOC_COMPLEX
     position:
       x: 0.0
       y: 0.0
   LOC_CORRIDOR:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: e/w canyon
     position:
       x: 0.0
       y: 0.0
   LOC_CRACK:
-    layer: unassigned
+    layer: hall_of_mists
     map_tag: LOC_CRACK
     position:
       x: 0.0
       y: 0.0
   LOC_CROSSOVER:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: Passage crossover.
     position:
       x: 0.0
       y: 0.0
   LOC_CULDESAC:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: Cul-de-sac.
     position:
       x: 0.0
       y: 0.0
   LOC_DARKROOM:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: LOC_DARKROOM
     position:
       x: 0.0
       y: 0.0
   LOC_DEADCRAWL:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: LOC_DEADCRAWL
     position:
       x: 0.0
       y: 0.0
   LOC_DEADEND13:
-    layer: unassigned
+    layer: sanctuary_endgame
     map_tag: LOC_DEADEND13
     position:
       x: 0.0
       y: 0.0
   LOC_DEADEND7:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: Maze all alike.
     position:
       x: 0.0
       y: 0.0
   LOC_DEBRIS:
-    layer: unassigned
+    layer: upper_cave
     map_tag: LOC_DEBRIS
     position:
       x: 0.0
       y: 0.0
   LOC_DIFFERENT1:
-    layer: unassigned
+    layer: sanctuary_endgame
     map_tag: Maze all different
     position:
       x: 0.0
       y: 0.0
   LOC_DIFFERENT10:
-    layer: unassigned
+    layer: sanctuary_endgame
     map_tag: Maze all different.
     position:
       x: 0.0
       y: 0.0
   LOC_DIFFERENT11:
-    layer: unassigned
+    layer: sanctuary_endgame
     map_tag: Maze all different.
     position:
       x: 0.0
       y: 0.0
   LOC_DIFFERENT2:
-    layer: unassigned
+    layer: sanctuary_endgame
     map_tag: Maze all different
     position:
       x: 0.0
       y: 0.0
   LOC_DIFFERENT3:
-    layer: unassigned
+    layer: sanctuary_endgame
     map_tag: Maze all different.
     position:
       x: 0.0
       y: 0.0
   LOC_DIFFERENT4:
-    layer: unassigned
+    layer: sanctuary_endgame
     map_tag: Maze all different.
     position:
       x: 0.0
       y: 0.0
   LOC_DIFFERENT5:
-    layer: unassigned
+    layer: sanctuary_endgame
     map_tag: Maze all different.
     position:
       x: 0.0
       y: 0.0
   LOC_DIFFERENT6:
-    layer: unassigned
+    layer: sanctuary_endgame
     map_tag: Maze all different.
     position:
       x: 0.0
       y: 0.0
   LOC_DIFFERENT7:
-    layer: unassigned
+    layer: sanctuary_endgame
     map_tag: Maze all different.
     position:
       x: 0.0
       y: 0.0
   LOC_DIFFERENT8:
-    layer: unassigned
+    layer: sanctuary_endgame
     map_tag: Maze all different.
     position:
       x: 0.0
       y: 0.0
   LOC_DIFFERENT9:
-    layer: unassigned
+    layer: sanctuary_endgame
     map_tag: Maze all different.
     position:
       x: 0.0
       y: 0.0
   LOC_DOME:
-    layer: unassigned
+    layer: upper_cave
     map_tag: LOC_DOME
     position:
       x: 0.0
       y: 0.0
   LOC_DUSTY:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: LOC_DUSTY
     position:
       x: 0.0
       y: 0.0
   LOC_EASTBANK:
-    layer: unassigned
+    layer: hall_of_mists
     map_tag: LOC_EASTBANK
     position:
       x: 0.0
       y: 0.0
   LOC_EASTEND:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: LOC_EASTEND
     position:
       x: 0.0
       y: 0.0
   LOC_EASTPIT:
-    layer: unassigned
+    layer: upper_cave
     map_tag: LOC_EASTPIT
     position:
       x: 0.0
       y: 0.0
   LOC_FLOORHOLE:
-    layer: unassigned
+    layer: hall_of_mists
     map_tag: Floor hole.
     position:
       x: 0.0
       y: 0.0
   LOC_FOOF1:
-    layer: unassigned
+    layer: upper_cave
     map_tag: LOC_FOOF1
     position:
       x: 0.0
       y: 0.0
   LOC_FOOF2:
-    layer: unassigned
+    layer: surface
     map_tag: LOC_FOOF2
     position:
       x: 0.0
       y: 0.0
   LOC_FOOF3:
-    layer: unassigned
+    layer: hall_of_mists
     map_tag: LOC_FOOF3
     position:
       x: 0.0
       y: 0.0
   LOC_FOOF4:
-    layer: unassigned
+    layer: surface
     map_tag: LOC_FOOF4
     position:
       x: 0.0
       y: 0.0
   LOC_FOOF5:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: LOC_FOOF5
     position:
       x: 0.0
       y: 0.0
   LOC_FOOF6:
-    layer: unassigned
+    layer: hall_of_mists
     map_tag: LOC_FOOF6
     position:
       x: 0.0
       y: 0.0
   LOC_FOOTSLIP:
-    layer: unassigned
+    layer: sanctuary_endgame
     map_tag: LOC_FOOTSLIP
     position:
       x: 0.0
@@ -682,13 +692,13 @@ nodes:
     anchor_tag: null
     jitter_seed: LOC_FOREST9
   LOC_FORK:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: LOC_FORK
     position:
       x: 0.0
       y: 0.0
   LOC_GIANTROOM:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: LOC_GIANTROOM
     position:
       x: 0.0
@@ -704,7 +714,7 @@ nodes:
     anchor_tag: GRATE
     jitter_seed: null
   LOC_GRUESOME:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: LOC_GRUESOME
     position:
       x: 0.0
@@ -720,259 +730,259 @@ nodes:
     anchor_tag: HILL
     jitter_seed: null
   LOC_IMMENSE:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: Immense passage end.
     position:
       x: 0.0
       y: 0.0
   LOC_INCLINE:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: LOC_INCLINE
     position:
       x: 0.0
       y: 0.0
   LOC_JUMBLE:
-    layer: unassigned
+    layer: hall_of_mists
     map_tag: Rock jumble
     position:
       x: 0.0
       y: 0.0
   LOC_KINGHALL:
-    layer: unassigned
+    layer: upper_cave
     map_tag: LOC_KINGHALL
     position:
       x: 0.0
       y: 0.0
   LOC_LARGE:
-    layer: unassigned
+    layer: sanctuary_endgame
     map_tag: Large chamber.
     position:
       x: 0.0
       y: 0.0
   LOC_LEDGE:
-    layer: unassigned
+    layer: sanctuary_endgame
     map_tag: LOC_LEDGE
     position:
       x: 0.0
       y: 0.0
   LOC_LIMESTONE:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: LOC_LIMESTONE
     position:
       x: 0.0
       y: 0.0
   LOC_LONGEAST:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: Maze all alike.
     position:
       x: 0.0
       y: 0.0
   LOC_LONGWEST:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: Maze all alike.
     position:
       x: 0.0
       y: 0.0
   LOC_LOWROOM:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: LOC_LOWROOM
     position:
       x: 0.0
       y: 0.0
   LOC_MAZEEND1:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: Maze all alike.
     position:
       x: 0.0
       y: 0.0
   LOC_MAZEEND10:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: Maze all alike.
     position:
       x: 0.0
       y: 0.0
   LOC_MAZEEND11:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: Maze all alike.
     position:
       x: 0.0
       y: 0.0
   LOC_MAZEEND12:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: LOC_MAZEEND12
     position:
       x: 0.0
       y: 0.0
   LOC_MAZEEND2:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: Maze all alike.
     position:
       x: 0.0
       y: 0.0
   LOC_MAZEEND3:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: Maze all alike.
     position:
       x: 0.0
       y: 0.0
   LOC_MAZEEND4:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: Maze all alike.
     position:
       x: 0.0
       y: 0.0
   LOC_MAZEEND5:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: Maze all alike.
     position:
       x: 0.0
       y: 0.0
   LOC_MAZEEND6:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: Maze all alike.
     position:
       x: 0.0
       y: 0.0
   LOC_MAZEEND8:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: Maze all alike.
     position:
       x: 0.0
       y: 0.0
   LOC_MAZEEND9:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: Maze all alike.
     position:
       x: 0.0
       y: 0.0
   LOC_MIRRORCANYON:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: LOC_MIRRORCANYON
     position:
       x: 0.0
       y: 0.0
   LOC_MISTHALL:
-    layer: unassigned
+    layer: hall_of_mists
     map_tag: LOC_MISTHALL
     position:
       x: 0.0
       y: 0.0
   LOC_MISTWEST:
-    layer: unassigned
+    layer: hall_of_mists
     map_tag: LOC_MISTWEST
     position:
       x: 0.0
       y: 0.0
   LOC_MISTY:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: LOC_MISTY
     position:
       x: 0.0
       y: 0.0
   LOC_NARROW:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: LOC_NARROW
     position:
       x: 0.0
       y: 0.0
   LOC_NE:
-    layer: unassigned
+    layer: sanctuary_endgame
     map_tag: Repository ne end
     position:
       x: 0.0
       y: 0.0
   LOC_NECHASM:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: LOC_NECHASM
     position:
       x: 0.0
       y: 0.0
   LOC_NECKBROKE:
-    layer: unassigned
+    layer: upper_cave
     map_tag: Pit bottom
     position:
       x: 0.0
       y: 0.0
   LOC_NOCLIMB:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: LOC_NOCLIMB
     position:
       x: 0.0
       y: 0.0
   LOC_NOMAKE:
-    layer: unassigned
+    layer: hall_of_mists
     map_tag: LOC_NOMAKE
     position:
       x: 0.0
       y: 0.0
   LOC_NUGGET:
-    layer: unassigned
+    layer: upper_cave
     map_tag: LOC_NUGGET
     position:
       x: 0.0
       y: 0.0
   LOC_ORIENTAL:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: LOC_ORIENTAL
     position:
       x: 0.0
       y: 0.0
   LOC_PARALLEL1:
-    layer: unassigned
+    layer: hall_of_mists
     map_tag: LOC_PARALLEL1
     position:
       x: 0.0
       y: 0.0
   LOC_PARALLEL2:
-    layer: unassigned
+    layer: hall_of_mists
     map_tag: Maze all alike.
     position:
       x: 0.0
       y: 0.0
   LOC_PITBRINK:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: LOC_PITBRINK
     position:
       x: 0.0
       y: 0.0
   LOC_PITTOP:
-    layer: unassigned
+    layer: upper_cave
     map_tag: LOC_PITTOP
     position:
       x: 0.0
       y: 0.0
   LOC_PLANTTOP:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: LOC_PLANTTOP
     position:
       x: 0.0
       y: 0.0
   LOC_PLOVER:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: LOC_PLOVER
     position:
       x: 0.0
       y: 0.0
   LOC_REACHDEAD:
-    layer: unassigned
+    layer: sanctuary_endgame
     map_tag: Dead end.
     position:
       x: 0.0
       y: 0.0
   LOC_RESBOTTOM:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: LOC_RESBOTTOM
     position:
       x: 0.0
       y: 0.0
   LOC_RESERVOIR:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: LOC_RESERVOIR
     position:
       x: 0.0
       y: 0.0
   LOC_RESNORTH:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: LOC_RESNORTH
     position:
       x: 0.0
@@ -988,61 +998,61 @@ nodes:
     anchor_tag: ROADEND
     jitter_seed: null
   LOC_ROUGHHEWN:
-    layer: unassigned
+    layer: sanctuary_endgame
     map_tag: Rough-hewn corridor
     position:
       x: 0.0
       y: 0.0
   LOC_SECRET1:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: LOC_SECRET1
     position:
       x: 0.0
       y: 0.0
   LOC_SECRET2:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: Secret canyon
     position:
       x: 0.0
       y: 0.0
   LOC_SECRET3:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: Secret e/w canyon
     position:
       x: 0.0
       y: 0.0
   LOC_SECRET4:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: Secret canyon
     position:
       x: 0.0
       y: 0.0
   LOC_SECRET5:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: Secret canyon
     position:
       x: 0.0
       y: 0.0
   LOC_SECRET6:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: Secret canyon
     position:
       x: 0.0
       y: 0.0
   LOC_SEWER:
-    layer: unassigned
+    layer: upper_cave
     map_tag: LOC_SEWER
     position:
       x: 0.0
       y: 0.0
   LOC_SHELLROOM:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: LOC_SHELLROOM
     position:
       x: 0.0
       y: 0.0
   LOC_SLAB:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: LOC_SLAB
     position:
       x: 0.0
@@ -1058,37 +1068,37 @@ nodes:
     anchor_tag: SLIT
     jitter_seed: null
   LOC_SLOPING1:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: Sloping corridor
     position:
       x: 0.0
       y: 0.0
   LOC_SMALLPIT:
-    layer: unassigned
+    layer: upper_cave
     map_tag: Small pit bottom
     position:
       x: 0.0
       y: 0.0
   LOC_SMALLPITBRINK:
-    layer: unassigned
+    layer: upper_cave
     map_tag: LOC_SMALLPITBRINK
     position:
       x: 0.0
       y: 0.0
   LOC_SNAKEBLOCK:
-    layer: unassigned
+    layer: upper_cave
     map_tag: LOC_SNAKEBLOCK
     position:
       x: 0.0
       y: 0.0
   LOC_SOFTROOM:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: LOC_SOFTROOM
     position:
       x: 0.0
       y: 0.0
   LOC_SOUTHSIDE:
-    layer: unassigned
+    layer: upper_cave
     map_tag: LOC_SOUTHSIDE
     position:
       x: 0.0
@@ -1104,61 +1114,61 @@ nodes:
     anchor_tag: START
     jitter_seed: null
   LOC_STEEP:
-    layer: unassigned
+    layer: sanctuary_endgame
     map_tag: Steep incline
     position:
       x: 0.0
       y: 0.0
   LOC_STOREROOM:
-    layer: unassigned
+    layer: sanctuary_endgame
     map_tag: Ogre's storeroom.
     position:
       x: 0.0
       y: 0.0
   LOC_SW:
-    layer: unassigned
+    layer: sanctuary_endgame
     map_tag: Repository sw end
     position:
       x: 0.0
       y: 0.0
   LOC_SWCHASM:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: LOC_SWCHASM
     position:
       x: 0.0
       y: 0.0
   LOC_SWISSCHEESE:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: LOC_SWISSCHEESE
     position:
       x: 0.0
       y: 0.0
   LOC_TALL:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: Tall canyon
     position:
       x: 0.0
       y: 0.0
   LOC_THREEJUNCTION:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: Secret canyon junction
     position:
       x: 0.0
       y: 0.0
   LOC_TIGHTPLACE:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: Tight canyon
     position:
       x: 0.0
       y: 0.0
   LOC_TOPSTALACTITE:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: LOC_TOPSTALACTITE
     position:
       x: 0.0
       y: 0.0
   LOC_TREACHEROUS:
-    layer: unassigned
+    layer: sanctuary_endgame
     map_tag: Rocky passage.
     position:
       x: 0.0
@@ -1174,73 +1184,73 @@ nodes:
     anchor_tag: VALLEY
     jitter_seed: null
   LOC_WARMWALLS:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: Warm junction
     position:
       x: 0.0
       y: 0.0
   LOC_WATERFALL:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: LOC_WATERFALL
     position:
       x: 0.0
       y: 0.0
   LOC_WESTBANK:
-    layer: unassigned
+    layer: hall_of_mists
     map_tag: LOC_WESTBANK
     position:
       x: 0.0
       y: 0.0
   LOC_WESTEND:
-    layer: unassigned
+    layer: upper_cave
     map_tag: LOC_WESTEND
     position:
       x: 0.0
       y: 0.0
   LOC_WESTPIT:
-    layer: unassigned
+    layer: upper_cave
     map_tag: LOC_WESTPIT
     position:
       x: 0.0
       y: 0.0
   LOC_WESTSIDE:
-    layer: unassigned
+    layer: upper_cave
     map_tag: LOC_WESTSIDE
     position:
       x: 0.0
       y: 0.0
   LOC_WIDEPLACE:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: Wide place
     position:
       x: 0.0
       y: 0.0
   LOC_WINDING:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: LOC_WINDING
     position:
       x: 0.0
       y: 0.0
   LOC_WINDOW1:
-    layer: unassigned
+    layer: hall_of_mists
     map_tag: LOC_WINDOW1
     position:
       x: 0.0
       y: 0.0
   LOC_WINDOW2:
-    layer: unassigned
+    layer: hall_of_mists
     map_tag: LOC_WINDOW2
     position:
       x: 0.0
       y: 0.0
   LOC_WITTSEND:
-    layer: unassigned
+    layer: labyrinths_river
     map_tag: LOC_WITTSEND
     position:
       x: 0.0
       y: 0.0
   LOC_Y2:
-    layer: unassigned
+    layer: hall_of_mists
     map_tag: Y2.
     position:
       x: 0.0
