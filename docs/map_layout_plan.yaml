@@ -940,7 +940,7 @@ nodes:
       x: 0.0
       y: 0.0
   LOC_PITBRINK:
-    layer: hall_of_mists
+    layer: labyrinths_river
     map_tag: LOC_PITBRINK
     position:
       x: 0.0
