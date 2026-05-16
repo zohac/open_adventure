@@ -1,0 +1,3242 @@
+{
+  "layer": "labyrinths_river",
+  "nodes": [
+    {
+      "id": "LOC_ALCOVE",
+      "map_tag": "You are in an alcove.  A small nw path seems to widen after a short\ndistance.  An extremely tight tunnel leads east.  It looks like a very\ntight squeeze.  An eerie light can be seen at the other end.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "EAST"
+          ],
+          "action": [
+            "goto",
+            "LOC_PLOVER"
+          ]
+        },
+        {
+          "verbs": [
+            "NW",
+            "CAVER"
+          ],
+          "action": [
+            "goto",
+            "LOC_MISTY"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_ALIKE1",
+      "map_tag": "Maze all alike.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "EAST"
+          ],
+          "action": [
+            "goto",
+            "LOC_ALIKE2"
+          ]
+        },
+        {
+          "verbs": [
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_ALIKE1"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_ALIKE4"
+          ]
+        },
+        {
+          "verbs": [
+            "UPWAR"
+          ],
+          "action": [
+            "goto",
+            "LOC_MISTWEST"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_ALIKE11"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_ALIKE10",
+      "map_tag": "Maze all alike.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "DOWN"
+          ],
+          "action": [
+            "goto",
+            "LOC_MAZEEND5"
+          ]
+        },
+        {
+          "verbs": [
+            "EAST"
+          ],
+          "action": [
+            "goto",
+            "LOC_PITBRINK"
+          ]
+        },
+        {
+          "verbs": [
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_ALIKE10"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_ALIKE8"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_ALIKE11",
+      "map_tag": "Maze all alike.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "EAST"
+          ],
+          "action": [
+            "goto",
+            "LOC_MAZEEND8"
+          ]
+        },
+        {
+          "verbs": [
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_ALIKE1"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_ALIKE11"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_ALIKE11"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_ALIKE12",
+      "map_tag": "Maze all alike.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "EAST"
+          ],
+          "action": [
+            "goto",
+            "LOC_ALIKE13"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_PITBRINK"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_MAZEEND10"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_ALIKE13",
+      "map_tag": "Maze all alike.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_PITBRINK"
+          ]
+        },
+        {
+          "verbs": [
+            "NW"
+          ],
+          "action": [
+            "goto",
+            "LOC_MAZEEND12"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_ALIKE12"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_ALIKE14",
+      "map_tag": "Maze all alike.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "UPWAR",
+            "DOWN"
+          ],
+          "action": [
+            "goto",
+            "LOC_ALIKE4"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_ALIKE2",
+      "map_tag": "Maze all alike.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "EAST"
+          ],
+          "action": [
+            "goto",
+            "LOC_ALIKE4"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_ALIKE3"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_ALIKE1"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_ALIKE3",
+      "map_tag": "Maze all alike.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "DOWN"
+          ],
+          "action": [
+            "goto",
+            "LOC_MAZEEND3"
+          ]
+        },
+        {
+          "verbs": [
+            "EAST"
+          ],
+          "action": [
+            "goto",
+            "LOC_ALIKE2"
+          ]
+        },
+        {
+          "verbs": [
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_MAZEEND9"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_ALIKE6"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_ALIKE4",
+      "map_tag": "Maze all alike.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "EAST"
+          ],
+          "action": [
+            "goto",
+            "LOC_MAZEEND1"
+          ]
+        },
+        {
+          "verbs": [
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_ALIKE2"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_MAZEEND2"
+          ]
+        },
+        {
+          "verbs": [
+            "UPWAR",
+            "DOWN"
+          ],
+          "action": [
+            "goto",
+            "LOC_ALIKE14"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_ALIKE1"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_ALIKE5",
+      "map_tag": "Maze all alike.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "EAST"
+          ],
+          "action": [
+            "goto",
+            "LOC_ALIKE6"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_ALIKE7"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_ALIKE6",
+      "map_tag": "Maze all alike.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "DOWN"
+          ],
+          "action": [
+            "goto",
+            "LOC_ALIKE7"
+          ]
+        },
+        {
+          "verbs": [
+            "EAST"
+          ],
+          "action": [
+            "goto",
+            "LOC_ALIKE3"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_ALIKE8"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_ALIKE5"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_ALIKE7",
+      "map_tag": "Maze all alike.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "EAST"
+          ],
+          "action": [
+            "goto",
+            "LOC_ALIKE8"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_ALIKE9"
+          ]
+        },
+        {
+          "verbs": [
+            "UPWAR"
+          ],
+          "action": [
+            "goto",
+            "LOC_ALIKE6"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_ALIKE5"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_ALIKE8",
+      "map_tag": "Maze all alike.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "DOWN"
+          ],
+          "action": [
+            "goto",
+            "LOC_MAZEEND11"
+          ]
+        },
+        {
+          "verbs": [
+            "EAST"
+          ],
+          "action": [
+            "goto",
+            "LOC_ALIKE7"
+          ]
+        },
+        {
+          "verbs": [
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_ALIKE10"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_ALIKE8"
+          ]
+        },
+        {
+          "verbs": [
+            "UPWAR"
+          ],
+          "action": [
+            "goto",
+            "LOC_ALIKE9"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_ALIKE6"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_ALIKE9",
+      "map_tag": "Maze all alike.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_ALIKE8"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_MAZEEND4"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_ALIKE7"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_ANTEROOM",
+      "map_tag": "You are in an anteroom leading to a large passage to the east.  Small\npassages go west and up.  The remnants of recent digging are evident.\nA sign in midair here says \"Cave under construction beyond this point.\nProceed at own risk.  [Witt Construction Company]\"",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "EAST"
+          ],
+          "action": [
+            "goto",
+            "LOC_WITTSEND"
+          ]
+        },
+        {
+          "verbs": [
+            "UPWAR"
+          ],
+          "action": [
+            "goto",
+            "LOC_COMPLEX"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_BEDQUILT"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_ARCHED",
+      "map_tag": "You are in an arched hall.  A coral passage once continued up and east\nfrom here, but is now blocked by debris.  The air smells of sea water.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "DOWN",
+            "SHELL",
+            "OUT"
+          ],
+          "action": [
+            "goto",
+            "LOC_SHELLROOM"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_BARRENFRONT",
+      "map_tag": "You are standing at the entrance to a large, barren room.  A notice\nabove the entrance reads:  \"Caution!  Bear in room!\"",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "EAST",
+            "INWAR",
+            "BARRE",
+            "ENTER"
+          ],
+          "action": [
+            "goto",
+            "LOC_BARRENROOM"
+          ]
+        },
+        {
+          "verbs": [
+            "FORK"
+          ],
+          "action": [
+            "goto",
+            "LOC_FORK"
+          ]
+        },
+        {
+          "verbs": [
+            "VIEW"
+          ],
+          "action": [
+            "goto",
+            "LOC_BREATHTAKING"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST",
+            "UPWAR"
+          ],
+          "action": [
+            "goto",
+            "LOC_LIMESTONE"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_BARRENROOM",
+      "map_tag": "You are inside a barren room.  The center of the room is completely\nempty except for some dust.  Marks in the dust lead away toward the\nfar end of the room.  The only exit is the way you came in.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "FORK"
+          ],
+          "action": [
+            "goto",
+            "LOC_FORK"
+          ]
+        },
+        {
+          "verbs": [
+            "VIEW"
+          ],
+          "action": [
+            "goto",
+            "LOC_BREATHTAKING"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST",
+            "OUT"
+          ],
+          "action": [
+            "goto",
+            "LOC_BARRENFRONT"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_BEDQUILT",
+      "map_tag": "You are in Bedquilt, a long east/west passage with holes everywhere.\nTo explore at random select north, south, up, or down.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "DOWN"
+          ],
+          "action": [
+            "goto",
+            "LOC_ANTEROOM"
+          ]
+        },
+        {
+          "verbs": [
+            "EAST"
+          ],
+          "action": [
+            "goto",
+            "LOC_COMPLEX"
+          ]
+        },
+        {
+          "verbs": [
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_LOWROOM"
+          ]
+        },
+        {
+          "verbs": [
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_THREEJUNCTION"
+          ]
+        },
+        {
+          "verbs": [
+            "SLAB"
+          ],
+          "action": [
+            "goto",
+            "LOC_SLAB"
+          ]
+        },
+        {
+          "verbs": [
+            "UPWAR"
+          ],
+          "action": [
+            "goto",
+            "LOC_DUSTY"
+          ]
+        },
+        {
+          "verbs": [
+            "UPWAR"
+          ],
+          "action": [
+            "goto",
+            "LOC_SECRET2"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_SWISSCHEESE"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_BOULDERS1",
+      "map_tag": "Boulders",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "SOUTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_TALL"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_BOULDERS2",
+      "map_tag": "You are in a small chamber filled with large boulders.  The walls are\nvery warm, causing the air in the room to be almost stifling from the\nheat.  The only exit is a crawl heading west, through which is coming\na low rumbling.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "FORK"
+          ],
+          "action": [
+            "goto",
+            "LOC_FORK"
+          ]
+        },
+        {
+          "verbs": [
+            "VIEW"
+          ],
+          "action": [
+            "goto",
+            "LOC_BREATHTAKING"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST",
+            "OUT",
+            "CRAWL"
+          ],
+          "action": [
+            "goto",
+            "LOC_WARMWALLS"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_BREATHTAKING",
+      "map_tag": "You are on the edge of a breath-taking view.  Far below you is an\nactive volcano, from which great gouts of molten lava come surging\nout, cascading back down into the depths.  The glowing rock fills the\nfarthest reaches of the cavern with a blood-red glare, giving every-\nthing an eerie, macabre appearance.  The air is filled with flickering\nsparks of ash and a heavy smell of brimstone.  The walls are hot to\nthe touch, and the thundering of the volcano drowns out all other\nsounds.  Embedded in the jagged roof far overhead are myriad twisted\nformations composed of pure white alabaster, which scatter the murky\nlight into sinister apparitions upon the walls.  To one side is a deep\ngorge, filled with a bizarre chaos of tortured rock which seems to\nhave been crafted by the devil himself.  An immense river of fire\ncrashes out from the depths of the volcano, burns its way through the\ngorge, and plummets into a bottomless pit far off to your left.  To\nthe right, an immense geyser of blistering steam erupts continuously\nfrom a barren island in the center of a sulfurous lake, which bubbles\nominously.  The far right wall is aflame with an incandescence of its\nown, which lends an additional infernal splendor to the already\nhellish scene.  A dark, foreboding passage exits to the south.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "FORK"
+          ],
+          "action": [
+            "goto",
+            "LOC_FORK"
+          ]
+        },
+        {
+          "verbs": [
+            "JUMP"
+          ],
+          "action": [
+            "goto",
+            "LOC_GRUESOME"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH",
+            "PASSA",
+            "OUT"
+          ],
+          "action": [
+            "goto",
+            "LOC_WARMWALLS"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_CAVEIN",
+      "map_tag": "Cave-in blockage",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "SOUTH",
+            "GIANT",
+            "OUT"
+          ],
+          "action": [
+            "goto",
+            "LOC_GIANTROOM"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_COMPLEX",
+      "map_tag": "You are at a complex junction.  A low hands and knees passage from the\nnorth joins a higher crawl from the east to make a walking passage\ngoing west.  There is also a large room above.  The air is damp here.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "EAST"
+          ],
+          "action": [
+            "goto",
+            "LOC_ANTEROOM"
+          ]
+        },
+        {
+          "verbs": [
+            "NORTH",
+            "SHELL"
+          ],
+          "action": [
+            "goto",
+            "LOC_SHELLROOM"
+          ]
+        },
+        {
+          "verbs": [
+            "UPWAR",
+            "CLIMB",
+            "ROOM"
+          ],
+          "action": [
+            "goto",
+            "LOC_DUSTY"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST",
+            "BEDQU"
+          ],
+          "action": [
+            "goto",
+            "LOC_BEDQUILT"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_CORRIDOR",
+      "map_tag": "e/w canyon",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "BARRE"
+          ],
+          "action": [
+            "goto",
+            "LOC_BARRENFRONT"
+          ]
+        },
+        {
+          "verbs": [
+            "EAST",
+            "FORK"
+          ],
+          "action": [
+            "goto",
+            "LOC_FORK"
+          ]
+        },
+        {
+          "verbs": [
+            "VIEW"
+          ],
+          "action": [
+            "goto",
+            "LOC_BREATHTAKING"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_NECHASM"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_CROSSOVER",
+      "map_tag": "Passage crossover.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "EAST"
+          ],
+          "action": [
+            "goto",
+            "LOC_WESTSIDE"
+          ]
+        },
+        {
+          "verbs": [
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_DEADEND7"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_LONGWEST"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_LONGEAST"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_CULDESAC",
+      "map_tag": "Cul-de-sac.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "SHELL"
+          ],
+          "action": [
+            "goto",
+            "LOC_SHELLROOM"
+          ]
+        },
+        {
+          "verbs": [
+            "UPWAR",
+            "OUT"
+          ],
+          "action": [
+            "goto",
+            "LOC_SLOPING1"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_DARKROOM",
+      "map_tag": "You're in the dark-room.  A corridor leading south is the only exit.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "SOUTH",
+            "PLOVE",
+            "OUT"
+          ],
+          "action": [
+            "goto",
+            "LOC_PLOVER"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_DEADCRAWL",
+      "map_tag": "Dead end crawl.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "SOUTH",
+            "CRAWL",
+            "OUT"
+          ],
+          "action": [
+            "goto",
+            "LOC_LOWROOM"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_DEADEND7",
+      "map_tag": "Maze all alike.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "SOUTH",
+            "OUT"
+          ],
+          "action": [
+            "goto",
+            "LOC_CROSSOVER"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_DUSTY",
+      "map_tag": "You are in a large room full of dusty rocks.  There is a big hole in\nthe floor.  There are cracks everywhere, and a passage leading east.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "BEDQU"
+          ],
+          "action": [
+            "goto",
+            "LOC_BEDQUILT"
+          ]
+        },
+        {
+          "verbs": [
+            "DOWN",
+            "HOLE",
+            "FLOOR"
+          ],
+          "action": [
+            "goto",
+            "LOC_COMPLEX"
+          ]
+        },
+        {
+          "verbs": [
+            "EAST",
+            "PASSA"
+          ],
+          "action": [
+            "goto",
+            "LOC_BROKEN"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_EASTEND",
+      "map_tag": "You are at the east end of the Twopit Room.  The floor here is\nlittered with thin rock slabs, which make it easy to descend the pits.\nThere is a path here bypassing the pits to connect passages from east\nand west.  There are holes all over, but the only big one is on the\nwall directly over the west pit where you can't get to it.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "DOWN",
+            "PIT"
+          ],
+          "action": [
+            "goto",
+            "LOC_EASTPIT"
+          ]
+        },
+        {
+          "verbs": [
+            "EAST"
+          ],
+          "action": [
+            "goto",
+            "LOC_SWISSCHEESE"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST",
+            "ACROS"
+          ],
+          "action": [
+            "goto",
+            "LOC_WESTEND"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_FOOF5",
+      "map_tag": ">>Foof!<<",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [],
+          "action": [
+            "goto",
+            "LOC_PLOVER"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_FORK",
+      "map_tag": "The path forks here.  The left fork leads northeast.  A dull rumbling\nseems to get louder in that direction.  The right fork leads southeast\ndown a gentle slope.  The main corridor enters from the west.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "BARRE"
+          ],
+          "action": [
+            "goto",
+            "LOC_BARRENFRONT"
+          ]
+        },
+        {
+          "verbs": [
+            "NE",
+            "LEFT"
+          ],
+          "action": [
+            "goto",
+            "LOC_WARMWALLS"
+          ]
+        },
+        {
+          "verbs": [
+            "SE",
+            "RIGHT",
+            "DOWN"
+          ],
+          "action": [
+            "goto",
+            "LOC_LIMESTONE"
+          ]
+        },
+        {
+          "verbs": [
+            "VIEW"
+          ],
+          "action": [
+            "goto",
+            "LOC_BREATHTAKING"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_CORRIDOR"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_GIANTROOM",
+      "map_tag": "You are in the Giant Room.  The ceiling here is too high up for your\nlamp to show it.  Cavernous passages lead east, north, and south.  On\nthe west wall is scrawled the inscription, \"FEE FIE FOE FOO\" [sic].",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "EAST"
+          ],
+          "action": [
+            "goto",
+            "LOC_CAVEIN"
+          ]
+        },
+        {
+          "verbs": [
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_IMMENSE"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_NARROW"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_GRUESOME",
+      "map_tag": "There is now one more gruesome aspect to the spectacular vista.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [],
+          "action": [
+            "goto",
+            "LOC_NOWHERE"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_IMMENSE",
+      "map_tag": "Immense passage end.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "NORTH",
+            "ENTER",
+            "CAVER"
+          ],
+          "action": [
+            "goto",
+            "LOC_WATERFALL"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH",
+            "GIANT",
+            "PASSA"
+          ],
+          "action": [
+            "goto",
+            "LOC_GIANTROOM"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_INCLINE",
+      "map_tag": "You are at the top of a steep incline above a large room.  You could\nclimb down here, but you would not be able to climb up.  There is a\npassage leading back to the north.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "DOWN",
+            "CLIMB"
+          ],
+          "action": [
+            "goto",
+            "LOC_LOWROOM"
+          ]
+        },
+        {
+          "verbs": [
+            "NORTH",
+            "CAVER",
+            "PASSA"
+          ],
+          "action": [
+            "goto",
+            "LOC_WATERFALL"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_LIMESTONE",
+      "map_tag": "You are walking along a gently sloping north/south passage lined with\noddly shaped limestone formations.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "NORTH",
+            "UPWAR",
+            "FORK"
+          ],
+          "action": [
+            "goto",
+            "LOC_FORK"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH",
+            "DOWN",
+            "BARRE"
+          ],
+          "action": [
+            "goto",
+            "LOC_BARRENFRONT"
+          ]
+        },
+        {
+          "verbs": [
+            "VIEW"
+          ],
+          "action": [
+            "goto",
+            "LOC_BREATHTAKING"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_LONGEAST",
+      "map_tag": "Maze all alike.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "EAST",
+            "UPWAR",
+            "CRAWL"
+          ],
+          "action": [
+            "goto",
+            "LOC_MISTWEST"
+          ]
+        },
+        {
+          "verbs": [
+            "NORTH",
+            "DOWN",
+            "HOLE"
+          ],
+          "action": [
+            "goto",
+            "LOC_CROSSOVER"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_LONGWEST"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_LONGWEST",
+      "map_tag": "Maze all alike.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "EAST"
+          ],
+          "action": [
+            "goto",
+            "LOC_LONGEAST"
+          ]
+        },
+        {
+          "verbs": [
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_CROSSOVER"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT1"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_LOWROOM",
+      "map_tag": "You are in a large low room.  Crawls lead north, se, and sw.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "BEDQU"
+          ],
+          "action": [
+            "goto",
+            "LOC_BEDQUILT"
+          ]
+        },
+        {
+          "verbs": [
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_DEADCRAWL"
+          ]
+        },
+        {
+          "verbs": [
+            "SE",
+            "ORIEN"
+          ],
+          "action": [
+            "goto",
+            "LOC_ORIENTAL"
+          ]
+        },
+        {
+          "verbs": [
+            "SW"
+          ],
+          "action": [
+            "goto",
+            "LOC_WINDING"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_MAZEEND1",
+      "map_tag": "Maze all alike.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "WEST",
+            "OUT"
+          ],
+          "action": [
+            "goto",
+            "LOC_ALIKE4"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_MAZEEND10",
+      "map_tag": "Maze all alike.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "EAST",
+            "OUT"
+          ],
+          "action": [
+            "goto",
+            "LOC_ALIKE12"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_MAZEEND11",
+      "map_tag": "Maze all alike.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "UPWAR",
+            "OUT"
+          ],
+          "action": [
+            "goto",
+            "LOC_ALIKE8"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_MAZEEND12",
+      "map_tag": "Dead end",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "SE"
+          ],
+          "action": [
+            "goto",
+            "LOC_ALIKE13"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_MAZEEND2",
+      "map_tag": "Maze all alike.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "EAST",
+            "OUT"
+          ],
+          "action": [
+            "goto",
+            "LOC_ALIKE4"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_MAZEEND3",
+      "map_tag": "Maze all alike.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "UPWAR",
+            "OUT"
+          ],
+          "action": [
+            "goto",
+            "LOC_ALIKE3"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_MAZEEND4",
+      "map_tag": "Maze all alike.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "WEST",
+            "OUT"
+          ],
+          "action": [
+            "goto",
+            "LOC_ALIKE9"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_MAZEEND5",
+      "map_tag": "Maze all alike.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "UPWAR",
+            "OUT"
+          ],
+          "action": [
+            "goto",
+            "LOC_ALIKE10"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_MAZEEND6",
+      "map_tag": "Maze all alike.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "EAST",
+            "OUT"
+          ],
+          "action": [
+            "goto",
+            "LOC_PITBRINK"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_MAZEEND8",
+      "map_tag": "Maze all alike.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "WEST",
+            "OUT"
+          ],
+          "action": [
+            "goto",
+            "LOC_ALIKE11"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_MAZEEND9",
+      "map_tag": "Maze all alike.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "SOUTH",
+            "OUT"
+          ],
+          "action": [
+            "goto",
+            "LOC_ALIKE3"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_MIRRORCANYON",
+      "map_tag": "You are in a north/south canyon about 25 feet across.  The floor is\ncovered by white mist seeping in from the north.  The walls extend\nupward for well over 100 feet.  Suspended from some unseen point far\nabove you, an enormous two-sided mirror is hanging parallel to and\nmidway between the canyon walls.  (The mirror is obviously provided\nfor the use of the dwarves who, as you know, are extremely vain.)  A\nsmall window can be seen in either wall, some fifty feet up.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "NORTH",
+            "RESER"
+          ],
+          "action": [
+            "goto",
+            "LOC_RESERVOIR"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_SECRET1"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_MISTY",
+      "map_tag": "You are following a wide path around the outer edge of a large cavern.\nFar below, through a heavy white mist, strange splashing noises can be\nheard.  The mist rises up through a fissure in the ceiling.  The path\nexits to the south and west.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "SOUTH",
+            "ORIEN"
+          ],
+          "action": [
+            "goto",
+            "LOC_ORIENTAL"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_ALCOVE"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_NARROW",
+      "map_tag": "You are in a long, narrow corridor stretching out of sight to the\nwest.  At the eastern end is a hole through which you can see a\nprofusion of leaves.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "DOWN",
+            "CLIMB",
+            "EAST"
+          ],
+          "action": [
+            "goto",
+            "LOC_WESTPIT"
+          ]
+        },
+        {
+          "verbs": [
+            "JUMP"
+          ],
+          "action": [
+            "goto",
+            "LOC_NECKBROKE"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST",
+            "GIANT"
+          ],
+          "action": [
+            "goto",
+            "LOC_GIANTROOM"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_NECHASM",
+      "map_tag": "You are on the far side of the chasm.  A ne path leads away from the\nchasm on this side.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "BARRE"
+          ],
+          "action": [
+            "goto",
+            "LOC_BARRENFRONT"
+          ]
+        },
+        {
+          "verbs": [
+            "FORK"
+          ],
+          "action": [
+            "goto",
+            "LOC_FORK"
+          ]
+        },
+        {
+          "verbs": [
+            "NE"
+          ],
+          "action": [
+            "goto",
+            "LOC_CORRIDOR"
+          ]
+        },
+        {
+          "verbs": [
+            "VIEW"
+          ],
+          "action": [
+            "goto",
+            "LOC_BREATHTAKING"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_NOCLIMB",
+      "map_tag": "There is nothing here to climb.  Use \"up\" or \"out\" to leave the pit.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [],
+          "action": [
+            "goto",
+            "LOC_WESTPIT"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_ORIENTAL",
+      "map_tag": "This is the Oriental Room.  Ancient oriental cave drawings cover the\nwalls.  A gently sloping passage leads upward to the north, another\npassage leads se, and a hands and knees crawl leads west.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "SE"
+          ],
+          "action": [
+            "goto",
+            "LOC_SWISSCHEESE"
+          ]
+        },
+        {
+          "verbs": [
+            "UPWAR",
+            "NORTH",
+            "CAVER"
+          ],
+          "action": [
+            "goto",
+            "LOC_MISTY"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST",
+            "CRAWL"
+          ],
+          "action": [
+            "goto",
+            "LOC_LOWROOM"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_PITBRINK",
+      "map_tag": "You are on the brink of a thirty foot pit with a massive orange column\ndown one wall.  You could climb down here but you could not get back\nup.  The maze continues at this level.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "DOWN",
+            "CLIMB"
+          ],
+          "action": [
+            "goto",
+            "LOC_BIRDCHAMBER"
+          ]
+        },
+        {
+          "verbs": [
+            "EAST"
+          ],
+          "action": [
+            "goto",
+            "LOC_ALIKE13"
+          ]
+        },
+        {
+          "verbs": [
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_ALIKE12"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_MAZEEND6"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_ALIKE10"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_PLANTTOP",
+      "map_tag": "You have climbed up the plant and out of the pit.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [],
+          "action": [
+            "goto",
+            "LOC_WESTEND"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_PLOVER",
+      "map_tag": "You're in a small chamber lit by an eerie green light.  An extremely\nnarrow tunnel exits to the west.  A dark corridor leads ne.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "NE",
+            "DARK"
+          ],
+          "action": [
+            "goto",
+            "LOC_DARKROOM"
+          ]
+        },
+        {
+          "verbs": [
+            "PLOVE"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOOF6"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_ALCOVE"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_RESBOTTOM",
+      "map_tag": "You are walking across the bottom of the reservoir.  Walls of water\nrear up on either side.  The roar of the water cascading past is\nnearly deafening, and the mist is so thick you can barely see.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_RESNORTH"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_RESERVOIR"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_RESERVOIR",
+      "map_tag": "You are at the edge of a large underground reservoir.  An opaque cloud\nof white mist fills the room and rises rapidly upward.  The lake is\nfed by a stream, which tumbles out of a hole in the wall about 10 feet\noverhead and splashes noisily into the water somewhere within the\nmist.  There is a passage going back toward the south.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_RESBOTTOM"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH",
+            "OUT"
+          ],
+          "action": [
+            "goto",
+            "LOC_MIRRORCANYON"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_RESNORTH",
+      "map_tag": "You are at the northern edge of the reservoir.  A northwest passage\nleads sharply up from here.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "NW",
+            "UPWAR",
+            "OUT"
+          ],
+          "action": [
+            "goto",
+            "LOC_TREACHEROUS"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_RESBOTTOM"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_SECRET1",
+      "map_tag": "You are in a secret n/s canyon above a large room.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "DOWN",
+            "SLAB"
+          ],
+          "action": [
+            "goto",
+            "LOC_SLAB"
+          ]
+        },
+        {
+          "verbs": [
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_MIRRORCANYON"
+          ]
+        },
+        {
+          "verbs": [
+            "RESER"
+          ],
+          "action": [
+            "goto",
+            "LOC_RESERVOIR"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_SECRET4"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_SECRET5"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_SECRET2",
+      "map_tag": "Secret canyon",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "DOWN",
+            "PASSA"
+          ],
+          "action": [
+            "goto",
+            "LOC_BEDQUILT"
+          ]
+        },
+        {
+          "verbs": [
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_THREEJUNCTION"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_TOPSTALACTITE"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_SECRET3",
+      "map_tag": "Secret e/w canyon",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "DOWN"
+          ],
+          "action": [
+            "goto",
+            "LOC_WIDEPLACE"
+          ]
+        },
+        {
+          "verbs": [
+            "EAST"
+          ],
+          "action": [
+            "goto",
+            "LOC_KINGHALL"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_SECRET5"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_SECRET6"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_SECRET4",
+      "map_tag": "Secret canyon",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "NORTH",
+            "OUT"
+          ],
+          "action": [
+            "goto",
+            "LOC_SECRET1"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_SECRET5",
+      "map_tag": "Secret canyon",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "EAST"
+          ],
+          "action": [
+            "goto",
+            "LOC_SECRET3"
+          ]
+        },
+        {
+          "verbs": [
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_SECRET1"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_SECRET6",
+      "map_tag": "Secret canyon",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "EAST",
+            "OUT"
+          ],
+          "action": [
+            "goto",
+            "LOC_SECRET3"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_SHELLROOM",
+      "map_tag": "You're in a large room carved out of sedimentary rock.  The floor and\nwalls are littered with bits of shells embedded in the stone.  A\nshallow passage proceeds downward, and a somewhat steeper one leads\nup.  A low hands and knees passage enters from the south.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "DOWN"
+          ],
+          "action": [
+            "goto",
+            "LOC_SLOPING1"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_COMPLEX"
+          ]
+        },
+        {
+          "verbs": [
+            "UPWAR",
+            "HALL"
+          ],
+          "action": [
+            "goto",
+            "LOC_ARCHED"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_SLAB",
+      "map_tag": "You are in a large low circular chamber whose floor is an immense slab\nfallen from the ceiling (Slab Room).  East and west there once were\nlarge passages, but they are now filled with boulders.  Low small\npassages go north and south, and the south one quickly bends west\naround the boulders.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_BEDQUILT"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_WESTEND"
+          ]
+        },
+        {
+          "verbs": [
+            "UPWAR",
+            "CLIMB"
+          ],
+          "action": [
+            "goto",
+            "LOC_SECRET1"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_SLOPING1",
+      "map_tag": "Sloping corridor",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "DOWN"
+          ],
+          "action": [
+            "goto",
+            "LOC_CULDESAC"
+          ]
+        },
+        {
+          "verbs": [
+            "UPWAR",
+            "SHELL"
+          ],
+          "action": [
+            "goto",
+            "LOC_SHELLROOM"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_SOFTROOM",
+      "map_tag": "You are in the Soft Room.  The walls are covered with heavy curtains,\nthe floor with a thick pile carpet.  Moss covers the ceiling.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "WEST",
+            "OUT"
+          ],
+          "action": [
+            "goto",
+            "LOC_SWISSCHEESE"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_SWCHASM",
+      "map_tag": "You are on one side of a large, deep chasm.  A heavy white mist rising\nup from below obscures all view of the far side.  A sw path leads away\nfrom the chasm into a winding corridor.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "JUMP"
+          ],
+          "action": [
+            "goto",
+            "LOC_NOMAKE"
+          ]
+        },
+        {
+          "verbs": [
+            "SW"
+          ],
+          "action": [
+            "goto",
+            "LOC_WINDING"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_SWISSCHEESE",
+      "map_tag": "You are in a room whose walls resemble Swiss cheese.  Obvious passages\ngo west, east, ne, and nw.  Part of the room is occupied by a large\nbedrock block.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "CANYO"
+          ],
+          "action": [
+            "goto",
+            "LOC_TALL"
+          ]
+        },
+        {
+          "verbs": [
+            "EAST"
+          ],
+          "action": [
+            "goto",
+            "LOC_SOFTROOM"
+          ]
+        },
+        {
+          "verbs": [
+            "NE"
+          ],
+          "action": [
+            "goto",
+            "LOC_BEDQUILT"
+          ]
+        },
+        {
+          "verbs": [
+            "ORIEN"
+          ],
+          "action": [
+            "goto",
+            "LOC_ORIENTAL"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_EASTEND"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_TALL",
+      "map_tag": "Tall canyon",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "EAST"
+          ],
+          "action": [
+            "goto",
+            "LOC_WIDEPLACE"
+          ]
+        },
+        {
+          "verbs": [
+            "NORTH",
+            "CRAWL"
+          ],
+          "action": [
+            "goto",
+            "LOC_SWISSCHEESE"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_BOULDERS1"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_THREEJUNCTION",
+      "map_tag": "Secret canyon junction",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_WINDOW2"
+          ]
+        },
+        {
+          "verbs": [
+            "SE"
+          ],
+          "action": [
+            "goto",
+            "LOC_BEDQUILT"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_SECRET2"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_TIGHTPLACE",
+      "map_tag": "Tight canyon",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_WIDEPLACE"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_TOPSTALACTITE",
+      "map_tag": "A large stalactite extends from the roof and almost reaches the floor\nbelow.  You could climb down it, and jump from it to the floor, but\nhaving done so you would be unable to reach it to climb back up.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "DOWN"
+          ],
+          "action": [
+            "goto",
+            "LOC_ALIKE4"
+          ]
+        },
+        {
+          "verbs": [
+            "DOWN"
+          ],
+          "action": [
+            "goto",
+            "LOC_ALIKE9"
+          ]
+        },
+        {
+          "verbs": [
+            "DOWN",
+            "JUMP",
+            "CLIMB"
+          ],
+          "action": [
+            "goto",
+            "LOC_ALIKE6"
+          ]
+        },
+        {
+          "verbs": [
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_SECRET2"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_WARMWALLS",
+      "map_tag": "Warm junction",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "EAST",
+            "CRAWL"
+          ],
+          "action": [
+            "goto",
+            "LOC_BOULDERS2"
+          ]
+        },
+        {
+          "verbs": [
+            "NORTH",
+            "VIEW"
+          ],
+          "action": [
+            "goto",
+            "LOC_BREATHTAKING"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH",
+            "FORK"
+          ],
+          "action": [
+            "goto",
+            "LOC_FORK"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_WATERFALL",
+      "map_tag": "You are in a magnificent cavern with a rushing stream, which cascades\nover a sparkling waterfall into a roaring whirlpool which disappears\nthrough a hole in the floor.  Passages exit to the south and west.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "GIANT"
+          ],
+          "action": [
+            "goto",
+            "LOC_GIANTROOM"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH",
+            "OUT"
+          ],
+          "action": [
+            "goto",
+            "LOC_IMMENSE"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_INCLINE"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_WIDEPLACE",
+      "map_tag": "Wide place",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_TALL"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_TIGHTPLACE"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_WINDING",
+      "map_tag": "You are in a long winding corridor sloping out of sight in both\ndirections.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "DOWN"
+          ],
+          "action": [
+            "goto",
+            "LOC_LOWROOM"
+          ]
+        },
+        {
+          "verbs": [
+            "UPWAR"
+          ],
+          "action": [
+            "goto",
+            "LOC_SWCHASM"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_WITTSEND",
+      "map_tag": "You are at Witt's End.  Passages lead off in *ALL* directions.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "EAST"
+          ],
+          "action": [
+            "goto",
+            "LOC_ANTEROOM"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1597 @@
+{
+  "layer": "sanctuary_endgame",
+  "nodes": [
+    {
+      "id": "LOC_BADDIRECTION",
+      "map_tag": "There is no way to go that direction.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [],
+          "action": [
+            "goto",
+            "LOC_DEADEND13"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_CLIFFACE",
+      "map_tag": "Vertical cliff.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "DOWN"
+          ],
+          "action": [
+            "goto",
+            "LOC_CLIFFBASE"
+          ]
+        },
+        {
+          "verbs": [
+            "UPWAR"
+          ],
+          "action": [
+            "goto",
+            "LOC_CLIFFTOP"
+          ]
+        },
+        {
+          "verbs": [
+            "UPWAR"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOOTSLIP"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_CLIFFBASE",
+      "map_tag": "You are at the base of a nearly vertical cliff.  There are some\nslim footholds which would enable you to climb up, but it looks\nextremely dangerous.  Here at the base of the cliff lie the remains\nof several earlier adventurers who apparently failed to make it.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "DOWN",
+            "SE"
+          ],
+          "action": [
+            "goto",
+            "LOC_STEEP"
+          ]
+        },
+        {
+          "verbs": [
+            "UPWAR",
+            "CLIMB"
+          ],
+          "action": [
+            "goto",
+            "LOC_CLIFFACE"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_CLIFFLEDGE",
+      "map_tag": "Clifftop",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "CLIMB",
+            "DOWN"
+          ],
+          "action": [
+            "goto",
+            "LOC_CLIFFACE"
+          ]
+        },
+        {
+          "verbs": [
+            "NE",
+            "CRAWL"
+          ],
+          "action": [
+            "goto",
+            "LOC_REACHDEAD"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_CLIFFTOP",
+      "map_tag": "Just as you reach the top, your foot slips on a loose rock and you\nmake one last desperate grab.  Your luck holds, as does your grip.\nWith an enormous heave, you lift yourself to the ledge above.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [],
+          "action": [
+            "goto",
+            "LOC_CLIFFLEDGE"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_DEADEND13",
+      "map_tag": "Dead end",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "NORTH",
+            "OUT"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT2"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_BADDIRECTION"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_ROUGHHEWN"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_DIFFERENT1",
+      "map_tag": "Maze all different",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "DOWN"
+          ],
+          "action": [
+            "goto",
+            "LOC_LONGWEST"
+          ]
+        },
+        {
+          "verbs": [
+            "EAST"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT9"
+          ]
+        },
+        {
+          "verbs": [
+            "NE"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT5"
+          ]
+        },
+        {
+          "verbs": [
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT11"
+          ]
+        },
+        {
+          "verbs": [
+            "NW"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT8"
+          ]
+        },
+        {
+          "verbs": [
+            "SE"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT6"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT3"
+          ]
+        },
+        {
+          "verbs": [
+            "SW"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT4"
+          ]
+        },
+        {
+          "verbs": [
+            "UPWAR"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT7"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT10"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_DIFFERENT10",
+      "map_tag": "Maze all different.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "DOWN"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT1"
+          ]
+        },
+        {
+          "verbs": [
+            "EAST"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT3"
+          ]
+        },
+        {
+          "verbs": [
+            "NE"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT4"
+          ]
+        },
+        {
+          "verbs": [
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT7"
+          ]
+        },
+        {
+          "verbs": [
+            "NW"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT2"
+          ]
+        },
+        {
+          "verbs": [
+            "SE"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT9"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT8"
+          ]
+        },
+        {
+          "verbs": [
+            "SW"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT11"
+          ]
+        },
+        {
+          "verbs": [
+            "UPWAR"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT5"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT6"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_DIFFERENT11",
+      "map_tag": "Maze all different.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "DOWN"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT7"
+          ]
+        },
+        {
+          "verbs": [
+            "EAST"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT4"
+          ]
+        },
+        {
+          "verbs": [
+            "NE"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT2"
+          ]
+        },
+        {
+          "verbs": [
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT6"
+          ]
+        },
+        {
+          "verbs": [
+            "NW"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT3"
+          ]
+        },
+        {
+          "verbs": [
+            "SE"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT8"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT10"
+          ]
+        },
+        {
+          "verbs": [
+            "SW"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT1"
+          ]
+        },
+        {
+          "verbs": [
+            "UPWAR"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT9"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT5"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_DIFFERENT2",
+      "map_tag": "Maze all different",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "DOWN"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT10"
+          ]
+        },
+        {
+          "verbs": [
+            "EAST"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT5"
+          ]
+        },
+        {
+          "verbs": [
+            "NE"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT8"
+          ]
+        },
+        {
+          "verbs": [
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT4"
+          ]
+        },
+        {
+          "verbs": [
+            "NW"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT6"
+          ]
+        },
+        {
+          "verbs": [
+            "SE"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT7"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_DEADEND13"
+          ]
+        },
+        {
+          "verbs": [
+            "SW"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT3"
+          ]
+        },
+        {
+          "verbs": [
+            "UPWAR"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT11"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT9"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_DIFFERENT3",
+      "map_tag": "Maze all different.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "DOWN"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT9"
+          ]
+        },
+        {
+          "verbs": [
+            "EAST"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT2"
+          ]
+        },
+        {
+          "verbs": [
+            "NE"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT7"
+          ]
+        },
+        {
+          "verbs": [
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT10"
+          ]
+        },
+        {
+          "verbs": [
+            "NW"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT5"
+          ]
+        },
+        {
+          "verbs": [
+            "SE"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT4"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT11"
+          ]
+        },
+        {
+          "verbs": [
+            "SW"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT6"
+          ]
+        },
+        {
+          "verbs": [
+            "UPWAR"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT8"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT1"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_DIFFERENT4",
+      "map_tag": "Maze all different.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "DOWN"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT11"
+          ]
+        },
+        {
+          "verbs": [
+            "EAST"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT10"
+          ]
+        },
+        {
+          "verbs": [
+            "NE"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT9"
+          ]
+        },
+        {
+          "verbs": [
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT5"
+          ]
+        },
+        {
+          "verbs": [
+            "NW"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT1"
+          ]
+        },
+        {
+          "verbs": [
+            "SE"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT2"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT6"
+          ]
+        },
+        {
+          "verbs": [
+            "SW"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT8"
+          ]
+        },
+        {
+          "verbs": [
+            "UPWAR"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT3"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT7"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_DIFFERENT5",
+      "map_tag": "Maze all different.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "DOWN"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT3"
+          ]
+        },
+        {
+          "verbs": [
+            "EAST"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT8"
+          ]
+        },
+        {
+          "verbs": [
+            "NE"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT6"
+          ]
+        },
+        {
+          "verbs": [
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT9"
+          ]
+        },
+        {
+          "verbs": [
+            "NW"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT10"
+          ]
+        },
+        {
+          "verbs": [
+            "SE"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT11"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT2"
+          ]
+        },
+        {
+          "verbs": [
+            "SW"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT7"
+          ]
+        },
+        {
+          "verbs": [
+            "UPWAR"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT1"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT4"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_DIFFERENT6",
+      "map_tag": "Maze all different.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "DOWN"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT8"
+          ]
+        },
+        {
+          "verbs": [
+            "EAST"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT7"
+          ]
+        },
+        {
+          "verbs": [
+            "NE"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT1"
+          ]
+        },
+        {
+          "verbs": [
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT3"
+          ]
+        },
+        {
+          "verbs": [
+            "NW"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT4"
+          ]
+        },
+        {
+          "verbs": [
+            "SE"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT5"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT9"
+          ]
+        },
+        {
+          "verbs": [
+            "SW"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT2"
+          ]
+        },
+        {
+          "verbs": [
+            "UPWAR"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT10"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT11"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_DIFFERENT7",
+      "map_tag": "Maze all different.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "DOWN"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT4"
+          ]
+        },
+        {
+          "verbs": [
+            "EAST"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT6"
+          ]
+        },
+        {
+          "verbs": [
+            "NE"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT10"
+          ]
+        },
+        {
+          "verbs": [
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT1"
+          ]
+        },
+        {
+          "verbs": [
+            "NW"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT11"
+          ]
+        },
+        {
+          "verbs": [
+            "SE"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT3"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT5"
+          ]
+        },
+        {
+          "verbs": [
+            "SW"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT9"
+          ]
+        },
+        {
+          "verbs": [
+            "UPWAR"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT2"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT8"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_DIFFERENT8",
+      "map_tag": "Maze all different.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "DOWN"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT6"
+          ]
+        },
+        {
+          "verbs": [
+            "EAST"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT1"
+          ]
+        },
+        {
+          "verbs": [
+            "NE"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT11"
+          ]
+        },
+        {
+          "verbs": [
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT2"
+          ]
+        },
+        {
+          "verbs": [
+            "NW"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT9"
+          ]
+        },
+        {
+          "verbs": [
+            "SE"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT10"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT7"
+          ]
+        },
+        {
+          "verbs": [
+            "SW"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT5"
+          ]
+        },
+        {
+          "verbs": [
+            "UPWAR"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT4"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT3"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_DIFFERENT9",
+      "map_tag": "Maze all different.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "DOWN"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT5"
+          ]
+        },
+        {
+          "verbs": [
+            "EAST"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT11"
+          ]
+        },
+        {
+          "verbs": [
+            "NE"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT3"
+          ]
+        },
+        {
+          "verbs": [
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT8"
+          ]
+        },
+        {
+          "verbs": [
+            "NW"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT7"
+          ]
+        },
+        {
+          "verbs": [
+            "SE"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT1"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT4"
+          ]
+        },
+        {
+          "verbs": [
+            "SW"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT10"
+          ]
+        },
+        {
+          "verbs": [
+            "UPWAR"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT6"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_DIFFERENT2"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_FOOTSLIP",
+      "map_tag": "Just as you reach the top, your foot slips on a loose rock and you\ntumble several hundred feet to join the other unlucky adventurers.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [],
+          "action": [
+            "goto",
+            "LOC_NOWHERE"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_LARGE",
+      "map_tag": "Large chamber.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_STOREROOM"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_ROUGHHEWN"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_LEDGE",
+      "map_tag": "You are on a small ledge on one face of a sheer cliff.  There are no\npaths away from the ledge.  Across the chasm is a small clearing\nsurrounded by forest.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "JUMP"
+          ],
+          "action": [
+            "goto",
+            "LOC_NOMAKE"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_NE",
+      "map_tag": "Repository ne end",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "SW"
+          ],
+          "action": [
+            "goto",
+            "LOC_SW"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_NOWHERE",
+      "map_tag": "Nowhere",
+      "cluster_id": null,
+      "is_ambiguous": true,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      }
+    },
+    {
+      "id": "LOC_REACHDEAD",
+      "map_tag": "Dead end.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "SW",
+            "OUT",
+            "CRAWL"
+          ],
+          "action": [
+            "goto",
+            "LOC_CLIFFLEDGE"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_ROUGHHEWN",
+      "map_tag": "Rough-hewn corridor",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_DEADEND13"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_LARGE"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_STEEP",
+      "map_tag": "Steep incline",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "DOWN",
+            "SE"
+          ],
+          "action": [
+            "goto",
+            "LOC_TREACHEROUS"
+          ]
+        },
+        {
+          "verbs": [
+            "UPWAR",
+            "NW"
+          ],
+          "action": [
+            "goto",
+            "LOC_CLIFFBASE"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_STOREROOM",
+      "map_tag": "Ogre's storeroom.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "SOUTH",
+            "OUT"
+          ],
+          "action": [
+            "goto",
+            "LOC_LARGE"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_SW",
+      "map_tag": "Repository sw end",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "NE"
+          ],
+          "action": [
+            "goto",
+            "LOC_NE"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_TREACHEROUS",
+      "map_tag": "Rocky passage.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "DOWN",
+            "SE"
+          ],
+          "action": [
+            "goto",
+            "LOC_RESNORTH"
+          ]
+        },
+        {
+          "verbs": [
+            "UPWAR",
+            "NW"
+          ],
+          "action": [
+            "goto",
+            "LOC_STEEP"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1546 @@
+{
+  "layer": "surface",
+  "nodes": [
+    {
+      "id": "LOC_BUILDING",
+      "map_tag": "You are inside a building, a well house for a large spring.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": "BUILDING",
+      "position": {
+        "x": 600.0,
+        "y": 420.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "DOWNS",
+            "STREA"
+          ],
+          "action": [
+            "goto",
+            "LOC_SEWER"
+          ]
+        },
+        {
+          "verbs": [
+            "OUT",
+            "OUTDO",
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_START"
+          ]
+        },
+        {
+          "verbs": [
+            "PLUGH"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOOF3"
+          ]
+        },
+        {
+          "verbs": [
+            "XYZZY"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOOF1"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_CLIFF",
+      "map_tag": "The forest thins out here to reveal a steep cliff.  There is no way\ndown, but a small ledge can be seen to the west across the chasm.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": "CLIFF",
+      "position": {
+        "x": 220.0,
+        "y": 360.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "EAST"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST19"
+          ]
+        },
+        {
+          "verbs": [
+            "JUMP"
+          ],
+          "action": [
+            "goto",
+            "LOC_NOMAKE"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH",
+            "FORES"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST17"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_FOOF2",
+      "map_tag": ">>Foof!<<",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [],
+          "action": [
+            "goto",
+            "LOC_BUILDING"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_FOOF4",
+      "map_tag": ">>Foof!<<",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [],
+          "action": [
+            "goto",
+            "LOC_BUILDING"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_FOREST1",
+      "map_tag": "Forest.",
+      "cluster_id": "FOREST",
+      "is_ambiguous": true,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "EAST"
+          ],
+          "action": [
+            "goto",
+            "LOC_START"
+          ]
+        },
+        {
+          "verbs": [
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST2"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST3"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST13"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_FOREST10",
+      "map_tag": "Forest.",
+      "cluster_id": "FOREST",
+      "is_ambiguous": true,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "EAST"
+          ],
+          "action": [
+            "goto",
+            "LOC_SLIT"
+          ]
+        },
+        {
+          "verbs": [
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST9"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_GRATE"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST11"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_FOREST11",
+      "map_tag": "Forest.",
+      "cluster_id": "FOREST",
+      "is_ambiguous": true,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "EAST"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST10"
+          ]
+        },
+        {
+          "verbs": [
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST22"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST9"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST8"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_FOREST12",
+      "map_tag": "Forest.",
+      "cluster_id": "FOREST",
+      "is_ambiguous": true,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "EAST"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST13"
+          ]
+        },
+        {
+          "verbs": [
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST22"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_VALLEY"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST14"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_FOREST13",
+      "map_tag": "Forest.",
+      "cluster_id": "FOREST",
+      "is_ambiguous": true,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "EAST"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST1"
+          ]
+        },
+        {
+          "verbs": [
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST20"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_HILL"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST12"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_FOREST14",
+      "map_tag": "Forest.",
+      "cluster_id": "FOREST",
+      "is_ambiguous": true,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "EAST"
+          ],
+          "action": [
+            "goto",
+            "LOC_ROADEND"
+          ]
+        },
+        {
+          "verbs": [
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST15"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST12"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST16"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_FOREST15",
+      "map_tag": "Forest.",
+      "cluster_id": "FOREST",
+      "is_ambiguous": true,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "EAST"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST16"
+          ]
+        },
+        {
+          "verbs": [
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_ROADEND"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST14"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST22"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_FOREST16",
+      "map_tag": "Forest.",
+      "cluster_id": "FOREST",
+      "is_ambiguous": true,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "EAST",
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST17"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST15"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST14"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_FOREST17",
+      "map_tag": "Forest.",
+      "cluster_id": "FOREST",
+      "is_ambiguous": true,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "EAST"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST18"
+          ]
+        },
+        {
+          "verbs": [
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_CLIFF"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST",
+            "SOUTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST16"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_FOREST18",
+      "map_tag": "Forest.",
+      "cluster_id": "FOREST",
+      "is_ambiguous": true,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "EAST"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST19"
+          ]
+        },
+        {
+          "verbs": [
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST2"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST21"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST17"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_FOREST19",
+      "map_tag": "Forest.",
+      "cluster_id": "FOREST",
+      "is_ambiguous": true,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "EAST"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST2"
+          ]
+        },
+        {
+          "verbs": [
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_CLIFF"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST20"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST18"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_FOREST2",
+      "map_tag": "Forest.",
+      "cluster_id": "FOREST",
+      "is_ambiguous": true,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "EAST"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST1"
+          ]
+        },
+        {
+          "verbs": [
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST3"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST18"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST19"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_FOREST20",
+      "map_tag": "Forest.",
+      "cluster_id": "FOREST",
+      "is_ambiguous": true,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "EAST"
+          ],
+          "action": [
+            "goto",
+            "LOC_HILL"
+          ]
+        },
+        {
+          "verbs": [
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST19"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST13"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST21"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_FOREST21",
+      "map_tag": "Forest.",
+      "cluster_id": "FOREST",
+      "is_ambiguous": true,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "EAST"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST20"
+          ]
+        },
+        {
+          "verbs": [
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST18"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST21"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_ROADEND"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_FOREST22",
+      "map_tag": "Forest.",
+      "cluster_id": "FOREST",
+      "is_ambiguous": true,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "EAST"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST8"
+          ]
+        },
+        {
+          "verbs": [
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST15"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST12"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST11"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_FOREST3",
+      "map_tag": "Forest.",
+      "cluster_id": "FOREST",
+      "is_ambiguous": true,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "EAST",
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST4"
+          ]
+        },
+        {
+          "verbs": [
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST2"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST1"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_FOREST4",
+      "map_tag": "Forest.",
+      "cluster_id": "FOREST",
+      "is_ambiguous": true,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "EAST",
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST3"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST",
+            "SOUTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST5"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_FOREST5",
+      "map_tag": "Forest.",
+      "cluster_id": "FOREST",
+      "is_ambiguous": true,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "EAST",
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST4"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST6"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST7"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_FOREST6",
+      "map_tag": "Forest.",
+      "cluster_id": "FOREST",
+      "is_ambiguous": true,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "EAST"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST5"
+          ]
+        },
+        {
+          "verbs": [
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_VALLEY"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_SLIT"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST7"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_FOREST7",
+      "map_tag": "Forest.",
+      "cluster_id": "FOREST",
+      "is_ambiguous": true,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "EAST"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST5"
+          ]
+        },
+        {
+          "verbs": [
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_GRATE"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST8"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST6"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_FOREST8",
+      "map_tag": "Forest.",
+      "cluster_id": "FOREST",
+      "is_ambiguous": true,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "EAST"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST9"
+          ]
+        },
+        {
+          "verbs": [
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST22"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST7"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST11"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_FOREST9",
+      "map_tag": "Forest.",
+      "cluster_id": "FOREST",
+      "is_ambiguous": true,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "EAST"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST11"
+          ]
+        },
+        {
+          "verbs": [
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST10"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_GRATE"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST8"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_GRATE",
+      "map_tag": "You are in a 20-foot depression floored with bare dirt.  Set into the\ndirt is a strong steel grate mounted in concrete.  A dry streambed\nleads into the depression.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": "GRATE",
+      "position": {
+        "x": 760.0,
+        "y": 520.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "BUILD"
+          ],
+          "action": [
+            "goto",
+            "LOC_START"
+          ]
+        },
+        {
+          "verbs": [
+            "EAST",
+            "FORES"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST7"
+          ]
+        },
+        {
+          "verbs": [
+            "ENTER",
+            "INWAR",
+            "DOWN"
+          ],
+          "action": [
+            "goto",
+            "LOC_BELOWGRATE"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST10"
+          ]
+        },
+        {
+          "verbs": [
+            "UPSTR",
+            "GULLY",
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_SLIT"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST9"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_HILL",
+      "map_tag": "You have walked up a hill, still in the forest.  The road slopes back\ndown the other side of the hill.  There is a building in the distance.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": "HILL",
+      "position": {
+        "x": 520.0,
+        "y": 210.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "BUILD",
+            "EAST"
+          ],
+          "action": [
+            "goto",
+            "LOC_START"
+          ]
+        },
+        {
+          "verbs": [
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST20"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH",
+            "FORES"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST13"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_ROADEND"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_ROADEND",
+      "map_tag": "The road, which approaches from the east, ends here amid the trees.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": "ROADEND",
+      "position": {
+        "x": 780.0,
+        "y": 380.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "BUILD"
+          ],
+          "action": [
+            "goto",
+            "LOC_START"
+          ]
+        },
+        {
+          "verbs": [
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST21"
+          ]
+        },
+        {
+          "verbs": [
+            "ROAD",
+            "EAST",
+            "UPWAR"
+          ],
+          "action": [
+            "goto",
+            "LOC_HILL"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH",
+            "FORES"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST14"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST15"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_SLIT",
+      "map_tag": "At your feet all the water of the stream splashes into a 2-inch slit\nin the rock.  Downstream the streambed is bare rock.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": "SLIT",
+      "position": {
+        "x": 320.0,
+        "y": 560.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "BUILD"
+          ],
+          "action": [
+            "goto",
+            "LOC_START"
+          ]
+        },
+        {
+          "verbs": [
+            "DOWNS",
+            "BED",
+            "SOUTH",
+            "DEPRE"
+          ],
+          "action": [
+            "goto",
+            "LOC_GRATE"
+          ]
+        },
+        {
+          "verbs": [
+            "EAST",
+            "FORES"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST6"
+          ]
+        },
+        {
+          "verbs": [
+            "UPSTR",
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_VALLEY"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST10"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_START",
+      "map_tag": "You are standing at the end of a road before a small brick building.\nAround you is a forest.  A small stream flows out of the building and\ndown a gully.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": "START",
+      "position": {
+        "x": 640.0,
+        "y": 460.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "DEPRE"
+          ],
+          "action": [
+            "goto",
+            "LOC_GRATE"
+          ]
+        },
+        {
+          "verbs": [
+            "DOWNS",
+            "GULLY",
+            "STREA",
+            "SOUTH",
+            "DOWN"
+          ],
+          "action": [
+            "goto",
+            "LOC_VALLEY"
+          ]
+        },
+        {
+          "verbs": [
+            "ENTER",
+            "BUILD",
+            "INWAR",
+            "EAST"
+          ],
+          "action": [
+            "goto",
+            "LOC_BUILDING"
+          ]
+        },
+        {
+          "verbs": [
+            "FORES",
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST1"
+          ]
+        },
+        {
+          "verbs": [
+            "ROAD",
+            "WEST",
+            "UPWAR"
+          ],
+          "action": [
+            "goto",
+            "LOC_HILL"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_VALLEY",
+      "map_tag": "You are in a valley in the forest beside a stream tumbling along a\nrocky bed.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": "VALLEY",
+      "position": {
+        "x": 280.0,
+        "y": 470.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "DEPRE"
+          ],
+          "action": [
+            "goto",
+            "LOC_GRATE"
+          ]
+        },
+        {
+          "verbs": [
+            "DOWNS",
+            "SOUTH",
+            "DOWN"
+          ],
+          "action": [
+            "goto",
+            "LOC_SLIT"
+          ]
+        },
+        {
+          "verbs": [
+            "EAST",
+            "FORES"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST6"
+          ]
+        },
+        {
+          "verbs": [
+            "UPSTR",
+            "BUILD",
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_START"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOREST12"
+          ]
+        }
+      ]
+    }
+  ]
+}

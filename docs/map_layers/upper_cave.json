@@ -1,0 +1,864 @@
+{
+  "layer": "upper_cave",
+  "nodes": [
+    {
+      "id": "LOC_AWKWARD",
+      "map_tag": "Awkward canyon.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "DEPRE"
+          ],
+          "action": [
+            "goto",
+            "LOC_GRATE"
+          ]
+        },
+        {
+          "verbs": [
+            "DOWN",
+            "EAST",
+            "DEBRI"
+          ],
+          "action": [
+            "goto",
+            "LOC_DEBRIS"
+          ]
+        },
+        {
+          "verbs": [
+            "ENTRA"
+          ],
+          "action": [
+            "goto",
+            "LOC_BELOWGRATE"
+          ]
+        },
+        {
+          "verbs": [
+            "INWAR",
+            "UPWAR",
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_BIRDCHAMBER"
+          ]
+        },
+        {
+          "verbs": [
+            "PIT"
+          ],
+          "action": [
+            "goto",
+            "LOC_PITTOP"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_BELOWGRATE",
+      "map_tag": "You are in a small chamber beneath a 3x3 steel grate to the surface.\nA low crawl over cobbles leads inward to the west.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "CRAWL",
+            "COBBL",
+            "INWAR",
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_COBBLE"
+          ]
+        },
+        {
+          "verbs": [
+            "DEBRI"
+          ],
+          "action": [
+            "goto",
+            "LOC_DEBRIS"
+          ]
+        },
+        {
+          "verbs": [
+            "OUT",
+            "UPWAR"
+          ],
+          "action": [
+            "goto",
+            "LOC_GRATE"
+          ]
+        },
+        {
+          "verbs": [
+            "PIT"
+          ],
+          "action": [
+            "goto",
+            "LOC_PITTOP"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_BIRDCHAMBER",
+      "map_tag": "You are in a splendid chamber thirty feet high.  The walls are frozen\nrivers of orange stone.  An awkward canyon and a good passage exit\nfrom east and west sides of the chamber.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "CANYO",
+            "EAST"
+          ],
+          "action": [
+            "goto",
+            "LOC_AWKWARD"
+          ]
+        },
+        {
+          "verbs": [
+            "DEBRI"
+          ],
+          "action": [
+            "goto",
+            "LOC_DEBRIS"
+          ]
+        },
+        {
+          "verbs": [
+            "DEPRE"
+          ],
+          "action": [
+            "goto",
+            "LOC_GRATE"
+          ]
+        },
+        {
+          "verbs": [
+            "ENTRA"
+          ],
+          "action": [
+            "goto",
+            "LOC_BELOWGRATE"
+          ]
+        },
+        {
+          "verbs": [
+            "PASSA",
+            "PIT",
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_PITTOP"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_BUILDING1",
+      "map_tag": "Middle of plant.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [],
+          "action": [
+            "goto",
+            "LOC_NOCLIMB"
+          ]
+        },
+        {
+          "verbs": [],
+          "action": [
+            "goto",
+            "LOC_PLANTTOP"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_CLIMBSTALK",
+      "map_tag": "You clamber up the plant and scurry through the hole at the top.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [],
+          "action": [
+            "goto",
+            "LOC_NARROW"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_COBBLE",
+      "map_tag": "You are crawling over cobbles in a low passage.  There is a dim light\nat the east end of the passage.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "INWAR",
+            "DARK",
+            "WEST",
+            "DEBRI"
+          ],
+          "action": [
+            "goto",
+            "LOC_DEBRIS"
+          ]
+        },
+        {
+          "verbs": [
+            "OUT",
+            "SURFA",
+            "EAST"
+          ],
+          "action": [
+            "goto",
+            "LOC_BELOWGRATE"
+          ]
+        },
+        {
+          "verbs": [
+            "PIT"
+          ],
+          "action": [
+            "goto",
+            "LOC_PITTOP"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_DEBRIS",
+      "map_tag": "You are in a debris room filled with stuff washed in from the surface.\nA low wide passage with cobbles becomes plugged with mud and debris\nhere, but an awkward canyon leads upward and west.  In the mud someone\nhas scrawled, \"MAGIC WORD XYZZY\".",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "CANYO",
+            "INWAR",
+            "UPWAR",
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_AWKWARD"
+          ]
+        },
+        {
+          "verbs": [
+            "CRAWL",
+            "COBBL",
+            "PASSA",
+            "LOW",
+            "EAST"
+          ],
+          "action": [
+            "goto",
+            "LOC_COBBLE"
+          ]
+        },
+        {
+          "verbs": [
+            "DEPRE"
+          ],
+          "action": [
+            "goto",
+            "LOC_GRATE"
+          ]
+        },
+        {
+          "verbs": [
+            "ENTRA"
+          ],
+          "action": [
+            "goto",
+            "LOC_BELOWGRATE"
+          ]
+        },
+        {
+          "verbs": [
+            "PIT"
+          ],
+          "action": [
+            "goto",
+            "LOC_PITTOP"
+          ]
+        },
+        {
+          "verbs": [
+            "XYZZY"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOOF2"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_DOME",
+      "map_tag": "The dome is unclimbable.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [],
+          "action": [
+            "goto",
+            "LOC_MISTHALL"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_EASTPIT",
+      "map_tag": "You are at the bottom of the eastern pit in the Twopit Room.  There is\na small pool of oil in one corner of the pit.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "UPWAR",
+            "OUT"
+          ],
+          "action": [
+            "goto",
+            "LOC_EASTEND"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_FOOF1",
+      "map_tag": ">>Foof!<<",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [],
+          "action": [
+            "goto",
+            "LOC_DEBRIS"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_KINGHALL",
+      "map_tag": "You are in the Hall of the Mountain King, with passages off in all\ndirections.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_SNAKEBLOCK"
+          ]
+        },
+        {
+          "verbs": [
+            "NORTH",
+            "RIGHT"
+          ],
+          "action": [
+            "goto",
+            "LOC_FLOORHOLE"
+          ]
+        },
+        {
+          "verbs": [
+            "SECRE"
+          ],
+          "action": [
+            "goto",
+            "LOC_SECRET3"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH",
+            "LEFT"
+          ],
+          "action": [
+            "goto",
+            "LOC_SOUTHSIDE"
+          ]
+        },
+        {
+          "verbs": [
+            "STAIR",
+            "UPWAR",
+            "EAST"
+          ],
+          "action": [
+            "goto",
+            "LOC_MISTHALL"
+          ]
+        },
+        {
+          "verbs": [
+            "SW"
+          ],
+          "action": [
+            "goto",
+            "LOC_SECRET3"
+          ]
+        },
+        {
+          "verbs": [
+            "SW"
+          ],
+          "action": [
+            "goto",
+            "LOC_SNAKEBLOCK"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST",
+            "FORWA"
+          ],
+          "action": [
+            "goto",
+            "LOC_WESTSIDE"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_NECKBROKE",
+      "map_tag": "Pit bottom",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [],
+          "action": [
+            "goto",
+            "LOC_NOWHERE"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_NUGGET",
+      "map_tag": "This is a low room with a crude note on the wall.  The note says,\n\"You won't get it up the steps\".",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "HALL",
+            "OUT",
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_MISTHALL"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_PITTOP",
+      "map_tag": "At your feet is a small pit breathing traces of white mist.  An east\npassage ends here except for a small crack leading on.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "CRACK",
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_CRACK"
+          ]
+        },
+        {
+          "verbs": [
+            "DEBRI"
+          ],
+          "action": [
+            "goto",
+            "LOC_DEBRIS"
+          ]
+        },
+        {
+          "verbs": [
+            "DEPRE"
+          ],
+          "action": [
+            "goto",
+            "LOC_GRATE"
+          ]
+        },
+        {
+          "verbs": [
+            "DOWN"
+          ],
+          "action": [
+            "goto",
+            "LOC_MISTHALL"
+          ]
+        },
+        {
+          "verbs": [
+            "DOWN",
+            "PIT",
+            "STEPS"
+          ],
+          "action": [
+            "goto",
+            "LOC_NECKBROKE"
+          ]
+        },
+        {
+          "verbs": [
+            "ENTRA"
+          ],
+          "action": [
+            "goto",
+            "LOC_BELOWGRATE"
+          ]
+        },
+        {
+          "verbs": [
+            "PASSA",
+            "EAST"
+          ],
+          "action": [
+            "goto",
+            "LOC_BIRDCHAMBER"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_SEWER",
+      "map_tag": "The stream flows out through a pair of 1 foot diameter sewer pipes.\nIt would be advisable to use the exit.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [],
+          "action": [
+            "goto",
+            "LOC_BUILDING"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_SMALLPIT",
+      "map_tag": "Small pit bottom",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "CLIMB",
+            "UPWAR",
+            "OUT"
+          ],
+          "action": [
+            "goto",
+            "LOC_SMALLPITBRINK"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_SMALLPITBRINK",
+      "map_tag": "You are on the brink of a small clean climbable pit.  A crawl leads\nwest.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "DOWN",
+            "PIT",
+            "CLIMB"
+          ],
+          "action": [
+            "goto",
+            "LOC_SMALLPIT"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST",
+            "CRAWL"
+          ],
+          "action": [
+            "goto",
+            "LOC_BROKEN"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_SNAKEBLOCK",
+      "map_tag": "You can't get by the snake.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [],
+          "action": [
+            "goto",
+            "LOC_KINGHALL"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_SOUTHSIDE",
+      "map_tag": "You are in the south side chamber.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "HALL",
+            "OUT",
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_KINGHALL"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_WESTEND",
+      "map_tag": "You are at the west end of the Twopit Room.  There is a large hole in\nthe wall above the pit at this end of the room.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "DOWN",
+            "PIT"
+          ],
+          "action": [
+            "goto",
+            "LOC_WESTPIT"
+          ]
+        },
+        {
+          "verbs": [
+            "EAST",
+            "ACROS"
+          ],
+          "action": [
+            "goto",
+            "LOC_EASTEND"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST",
+            "SLAB"
+          ],
+          "action": [
+            "goto",
+            "LOC_SLAB"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_WESTPIT",
+      "map_tag": "You are at the bottom of the western pit in the Twopit Room.  There is\na large hole in the wall about 25 feet above you.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "CLIMB"
+          ],
+          "action": [
+            "goto",
+            "LOC_BUILDING1"
+          ]
+        },
+        {
+          "verbs": [
+            "CLIMB"
+          ],
+          "action": [
+            "goto",
+            "LOC_CLIMBSTALK"
+          ]
+        },
+        {
+          "verbs": [
+            "UPWAR",
+            "OUT"
+          ],
+          "action": [
+            "goto",
+            "LOC_WESTEND"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_WESTSIDE",
+      "map_tag": "You are in the west side chamber of the Hall of the Mountain King.\nA passage continues west and up here.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "HALL",
+            "OUT",
+            "EAST"
+          ],
+          "action": [
+            "goto",
+            "LOC_KINGHALL"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST",
+            "UPWAR"
+          ],
+          "action": [
+            "goto",
+            "LOC_CROSSOVER"
+          ]
+        }
+      ]
+    }
+  ]
+}

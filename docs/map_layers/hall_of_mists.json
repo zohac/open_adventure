@@ -1,0 +1,595 @@
+{
+  "layer": "hall_of_mists",
+  "nodes": [
+    {
+      "id": "LOC_BROKEN",
+      "map_tag": "You are in a dirty broken passage.  To the east is a crawl.  To the\nwest is a large passage.  Above you is a hole to another passage.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "BEDQU"
+          ],
+          "action": [
+            "goto",
+            "LOC_BEDQUILT"
+          ]
+        },
+        {
+          "verbs": [
+            "EAST",
+            "CRAWL"
+          ],
+          "action": [
+            "goto",
+            "LOC_SMALLPITBRINK"
+          ]
+        },
+        {
+          "verbs": [
+            "UPWAR",
+            "HOLE"
+          ],
+          "action": [
+            "goto",
+            "LOC_FLOORHOLE"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_DUSTY"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_CRACK",
+      "map_tag": "The crack is far too small for you to follow.  At its widest it is\nbarely wide enough to admit your foot.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [],
+          "action": [
+            "goto",
+            "LOC_PITTOP"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_EASTBANK",
+      "map_tag": "You are on the east bank of a fissure slicing clear across the hall.\nThe mist is quite thick here, and the fissure is too wide to jump.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "FORWA"
+          ],
+          "action": [
+            "goto",
+            "LOC_NOMAKE"
+          ]
+        },
+        {
+          "verbs": [
+            "HALL",
+            "EAST"
+          ],
+          "action": [
+            "goto",
+            "LOC_MISTHALL"
+          ]
+        },
+        {
+          "verbs": [
+            "OVER"
+          ],
+          "action": [
+            "goto",
+            "LOC_WESTBANK"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_FLOORHOLE",
+      "map_tag": "Floor hole.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "DOWN",
+            "HOLE"
+          ],
+          "action": [
+            "goto",
+            "LOC_BROKEN"
+          ]
+        },
+        {
+          "verbs": [
+            "HALL",
+            "OUT",
+            "SOUTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_KINGHALL"
+          ]
+        },
+        {
+          "verbs": [
+            "NORTH",
+            "Y2"
+          ],
+          "action": [
+            "goto",
+            "LOC_Y2"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_FOOF3",
+      "map_tag": ">>Foof!<<",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [],
+          "action": [
+            "goto",
+            "LOC_Y2"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_FOOF6",
+      "map_tag": ">>Foof!<<",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [],
+          "action": [
+            "goto",
+            "LOC_Y2"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_JUMBLE",
+      "map_tag": "Rock jumble",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "DOWN",
+            "Y2"
+          ],
+          "action": [
+            "goto",
+            "LOC_Y2"
+          ]
+        },
+        {
+          "verbs": [
+            "UPWAR"
+          ],
+          "action": [
+            "goto",
+            "LOC_MISTHALL"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_MISTHALL",
+      "map_tag": "You are at one end of a vast hall stretching forward out of sight to\nthe west.  There are openings to either side.  Nearby, a wide stone\nstaircase leads downward.  The hall is filled with wisps of white mist\nswaying to and fro almost as if alive.  A cold wind blows up the\nstaircase.  There is a passage at the top of a dome behind you.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "FORWA",
+            "HALL",
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_EASTBANK"
+          ]
+        },
+        {
+          "verbs": [
+            "LEFT",
+            "SOUTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_NUGGET"
+          ]
+        },
+        {
+          "verbs": [
+            "STAIR",
+            "DOWN",
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_KINGHALL"
+          ]
+        },
+        {
+          "verbs": [
+            "UPWAR"
+          ],
+          "action": [
+            "goto",
+            "LOC_PITTOP"
+          ]
+        },
+        {
+          "verbs": [
+            "UPWAR",
+            "PIT",
+            "STEPS",
+            "DOME",
+            "PASSA",
+            "EAST"
+          ],
+          "action": [
+            "goto",
+            "LOC_DOME"
+          ]
+        },
+        {
+          "verbs": [
+            "Y2"
+          ],
+          "action": [
+            "goto",
+            "LOC_JUMBLE"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_MISTWEST",
+      "map_tag": "You are at the west end of the Hall of Mists.  A low wide crawl\ncontinues west and another goes north.  To the south is a little\npassage 6 feet off the floor.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "EAST"
+          ],
+          "action": [
+            "goto",
+            "LOC_WESTBANK"
+          ]
+        },
+        {
+          "verbs": [
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_PARALLEL2"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH",
+            "UPWAR",
+            "PASSA",
+            "CLIMB"
+          ],
+          "action": [
+            "goto",
+            "LOC_ALIKE1"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST",
+            "CRAWL"
+          ],
+          "action": [
+            "goto",
+            "LOC_LONGEAST"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_NOMAKE",
+      "map_tag": "You didn't make it.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [],
+          "action": [
+            "goto",
+            "LOC_NOWHERE"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_PARALLEL1",
+      "map_tag": "You have crawled through a very low wide passage parallel to and north\nof the Hall of Mists.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [],
+          "action": [
+            "goto",
+            "LOC_MISTWEST"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_PARALLEL2",
+      "map_tag": "Maze all alike.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [],
+          "action": [
+            "goto",
+            "LOC_WESTBANK"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_WESTBANK",
+      "map_tag": "You are on the west side of the fissure in the Hall of Mists.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "FORWA"
+          ],
+          "action": [
+            "goto",
+            "LOC_NOMAKE"
+          ]
+        },
+        {
+          "verbs": [
+            "NORTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_PARALLEL1"
+          ]
+        },
+        {
+          "verbs": [
+            "OVER"
+          ],
+          "action": [
+            "goto",
+            "LOC_EASTBANK"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_MISTWEST"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_WINDOW1",
+      "map_tag": "You're at a low window overlooking a huge pit, which extends up out of\nsight.  A floor is indistinctly visible over 50 feet below.  Traces of\nwhite mist cover the floor of the pit, becoming thicker to the right.\nMarks in the dust around the window would seem to indicate that\nsomeone has been here recently.  Directly across the pit from you and\n25 feet away there is a similar window looking into a lighted room.  A\nshadowy figure can be seen there peering back at you.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "EAST",
+            "Y2"
+          ],
+          "action": [
+            "goto",
+            "LOC_Y2"
+          ]
+        },
+        {
+          "verbs": [
+            "JUMP"
+          ],
+          "action": [
+            "goto",
+            "LOC_NECKBROKE"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_WINDOW2",
+      "map_tag": "You're at a low window overlooking a huge pit, which extends up out of\nsight.  A floor is indistinctly visible over 50 feet below.  Traces of\nwhite mist cover the floor of the pit, becoming thicker to the left.\nMarks in the dust around the window would seem to indicate that\nsomeone has been here recently.  Directly across the pit from you and\n25 feet away there is a similar window looking into a lighted room.  A\nshadowy figure can be seen there peering back at you.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "JUMP"
+          ],
+          "action": [
+            "goto",
+            "LOC_NECKBROKE"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_THREEJUNCTION"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LOC_Y2",
+      "map_tag": "Y2.",
+      "cluster_id": null,
+      "is_ambiguous": false,
+      "anchor_tag": null,
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "travel": [
+        {
+          "verbs": [
+            "EAST",
+            "WALL",
+            "BROKE"
+          ],
+          "action": [
+            "goto",
+            "LOC_JUMBLE"
+          ]
+        },
+        {
+          "verbs": [
+            "PLOVE"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOOF5"
+          ]
+        },
+        {
+          "verbs": [
+            "PLUGH"
+          ],
+          "action": [
+            "goto",
+            "LOC_FOOF4"
+          ]
+        },
+        {
+          "verbs": [
+            "SOUTH"
+          ],
+          "action": [
+            "goto",
+            "LOC_FLOORHOLE"
+          ]
+        },
+        {
+          "verbs": [
+            "WEST"
+          ],
+          "action": [
+            "goto",
+            "LOC_WINDOW1"
+          ]
+        }
+      ]
+    }
+  ]
+}
