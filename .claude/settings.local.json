@@ -2,7 +2,15 @@
   "permissions": {
     "allow": [
       "Bash(git add *)",
-      "Bash(git commit *)"
+      "Bash(git commit *)",
+      "Skill(bmad-help)",
+      "Skill(gds-document-project)",
+      "Bash(python3 *)",
+      "Skill(gds-generate-project-context)",
+      "Skill(gds-sprint-planning)",
+      "Skill(gds-sprint-status)",
+      "Skill(gds-create-story)",
+      "Bash(git *)"
     ]
   }
 }

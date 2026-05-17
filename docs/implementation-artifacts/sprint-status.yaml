@@ -1,0 +1,163 @@
+# generated: 2026-05-17
+# last_updated: 2026-05-17
+# project: open_adventure
+# project_key: NOKEY
+# tracking_system: file-system
+# story_location: docs/implementation-artifacts
+
+# STATUS DEFINITIONS:
+# ==================
+# Epic Status:
+#   - backlog: Epic not yet started
+#   - in-progress: Epic actively being worked on
+#   - done: All stories in epic completed
+#
+# Epic Status Transitions:
+#   - backlog → in-progress: Automatically when first story is created (via create-story)
+#   - in-progress → done: Manually when all stories reach 'done' status
+#
+# Story Status:
+#   - backlog: Story only exists in epic file
+#   - ready-for-dev: Story file created in stories folder
+#   - in-progress: Developer actively working on implementation
+#   - review: Ready for code review (via Dev's code-review workflow)
+#   - done: Story completed
+#
+# Retrospective Status:
+#   - optional: Can be completed but not required
+#   - done: Retrospective has been completed
+#
+# WORKFLOW NOTES:
+# ===============
+# - Epic transitions to 'in-progress' automatically when first story is created
+# - Stories can be worked in parallel if team capacity allows
+# - Developer typically creates next story after previous one is 'done' to incorporate learnings
+# - Dev moves story to 'review', then runs code-review (fresh context, different LLM recommended)
+#
+# Source:
+# - Epics derived from docs/EXEC_S1.md…EXEC_S4.md ("Suivi & tickets" sections)
+# - Statuses detected from checkbox state ([x] → done, [ ] → backlog)
+# - Project context: docs/project-context.md
+# - Master index: docs/index.md
+
+generated: 2026-05-17
+last_updated: 2026-05-17  # bulk story creation : 27 stories backlog → ready-for-dev (epic 3 reste + epic 4 complet)
+project: open_adventure
+project_key: NOKEY
+tracking_system: file-system
+story_location: docs/implementation-artifacts
+
+development_status:
+  # ──────────────────────────────────────────────────────────────────
+  # Epic 1 — Sprint 1 (Scaffolding, Data layer, AdventureRepository, initialGame)
+  # ──────────────────────────────────────────────────────────────────
+  epic-1: done
+  1-1-mettre-a-niveau-environnement: done
+  1-2-isoler-le-legacy: done
+  1-3-declarer-assets-pubspec: done
+  1-4-scaffolding-clean-architecture: done
+  1-5-asset-data-source: done
+  1-6-location-model-from-json: done
+  1-7-game-object-model-from-json: done
+  1-8-action-condition-travel-rule-models: done
+  1-9-adventure-repository-interfaces: done
+  1-10-adventure-repository-impl: done
+  1-11-lookup-service: done
+  1-12-initial-game-builder: done
+  1-13-tests-data-locations-objects: done
+  1-14-tests-repository: done
+  1-15-tests-initial-game: done
+  1-16-lint-analyze-null-safety: done
+  1-17-feature-flag-parsing-isolate: done
+  1-18-documentation-readme-docstrings: done
+  1-19-nettoyage-assets-scripts: done
+  1-20-revue-scripts-generation: done
+  1-21-tests-integration-scripts: done
+  1-22-script-update-assets: done
+  1-23-generator-asset-tracker: done
+  1-24-generator-asset-manifest: done
+  epic-1-retrospective: optional
+
+  # ──────────────────────────────────────────────────────────────────
+  # Epic 2 — Sprint 2 (Moteur travel, UI v0, Autosave, Audio, BACK, Incantations)
+  # ──────────────────────────────────────────────────────────────────
+  epic-2: done
+  2-1-vos-command-turn-result: done
+  2-2-list-available-actions-travel: done
+  2-3-tests-list-available-actions: done
+  2-4-apply-turn-goto: done
+  2-5-tests-apply-turn: done
+  2-6-save-repository-minimal: done
+  2-7-tests-save-repository: done
+  2-8-game-controller: done
+  2-9-tests-game-controller-autosave: done
+  2-10-adventure-page-v0: done
+  2-11-widget-tests-adventure-page: done
+  2-12-canonical-motions-table: done
+  2-13-fallback-observer-cul-de-sac: done
+  2-14-lint-analyze-zero-warning: done
+  2-15-mesure-perf-interaction: done
+  2-16-slot-image-location-image-key: done
+  2-17-audio-controller-bootstrap: done
+  2-18-settings-volumes-persistes: done
+  2-19-theme-tokens-baseline: done
+  2-20-home-page-v0: done
+  2-21-mouvement-back-return: done
+  2-22-tests-non-regression-back: done
+  2-23-filtrer-incantations: done
+  2-24-tests-incantations-visibilite: done
+  epic-2-retrospective: optional
+
+  # ──────────────────────────────────────────────────────────────────
+  # Epic 3 — Sprint 3 (Interactions, Inventaire, Nains, Lampe, Scoring, Map, Journal, Images, Audio)
+  # ──────────────────────────────────────────────────────────────────
+  epic-3: in-progress
+  3-1-evaluate-condition: done
+  3-2-list-available-actions-interaction-meta: done
+  3-3-take-object: done
+  3-4-drop-object: done
+  3-5-open-object: done
+  3-6-close-object: done
+  3-7-light-lamp: done
+  3-8-extinguish-lamp: done
+  3-9-examine: done
+  3-10-inventory-use-case: done
+  3-11-dwarf-system-tick: done
+  3-12-compute-score-partial: done
+  3-13-integrate-interactions-apply-turn: done
+  3-14-game-controller-journal-lampe-nains: done
+  3-15-inventory-page: done
+  3-16-map-page-v1: ready-for-dev
+  3-17-journal-view: ready-for-dev
+  3-18-accessibilite-de-base: ready-for-dev
+  3-19-lint-couverture-domain-85: ready-for-dev
+  3-20-images-scene-location-image: ready-for-dev
+  3-21-audio-zones-bgm-crossfade: ready-for-dev
+  3-22-audio-sfx-interaction-throttle: ready-for-dev
+  3-23-art-15-20-scenes-prioritaires: ready-for-dev
+  epic-3-retrospective: optional
+
+  # ──────────────────────────────────────────────────────────────────
+  # Epic 4 — Sprint 4 (Scoring complet, Fins, Multi-saves, Polish, Hardening, CI)
+  # ──────────────────────────────────────────────────────────────────
+  epic-4: in-progress  # stories définies, démarrage attendu après clôture epic-3
+  4-1-compute-score-complet: ready-for-dev
+  4-2-detection-fins-de-jeu: ready-for-dev
+  4-3-systeme-indices: ready-for-dev
+  4-4-save-repository-complet: ready-for-dev
+  4-5-saves-page: ready-for-dev
+  4-6-settings-page-theme-langue: ready-for-dev
+  4-7-adventure-page-v2-status-bar: ready-for-dev
+  4-8-end-game-page: ready-for-dev
+  4-9-i18n-finale: ready-for-dev
+  4-10-accessibilite-finale: ready-for-dev
+  4-11-job-ci-data-validate: ready-for-dev
+  4-12-perf-hardening: ready-for-dev
+  4-13-resilience-sauvegardes: ready-for-dev
+  4-14-lint-couverture-cibles: ready-for-dev
+  4-15-images-precache-toggle: ready-for-dev
+  4-16-audio-preload-ducking: ready-for-dev
+  4-17-audio-settings-avances: ready-for-dev
+  4-18-art-scenes-restantes: ready-for-dev
+  4-19-home-page-v1: ready-for-dev
+  epic-4-retrospective: optional
