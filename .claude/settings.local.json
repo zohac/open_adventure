@@ -10,7 +10,13 @@
       "Skill(gds-sprint-planning)",
       "Skill(gds-sprint-status)",
       "Skill(gds-create-story)",
-      "Bash(git *)"
+      "Bash(git *)",
+      "Bash(flutter --version)",
+      "mcp__plugin_context7_context7__resolve-library-id",
+      "Bash(flutter pub *)",
+      "Bash(flutter test *)",
+      "Bash(flutter analyze *)",
+      "Bash(flutter build *)"
     ]
   }
 }
