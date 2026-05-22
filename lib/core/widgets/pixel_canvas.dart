@@ -1,4 +1,3 @@
-// lib/presentation/widgets/pixel_canvas.dart
 // Pixel-perfect canvas for 16-bit style rendering with integer scaling.
 
 import 'package:flutter/material.dart';

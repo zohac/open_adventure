@@ -1,4 +1,3 @@
-// lib/presentation/widgets/location_image.dart
 // Scene image widget for locations with pixel-art friendly rendering.
 
 import 'package:flutter/material.dart';

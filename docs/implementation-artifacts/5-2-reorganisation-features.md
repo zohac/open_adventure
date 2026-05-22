@@ -53,6 +53,26 @@ Refs : [epic-5](../planning-artifacts/epic-5.md#story-52-réorganisation-libpres
   - [x] `flutter analyze`, `flutter test`, `flutter build apk --debug`.
   - [x] Diff revue : aucun changement non-mécanique (renommage uniquement).
 
+### Review Findings
+
+- [x] [Review][Decision] Clarifier l'application de la règle "test miroir strict" sur 5-2 — AC5 couvre le déplacement des tests `test/presentation/**`, mais les Project Context Rules de cette story disent aussi que chaque module `lib/<couche>/<chemin>.dart` a son test miroir sans dérogation. Plusieurs modules déplacés n'avaient déjà pas de test miroir avant 5-2 (`credits_page`, `saves_page`, `pixel_canvas`, `icon_helper`, `location_image`, widgets home, tokens theme). Il faut décider si 5-2 doit créer ces tests maintenant ou si cette dette préexistante reste hors scope d'une restructuration mécanique.
+  - **R1 — Résolu (2026-05-22) : hors scope de 5-2, dette documentée**. Cette dette **préexiste** la Story 5-2 : les modules cités (`credits_page`, `saves_page`, `pixel_canvas`, `icon_helper`, `location_image`, `home/widgets/*`, tokens theme) n'avaient pas de test miroir avant la restructuration. L'AC7 de 5-2 dit explicitement « aucune logique métier, aucun rendu, aucun import externe n'est modifié. Le commit doit pouvoir être décrit comme "pure restructuration" » — créer 6+ nouveaux tests (avec nouveau code, nouvelles assertions, nouvelle logique de mock) violerait cet AC. **Convention adoptée** : la règle « test miroir strict » s'applique aux **nouveaux** modules et aux modules **modifiés en contenu**. Pour les modules historiques sans miroir, la dette est rattrapée par les stories qui retoucheront leur contenu :
+    - `pixel_canvas`, `location_image`, `icon_helper` → Story **5-4** (Atomes UI partagés) reprend ces atomes et doit créer leur test miroir.
+    - `credits_page`, `saves_page`, `home/widgets/*` → Stories **5-7 → 5-9** (refontes pages) ajoutent les tests miroirs lors du reskin.
+    - Tokens theme (`app_colors`, `app_typography`, `app_spacing`) → Story **5-3** (refonte tokens design system) crée `oa_*_test.dart` correspondants.
+    - Si après 5-10 il reste des modules sans miroir, ouvrir une story dédiée `chore: rattrapage tests miroirs résiduels`.
+  - Cette décision est cohérente avec la coordination annoncée dans la story (« cette story doit être livrée seule, pas de PR parallèle qui touche `lib/presentation/` »).
+- [x] [Review][Patch] Supprimer les deux commentaires de chemin `lib/presentation/...` restants dans `lib/` [`lib/core/widgets/location_image.dart`:1]
+  - **R2 — Résolu (2026-05-22)** : Deux commentaires d'en-tête `// lib/presentation/widgets/<file>.dart` supprimés dans `lib/core/widgets/pixel_canvas.dart:1` et `lib/core/widgets/location_image.dart:1`. Le path est porté par le système de fichiers, le commentaire était redondant et trompeur après le `git mv`. `grep -rn "lib/presentation" lib/ test/` → 0 match.
+- [x] [Review][Patch] Mettre à jour les docs de référence encore pointées vers `lib/presentation/**` / `test/presentation/**` [`docs/component-inventory.md`:125]
+  - **R3 — Résolu (2026-05-22)** : Quatre docs vivants mis à jour pour pointer vers `lib/features/` / `lib/core/widgets/` / `lib/core/theme/` :
+    - `docs/component-inventory.md` : tableaux Pages (§Features — pages), Widgets (§Core — widgets transverses) et Tokens (§Core — theme) entièrement réécrits avec nouvelles paths + notes sur les refontes futures (5-3, 5-4, 5-7/5-8/5-9).
+    - `docs/architecture.md` : §9 UI/Theming (path tokens) + §17 Carte du code (UI = `lib/features/` + `lib/core/widgets/` + `lib/core/theme/`) + bandeau de transition (`ValueNotifier + lib/features/` post-5-2).
+    - `docs/source-tree-analysis.md` : entrée Top Knowledge mise à jour pour `lib/core/widgets/pixel_canvas.dart`.
+    - `docs/development-guide.md` : §Organisation des tests (`test/features/` au lieu de `test/presentation/`).
+    - `docs/Cahier_des_charges_Map.md` : path aspirationnel du futur `map_page.dart` mis à jour vers `lib/features/map/`.
+  - **Volontairement non touchés** (états historiques ou aspirationnels) : `docs/EXEC_S1.md`, `docs/EXEC_S2.md`, `docs/EXEC_S3.md` (exec docs datés par sprint, décrivent l'état au moment du sprint) ; `docs/VISUAL_STYLE_GUIDE.md` §132-134 (paths aspirationnels `colors.dart`/`typography.dart`/`theme.dart` qui seront créés par 5-3) ; `docs/design.md:74` (diagramme ASCII avec mention transition explicite) ; `docs/planning-artifacts/sprint-change-proposal-2026-05-22.md` et `docs/planning-artifacts/epic-5.md` (historique du change "from → to") ; `docs/implementation-artifacts/4-10-accessibilite-finale.md` (story future qui sera retravaillée à son tour).
+
 ## Dev Notes
 
 ### Architecture cible
@@ -204,3 +224,4 @@ lib/
 | Date       | Author        | Change                                                                              |
 |------------|---------------|-------------------------------------------------------------------------------------|
 | 2026-05-22 | Claude (dev)  | Implémentation Story 5-2 : `lib/presentation/` → `lib/features/` + `lib/core/widgets/` + `lib/core/theme/` (`git mv` × 22, imports patchés, tests miroirs préservés, `project-context.md` mis à jour). Pure restructuration mécanique : zéro changement de comportement, 203 tests verts, APK debug OK. |
+| 2026-05-22 | Claude (dev)  | Review findings R1/R2/R3 adressés. R1 : décision « hors scope de 5-2, dette préexistante » ; rattrapage tests miroirs délégué stories par stories (5-3 pour tokens, 5-4 pour atomes, 5-7/5-8/5-9 pour pages refondues). R2 : 2 commentaires d'en-tête `// lib/presentation/...` supprimés (`pixel_canvas.dart`, `location_image.dart`). R3 : 5 docs vivants mis à jour (`component-inventory.md`, `architecture.md`, `source-tree-analysis.md`, `development-guide.md`, `Cahier_des_charges_Map.md`) ; docs historiques (EXEC_S*, sprint-change-proposal, epic-5) laissés intacts. Statut reste `review`. |

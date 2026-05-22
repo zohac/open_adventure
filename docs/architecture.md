@@ -1,7 +1,7 @@
 # Architecture — open_adventure
 
 > **🚧 EN TRANSITION — 2026-05-22.** L'architecture cible (Riverpod 2 + `lib/features/`) est en cours de migration via l'Epic 5 "Foundation Refresh".
-> Jusqu'à la livraison des stories 5-1 à 5-15, ce document décrit l'architecture **en place** (ValueNotifier + `lib/presentation/`).
+> Jusqu'à la livraison des stories 5-1 à 5-15, ce document décrit l'architecture **en place** (ValueNotifier + `lib/features/` post-5-2 ; migration Riverpod en 5-6 → 5-10).
 > Source de vérité de l'architecture cible : [`docs/design.md`](./design.md) §3–§5.
 > Ce document sera réécrit dans la story 5-15.
 
@@ -140,7 +140,7 @@ La UI utilise `ValueListenableBuilder` ou écoute directe via `addListener`. Auc
 
 ## 9. UI / Theming
 
-- **Thème 16-bit** : `AppTheme.light()/.dark()` (`lib/presentation/theme/`) + tokens `AppColors`, `AppTypography`, `AppSpacing`.
+- **Thème 16-bit** : `AppTheme.light()/.dark()` (`lib/core/theme/`) + tokens `AppColors`, `AppTypography`, `AppSpacing`. Refonte tokens (palette dark-only) déléguée à Story 5-3.
 - **Pixel-perfect** : tout asset visuel passe par `PixelCanvas` (scaling entier, `FilterQuality.none`) en canvas logique 320×180.
 - **Images de lieu** : `LocationImage` charge `assets/images/locations/<key>.webp` via `locationImageKey(Location)` (priorité `mapTag` → `snake_case(name)` → `id`). Fallback silencieux si absent ; aucun crash.
 - **Flash messages** : `FlashMessageListener` écoute `GameViewState.flashMessage` et le surface en SnackBar, puis appelle `controller.clearFlashMessage()`.
@@ -228,6 +228,6 @@ Reporting    :  scripts/generate_asset_tracker.py → docs/ASSET_TRACKER.md
 - Cœur métier : [`lib/domain/`](../lib/domain/)
 - Orchestration : [`lib/application/controllers/game_controller.dart`](../lib/application/controllers/game_controller.dart)
 - IO/JSON : [`lib/data/`](../lib/data/)
-- UI : [`lib/presentation/`](../lib/presentation/)
+- UI : [`lib/features/`](../lib/features/) (pages par écran) + [`lib/core/widgets/`](../lib/core/widgets/) (atomes transverses) + [`lib/core/theme/`](../lib/core/theme/) (tokens)
 - Points d'entrée : [`lib/main.dart`](../lib/main.dart)
 - Pipeline assets : [`scripts/update_assets.py`](../scripts/update_assets.py)

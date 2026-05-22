@@ -92,7 +92,7 @@ type MapGraph = {
 
 ### F. Livrables S3 (PR attendu)
 
-* `lib/presentation/pages/map_page.dart` + painter.
+* `lib/features/map/map_page.dart` + painter (post-Story 5-2 ; non encore créé).
 * `assets/data/map_layout.json` (v2 avec `clusterId/isAmbiguous/jitterSeed/anchorTag`).
 * Hook d’**autosave** pour `MapGraph` dans `GameController`.
 * **Tests** : widget + goldens + sérialisation.

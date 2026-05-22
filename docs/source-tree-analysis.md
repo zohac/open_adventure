@@ -218,7 +218,7 @@ open_adventure/                       # racine du projet Flutter
 | `docs/CONVERSION_SPEC.md`       | Source de vérité fonctionnelle. Prime sur tout code en cas de contradiction (cf. en-tête doc).   |
 | `lib/data/repositories/`        | Implémentations IO + caches + index. Frontière unique vers les assets/JSON.                      |
 | `scripts/`                      | Régénération/validation des assets depuis YAML upstream. Indispensable si `adventure.yaml` bouge.|
-| `lib/presentation/widgets/pixel_canvas.dart` | Convention pixel-perfect (FilterQuality.none + scale entier). À respecter pour toute image. |
+| `lib/core/widgets/pixel_canvas.dart` | Convention pixel-perfect (FilterQuality.none + scale entier). À respecter pour toute image. |
 | `open-adventure-master/`        | Référence canonique 430 pts (gameplay/score/save). Oracle de fidélité pour tests cross-langage.  |
 
 ## Points d'entrée

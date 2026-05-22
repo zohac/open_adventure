@@ -67,7 +67,7 @@ flutter test --coverage                        # produit coverage/lcov.info
 
 ### Organisation
 
-Les tests miroirent `lib/` (un fichier par module). Voir `test/domain/`, `test/data/`, `test/application/`, `test/presentation/`, `test/core/`, `test/l10n/`.
+Les tests miroirent `lib/` (un fichier par module). Voir `test/domain/`, `test/data/`, `test/application/`, `test/features/`, `test/core/`, `test/l10n/`.
 
 ### Outils
 

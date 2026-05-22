@@ -118,37 +118,43 @@
 |--------------------------|---------------------------------------------------------|------|
 | `MotionNormalizerImpl`   | `lib/data/services/motion_normalizer_impl.dart`        | Charge `motions.json`, table `_renames` (IN→ENTER, U→UP, NORTHEAST→NE…) ; filtre `MOT_*` / `HERE` / `NUL` → `UNKNOWN` |
 
-## Presentation — pages
+## Features — pages
+
+> Post Story 5-2 : pages déplacées sous `lib/features/<screen>/` (un écran = un dossier).
 
 | Page                  | Fichier                                                      | Statut | Notes |
 |-----------------------|---------------------------------------------------------------|--------|-------|
-| `HomePage`            | `lib/presentation/pages/home_page.dart`                       | ✅ S2  | Menu Nouvelle/Continuer/Charger/Options/Crédits ; tap "Continuer" disabled si autosave absente |
-| `AdventurePage`       | `lib/presentation/pages/adventure_page.dart`                  | ✅ S2  | Description + boutons d'actions + journal + flash messages + "Plus…" si > 7 actions |
-| `InventoryPage`       | `lib/presentation/pages/inventory_page.dart`                  | ✅ S3  | Liste objets portés + actions contextuelles |
-| `SavesPage`           | `lib/presentation/pages/saves_page.dart`                      | 🟡 stub | Sera enrichi en S4 (multi-slots, métadonnées, suppression) |
-| `SettingsPage`        | `lib/presentation/pages/settings_page.dart`                   | ✅ S2  | Sliders volumes BGM/SFX persistés ; thème/langue ajoutés en S4 |
-| `CreditsPage`         | `lib/presentation/pages/credits_page.dart`                    | ✅ S2  | Crédits historiques |
+| `HomePage`            | `lib/features/home/home_page.dart`                            | ✅ S2  | Menu Nouvelle/Continuer/Charger/Options/Crédits ; tap "Continuer" disabled si autosave absente. Refonte UI déléguée à 5-8. |
+| `AdventurePage`       | `lib/features/adventure/adventure_page.dart`                  | ✅ S2  | Description + boutons d'actions + journal + flash messages + "Plus…" si > 7 actions. Refonte UI déléguée à 5-7. |
+| `InventoryPage`       | `lib/features/inventory/inventory_page.dart`                  | ✅ S3  | Liste objets portés + actions contextuelles. Refonte UI déléguée à 5-9. |
+| `SavesPage`           | `lib/features/saves/saves_page.dart`                          | 🟡 stub | Sera enrichi en S4 (multi-slots, métadonnées, suppression) |
+| `SettingsPage`        | `lib/features/settings/settings_page.dart`                    | ✅ S2  | Sliders volumes BGM/SFX persistés ; thème/langue ajoutés en S4 |
+| `CreditsPage`         | `lib/features/credits/credits_page.dart`                      | ✅ S2  | Crédits historiques |
 | `MapPage`             | _non livré_                                                   | ⏳ S3   | Cf. `docs/Cahier_des_charges_Map.md` + `docs/CTO_DEV_MAP_REQUEST.md` |
 
-## Presentation — widgets
+## Core — widgets transverses
 
-| Widget                    | Fichier                                                      | Rôle |
-|---------------------------|---------------------------------------------------------------|------|
-| `PixelCanvas`             | `lib/presentation/widgets/pixel_canvas.dart`                 | Conteneur pixel-perfect (320×180 logique, scale entier, FilterQuality.none) |
-| `LocationImage`           | `lib/presentation/widgets/location_image.dart`               | `FadeInImage` `assets/images/locations/<key>.webp` + fallback silencieux |
-| `FlashMessageListener`    | `lib/presentation/widgets/flash_message_listener.dart`       | Écoute `GameViewState.flashMessage` → SnackBar puis `clearFlashMessage` |
-| `IconHelper`              | `lib/presentation/widgets/icon_helper.dart`                  | Mapping nom Material → `IconData` (utilisé par les `ActionOption.icon`) |
-| `home_hero_banner.dart`   | `lib/presentation/pages/home/widgets/home_hero_banner.dart`  | Bannière pixel-art de la HomePage |
-| `home_menu_button.dart`   | `lib/presentation/pages/home/widgets/home_menu_button.dart`  | Bouton menu 16-bit |
+> Post Story 5-2 : atomes UI partagés déplacés sous `lib/core/widgets/`. Story 5-4 ajoutera `OAStamp`, `OAPill`, etc.
 
-## Presentation — theme
+| Widget                    | Fichier                                                       | Rôle |
+|---------------------------|----------------------------------------------------------------|------|
+| `PixelCanvas`             | `lib/core/widgets/pixel_canvas.dart`                          | Conteneur pixel-perfect (320×180 logique, scale entier, FilterQuality.none) |
+| `LocationImage`           | `lib/core/widgets/location_image.dart`                        | `FadeInImage` `assets/images/locations/<key>.webp` + fallback silencieux |
+| `FlashMessageListener`    | `lib/core/widgets/flash_message_listener.dart`                | Écoute `GameViewState.flashMessage` → SnackBar puis `clearFlashMessage` |
+| `IconHelper`              | `lib/core/widgets/icon_helper.dart`                           | Mapping nom Material → `IconData` (utilisé par les `ActionOption.icon`) |
+| `home_hero_banner.dart`   | `lib/features/home/widgets/home_hero_banner.dart`             | Bannière pixel-art de la HomePage (interne à la feature `home/`) |
+| `home_menu_button.dart`   | `lib/features/home/widgets/home_menu_button.dart`             | Bouton menu 16-bit (interne à la feature `home/`) |
 
-| Token              | Fichier                                                  | Rôle |
-|--------------------|----------------------------------------------------------|------|
-| `AppTheme`         | `lib/presentation/theme/app_theme.dart`                  | `ThemeData.light()/.dark()` |
-| `AppColors`        | `lib/presentation/theme/app_colors.dart`                 | Palette 16-bit |
-| `AppTypography`    | `lib/presentation/theme/app_typography.dart`             | Polices pixel + tailles |
-| `AppSpacing`       | `lib/presentation/theme/app_spacing.dart`                | Échelle 8/16/24 |
+## Core — theme
+
+> Post Story 5-2 : tokens déplacés sous `lib/core/theme/`. Story 5-3 introduira `oa_colors.dart`, `oa_typography.dart`, `oa_spacing.dart` (palette dark-only ambre/encre).
+
+| Token              | Fichier                                              | Rôle |
+|--------------------|-------------------------------------------------------|------|
+| `AppTheme`         | `lib/core/theme/app_theme.dart`                      | `ThemeData.light()/.dark()` (refonte en 5-3) |
+| `AppColors`        | `lib/core/theme/app_colors.dart`                     | Palette 16-bit (refonte en 5-3) |
+| `AppTypography`    | `lib/core/theme/app_typography.dart`                 | Polices pixel + tailles (refonte en 5-3) |
+| `AppSpacing`       | `lib/core/theme/app_spacing.dart`                    | Échelle 8/16/24 (refonte en 5-3) |
 
 ## Core
 
