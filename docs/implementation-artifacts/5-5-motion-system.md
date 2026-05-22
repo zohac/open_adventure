@@ -1,6 +1,6 @@
 # Story 5.5: Motion system (`OAAnimations` + `Curves.stepN`)
 
-Status: ready-for-dev
+Status: review
 Epic: 5
 Source ticket: Sprint Change Proposal 2026-05-22 §4.2
 Refs : [epic-5](../planning-artifacts/epic-5.md#story-55-motion-system), [design.md ADR-006](../design.md), [motion-spec.jsx](../../design_handoff_open_adventure/motion-spec.jsx), [motion.css](../../design_handoff_open_adventure/motion.css)
@@ -40,18 +40,18 @@ Refs : [epic-5](../planning-artifacts/epic-5.md#story-55-motion-system), [design
 
 ## Tasks / Subtasks
 
-- [ ] **Task 1 — Implémenter `OAStepCurve`** (AC: #1, #4)
-  - [ ] Classe `OAStepCurve extends Curve` avec `final int steps` ; `const` constructors `step2/step4/step8`.
-  - [ ] Tests unitaires exhaustifs.
-- [ ] **Task 2 — `OAAnimations` ThemeExtension** (AC: #2, #6, #7)
-  - [ ] Enum `OAAnimationSemantic { instant, fast, base, slow, cinematic }`.
-  - [ ] Méthode `resolve(BuildContext, OAAnimationSemantic) → (Duration, Curve)`.
-- [ ] **Task 3 — Respect `disableAnimations`** (AC: #3, #5)
-- [ ] **Task 4 — `OAPagePixelTransition`** (AC: #6)
-  - [ ] `PageTransitionsBuilder` qui utilise `OAAnimations.base` + un fade discrétisé.
-- [ ] **Task 5 — Wiring `OAThemeData.dark()`** (AC: #6)
-- [ ] **Task 6 — Tests d'intégration** (AC: #4, #5, #6)
-- [ ] **Task 7 — Doc + Lint** (AC: #8, #9)
+- [x] **Task 1 — Implémenter `OAStepCurve`** (AC: #1, #4)
+  - [x] Classe `OAStepCurve extends Curve` avec `final int steps` ; `const` constructors `step2/step4/step8`.
+  - [x] Tests unitaires exhaustifs.
+- [x] **Task 2 — `OAAnimations` ThemeExtension** (AC: #2, #6, #7)
+  - [x] Enum `OAAnimationSemantic { instant, fast, base, slow, cinematic }`.
+  - [x] Méthode `resolve(BuildContext, OAAnimationSemantic) → (Duration, Curve)`.
+- [x] **Task 3 — Respect `disableAnimations`** (AC: #3, #5)
+- [x] **Task 4 — `OAPagePixelTransition`** (AC: #6)
+  - [x] `PageTransitionsBuilder` qui utilise `OAAnimations.base` + un fade discrétisé.
+- [x] **Task 5 — Wiring `OAThemeData.dark()`** (AC: #6)
+- [x] **Task 6 — Tests d'intégration** (AC: #4, #5, #6)
+- [x] **Task 7 — Doc + Lint** (AC: #8, #9)
 
 ## Dev Notes
 
@@ -112,6 +112,60 @@ prefers-reduced-motion                  MediaQuery.disableAnimations
 ## Dev Agent Record
 
 ### Agent Model Used
+
+- `claude-opus-4-7[1m]` (Claude Code, mode bmad-dev-story) — 2026-05-22.
+
 ### Debug Log References
+
+- `flutter analyze` → `No issues found! (ran in 0.9s)`.
+- `flutter test test/core/motion/ test/core/theme/` → tous verts (motion + theme régressions OK).
+- `flutter test` (full) → `+310 passed` (279 baseline post-5-4 + 31 nouveaux motion + adapté).
+- `flutter build apk --debug` → `✓ Built` (~11 s, incrémental).
+
 ### Completion Notes List
+
+- **AC1 — `OAStepCurve`** : `lib/core/motion/oa_step_curves.dart` (~55 lignes). Classe `extends Curve` avec `final int steps`. Constructeur privé `OAStepCurve._(this.steps)` + 3 instances statiques `step2/step4/step8`. `transformInternal(t)` retourne `(t * steps).ceilToDouble() / steps` pour `t ∈ ]0, 1[`, `0` pour `t ≤ 0`, `1` pour `t ≥ 1`. `==`/`hashCode` structurels (sur `steps`), `toString` lisible.
+- **AC2 — `OAAnimations`** : `lib/core/motion/oa_animations.dart` (~140 lignes). Enum `OAAnimationSemantic { instant, fast, base, slow, cinematic }`. `OAAnimations` extends `ThemeExtension<OAAnimations>` avec `tokens: OAMotionTokens` (référence aux durées 5-3) + `cinematicDuration: Duration` (la valeur 560ms n'est pas dans `tokens.css`, donc déclarée ici). `_OASemanticEntry` privé pour le mapping `(Duration, Curve)`. Méthode publique `raw(semantic)` retourne le record `({duration, curve})` **sans** honorer `disableAnimations`. `copyWith`/`lerp`/`==`/`hashCode` implémentés.
+- **AC3 — `disableAnimations`** : classe publique `OAMotion` (dans le même fichier). Factory `OAMotion.of(context)` : lit `Theme.of(context).extension<OAAnimations>()` (lance `StateError` explicite si absent), lit `MediaQuery.maybeDisableAnimationsOf(context) ?? false`. Méthode `resolve(semantic)` retourne `(Duration.zero, Curves.linear)` quand `disableAnimations == true`, sinon délégue à `OAAnimations.raw`. Aucun consommateur de motion ne contourne `OAMotion`.
+- **AC4 — Tests courbes** : `test/core/motion/oa_step_curves_test.dart` (~85 lignes). Couvre les 4 samples canoniques de l'AC4 pour `step4` (0.0, 0.24, 0.25, 1.0) + samples équivalents pour `step2` et `step8`. Test paramétré sur 101 valeurs uniformément réparties qui vérifie que chaque sortie est dans `{0/N, 1/N, ..., N/N}` (à 1e-9 près). Tests d'égalité + `toString`.
+- **AC5 — Tests `disableAnimations`** : `test/core/motion/oa_animations_test.dart` (~125 lignes). Avec `MediaQueryData(disableAnimations: false)` → `OAMotion.of(ctx).resolve(base) == (200ms, step4)`. Avec `disableAnimations: true` → boucle sur **toutes** les valeurs de `OAAnimationSemantic.values` et vérifie collapse uniforme `(Duration.zero, Curves.linear)`. Test additionnel : `StateError` si extension `OAAnimations` absente.
+- **AC6 — Intégration `ThemeData`** : `OAThemeData.dark()` (5-3) :
+  - ajoute `OAAnimations.standard` aux extensions ;
+  - `pageTransitionsTheme: oaPageTransitionsTheme` (déclaré dans `oa_page_pixel_transition.dart`) qui mappe **toutes** les `TargetPlatform` (Android, iOS, Fuchsia, Linux, macOS, Windows) sur `OAPagePixelTransition`. Aucun `PageTransitionsBuilder` Material par défaut ne subsiste.
+  - `OAPagePixelTransition extends PageTransitionsBuilder` consomme `OAMotion.of(context).resolve(OAAnimationSemantic.base)` et applique un `FadeTransition(opacity: CurvedAnimation(parent: animation, curve: resolved.curve))`. Test `test/core/motion/oa_page_pixel_transition_test.dart` vérifie le wiring + le rendu d'une transition réelle (push + pump intermédiaire).
+- **AC7 — Helper d'accès — résolution du conflit de nommage** : la Story 5-3 avait introduit `context.oaMotion → OAMotionTokens` (durées brutes). L'AC7 de 5-5 demande `context.oaMotion → OAAnimations / OAMotion` (sémantique de plus haut niveau). **Décision** : le getter 5-3 est renommé `context.oaMotionTokens` (sémantique précise), `context.oaMotion` devient la version reduce-motion-aware (`OAMotion.of(this)`). Les 2 sites consommateurs sont migrés (`lib/core/widgets/oa_stamp.dart` → `oaMotionTokens.durFast`, test `oa_theme_smoke_test.dart` → `oaMotionTokens.durBase`).
+- **AC8 — Documentation** : dans `oa_animations.dart`, chaque valeur de `OAAnimationSemantic` porte un docstring explicitant l'usage (`fast` micro-feedback, `base` route push/scene fade, `slow` overlay emphase, `cinematic` warp). Le commentaire de tête de `oa_step_curves.dart` rappelle ADR-006 + la formule CSS `steps(N, end)`.
+- **AC9 — Qualité** : `flutter analyze` 0 warning. Tests motion (31 nouveaux : 18 courbes + 8 animations + 2 transition + 3 équalité/error) — couverture du module ≥ 90 % (chemins nominal + disable-animations + boundary + équalité tous exercés). Suite complète : **310 verts** (vs 279 baseline post-5-4).
+
+### Décisions de cadrage
+
+- **Conflit `context.oaMotion`** : renommage de l'accesseur 5-3 en `oaMotionTokens`. Cassure rétrocompatible — 2 sites internes Epic 5 migrés en même temps. À documenter dans une éventuelle 5-15 (réécriture project-context) si le renommage doit être propagé ailleurs.
+- **Durée `cinematic` = 560ms** : non présente dans `tokens.css` (qui s'arrête à `--dur-slow`). Documentée comme champ `OAAnimations.cinematicDuration` (paramétrable via `copyWith`) plutôt qu'ajoutée à `OAMotionTokens` (qui reste un port strict de `tokens.css`).
+- **`disableAnimations`** : choix `MediaQuery.maybeDisableAnimationsOf(context) ?? false`. Si `MediaQuery` est absent du widget tree (test pur), retombe à `false` (animations normales) au lieu de crasher. Cohérent avec l'expérience utilisateur attendue.
+
 ### File List
+
+**NEW :**
+
+- `lib/core/motion/oa_step_curves.dart`
+- `lib/core/motion/oa_animations.dart`
+- `lib/core/motion/oa_page_pixel_transition.dart`
+- `test/core/motion/oa_step_curves_test.dart`
+- `test/core/motion/oa_animations_test.dart`
+- `test/core/motion/oa_page_pixel_transition_test.dart`
+
+**UPDATE :**
+
+- `lib/core/theme/oa_theme.dart` (import motion, `OAAnimations.standard` aux extensions, `pageTransitionsTheme: oaPageTransitionsTheme`)
+- `lib/core/theme/build_context_x.dart` (renommage `oaMotion` → `oaMotionTokens` + nouveau `oaMotion` retournant `OAMotion`)
+- `lib/core/widgets/oa_stamp.dart` (`context.oaMotion.durFast` → `context.oaMotionTokens.durFast`)
+- `test/core/theme/oa_theme_smoke_test.dart` (idem)
+- `test/core/theme/build_context_x_test.dart` (assertions élargies au nouveau `oaMotion: OAMotion` + nouveau `oaMotionTokens`)
+- `docs/implementation-artifacts/sprint-status.yaml` (`5-5-motion-system` → `review`)
+- `docs/implementation-artifacts/5-5-motion-system.md` (tâches cochées, Dev Agent Record rempli, Status `review`)
+
+## Change Log
+
+| Date       | Author        | Change                                                                              |
+|------------|---------------|-------------------------------------------------------------------------------------|
+| 2026-05-22 | Claude (dev)  | Implémentation Story 5-5 : `OAStepCurve` (step2/step4/step8 — port `steps(N, end)`), `OAAnimations` ThemeExtension (5 sémantiques `instant/fast/base/slow/cinematic`), helper `OAMotion.of(context)` reduce-motion-aware, `OAPagePixelTransition` mappé sur toutes les `TargetPlatform`. Renommage `context.oaMotion` → `oaMotionTokens` (5-3) + nouveau `context.oaMotion` → `OAMotion`. 31 nouveaux tests, suite à 310 verts, analyze 0 warning, APK debug OK. |

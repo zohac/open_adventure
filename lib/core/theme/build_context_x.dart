@@ -6,6 +6,7 @@
 
 import 'package:flutter/material.dart';
 
+import '../motion/oa_animations.dart';
 import 'oa_colors.dart';
 import 'oa_motion_tokens.dart';
 import 'oa_shadows.dart';
@@ -19,7 +20,15 @@ extension BuildContextX on BuildContext {
 
   OASpacing get oaSpacing => _extension<OASpacing>();
 
-  OAMotionTokens get oaMotion => _extension<OAMotionTokens>();
+  /// Raw duration tokens (cf. Story 5-3). Prefer [oaMotion] when you need
+  /// a `(Duration, Curve)` resolved against the current reduce-motion
+  /// setting (Story 5-5).
+  OAMotionTokens get oaMotionTokens => _extension<OAMotionTokens>();
+
+  /// Reduce-motion-aware semantic animation resolver (Story 5-5). Returns
+  /// `(Duration.zero, Curves.linear)` for every semantic when
+  /// `MediaQuery.disableAnimations` is `true`.
+  OAMotion get oaMotion => OAMotion.of(this);
 
   OAShadows get oaShadows => _extension<OAShadows>();
 

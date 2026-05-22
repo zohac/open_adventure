@@ -173,7 +173,7 @@ class _OAStampState extends State<OAStamp> {
         : null;
 
     final decorated = AnimatedOpacity(
-      duration: context.oaMotion.durFast,
+      duration: context.oaMotionTokens.durFast,
       opacity: _enabled ? 1.0 : 0.45,
       child: ConstrainedBox(
         constraints: BoxConstraints(

@@ -47,7 +47,7 @@ void main() {
 
       // (e) motion durBase = 200ms.
       expect(
-        capturedContext.oaMotion.durBase,
+        capturedContext.oaMotionTokens.durBase,
         const Duration(milliseconds: 200),
       );
     });

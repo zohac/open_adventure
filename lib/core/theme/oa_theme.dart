@@ -4,6 +4,8 @@
 
 import 'package:flutter/material.dart';
 
+import '../motion/oa_animations.dart';
+import '../motion/oa_page_pixel_transition.dart';
 import 'app_colors.dart' show AppActionAccents;
 import 'oa_colors.dart';
 import 'oa_motion_tokens.dart';
@@ -59,11 +61,13 @@ abstract final class OAThemeData {
       // Set non-const : les `ThemeExtension` Open Adventure overrident `==`
       // (égalité structurelle), ce qui interdit leur utilisation dans un
       // `const Set` (cf. analyzer `const_set_element_not_primitive_equality`).
+      pageTransitionsTheme: oaPageTransitionsTheme,
       extensions: <ThemeExtension<dynamic>>{
         colors,
         typography,
         OASpacing.standard,
         OAMotionTokens.standard,
+        OAAnimations.standard,
         OAShadows.standard,
         // Compat transitoire (cohabitation Epic 5) : `HomePage` (et tout autre
         // écran non encore refondu) lit `theme.extension<AppActionAccents>()!`.
