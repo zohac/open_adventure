@@ -94,5 +94,26 @@ void main() {
         throwsAssertionError,
       );
     });
+
+    testWidgets(
+        'disabled opacity transition has zero duration when '
+        'MediaQuery.disableAnimations == true (reduce motion contract)',
+        (tester) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          theme: OAThemeData.dark(),
+          home: MediaQuery(
+            data: const MediaQueryData(disableAnimations: true),
+            child: Scaffold(
+              body: OAStamp(label: 'A', onPressed: null),
+            ),
+          ),
+        ),
+      );
+
+      final animated =
+          tester.widget<AnimatedOpacity>(find.byType(AnimatedOpacity));
+      expect(animated.duration, Duration.zero);
+    });
   });
 }

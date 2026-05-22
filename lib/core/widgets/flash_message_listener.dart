@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:open_adventure/application/controllers/game_controller.dart';
+import 'package:open_adventure/core/motion/oa_animations.dart';
 import 'package:open_adventure/l10n/app_localizations.dart';
 
 /// Bridges the [GameController] flash message stream with a floating banner.
@@ -111,6 +112,22 @@ class _FlashMessageListenerState extends State<FlashMessageListener> {
   Widget build(BuildContext context) {
     final String? message = _visibleMessage;
     final l10n = AppLocalizations.of(context);
+    // Defensive resolve : the widget can be hosted under a `MaterialApp`
+    // that lacks the `OAAnimations` extension (legacy test harnesses,
+    // overlays bootstrapped before the theme is mounted, etc.). In that
+    // case we fall back to the canonical animation set (still
+    // step-discretised — no cubic-bezier sneaks back in). Reduce-motion
+    // is honoured whenever a `MediaQuery` ancestor exists.
+    final extension = Theme.of(context).extension<OAAnimations>();
+    final disableAnimations =
+        MediaQuery.maybeDisableAnimationsOf(context) ?? false;
+    final animations = extension ?? OAAnimations.standard;
+    final inResolved = disableAnimations
+        ? animations.raw(OAAnimationSemantic.instant)
+        : animations.raw(OAAnimationSemantic.base);
+    final outResolved = disableAnimations
+        ? animations.raw(OAAnimationSemantic.instant)
+        : animations.raw(OAAnimationSemantic.fast);
     return Stack(
       fit: StackFit.expand,
       children: <Widget>[
@@ -124,16 +141,17 @@ class _FlashMessageListenerState extends State<FlashMessageListener> {
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
                   child: AnimatedSwitcher(
-                    duration: const Duration(milliseconds: 200),
-                    switchInCurve: Curves.easeOutCubic,
-                    switchOutCurve: Curves.easeInCubic,
+                    duration: inResolved.duration,
+                    reverseDuration: outResolved.duration,
+                    switchInCurve: inResolved.curve,
+                    switchOutCurve: outResolved.curve,
                     transitionBuilder:
                         (Widget child, Animation<double> animation) {
                           final slideAnimation = animation.drive(
                             Tween<Offset>(
                               begin: const Offset(0, -0.1),
                               end: Offset.zero,
-                            ).chain(CurveTween(curve: Curves.easeOutCubic)),
+                            ),
                           );
                           return FadeTransition(
                             opacity: animation,

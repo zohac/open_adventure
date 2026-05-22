@@ -4,6 +4,7 @@
 
 import 'package:flutter/material.dart';
 
+import '../motion/oa_animations.dart';
 import '../theme/build_context_x.dart';
 import '../theme/oa_colors.dart';
 import '../theme/oa_shadows.dart';
@@ -172,8 +173,10 @@ class _OAStampState extends State<OAStamp> {
           )
         : null;
 
+    final fast = context.oaMotion.resolve(OAAnimationSemantic.fast);
     final decorated = AnimatedOpacity(
-      duration: context.oaMotionTokens.durFast,
+      duration: fast.duration,
+      curve: fast.curve,
       opacity: _enabled ? 1.0 : 0.45,
       child: ConstrainedBox(
         constraints: BoxConstraints(

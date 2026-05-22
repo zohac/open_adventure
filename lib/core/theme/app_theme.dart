@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../motion/oa_animations.dart';
 import 'app_colors.dart';
 import 'app_spacing.dart';
 import 'app_typography.dart';
@@ -25,6 +26,12 @@ class AppTheme {
         scheme.brightness == Brightness.dark
             ? AppActionAccents.dark
             : AppActionAccents.light,
+        // Compat transitoire (cohabitation Epic 5) : `FlashMessageListener`
+        // (Story 5-5 patch F3) lit `context.oaMotion`. Sans cette
+        // extension, les pages encore servies par le legacy `AppTheme`
+        // (test harnesses widget) crashent. Retirée quand AppTheme
+        // disparaîtra (Story 5-15).
+        OAAnimations.standard,
       ],
       appBarTheme: AppBarTheme(
         backgroundColor: scheme.surface,
