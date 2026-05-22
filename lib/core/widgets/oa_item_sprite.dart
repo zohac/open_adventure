@@ -10,6 +10,9 @@ import 'oa_pill.dart';
 
 enum OAItemTone { paper, ink, amber, teal }
 
+/// Maximum integer badge rendered as-is ; au-delà, l'UI affiche `"99+"`.
+const int _kBadgeCountClampMax = 99;
+
 @immutable
 class OAItemSprite extends StatelessWidget {
   const OAItemSprite({
@@ -20,7 +23,10 @@ class OAItemSprite extends StatelessWidget {
     this.onTap,
     this.selected = false,
     this.badgeCount,
-  });
+  }) : assert(
+          badgeCount == null || badgeCount > 0,
+          'OAItemSprite.badgeCount must be null or a positive integer.',
+        );
 
   final ImageProvider image;
 
@@ -32,6 +38,7 @@ class OAItemSprite extends StatelessWidget {
   final bool selected;
 
   /// Si non null, un petit [OAPill] s'affiche dans le coin haut-droit.
+  /// Valeurs > 99 sont rendues `"99+"`.
   final int? badgeCount;
 
   bool get _tappable => onTap != null;
@@ -49,14 +56,19 @@ class OAItemSprite extends StatelessWidget {
     }
   }
 
+  String _formatBadge(int n) =>
+      n > _kBadgeCountClampMax ? '$_kBadgeCountClampMax+' : n.toString();
+
   @override
   Widget build(BuildContext context) {
     final colors = context.oaColors;
     final spacing = context.oaSpacing;
+    final shadows = context.oaShadows;
 
     final borderColor = selected ? colors.amber.base : colors.paper.warm;
 
     final tile = Container(
+      clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
         color: _bgColor(colors),
         border: Border.all(
@@ -66,7 +78,7 @@ class OAItemSprite extends StatelessWidget {
         boxShadow: <BoxShadow>[
           BoxShadow(
             color: colors.ink.voidColor,
-            offset: const Offset(2, 2),
+            offset: shadows.blockSmall,
             blurRadius: 0,
           ),
         ],
@@ -76,13 +88,17 @@ class OAItemSprite extends StatelessWidget {
         child: Stack(
           fit: StackFit.expand,
           children: <Widget>[
-            Image(image: image, fit: BoxFit.cover, filterQuality: FilterQuality.none),
+            Image(
+              image: image,
+              fit: BoxFit.cover,
+              filterQuality: FilterQuality.none,
+            ),
             if (badgeCount != null)
               Positioned(
                 top: spacing.s1,
                 right: spacing.s1,
                 child: OAPill(
-                  label: badgeCount!.toString(),
+                  label: _formatBadge(badgeCount!),
                   tone: OAPillTone.amber,
                   dense: true,
                 ),

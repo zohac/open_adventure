@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:open_adventure/core/theme/build_context_x.dart';
 import 'package:open_adventure/core/theme/oa_theme.dart';
 import 'package:open_adventure/core/widgets/oa_item_sprite.dart';
 
@@ -68,21 +69,59 @@ void main() {
 
     testWidgets('selected=true uses an amber border in the decoration',
         (tester) async {
+      late BuildContext captured;
+      await tester.pumpWidget(
+        _wrap(
+          Builder(builder: (ctx) {
+            captured = ctx;
+            return OAItemSprite(
+              image: MemoryImage(_onePx),
+              label: 'Gem',
+              selected: true,
+              onTap: () {},
+            );
+          }),
+        ),
+      );
+
+      final container = tester.widgetList<Container>(find.byType(Container)).first;
+      final decoration = container.decoration as BoxDecoration;
+      final border = decoration.border! as Border;
+      expect(border.top.color, captured.oaColors.amber.base);
+    });
+
+    testWidgets('badgeCount > 99 is clamped to "99+"', (tester) async {
       await tester.pumpWidget(
         _wrap(
           OAItemSprite(
             image: MemoryImage(_onePx),
-            label: 'Gem',
-            selected: true,
-            onTap: () {},
+            label: 'Pile',
+            badgeCount: 250,
           ),
         ),
       );
 
-      // The outer Container's decoration uses the amber base color.
-      final container = tester.widgetList<Container>(find.byType(Container)).first;
-      final decoration = container.decoration as BoxDecoration;
-      expect(decoration.border, isNotNull);
+      expect(find.text('99+'), findsOneWidget);
+      expect(find.text('250'), findsNothing);
+    });
+
+    test('asserts badgeCount must be null or positive', () {
+      expect(
+        () => OAItemSprite(
+          image: MemoryImage(_onePx),
+          label: 'x',
+          badgeCount: 0,
+        ),
+        throwsAssertionError,
+      );
+      expect(
+        () => OAItemSprite(
+          image: MemoryImage(_onePx),
+          label: 'x',
+          badgeCount: -3,
+        ),
+        throwsAssertionError,
+      );
     });
   });
 }

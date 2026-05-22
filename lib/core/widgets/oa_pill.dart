@@ -98,12 +98,19 @@ class OAPill extends StatelessWidget {
           if (iconLeading != null) ...<Widget>[
             OAIcon(
               iconLeading!,
-              size: dense ? OAIconSize.s : OAIconSize.s,
+              size: dense ? OAIconSize.s : OAIconSize.m,
               color: t.fg,
             ),
             SizedBox(width: spacing.s1),
           ],
-          Text(label, style: textStyle),
+          Flexible(
+            child: Text(
+              label,
+              style: textStyle,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
         ],
       ),
     );

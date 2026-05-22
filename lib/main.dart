@@ -143,7 +143,9 @@ class _OpenAdventureAppState extends State<OpenAdventureApp> {
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       routes: <String, WidgetBuilder>{
-        if (kDebugMode)
+        // `!kReleaseMode` ⇒ debug + profile (incluant DevTools / benchmarks).
+        // En release, l'entrée est absente : navigation impossible.
+        if (!kReleaseMode)
           WidgetGalleryPage.routeName: (_) => const WidgetGalleryPage(),
       },
       home: HomePage(

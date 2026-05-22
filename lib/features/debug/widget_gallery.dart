@@ -1,6 +1,8 @@
 // Widget Gallery — catalogue debug des atomes UI Open Adventure.
-// Visible uniquement en `kDebugMode` (cf. lib/main.dart route conditionnelle).
+// Visible uniquement en `!kReleaseMode` (debug + profile), cf. `lib/main.dart`.
 // Story 5-4 — Atomes UI partagés.
+
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 
@@ -10,6 +12,17 @@ import '../../core/widgets/oa_item_sprite.dart';
 import '../../core/widgets/oa_pill.dart';
 import '../../core/widgets/oa_scene_frame.dart';
 import '../../core/widgets/oa_stamp.dart';
+
+/// 1×1 transparent PNG inline (placeholder pour `OAItemSprite` dans la
+/// gallery, en attendant les sprites réels livrés en Story 5-12).
+final Uint8List _placeholderPng = Uint8List.fromList(const <int>[
+  0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A, 0x00, 0x00, 0x00, 0x0D,
+  0x49, 0x48, 0x44, 0x52, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x01,
+  0x08, 0x06, 0x00, 0x00, 0x00, 0x1F, 0x15, 0xC4, 0x89, 0x00, 0x00, 0x00,
+  0x0D, 0x49, 0x44, 0x41, 0x54, 0x78, 0x9C, 0x63, 0x00, 0x01, 0x00, 0x00,
+  0x05, 0x00, 0x01, 0x0D, 0x0A, 0x2D, 0xB4, 0x00, 0x00, 0x00, 0x00, 0x49,
+  0x45, 0x4E, 0x44, 0xAE, 0x42, 0x60, 0x82,
+]);
 
 class WidgetGalleryPage extends StatelessWidget {
   const WidgetGalleryPage({super.key});
@@ -49,7 +62,7 @@ class WidgetGalleryPage extends StatelessWidget {
             onPressed: () {},
           ),
           SizedBox(height: spacing.s2),
-          const OAStamp(label: 'Disabled', onPressed: null),
+          OAStamp(label: 'Disabled', onPressed: null),
           SizedBox(height: spacing.s2),
           OAStamp(
             label: 'Full width — large',
@@ -111,10 +124,7 @@ class WidgetGalleryPage extends StatelessWidget {
                   SizedBox(
                     width: 80,
                     child: OAItemSprite(
-                      image: const AssetImage(
-                        // Placeholder ; remplacé par les assets réels en 5-12.
-                        'assets/data/locations.json',
-                      ),
+                      image: MemoryImage(_placeholderPng),
                       label: tone.name,
                       tone: tone,
                       onTap: () {},

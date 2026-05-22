@@ -36,57 +36,81 @@ class OASceneFrame extends StatelessWidget {
     final outerBorderWidth = spacing.borderWidths.b2;
     final innerBorderWidth = spacing.borderWidths.b1;
 
+    // Clamp runtime : l'`assert` du constructeur est strippé en release ; on
+    // garantit ici que l'intensité est finie et bornée pour éviter une
+    // `RadialGradient` invalide (couleurs avec alpha NaN/Infinity).
+    final double safeIntensity = lampHaloIntensity.isFinite
+        ? lampHaloIntensity.clamp(0.0, 1.0)
+        : 0.0;
+
     final inner = ClipRect(
       child: AspectRatio(
         aspectRatio: 16 / 9,
-        child: Stack(
-          fit: StackFit.expand,
-          children: <Widget>[
-            child,
-            if (lampHaloIntensity > 0)
-              IgnorePointer(
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    gradient: RadialGradient(
-                      center: const Alignment(0, -0.1),
-                      radius: 0.85,
-                      colors: <Color>[
-                        colors.amber.base
-                            .withValues(alpha: 0.32 * lampHaloIntensity),
-                        colors.amber.base
-                            .withValues(alpha: 0.12 * lampHaloIntensity),
-                        colors.amber.base.withValues(alpha: 0),
-                      ],
-                      stops: const <double>[0.0, 0.35, 0.7],
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            final maxLabelWidth =
+                constraints.maxWidth - spacing.s3 * 2;
+
+            return Stack(
+              fit: StackFit.expand,
+              children: <Widget>[
+                child,
+                if (safeIntensity > 0)
+                  IgnorePointer(
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        // Paramètres `Alignment(0,-0.1)`, `radius: 0.85` et
+                        // `stops: [0, 0.35, 0.7]` : spécifiques à l'effet lamp
+                        // halo (cf. handoff `pixel-ui.jsx` ScenePlaceholder),
+                        // pas des tokens design partagés.
+                        gradient: RadialGradient(
+                          center: const Alignment(0, -0.1),
+                          radius: 0.85,
+                          colors: <Color>[
+                            colors.amber.base
+                                .withValues(alpha: 0.32 * safeIntensity),
+                            colors.amber.base
+                                .withValues(alpha: 0.12 * safeIntensity),
+                            colors.amber.base.withValues(alpha: 0),
+                          ],
+                          stops: const <double>[0.0, 0.35, 0.7],
+                        ),
+                      ),
                     ),
                   ),
-                ),
-              ),
-            if (locationName != null)
-              Positioned(
-                left: spacing.s3,
-                bottom: spacing.s3,
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    color: colors.ink.voidColor.withValues(alpha: 0.72),
-                    border: Border.all(
-                      color: colors.paper.warm.withValues(alpha: 0.45),
-                      width: innerBorderWidth,
+                if (locationName != null)
+                  PositionedDirectional(
+                    start: spacing.s3,
+                    bottom: spacing.s3,
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(maxWidth: maxLabelWidth),
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          color: colors.ink.voidColor.withValues(alpha: 0.72),
+                          border: Border.all(
+                            color: colors.paper.warm.withValues(alpha: 0.45),
+                            width: innerBorderWidth,
+                          ),
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: spacing.s2,
+                            vertical: spacing.s1,
+                          ),
+                          child: Text(
+                            locationName!,
+                            style: typo.caps.m
+                                .copyWith(color: colors.paper.bright),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: spacing.s2,
-                      vertical: spacing.s1,
-                    ),
-                    child: Text(
-                      locationName!,
-                      style: typo.caps.m.copyWith(color: colors.paper.bright),
-                    ),
-                  ),
-                ),
-              ),
-          ],
+              ],
+            );
+          },
         ),
       ),
     );

@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'app_colors.dart' show AppActionAccents;
 import 'oa_colors.dart';
 import 'oa_motion_tokens.dart';
+import 'oa_shadows.dart';
 import 'oa_spacing.dart';
 import 'oa_typography.dart';
 
@@ -63,6 +64,7 @@ abstract final class OAThemeData {
         typography,
         OASpacing.standard,
         OAMotionTokens.standard,
+        OAShadows.standard,
         // Compat transitoire (cohabitation Epic 5) : `HomePage` (et tout autre
         // écran non encore refondu) lit `theme.extension<AppActionAccents>()!`.
         // L'extension est retirée une fois les pages migrées (Story 5-8 pour

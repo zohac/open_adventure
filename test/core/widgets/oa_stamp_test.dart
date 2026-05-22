@@ -30,15 +30,21 @@ void main() {
 
     testWidgets('disabled (onPressed == null) does not trigger taps',
         (tester) async {
+      var tapped = 0;
       await tester.pumpWidget(
-        _wrap(const OAStamp(label: 'DISABLED', onPressed: null)),
+        _wrap(OAStamp(label: 'DISABLED', onPressed: null)),
       );
 
-      // Tap is a no-op (no callback to verify) — assert widget still renders.
       await tester.tap(find.byType(OAStamp), warnIfMissed: false);
       await tester.pump();
 
+      expect(tapped, 0);
       expect(find.text('DISABLED'), findsOneWidget);
+
+      // The underlying InkWell exposes onTap = null when the parent's
+      // onPressed is null (this is what gates Material's pointer routing).
+      final inkWell = tester.widget<InkWell>(find.byType(InkWell));
+      expect(inkWell.onTap, isNull);
     });
 
     testWidgets('respects min hit target of 44dp on size compact', (tester) async {
@@ -54,6 +60,17 @@ void main() {
 
       final size = tester.getSize(find.byType(OAStamp));
       expect(size.height, greaterThanOrEqualTo(44));
+      // WCAG 2.5.5 : horizontal hit target too.
+      expect(size.width, greaterThanOrEqualTo(44));
+    });
+
+    testWidgets('size regular reaches 48dp hit target', (tester) async {
+      await tester.pumpWidget(
+        _wrap(OAStamp(label: 'A', onPressed: () {})),
+      );
+
+      final size = tester.getSize(find.byType(OAStamp));
+      expect(size.height, greaterThanOrEqualTo(48));
     });
 
     testWidgets('size large reaches 56dp hit target', (tester) async {
@@ -69,6 +86,13 @@ void main() {
 
       final size = tester.getSize(find.byType(OAStamp));
       expect(size.height, greaterThanOrEqualTo(56));
+    });
+
+    test('asserts label or icon must be present', () {
+      expect(
+        () => OAStamp(label: '', onPressed: () {}),
+        throwsAssertionError,
+      );
     });
   });
 }

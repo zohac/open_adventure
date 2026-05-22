@@ -196,8 +196,48 @@ Refs : [epic-5](../planning-artifacts/epic-5.md#story-54-atomes-ui-partagés), [
 - `docs/implementation-artifacts/sprint-status.yaml` (`5-4-atomes-ui-partages` → `review`)
 - `docs/implementation-artifacts/5-4-atomes-ui-partages.md` (tâches cochées, Dev Agent Record rempli, Status `review`)
 
+### Review Findings
+
+#### Decisions à trancher (`decision-needed`)
+
+- [x] [Review][Decision] **AC1 — Mapping hit-target ≠ spec** — Résolu : **(b)** AC1 amendé implicitement. Le mapping `compact→44 / regular→48 / large→56` est validé comme étant plus généreux et conforme WCAG 2.5.5. Documenté dans le Dev Agent Record AC1.
+- [x] [Review][Decision] **AC1 — Focus ring 2px ambre absent** — Résolu : **(a)** vrai outline 2px ambre implémenté. `OAStamp` est passé `StatefulWidget`, écoute le focus via `FocusableActionDetector(onShowFocusHighlight: ...)`, et superpose un `Border.all(color: amber.base, width: borderWidths.b2)` via un `Stack > Positioned.fill > DecoratedBox`.
+- [x] [Review][Decision] **AC8 — Offsets de shadow codés en dur** — Résolu : **(a)** nouveau token `OAShadows` créé sous `lib/core/theme/oa_shadows.dart` exposant `blockSmall=Offset(2,2)`, `blockMedium=Offset(3,3)`, `blockLarge=Offset(4,4)` (port direct des `--sh-block-*` de `tokens.css`). Ajouté aux extensions de `OAThemeData.dark()`, accessible via `context.oaShadows`. `OAStamp` et `OAItemSprite` consomment désormais ces tokens.
+- [x] [Review][Decision] **AC8 — Paramètres `RadialGradient` codés en dur dans OASceneFrame** — Résolu : **(a)** acceptable. Commentaire inline ajouté dans `oa_scene_frame.dart` documentant que `Alignment(0,-0.1)`, `radius: 0.85` et `stops: [0, 0.35, 0.7]` sont des paramètres spécifiques à l'effet lamp halo (cf. handoff `pixel-ui.jsx` ScenePlaceholder), pas des tokens design partagés.
+- [x] [Review][Decision] **Gallery debug — `kDebugMode` vs `!kReleaseMode`** — Résolu : **(b)** bascule sur `!kReleaseMode`. La route `/debug/gallery` est désormais accessible en mode debug **et** profile (DevTools / benchmarks), mais reste absente en release. Cohérent avec le commit message « absente en build release ».
+
+#### Patches à appliquer (`patch`)
+
+- [x] [Review][Patch] **OAPill — Ternaire mort** — Résolu : `dense ? OAIconSize.s : OAIconSize.m` (correction du copy-paste). Test dédié ajouté (`dense renders smaller leading icon than non-dense`).
+- [x] [Review][Patch] **OAStamp ghost compact — `minWidth`** — Résolu : `ConstrainedBox(minHeight: ..., minWidth: _minHeight(spacing))` appliqué pour tous les variants/sizes (WCAG 2.5.5). Test compact vérifie désormais width ≥ 44 dp.
+- [x] [Review][Patch] **OAStamp — Label vide** — Résolu : `assert(label.isNotEmpty || iconLeading != null || iconTrailing != null, ...)` au constructeur. Le `Semantics.label` retombe sur `null` si le label est vide (cas valide quand au moins une icône est présente). Test `asserts label or icon must be present` ajouté.
+- [x] [Review][Patch] **OASceneFrame — NaN/Infinity** — Résolu : clamp runtime ajouté dans `build()` (`safeIntensity = lampHaloIntensity.isFinite ? clamp(0,1) : 0.0`). L'`assert` reste en debug ; en release, NaN/Infinity tombent à 0 (halo désactivé, pas de crash).
+- [x] [Review][Patch] **OASceneFrame — locationName long overflow** — Résolu : `LayoutBuilder` calcule `maxLabelWidth = constraints.maxWidth - 2*spacing.s3`, le `Text` est wrappé dans `ConstrainedBox(maxWidth: maxLabelWidth)` avec `maxLines: 1, overflow: ellipsis`.
+- [x] [Review][Patch] **OASceneFrame — `Positioned` non-RTL** — Résolu : `Positioned(left: s3)` → `PositionedDirectional(start: s3)` ; respecte la direction du `Directionality` ambiant.
+- [x] [Review][Patch] **OAStamp — Long label overflow** — Résolu : déjà présent (`maxLines: 1, overflow: TextOverflow.ellipsis`) dans le `Text` du label. Re-vérifié.
+- [x] [Review][Patch] **OAItemSprite — badgeCount non validé** — Résolu : `assert(badgeCount == null || badgeCount > 0, ...)` ; rendu visuel `"99+"` si `badgeCount > 99` via helper `_formatBadge`. Tests dédiés (`clamped to "99+"` et `asserts badgeCount must be null or positive`).
+- [x] [Review][Patch] **AC8 — `borderWidth: 2` hardcodé** — Résolu : `_resolveTone` reçoit désormais `OASpacing` et utilise `s.borderWidths.b2`.
+- [x] [Review][Patch] **Test OAStamp disabled n'assertit rien** — Résolu : test vérifie maintenant `inkWell.onTap == null` + compteur (qui reste 0 après tap forcé).
+- [x] [Review][Patch] **Test OAItemSprite selected ne vérifie pas la couleur** — Résolu : test compare `(decoration.border as Border).top.color == captured.oaColors.amber.base`.
+- [x] [Review][Patch] **Tests OAPill fontSize hardcodés** — Résolu : tests dense/non-dense utilisent désormais `captured.oaTypography.caps.s.fontSize` et `caps.m.fontSize`.
+- [x] [Review][Patch] **Gallery AssetImage cassée** — Résolu : `MemoryImage(_placeholderPng)` (1×1 transparent PNG inline). Plus de dépendance à un fichier asset absent.
+- [x] [Review][Patch] **Tests OAPill tones non-amber non testés** — Résolu : test table-driven sur les 7 tones de `OAPillTone.values` ; pour chaque tone, vérifie que `border.top.color` correspond bien à la couleur attendue de `OAColors`.
+- [x] [Review][Patch] **Tests OAPill long label overflow** — Résolu : test dédié dans un `SizedBox(width: 80)` qui vérifie `text.overflow == ellipsis` et `maxLines == 1`. Le widget OAPill wrappe désormais le `Text` dans un `Flexible` avec ces propriétés.
+- [x] [Review][Patch] **OAIcon — `semanticsLabel: ""` non validé** — Résolu : `assert(semanticsLabel == null || semanticsLabel.length > 0, ...)` au constructeur.
+- [x] [Review][Patch] **Test OASceneFrame bornes NaN/-Infinity** — Résolu : tests étendus avec `-0.5` (asserts), et un test additionnel `tolerates NaN/Infinity in release-like contexts` qui vérifie l'absence de crash sur valeur extrême.
+- [x] [Review][Patch] **OAItemSprite — Container sans `clipBehavior`** — Résolu : `Container(clipBehavior: Clip.hardEdge, ...)` ; `Image.cover` ne déborde plus du cadre.
+- [x] [Review][Patch] **Test OAStamp Hit target `regular` non testé** — Résolu : nouveau test `size regular reaches 48dp hit target`.
+
+#### Reports (`defer`)
+
+- [x] [Review][Defer] **OAStamp — `AnimatedOpacity` ne synchronise pas la shadow lors du flip enabled↔disabled** [lib/core/widgets/oa_stamp.dart:616-630] — deferred, point esthétique mineur, pas une régression bloquante.
+- [x] [Review][Defer] **OAItemSprite — `minWidth` ConstrainedBox vs `AspectRatio` peut être écrasé par parent contraint** [lib/core/widgets/oa_item_sprite.dart:213-219] — deferred, cas théorique non observé en pratique (gallery + futurs callers utilisent `SizedBox` parent).
+
+---
+
 ## Change Log
 
 | Date       | Author        | Change                                                                              |
 |------------|---------------|-------------------------------------------------------------------------------------|
 | 2026-05-22 | Claude (dev)  | Implémentation Story 5-4 : 5 atomes UI (`OAStamp`, `OAPill`, `OAIcon`, `OASceneFrame`, `OAItemSprite`), 21 tests miroirs, widget gallery conditionnelle `kDebugMode`. Tous les atomes consomment exclusivement `context.oa*` (zéro hex/dp/font en dur). 226 tests verts, analyze 0 warning, APK debug OK. |
+| 2026-05-22 | Claude (dev)  | Review findings adressés (5 décisions + 19 patches). **Décisions** : D1 mapping hit-target 44/48/56 entériné (WCAG-friendly) ; D2 vrai focus ring 2px ambre via `StatefulWidget + FocusableActionDetector + Stack` ; D3 nouveau token `OAShadows` (`oa_shadows.dart`) ajouté au theme et consommé par OAStamp/OAItemSprite ; D4 params RadialGradient documentés comme spec halo ; D5 gallery passée à `!kReleaseMode`. **Patches** : ternaire OAPill corrigé, `minWidth` WCAG, asserts label/badgeCount/semanticsLabel, clamp runtime NaN/Infinity, ellipsis locationName, `PositionedDirectional`, `borderWidth` via tokens, `clipBehavior: Clip.hardEdge` sur OAItemSprite, MemoryImage gallery. **Tests** : 5 tests `oa_shadows_test.dart` + table-driven 7 tones OAPill + bornes NaN/badge clamp + assertions du widget. 279 tests verts (+53 vs baseline 5-4). Statut reste `review`. |

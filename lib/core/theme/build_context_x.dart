@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 
 import 'oa_colors.dart';
 import 'oa_motion_tokens.dart';
+import 'oa_shadows.dart';
 import 'oa_spacing.dart';
 import 'oa_typography.dart';
 
@@ -19,6 +20,8 @@ extension BuildContextX on BuildContext {
   OASpacing get oaSpacing => _extension<OASpacing>();
 
   OAMotionTokens get oaMotion => _extension<OAMotionTokens>();
+
+  OAShadows get oaShadows => _extension<OAShadows>();
 
   T _extension<T extends ThemeExtension<T>>() {
     final ext = Theme.of(this).extension<T>();

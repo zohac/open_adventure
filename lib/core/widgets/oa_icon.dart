@@ -28,7 +28,10 @@ class OAIcon extends StatelessWidget {
     this.size = OAIconSize.m,
     this.color,
     this.semanticsLabel,
-  });
+  }) : assert(
+          semanticsLabel == null || semanticsLabel.length > 0,
+          'OAIcon.semanticsLabel must be null (decorative) or non-empty.',
+        );
 
   final IconData icon;
   final OAIconSize size;

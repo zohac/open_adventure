@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 
 import '../theme/build_context_x.dart';
 import '../theme/oa_colors.dart';
+import '../theme/oa_shadows.dart';
 import '../theme/oa_spacing.dart';
 import 'oa_icon.dart';
 
@@ -13,9 +14,8 @@ enum OAStampVariant { primary, secondary, ghost }
 
 enum OAStampSize { compact, regular, large }
 
-@immutable
-class OAStamp extends StatelessWidget {
-  const OAStamp({
+class OAStamp extends StatefulWidget {
+  OAStamp({
     super.key,
     required this.label,
     required this.onPressed,
@@ -24,7 +24,10 @@ class OAStamp extends StatelessWidget {
     this.iconTrailing,
     this.fullWidth = false,
     this.size = OAStampSize.regular,
-  });
+  }) : assert(
+          label.isNotEmpty || iconLeading != null || iconTrailing != null,
+          'OAStamp must have a label or at least one icon for accessibility.',
+        );
 
   /// Label déjà résolu (i18n côté caller).
   final String label;
@@ -38,10 +41,17 @@ class OAStamp extends StatelessWidget {
   final bool fullWidth;
   final OAStampSize size;
 
-  bool get _enabled => onPressed != null;
+  @override
+  State<OAStamp> createState() => _OAStampState();
+}
+
+class _OAStampState extends State<OAStamp> {
+  bool _focused = false;
+
+  bool get _enabled => widget.onPressed != null;
 
   double _minHeight(OASpacing s) {
-    switch (size) {
+    switch (widget.size) {
       case OAStampSize.compact:
         return s.hitTargets.min; // 44
       case OAStampSize.regular:
@@ -52,7 +62,7 @@ class OAStamp extends StatelessWidget {
   }
 
   EdgeInsets _padding(OASpacing s) {
-    switch (size) {
+    switch (widget.size) {
       case OAStampSize.compact:
         return EdgeInsets.symmetric(horizontal: s.s3, vertical: s.s2);
       case OAStampSize.regular:
@@ -62,19 +72,24 @@ class OAStamp extends StatelessWidget {
     }
   }
 
-  ({Color bg, Color border, Color fg, double borderWidth, List<BoxShadow> shadow})
-      _resolveTone(OAColors c) {
-    switch (variant) {
+  ({
+    Color bg,
+    Color border,
+    Color fg,
+    double borderWidth,
+    List<BoxShadow> shadow,
+  }) _resolveTone(OAColors c, OASpacing s, OAShadows sh) {
+    switch (widget.variant) {
       case OAStampVariant.primary:
         return (
           bg: c.amber.base,
           border: c.amber.shadow,
           fg: c.paper.bright,
-          borderWidth: 2,
-          shadow: [
+          borderWidth: s.borderWidths.b2,
+          shadow: <BoxShadow>[
             BoxShadow(
               color: c.amber.shadow,
-              offset: const Offset(3, 3),
+              offset: sh.blockMedium,
               blurRadius: 0,
             ),
           ],
@@ -84,11 +99,11 @@ class OAStamp extends StatelessWidget {
           bg: Colors.transparent,
           border: c.paper.warm,
           fg: c.paper.warm,
-          borderWidth: 2,
-          shadow: [
+          borderWidth: s.borderWidths.b2,
+          shadow: <BoxShadow>[
             BoxShadow(
               color: c.ink.voidColor,
-              offset: const Offset(2, 2),
+              offset: sh.blockSmall,
               blurRadius: 0,
             ),
           ],
@@ -109,67 +124,103 @@ class OAStamp extends StatelessWidget {
     final colors = context.oaColors;
     final typo = context.oaTypography;
     final spacing = context.oaSpacing;
-    final tone = _resolveTone(colors);
+    final shadows = context.oaShadows;
+    final tone = _resolveTone(colors, spacing, shadows);
 
     final content = Padding(
       padding: _padding(spacing),
       child: Row(
-        mainAxisSize: fullWidth ? MainAxisSize.max : MainAxisSize.min,
+        mainAxisSize: widget.fullWidth ? MainAxisSize.max : MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          if (iconLeading != null) ...<Widget>[
-            OAIcon(iconLeading!, size: OAIconSize.s, color: tone.fg),
+          if (widget.iconLeading != null) ...<Widget>[
+            OAIcon(widget.iconLeading!, size: OAIconSize.s, color: tone.fg),
             SizedBox(width: spacing.s2),
           ],
           Flexible(
             child: Text(
-              label,
+              widget.label,
               style: typo.action.copyWith(color: tone.fg),
               textAlign: TextAlign.center,
               softWrap: false,
+              maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),
           ),
-          if (iconTrailing != null) ...<Widget>[
+          if (widget.iconTrailing != null) ...<Widget>[
             SizedBox(width: spacing.s2),
-            OAIcon(iconTrailing!, size: OAIconSize.s, color: tone.fg),
+            OAIcon(widget.iconTrailing!, size: OAIconSize.s, color: tone.fg),
           ],
         ],
       ),
     );
 
+    // Focus ring : outline 2px ambre, rendu **en plus** de la bordure
+    // habituelle, sans recalculer le layout (Stack + Positioned.fill).
+    final focusOutline = _focused
+        ? Positioned.fill(
+            child: IgnorePointer(
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: colors.amber.base,
+                    width: spacing.borderWidths.b2,
+                  ),
+                ),
+              ),
+            ),
+          )
+        : null;
+
     final decorated = AnimatedOpacity(
       duration: context.oaMotion.durFast,
       opacity: _enabled ? 1.0 : 0.45,
-      child: Container(
-        constraints: BoxConstraints(minHeight: _minHeight(spacing)),
-        decoration: BoxDecoration(
-          color: tone.bg,
-          border: tone.borderWidth > 0
-              ? Border.all(color: tone.border, width: tone.borderWidth)
-              : null,
-          boxShadow: _enabled ? tone.shadow : const <BoxShadow>[],
+      child: ConstrainedBox(
+        constraints: BoxConstraints(
+          minHeight: _minHeight(spacing),
+          minWidth: _minHeight(spacing), // hit target horizontal (WCAG 2.5.5)
         ),
-        child: content,
+        child: Stack(
+          children: <Widget>[
+            Container(
+              decoration: BoxDecoration(
+                color: tone.bg,
+                border: tone.borderWidth > 0
+                    ? Border.all(color: tone.border, width: tone.borderWidth)
+                    : null,
+                boxShadow: _enabled ? tone.shadow : const <BoxShadow>[],
+              ),
+              child: content,
+            ),
+            ?focusOutline,
+          ],
+        ),
       ),
     );
 
     final button = Semantics(
-      label: label,
+      label: widget.label.isEmpty ? null : widget.label,
       button: true,
       enabled: _enabled,
       child: Material(
         type: MaterialType.transparency,
-        child: InkWell(
-          onTap: onPressed,
-          focusColor: colors.amber.base.withValues(alpha: 0.16),
-          highlightColor: colors.amber.base.withValues(alpha: 0.08),
-          splashColor: colors.amber.glow.withValues(alpha: 0.12),
-          child: decorated,
+        child: FocusableActionDetector(
+          enabled: _enabled,
+          onShowFocusHighlight: (focused) {
+            if (focused != _focused) setState(() => _focused = focused);
+          },
+          child: InkWell(
+            onTap: widget.onPressed,
+            highlightColor: colors.amber.base.withValues(alpha: 0.08),
+            splashColor: colors.amber.glow.withValues(alpha: 0.12),
+            child: decorated,
+          ),
         ),
       ),
     );
 
-    return fullWidth ? SizedBox(width: double.infinity, child: button) : button;
+    return widget.fullWidth
+        ? SizedBox(width: double.infinity, child: button)
+        : button;
   }
 }
