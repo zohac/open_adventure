@@ -1,6 +1,6 @@
 # Story 5.4: Atomes UI partagés (`OAStamp`, `OAPill`, `OAIcon`, `OASceneFrame`, `OAItemSprite`)
 
-Status: review
+Status: done
 Epic: 5
 Source ticket: Sprint Change Proposal 2026-05-22 §4.2
 Refs : [epic-5](../planning-artifacts/epic-5.md#story-54-atomes-ui-partagés), [design.md §10 Glossaire / ADR-010](../design.md), [design-system.jsx](../../design_handoff_open_adventure/design-system.jsx), [action-buttons.jsx](../../design_handoff_open_adventure/action-buttons.jsx), [pixel-ui.jsx](../../design_handoff_open_adventure/pixel-ui.jsx)
@@ -116,9 +116,9 @@ Refs : [epic-5](../planning-artifacts/epic-5.md#story-54-atomes-ui-partagés), [
 
 | Atome | Bordure | Ombre | Radius | Hit target |
 |---|---|---|---|---|
-| `OAStamp` primary | b2 ambre | sh-block-md | r0 | 44dp |
-| `OAStamp` secondary | b2 paper-warm | sh-block-sm | r0 | 44dp |
-| `OAStamp` ghost | none | none | r0 | 44dp |
+| `OAStamp` primary | b2 ambre | sh-block-md | r0 | 44 / 48 / 56dp (compact / regular / large) |
+| `OAStamp` secondary | b2 paper-warm | sh-block-sm | r0 | 44 / 48 / 56dp |
+| `OAStamp` ghost | none | none | r0 | 44 / 48 / 56dp |
 | `OAPill` | b1 tone | none | r1 | n/a |
 | `OASceneFrame` | b2 paper-warm + inset b1 | none | r0 | n/a |
 | `OAItemSprite` | b2 paper-warm | sh-block-sm | r0 | 56dp si tap |
