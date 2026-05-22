@@ -3,76 +3,37 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:open_adventure/features/debug/widget_gallery.dart';
-import 'package:open_adventure/l10n/app_localizations.dart';
 import 'package:open_adventure/application/controllers/audio_settings_controller.dart';
 import 'package:open_adventure/application/controllers/game_controller.dart';
 import 'package:open_adventure/application/controllers/home_controller.dart';
+import 'package:open_adventure/application/providers/dependencies.dart';
+import 'package:open_adventure/application/providers/game_state_provider.dart';
 import 'package:open_adventure/application/services/audio_controller.dart';
-import 'package:open_adventure/data/repositories/adventure_repository_impl.dart';
-import 'package:open_adventure/data/repositories/audio_settings_repository_impl.dart';
-import 'package:open_adventure/data/repositories/save_repository_impl.dart';
-import 'package:open_adventure/data/services/motion_normalizer_impl.dart';
-import 'package:open_adventure/domain/usecases/apply_turn.dart';
-import 'package:open_adventure/domain/usecases/apply_turn_goto.dart';
-import 'package:open_adventure/domain/usecases/close_object.dart';
-import 'package:open_adventure/domain/usecases/drop_object.dart';
-import 'package:open_adventure/domain/usecases/evaluate_condition.dart';
-import 'package:open_adventure/domain/usecases/examine.dart';
-import 'package:open_adventure/domain/usecases/extinguish_lamp.dart';
-import 'package:open_adventure/domain/usecases/drink_liquid.dart';
-import 'package:open_adventure/domain/usecases/light_lamp.dart';
-import 'package:open_adventure/domain/usecases/list_available_actions.dart';
-import 'package:open_adventure/domain/usecases/load_audio_settings.dart';
-import 'package:open_adventure/domain/usecases/open_object.dart';
-import 'package:open_adventure/domain/usecases/save_audio_settings.dart';
-import 'package:open_adventure/domain/usecases/take_object.dart';
-import 'package:open_adventure/domain/services/dwarf_system.dart';
-import 'package:open_adventure/features/home/home_page.dart';
 import 'package:open_adventure/core/theme/oa_theme.dart';
+import 'package:open_adventure/data/repositories/audio_settings_repository_impl.dart';
+import 'package:open_adventure/domain/usecases/load_audio_settings.dart';
+import 'package:open_adventure/domain/usecases/save_audio_settings.dart';
+import 'package:open_adventure/features/debug/widget_gallery.dart';
+import 'package:open_adventure/features/home/home_page.dart';
+import 'package:open_adventure/l10n/app_localizations.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  final motionNormalizer = await MotionNormalizerImpl.load();
-  final adventureRepository = AdventureRepositoryImpl();
-  final listAvailableActionsTravel = ListAvailableActionsTravel(
-    adventureRepository,
-    motionNormalizer,
-  );
-  const evaluateCondition = EvaluateConditionImpl();
-  final listAvailableActions = ListAvailableActions(
-    adventureRepository: adventureRepository,
-    travel: listAvailableActionsTravel,
-    evaluateCondition: evaluateCondition,
-  );
-  final examine = ExamineImpl(adventureRepository: adventureRepository);
-  final takeObject = TakeObjectImpl(adventureRepository: adventureRepository);
-  final dropObject = DropObjectImpl(adventureRepository: adventureRepository);
-  final openObject = OpenObjectImpl(adventureRepository: adventureRepository);
-  final closeObject = CloseObjectImpl(adventureRepository: adventureRepository);
-  final lightLamp = LightLampImpl(adventureRepository: adventureRepository);
-  final extinguishLamp = ExtinguishLampImpl(
-    adventureRepository: adventureRepository,
-  );
-  final drinkLiquid = DrinkLiquidImpl(
-    adventureRepository: adventureRepository,
-  );
-  final applyTurnGoto = ApplyTurnGoto(adventureRepository, motionNormalizer);
-  final applyTurn = ApplyTurn(
-    travel: applyTurnGoto,
-    examine: examine,
-    takeObject: takeObject,
-    dropObject: dropObject,
-    openObject: openObject,
-    closeObject: closeObject,
-    lightLamp: lightLamp,
-    extinguishLamp: extinguishLamp,
-    drinkLiquid: drinkLiquid,
-  );
-  final saveRepository = SaveRepositoryImpl();
-  final dwarfSystem = DwarfSystem(adventureRepository);
+  // Container Riverpod racine — résout tous les providers gameplay
+  // (adventureRepository, applyTurn, saveRepository, dwarfSystem, etc.)
+  // exposés par `lib/application/providers/dependencies.dart` (Story 5-6).
+  final container = ProviderContainer();
 
+  // Pré-résoudre les FutureProviders pour que les pages legacy non encore
+  // refondues (cohabitation transitoire) reçoivent un `GameNotifier` prêt
+  // par constructeur. Les pages refondues (5-7/5-9) consommeront
+  // `ref.watch(gameStateProvider)` et géreront elles-mêmes l'AsyncValue.
+  final gameController = await container.read(gameStateProvider.future);
+  final saveRepository = container.read(saveRepositoryProvider);
+
+  // Audio + Home controllers : migrés en Stories 5-10 (audio settings)
+  // et lots futurs (Home). Pour l'instant DI manuelle.
   final audioController = AudioController();
   final audioSettingsRepository = AudioSettingsRepositoryImpl();
   final loadAudioSettings = LoadAudioSettings(audioSettingsRepository);
@@ -84,19 +45,13 @@ Future<void> main() async {
   );
   await audioSettingsController.init();
 
-  final controller = GameController(
-    adventureRepository: adventureRepository,
-    listAvailableActions: listAvailableActions,
-    applyTurn: applyTurn,
-    saveRepository: saveRepository,
-    dwarfSystem: dwarfSystem,
-  );
   final homeController = HomeController(saveRepository: saveRepository);
 
   runApp(
-    ProviderScope(
+    UncontrolledProviderScope(
+      container: container,
       child: OpenAdventureApp(
-        gameController: controller,
+        gameController: gameController,
         audioController: audioController,
         audioSettingsController: audioSettingsController,
         homeController: homeController,
@@ -114,7 +69,7 @@ class OpenAdventureApp extends StatefulWidget {
     required this.homeController,
   });
 
-  final GameController gameController;
+  final GameNotifier gameController;
   final AudioController audioController;
   final AudioSettingsController audioSettingsController;
   final HomeController homeController;
@@ -129,7 +84,8 @@ class _OpenAdventureAppState extends State<OpenAdventureApp> {
     unawaited(widget.audioController.dispose());
     widget.audioSettingsController.dispose();
     widget.homeController.dispose();
-    widget.gameController.dispose();
+    // `gameController` lifecycle is owned by the Riverpod container (cf.
+    // `gameStateProvider` ref.onDispose). No manual dispose needed here.
     super.dispose();
   }
 

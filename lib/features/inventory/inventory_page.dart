@@ -25,7 +25,7 @@ class InventoryPage extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(title: Text(l10n.inventoryTitle)),
         body: ValueListenableBuilder<GameViewState>(
-          valueListenable: controller,
+          valueListenable: controller.listenable,
           builder: (context, state, _) {
             final Game? game = state.game;
             if (state.isLoading || game == null) {

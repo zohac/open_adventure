@@ -1,0 +1,50 @@
+00:04 +273: /Users/simon/dev/open_adventure/test/domain/usecases/list_available_actions_test.dart: ListAvailableActions omits interaction lookup when no object states are tracked
+00:04 +274: /Users/simon/dev/open_adventure/test/domain/usecases/light_lamp_test.dart: LightLampImpl returns already message when lamp already lit
+00:04 +275: /Users/simon/dev/open_adventure/test/domain/usecases/examine_test.dart: ExamineImpl returns not here when object is neither carried nor colocated
+00:04 +276: /Users/simon/dev/open_adventure/test/domain/usecases/apply_turn_test.dart: ApplyTurn delegates DRINK interaction to DrinkLiquid
+00:04 +277: /Users/simon/dev/open_adventure/test/domain/usecases/apply_turn_test.dart: ApplyTurn delegates DRINK interaction to DrinkLiquid
+00:04 +278: /Users/simon/dev/open_adventure/test/domain/usecases/examine_test.dart: ExamineImpl throws when target identifier is null
+00:05 +279: /Users/simon/dev/open_adventure/test/domain/usecases/drop_object_test.dart: DropObjectImpl moves object from inventory to current location with success message
+00:05 +280: /Users/simon/dev/open_adventure/test/domain/usecases/list_available_actions_travel_test.dart: (setUpAll)
+00:05 +281: /Users/simon/dev/open_adventure/test/domain/usecases/list_available_actions_travel_test.dart: (setUpAll)
+00:05 +281: /Users/simon/dev/open_adventure/test/domain/usecases/apply_turn_goto_test.dart: ApplyTurnGoto updates location, increments turns and returns description
+00:05 +282: /Users/simon/dev/open_adventure/test/domain/usecases/open_object_test.dart: OpenObjectImpl opens a supported object when requirements are met
+00:05 +283: /Users/simon/dev/open_adventure/test/domain/usecases/open_object_test.dart: OpenObjectImpl opens a supported object when requirements are met
+00:05 +284: /Users/simon/dev/open_adventure/test/domain/usecases/open_object_test.dart: OpenObjectImpl opens a supported object when requirements are met
+00:05 +285: /Users/simon/dev/open_adventure/test/domain/usecases/extinguish_lamp_test.dart: ExtinguishLampImpl turns the lamp off when it is lit and accessible
+00:05 +286: /Users/simon/dev/open_adventure/test/domain/usecases/list_available_actions_travel_test.dart: ListAvailableActionsTravel returns only travel, deduped and sorted
+00:05 +287: /Users/simon/dev/open_adventure/test/domain/usecases/list_available_actions_travel_test.dart: ListAvailableActionsTravel returns only travel, deduped and sorted
+00:05 +288: /Users/simon/dev/open_adventure/test/domain/usecases/list_available_actions_travel_test.dart: ListAvailableActionsTravel returns only travel, deduped and sorted
+00:05 +289: /Users/simon/dev/open_adventure/test/domain/usecases/list_available_actions_travel_test.dart: ListAvailableActionsTravel returns only travel, deduped and sorted
+00:05 +290: /Users/simon/dev/open_adventure/test/domain/usecases/list_available_actions_travel_test.dart: ListAvailableActionsTravel returns only travel, deduped and sorted
+00:05 +291: /Users/simon/dev/open_adventure/test/domain/usecases/list_available_actions_travel_test.dart: ListAvailableActionsTravel returns only travel, deduped and sorted
+00:05 +292: /Users/simon/dev/open_adventure/test/domain/usecases/list_available_actions_travel_test.dart: ListAvailableActionsTravel returns only travel, deduped and sorted
+00:05 +293: /Users/simon/dev/open_adventure/test/domain/usecases/list_available_actions_travel_test.dart: ListAvailableActionsTravel returns only travel, deduped and sorted
+00:05 +294: /Users/simon/dev/open_adventure/test/domain/usecases/list_available_actions_travel_test.dart: ListAvailableActionsTravel returns only travel, deduped and sorted
+00:05 +295: /Users/simon/dev/open_adventure/test/domain/usecases/list_available_actions_travel_test.dart: ListAvailableActionsTravel returns only travel, deduped and sorted
+00:05 +296: /Users/simon/dev/open_adventure/test/domain/usecases/list_available_actions_travel_test.dart: ListAvailableActionsTravel returns only travel, deduped and sorted
+00:05 +297: /Users/simon/dev/open_adventure/test/domain/usecases/list_available_actions_travel_test.dart: ListAvailableActionsTravel returns only travel, deduped and sorted
+00:05 +298: /Users/simon/dev/open_adventure/test/domain/usecases/list_available_actions_travel_test.dart: ListAvailableActionsTravel returns only travel, deduped and sorted
+00:05 +299: /Users/simon/dev/open_adventure/test/domain/usecases/list_available_actions_travel_test.dart: ListAvailableActionsTravel returns only travel, deduped and sorted
+00:05 +300: /Users/simon/dev/open_adventure/test/domain/usecases/list_available_actions_travel_test.dart: ListAvailableActionsTravel returns only travel, deduped and sorted
+00:05 +301: /Users/simon/dev/open_adventure/test/domain/usecases/list_available_actions_travel_test.dart: ListAvailableActionsTravel returns only travel, deduped and sorted
+00:05 +302: /Users/simon/dev/open_adventure/test/domain/usecases/list_available_actions_travel_test.dart: ListAvailableActionsTravel returns only travel, deduped and sorted
+00:05 +303: /Users/simon/dev/open_adventure/test/domain/usecases/list_available_actions_travel_test.dart: ListAvailableActionsTravel returns only travel, deduped and sorted
+00:05 +304: /Users/simon/dev/open_adventure/test/domain/usecases/list_available_actions_travel_test.dart: ListAvailableActionsTravel returns only travel, deduped and sorted
+00:05 +305: /Users/simon/dev/open_adventure/test/domain/usecases/list_available_actions_travel_test.dart: Synonyms (numeric/text) dedupe to a single canonical option
+00:05 +306: /Users/simon/dev/open_adventure/test/domain/usecases/list_available_actions_travel_test.dart: Synonyms (numeric/text) dedupe to a single canonical option
+00:05 +307: /Users/simon/dev/open_adventure/test/domain/usecases/list_available_actions_travel_test.dart: Synonyms (numeric/text) dedupe to a single canonical option
+00:05 +308: /Users/simon/dev/open_adventure/test/domain/usecases/list_available_actions_travel_test.dart: Synonyms (numeric/text) dedupe to a single canonical option
+00:05 +309: /Users/simon/dev/open_adventure/test/domain/usecases/list_available_actions_travel_test.dart: Labels are UI keys and icons mapped for known motions
+00:05 +310: /Users/simon/dev/open_adventure/test/domain/usecases/list_available_actions_travel_test.dart: IDs are stable and include fromId,destId,motion
+00:05 +311: /Users/simon/dev/open_adventure/test/domain/usecases/list_available_actions_travel_test.dart: Unknown/empty motions are excluded
+00:05 +312: /Users/simon/dev/open_adventure/test/domain/usecases/list_available_actions_travel_test.dart: Filters conditional travel rules (cond_not etc.)
+00:05 +313: /Users/simon/dev/open_adventure/test/domain/usecases/list_available_actions_travel_test.dart: Contextual motions expose the canonical iconography
+00:05 +314: /Users/simon/dev/open_adventure/test/domain/usecases/list_available_actions_travel_test.dart: returns observer fallback when no travel actions are available
+00:05 +315: /Users/simon/dev/open_adventure/test/domain/usecases/list_available_actions_travel_test.dart: includes BACK option when history allows it
+00:05 +316: /Users/simon/dev/open_adventure/test/domain/usecases/list_available_actions_travel_test.dart: BACK option uses oldLc2 when previous location is forced
+00:05 +317: /Users/simon/dev/open_adventure/test/domain/usecases/list_available_actions_travel_test.dart: does not offer BACK when current location forbids it
+00:05 +318: /Users/simon/dev/open_adventure/test/domain/usecases/list_available_actions_travel_test.dart: filters magic words until the flag is unlocked
+00:05 +319: /Users/simon/dev/open_adventure/test/domain/usecases/list_available_actions_travel_test.dart: surfaces magic words only for eligible locations once unlocked
+00:05 +320: /Users/simon/dev/open_adventure/test/domain/usecases/list_available_actions_travel_test.dart: (tearDownAll)
+00:05 +320: All tests passed!

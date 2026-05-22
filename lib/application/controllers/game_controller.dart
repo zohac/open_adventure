@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:open_adventure/domain/entities/game.dart';
 import 'package:open_adventure/domain/entities/location.dart';
 import 'package:open_adventure/domain/entities/game_object.dart';
@@ -100,8 +101,13 @@ class GameViewState {
 const Object _flashMessageSentinel = Object();
 
 /// S2 game orchestrator bridging domain use cases and persistence.
-class GameController extends ValueNotifier<GameViewState> {
-  GameController({
+///
+/// Migrated to [StateNotifier] by Story 5-6 (Epic 5 Foundation Refresh).
+/// The turn loop (1→11) documented in `docs/project-context.md` is preserved
+/// verbatim — only the state-exposure mechanism changed (`value` →
+/// [state]).
+class GameNotifier extends StateNotifier<GameViewState> {
+  GameNotifier({
     required AdventureRepository adventureRepository,
     required ListAvailableActions listAvailableActions,
     required ApplyTurn applyTurn,
@@ -124,11 +130,39 @@ class GameController extends ValueNotifier<GameViewState> {
   static const int _maxJournalEntries = 200;
   static const int _lampWarningThreshold = 30;
 
+  // ───────────────────────────────────────────────────────────
+  // Transitional ValueListenable adapter (Story 5-6 AC10).
+  // Removed when Stories 5-7 / 5-9 migrate their pages to
+  // `ref.watch(gameStateProvider)`.
+  // ───────────────────────────────────────────────────────────
+  _GameNotifierListenable? _listenableAdapter;
+
+  /// Adapter exposing the current state as a [ValueListenable] for pages
+  /// not yet refondues to consume Riverpod directly.
+  @Deprecated(
+    'Migrate to ref.watch(gameStateProvider). Removed when 5-7/5-9 land.',
+  )
+  ValueListenable<GameViewState> get listenable =>
+      _listenableAdapter ??= _GameNotifierListenable(this, state);
+
+  /// Legacy alias for [state] — preserves `controller.value` call sites.
+  @Deprecated('Use state instead. Removed when 5-7/5-9 land.')
+  GameViewState get value => state;
+
+  /// Test-only setter that seeds the internal state. Existing tests that
+  /// historically did `controller.value = ...` (when the controller still
+  /// extended `ValueNotifier`) call this. Removed when Stories 5-7/5-9 land
+  /// and tests are rewritten around `ProviderContainer`.
+  @visibleForTesting
+  set debugState(GameViewState newState) {
+    state = newState;
+  }
+
   /// Initializes the controller by loading the initial game and computing
   /// the first batch of actions. Also triggers an autosave so "Continue"
   /// can resume immediately.
   Future<void> init() async {
-    value = value.copyWith(isLoading: true);
+    state = state.copyWith(isLoading: true);
 
     final List<GameObject> objects = await _adventureRepository
         .getGameObjects();
@@ -149,7 +183,7 @@ class GameController extends ValueNotifier<GameViewState> {
         ? const <String>[]
         : <String>[description];
 
-    value = GameViewState(
+    state = GameViewState(
       game: initialGame,
       locationTitle: location.name,
       locationMapTag: location.mapTag,
@@ -166,7 +200,7 @@ class GameController extends ValueNotifier<GameViewState> {
 
   /// Executes the chosen [option], updates the state and triggers autosave.
   Future<void> perform(ActionOption option) async {
-    final Game? currentGame = value.game;
+    final Game? currentGame = state.game;
     if (currentGame == null) {
       throw StateError('Cannot perform action before init() succeeds.');
     }
@@ -180,10 +214,10 @@ class GameController extends ValueNotifier<GameViewState> {
             ? location.longDescription!
             : location.shortDescription ?? '';
         final updatedJournal = _appendJournal(
-          value.journal,
+          state.journal,
           [description].where((m) => m.isNotEmpty).toList(),
         );
-        value = value.copyWith(
+        state = state.copyWith(
           locationDescription: description,
           journal: List.unmodifiable(updatedJournal),
           locationTitle: location.name,
@@ -241,7 +275,7 @@ class GameController extends ValueNotifier<GameViewState> {
       await _listAvailableActions(newGame),
       newGame,
     );
-    String description = value.locationDescription;
+    String description = state.locationDescription;
     String? flashMessage;
     if (locationChanged) {
       if (messages.isNotEmpty) {
@@ -258,9 +292,9 @@ class GameController extends ValueNotifier<GameViewState> {
     } else if (messages.isNotEmpty) {
       flashMessage = messages.join('\n');
     }
-    final List<String> updatedJournal = _appendJournal(value.journal, messages);
+    final List<String> updatedJournal = _appendJournal(state.journal, messages);
 
-    value = value.copyWith(
+    state = state.copyWith(
       game: newGame,
       locationTitle: location.name,
       locationMapTag: location.mapTag,
@@ -280,7 +314,7 @@ class GameController extends ValueNotifier<GameViewState> {
   /// Recomputes the available actions for the current game without changing
   /// other presentation data.
   Future<void> refreshActions() async {
-    final Game? game = value.game;
+    final Game? game = state.game;
     if (game == null) {
       return;
     }
@@ -288,13 +322,13 @@ class GameController extends ValueNotifier<GameViewState> {
       await _listAvailableActions(game),
       game,
     );
-    value = value.copyWith(actions: List.unmodifiable(actions));
+    state = state.copyWith(actions: List.unmodifiable(actions));
   }
 
   /// Clears the pending flash message if the presentation layer consumed it.
   void clearFlashMessage() {
-    if (value.flashMessage != null) {
-      value = value.copyWith(flashMessage: null);
+    if (state.flashMessage != null) {
+      state = state.copyWith(flashMessage: null);
     }
   }
 
@@ -390,7 +424,18 @@ class GameController extends ValueNotifier<GameViewState> {
       for (final object in objects) object.id: object,
     });
   }
+
+  @override
+  void dispose() {
+    _listenableAdapter?.dispose();
+    super.dispose();
+  }
 }
+
+/// Backward-compatible alias for [GameNotifier]. Removed when Stories
+/// 5-7 / 5-9 finish migrating the Presentation layer.
+@Deprecated('Use GameNotifier. Removed when 5-7/5-9 land.')
+typedef GameController = GameNotifier;
 
 class _LampTickOutcome {
   _LampTickOutcome({
@@ -400,4 +445,27 @@ class _LampTickOutcome {
 
   final Game game;
   final List<String> messages;
+}
+
+/// Bridges [GameNotifier.state] changes to the legacy [ValueListenable]
+/// contract consumed by widgets not yet refondues.
+class _GameNotifierListenable extends ValueNotifier<GameViewState> {
+  _GameNotifierListenable(this._notifier, GameViewState initial)
+      : super(initial) {
+    _removeListener = _notifier.addListener(_onStateChanged,
+        fireImmediately: false);
+  }
+
+  final GameNotifier _notifier;
+  late final RemoveListener _removeListener;
+
+  void _onStateChanged(GameViewState next) {
+    value = next;
+  }
+
+  @override
+  void dispose() {
+    _removeListener();
+    super.dispose();
+  }
 }

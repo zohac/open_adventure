@@ -34,7 +34,7 @@ void main() {
         saveRepository: _MockSaveRepository(),
         dwarfSystem: _MockDwarfSystem(),
       );
-      controller.value = controller.value.copyWith(isLoading: false);
+      controller.debugState = controller.value.copyWith(isLoading: false);
     });
 
     tearDown(() {
@@ -71,7 +71,7 @@ void main() {
 
       await tester.pumpAndSettle();
 
-      controller.value = controller.value.copyWith(
+      controller.debugState = controller.value.copyWith(
         flashMessage: 'You swing the sword.',
       );
 

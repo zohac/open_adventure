@@ -67,7 +67,7 @@ class _AdventurePageState extends State<AdventurePage> {
       child: Scaffold(
         appBar: AppBar(
           title: ValueListenableBuilder<GameViewState>(
-            valueListenable: widget.controller,
+            valueListenable: widget.controller.listenable,
           builder: (context, state, _) {
             final l10n = AppLocalizations.of(context);
             final title = state.locationTitle.isEmpty
@@ -98,7 +98,7 @@ class _AdventurePageState extends State<AdventurePage> {
         ],
       ),
         body: ValueListenableBuilder<GameViewState>(
-          valueListenable: widget.controller,
+          valueListenable: widget.controller.listenable,
           builder: (context, state, _) {
             final l10n = AppLocalizations.of(context);
             if (state.isLoading) {

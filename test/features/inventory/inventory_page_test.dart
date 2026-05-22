@@ -41,7 +41,7 @@ class _TestGameController extends GameController {
   @override
   Future<void> perform(ActionOption option) async {
     performed = option;
-    value = value.copyWith(flashMessage: 'Journal entry for ${option.verb}');
+    debugState = value.copyWith(flashMessage: 'Journal entry for ${option.verb}');
   }
 }
 
@@ -151,7 +151,7 @@ void main() {
     controller.debugSeedObjectIndex(const <GameObject>[
       GameObject(id: 10, name: 'LAMP'),
     ]);
-    controller.value = GameViewState(
+    controller.debugState = GameViewState(
       game: const Game(
         loc: 1,
         oldLoc: 1,
@@ -207,7 +207,7 @@ void main() {
     controller.debugSeedObjectIndex(const <GameObject>[
       GameObject(id: 11, name: 'BOTTLE'),
     ]);
-    controller.value = GameViewState(
+    controller.debugState = GameViewState(
       game: const Game(
         loc: 1,
         oldLoc: 1,
@@ -239,7 +239,7 @@ void main() {
   testWidgets('shows empty placeholder when nothing is carried', (
     tester,
   ) async {
-    controller.value = GameViewState(
+    controller.debugState = GameViewState(
       game: const Game(
         loc: 1,
         oldLoc: 1,
@@ -269,7 +269,7 @@ void main() {
     controller.debugSeedObjectIndex(const <GameObject>[
       GameObject(id: 25, name: 'COINS'),
     ]);
-    controller.value = GameViewState(
+    controller.debugState = GameViewState(
       game: const Game(
         loc: 1,
         oldLoc: 1,

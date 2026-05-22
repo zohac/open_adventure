@@ -43,30 +43,30 @@ class _FlashMessageListenerState extends State<FlashMessageListener> {
   @override
   void initState() {
     super.initState();
-    widget.controller.addListener(_handleStateChange);
+    widget.controller.listenable.addListener(_handleStateChange);
   }
 
   @override
   void didUpdateWidget(covariant FlashMessageListener oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.controller != widget.controller) {
-      oldWidget.controller.removeListener(_handleStateChange);
+      oldWidget.controller.listenable.removeListener(_handleStateChange);
       _lastHandledMessage = null;
       _visibleMessage = null;
       _cancelAutoDismiss();
-      widget.controller.addListener(_handleStateChange);
+      widget.controller.listenable.addListener(_handleStateChange);
     }
   }
 
   @override
   void dispose() {
-    widget.controller.removeListener(_handleStateChange);
+    widget.controller.listenable.removeListener(_handleStateChange);
     _cancelAutoDismiss();
     super.dispose();
   }
 
   void _handleStateChange() {
-    final String? message = widget.controller.value.flashMessage;
+    final String? message = widget.controller.listenable.value.flashMessage;
     if (message == null) {
       _lastHandledMessage = null;
       return;
@@ -80,7 +80,7 @@ class _FlashMessageListenerState extends State<FlashMessageListener> {
       if (!mounted) {
         return;
       }
-      if (widget.controller.value.flashMessage == message) {
+      if (widget.controller.listenable.value.flashMessage == message) {
         widget.controller.clearFlashMessage();
       }
     });
