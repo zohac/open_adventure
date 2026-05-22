@@ -1,0 +1,118 @@
+/* ============================================================
+   OPEN ADVENTURE — Motion
+   Keyframes chunky pixel-stepés (jamais d'easing fluide).
+   Préfixe `oa-` (Open Adventure) pour éviter collisions.
+   ============================================================ */
+
+/* ── 1 · STAMP PRESS — feedback tap sur bouton tampon ─────── */
+@keyframes oa-stamp-press {
+  0%, 40%        { transform: translate(0, 0);     box-shadow: 3px 3px 0 0 var(--c-ink-void); }
+  50%            { transform: translate(3px, 3px); box-shadow: 0 0 0 0 var(--c-ink-void); }
+  65%, 100%      { transform: translate(0, 0);     box-shadow: 3px 3px 0 0 var(--c-ink-void); }
+}
+
+/* ── 2 · LAMP PULSE WARNING — lanterne faible, halo rouge ── */
+@keyframes oa-lamp-pulse-warn {
+  0%, 100%       { box-shadow: 3px 3px 0 0 var(--c-ink-void), 0 0 14px 2px rgba(212,74,58,0.35); }
+  50%            { box-shadow: 3px 3px 0 0 var(--c-ink-void), 0 0 22px 5px rgba(212,74,58,0.75); }
+}
+
+/* ── 3 · LAMP FLICKER — lanterne allumée, vibration douce ── */
+@keyframes oa-lamp-flicker {
+  0%, 100%       { box-shadow: 3px 3px 0 0 var(--c-ink-void), 0 0 16px 3px rgba(240,160,64,0.40); }
+  30%            { box-shadow: 3px 3px 0 0 var(--c-ink-void), 0 0 20px 4px rgba(240,160,64,0.55); }
+  60%            { box-shadow: 3px 3px 0 0 var(--c-ink-void), 0 0 18px 3px rgba(240,160,64,0.45); }
+}
+
+/* ── 4 · MAGIC REVEAL — incantation surfaces ───────────────── */
+@keyframes oa-magic-reveal {
+  0%             { opacity: 0; transform: translateY(-6px); filter: brightness(2); }
+  25%            { opacity: 1; transform: translateY(2px);  filter: brightness(1.6); }
+  60%, 100%      { opacity: 1; transform: translateY(0);     filter: brightness(1); }
+}
+
+/* ── 5 · MAGIC PULSE — vibrato runic permanent (subtil) ──── */
+@keyframes oa-magic-pulse {
+  0%, 100%       { box-shadow: 3px 3px 0 0 #3d2a55, 0 0 0 0 rgba(152,112,196,0.40); }
+  50%            { box-shadow: 3px 3px 0 0 #3d2a55, 0 0 0 4px rgba(152,112,196,0.0); }
+}
+
+/* ── 6 · DEATH TILT — lanterne tombe, slash apparaît ──────── */
+@keyframes oa-death-tilt {
+  0%             { transform: rotate(0deg); }
+  40%            { transform: rotate(-26deg); }
+  55%            { transform: rotate(-18deg); }
+  70%, 100%      { transform: rotate(-22deg); }
+}
+@keyframes oa-death-slash {
+  0%, 40%        { opacity: 0; transform: rotate(-30deg) scaleX(0); }
+  55%            { opacity: 1; transform: rotate(-30deg) scaleX(1); }
+  100%           { opacity: 0.8; transform: rotate(-30deg) scaleX(1); }
+}
+
+/* ── 7 · FLASH SLIDE IN — bandeau de notification ─────────── */
+@keyframes oa-flash-slide-in {
+  0%             { opacity: 0; transform: translateY(-10px); box-shadow: 0 0 0 0 var(--c-ink-void); }
+  60%            { opacity: 1; transform: translateY(2px);   box-shadow: 3px 5px 0 0 var(--c-ink-void); }
+  100%           { opacity: 1; transform: translateY(0);     box-shadow: 3px 3px 0 0 var(--c-ink-void); }
+}
+
+/* ── 8 · SHEET SLIDE UP — bottom sheet (item action) ──────── */
+@keyframes oa-sheet-slide-up {
+  0%             { transform: translateY(100%); }
+  100%           { transform: translateY(0); }
+}
+
+/* ── 9 · SCRIM FADE IN ────────────────────────────────────── */
+@keyframes oa-scrim-fade {
+  0%             { opacity: 0; }
+  100%           { opacity: 1; }
+}
+
+/* ── 10 · TREASURE SPARKLE — éclats sur trésor découvert ── */
+@keyframes oa-sparkle {
+  0%, 100%       { opacity: 0; transform: scale(0.4); }
+  40%            { opacity: 1; transform: scale(1.2); }
+  60%            { opacity: 1; transform: scale(1.0); }
+}
+
+/* ── 11 · SCORE ROLL — +N pts qui flotte vers le haut ────── */
+@keyframes oa-score-pop {
+  0%             { opacity: 0; transform: translateY(0)   scale(0.8); }
+  30%            { opacity: 1; transform: translateY(-6px) scale(1.2); }
+  70%            { opacity: 1; transform: translateY(-12px) scale(1.0); }
+  100%           { opacity: 0; transform: translateY(-20px) scale(0.9); }
+}
+
+/* ── 12 · TAP HALO — onde concentrique sur tap ──────────── */
+@keyframes oa-tap-halo {
+  0%             { opacity: 0.8; transform: scale(0.5); }
+  100%           { opacity: 0;   transform: scale(2.2); }
+}
+
+/* ── 13 · DOT BLINK — indicateur de tour actif ─────────── */
+@keyframes oa-dot-blink {
+  0%, 100%       { opacity: 0.3; }
+  50%            { opacity: 1; }
+}
+
+
+/* ── Utility classes — appliquer une keyframe en boucle ──── */
+.oa-anim-stamp-press     { animation: oa-stamp-press     2.4s steps(8, end) infinite; }
+.oa-anim-lamp-flicker    { animation: oa-lamp-flicker    1.8s steps(3, end) infinite; }
+.oa-anim-lamp-pulse-warn { animation: oa-lamp-pulse-warn 1.4s steps(8, end) infinite; }
+.oa-anim-magic-reveal    { animation: oa-magic-reveal    2.6s steps(6, end) infinite; }
+.oa-anim-magic-pulse     { animation: oa-magic-pulse     2.0s ease-out      infinite; }
+.oa-anim-death-tilt      { animation: oa-death-tilt      3.2s steps(8, end) infinite; }
+.oa-anim-death-slash     { animation: oa-death-slash     3.2s steps(8, end) infinite; }
+.oa-anim-flash-slide     { animation: oa-flash-slide-in  2.8s steps(8, end) infinite; }
+.oa-anim-sheet-slide     { animation: oa-sheet-slide-up  2.4s steps(8, end) infinite; }
+.oa-anim-sparkle         { animation: oa-sparkle         1.6s steps(8, end) infinite; }
+.oa-anim-score-pop       { animation: oa-score-pop       2.0s steps(8, end) infinite; }
+.oa-anim-tap-halo        { animation: oa-tap-halo        1.4s steps(6, end) infinite; }
+.oa-anim-dot-blink       { animation: oa-dot-blink       1.0s steps(2, end) infinite; }
+
+/* Reduced motion : flatten everything */
+@media (prefers-reduced-motion: reduce) {
+  [class*="oa-anim-"] { animation: none !important; }
+}

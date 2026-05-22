@@ -1,9 +1,26 @@
 # Story 4.7: AdventurePage v2 — StatusBar (score/tours/lampe) + groupes actions
 
-Status: ready-for-dev
+Status: blocked-by-epic-5
 Epic: 4
 Source ticket: ADVT‑S4‑07 (`docs/EXEC_S4.md`)
-Refs : [UX_SCREENS](../UX_SCREENS.md), [project-context](../project-context.md)
+Refs : [design.md](../design.md), [features/adventure.md](../features/adventure.md), [project-context](../project-context.md)
+~~Refs obsolètes~~ : ~~[UX_SCREENS](../UX_SCREENS.md)~~ (superseded 2026-05-22)
+
+---
+## 📝 Amendement Design Handoff — 2026-05-22
+
+Cette story est antérieure au handoff design. Avant `dev-story`, intégrer :
+- **DA** : palette ambre/encre dark-only, fonts Pixelify Sans + Silkscreen + DM Sans (cf. [`docs/design.md`](../design.md) §4 ADR-003/004 ; [`tokens.css`](../../design_handoff_open_adventure/tokens.css))
+- **Mockup visuel** : [`design_handoff_open_adventure/screens.jsx`](../../design_handoff_open_adventure/screens.jsx) (AdventureScreen) + [`action-buttons.jsx`](../../design_handoff_open_adventure/action-buttons.jsx) + [`overflow-actions.jsx`](../../design_handoff_open_adventure/overflow-actions.jsx)
+- **Spec feature** : [`docs/features/adventure.md`](../features/adventure.md)
+- **Atomes UI** : `OAStamp` pour actions, `OAPill` pour StatusBar, `OAIcon` pour batterie lampe (livrés par Epic 5 story 5-4)
+- **Motion** : `Curves.stepN` via `OAAnimations` (ADR-006), `MediaQuery.disableAnimations` respecté
+- **Path target** : `lib/features/adventure/widgets/status_bar.dart` et `lib/features/adventure/adventure_page.dart` (post-réorg 5-2)
+- **State** : `ConsumerWidget` + `gameStateProvider` (post-migration 5-6/5-7) ; plus de `ValueListenableBuilder<GameViewState>`
+
+> ⚠️ **Bloquant** : cette story ne peut entrer en dev qu'après livraison de l'Epic 5 — notamment 5-7 (Migration AdventurePage Riverpod + reskin) qui prépare le terrain. La StatusBar 4-7 sera **un complément** à l'AdventurePage refondue en 5-7.
+> La section « Acceptance Criteria » ci-dessous peut nécessiter des compléments — à revoir lors du `Create Story` / `Validate Story`.
+---
 
 ## Story
 

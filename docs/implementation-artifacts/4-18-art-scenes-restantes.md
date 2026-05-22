@@ -1,9 +1,22 @@
 # Story 4.18: Art — compléter les scènes restantes (Asset Bible) + QA finale 16-bit
 
-Status: ready-for-dev
+Status: blocked-by-epic-5
 Epic: 4
 Source ticket: ADVT‑S4‑18 (`docs/EXEC_S4.md`)
-Refs : [ART_ASSET_BIBLE](../ART_ASSET_BIBLE.md), [VISUAL_STYLE_GUIDE](../VISUAL_STYLE_GUIDE.md), [asset-inventory](../asset-inventory.md)
+Refs : [design.md](../design.md), [ART_ASSET_BIBLE](../ART_ASSET_BIBLE.md), [asset-inventory](../asset-inventory.md)
+~~Refs obsolètes~~ : ~~[VISUAL_STYLE_GUIDE](../VISUAL_STYLE_GUIDE.md)~~ (superseded 2026-05-22)
+
+---
+## 📝 Amendement Design Handoff — 2026-05-22
+
+Cette story est antérieure au handoff design. Avant `dev-story`, intégrer :
+- **Palette imposée** : encre profonde × halo ambre × papier vieilli (cf. [`docs/design.md`](../design.md) §4 ADR-003 ; [`tokens.css`](../../design_handoff_open_adventure/tokens.css))
+- **Cohérence avec 3-23** : les scènes restantes doivent rester cohérentes avec les 15-20 scènes prioritaires livrées par 3-23 (palette, dither, contraste)
+- **QA finale** : check WCAG AA, lisibilité ×1/×2/×3, alignement avec ADR-010 (tiers 1 — scènes 16:9 320×180 WebP)
+- **ART_ASSET_BIBLE.md** doit être mis à jour pour refléter ADR-010 (3 tiers)
+
+> ⚠️ **Bloquant** : cette story ne peut entrer en dev qu'après livraison de 3-23 (calage palette) et Epic 5 story 5-3 (tokens).
+---
 
 ## Story
 

@@ -1,5 +1,9 @@
 # Annexe Design — Mobile UX, Pixel‑Art, Audio (normatif)
 
+> **⚠️ SUPERSEDED — 2026-05-22.** Ce document est conservé pour historique mais n'est plus normatif.
+> Source de vérité design : [`docs/design.md`](./design.md) + [`docs/features/`](./features/).
+> Le contenu ci-dessous peut contredire les ADRs en vigueur — ne pas implémenter directement contre.
+
 Statut: annexe normative rattachée à `docs/CONVERSION_SPEC.md` (§17–§19). En cas d’écart, aligner le code et les assets sur ce document et la spec.
 
 Règle d’or: 3–7 choix vraiment utiles à chaque instant, zéro clavier (incantations traitées selon DDR-001 du `docs/Dossier_de_Référence.md`).

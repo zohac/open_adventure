@@ -19,9 +19,12 @@
 # Story Status:
 #   - backlog: Story only exists in epic file
 #   - ready-for-dev: Story file created in stories folder
+#   - blocked-by-epic-5: Story file existe mais dev bloqué jusqu'à livraison Epic 5 Foundation Refresh
+#                         (introduit 2026-05-22 via Correct Course suite au design handoff)
 #   - in-progress: Developer actively working on implementation
 #   - review: Ready for code review (via Dev's code-review workflow)
 #   - done: Story completed
+#   - done (#supersedée par 5-x): Story livrée mais sera refondue dans Epic 5 (inline comment)
 #
 # Retrospective Status:
 #   - optional: Can be completed but not required
@@ -91,7 +94,7 @@ development_status:
   2-7-tests-save-repository: done
   2-8-game-controller: done
   2-9-tests-game-controller-autosave: done
-  2-10-adventure-page-v0: done
+  2-10-adventure-page-v0: done  # supersedée par 5-7 (Epic 5 Foundation Refresh)
   2-11-widget-tests-adventure-page: done
   2-12-canonical-motions-table: done
   2-13-fallback-observer-cul-de-sac: done
@@ -100,8 +103,8 @@ development_status:
   2-16-slot-image-location-image-key: done
   2-17-audio-controller-bootstrap: done
   2-18-settings-volumes-persistes: done
-  2-19-theme-tokens-baseline: done
-  2-20-home-page-v0: done
+  2-19-theme-tokens-baseline: done  # supersedée par 5-3 (Epic 5 Foundation Refresh)
+  2-20-home-page-v0: done  # supersedée par 5-8 (Epic 5 Foundation Refresh)
   2-21-mouvement-back-return: done
   2-22-tests-non-regression-back: done
   2-23-filtrer-incantations: done
@@ -125,16 +128,16 @@ development_status:
   3-11-dwarf-system-tick: done
   3-12-compute-score-partial: done
   3-13-integrate-interactions-apply-turn: done
-  3-14-game-controller-journal-lampe-nains: done
-  3-15-inventory-page: done
-  3-16-map-page-v1: ready-for-dev
-  3-17-journal-view: ready-for-dev
+  3-14-game-controller-journal-lampe-nains: done  # GameController refondu en 5-6 (StateNotifier Riverpod)
+  3-15-inventory-page: done  # supersedée par 5-9 (Epic 5 Foundation Refresh)
+  3-16-map-page-v1: blocked-by-epic-5  # design handoff 2026-05-22 ; nécessite atomes UI + Riverpod
+  3-17-journal-view: blocked-by-epic-5  # design handoff 2026-05-22 ; nécessite atomes UI + Riverpod
   3-18-accessibilite-de-base: ready-for-dev
   3-19-lint-couverture-domain-85: ready-for-dev
-  3-20-images-scene-location-image: ready-for-dev
+  3-20-images-scene-location-image: blocked-by-epic-5  # ADR-010 3 tiers ; dépend 5-12
   3-21-audio-zones-bgm-crossfade: ready-for-dev
   3-22-audio-sfx-interaction-throttle: ready-for-dev
-  3-23-art-15-20-scenes-prioritaires: ready-for-dev
+  3-23-art-15-20-scenes-prioritaires: blocked-by-epic-5  # palette imposée ; dépend 5-3
   epic-3-retrospective: optional
 
   # ──────────────────────────────────────────────────────────────────
@@ -145,19 +148,42 @@ development_status:
   4-2-detection-fins-de-jeu: ready-for-dev
   4-3-systeme-indices: ready-for-dev
   4-4-save-repository-complet: ready-for-dev
-  4-5-saves-page: ready-for-dev
-  4-6-settings-page-theme-langue: ready-for-dev
-  4-7-adventure-page-v2-status-bar: ready-for-dev
-  4-8-end-game-page: ready-for-dev
+  4-5-saves-page: blocked-by-epic-5  # design handoff 2026-05-22 ; nécessite atomes UI + Riverpod
+  4-6-settings-page-theme-langue: blocked-by-epic-5  # AC1 (thème) à réécrire ; ADR-003 dark-only
+  4-7-adventure-page-v2-status-bar: blocked-by-epic-5  # design handoff 2026-05-22 ; complète 5-7
+  4-8-end-game-page: blocked-by-epic-5  # mockups endgame.jsx + death.jsx ; nécessite atomes UI
   4-9-i18n-finale: ready-for-dev
   4-10-accessibilite-finale: ready-for-dev
   4-11-job-ci-data-validate: ready-for-dev
   4-12-perf-hardening: ready-for-dev
   4-13-resilience-sauvegardes: ready-for-dev
   4-14-lint-couverture-cibles: ready-for-dev
-  4-15-images-precache-toggle: ready-for-dev
+  4-15-images-precache-toggle: blocked-by-epic-5  # ADR-010 3 tiers ; dépend 5-12
   4-16-audio-preload-ducking: ready-for-dev
   4-17-audio-settings-avances: ready-for-dev
-  4-18-art-scenes-restantes: ready-for-dev
-  4-19-home-page-v1: ready-for-dev
+  4-18-art-scenes-restantes: blocked-by-epic-5  # palette imposée ; dépend 3-23 + 5-3
+  4-19-home-page-v1: blocked-by-epic-5  # devient polish post-5-8 (HomePage refondue)
   epic-4-retrospective: optional
+
+  # ──────────────────────────────────────────────────────────────────
+  # Epic 5 — Foundation Refresh (créé 2026-05-22 via Correct Course)
+  # Migration ValueNotifier→Riverpod + lib/presentation/→lib/features/ + design system
+  # Inséré entre clôture epic-3 reste et démarrage epic-4
+  # ──────────────────────────────────────────────────────────────────
+  epic-5: backlog
+  5-1-riverpod-foundation: backlog
+  5-2-reorganisation-features: backlog
+  5-3-port-tokens-design-system: backlog
+  5-4-atomes-ui-partages: backlog
+  5-5-motion-system: backlog
+  5-6-migration-game-controller: backlog
+  5-7-migration-adventure-page: backlog
+  5-8-migration-home-page: backlog
+  5-9-migration-inventory-page: backlog
+  5-10-migration-audio-settings: backlog
+  5-11-magic-word-surface: backlog
+  5-12-pipeline-assets-3-tiers: backlog
+  5-13-audit-fidelite-postmigration: backlog
+  5-14-reecriture-architecture-md: backlog
+  5-15-reecriture-project-context-md: backlog
+  epic-5-retrospective: optional

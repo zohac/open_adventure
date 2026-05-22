@@ -1,9 +1,25 @@
 # Story 3.17: JournalView — fil des évènements append/trim/scroll
 
-Status: ready-for-dev
+Status: blocked-by-epic-5
 Epic: 3
 Source ticket: ADVT‑S3‑17 (`docs/EXEC_S3.md`)
-Refs : [project-context](../project-context.md), [architecture](../architecture.md), [UX_SCREENS](../UX_SCREENS.md)
+Refs : [design.md](../design.md), [project-context](../project-context.md), [architecture](../architecture.md)
+~~Refs obsolètes~~ : ~~[UX_SCREENS](../UX_SCREENS.md)~~ (superseded 2026-05-22)
+
+---
+## 📝 Amendement Design Handoff — 2026-05-22
+
+Cette story est antérieure au handoff design. Avant `dev-story`, intégrer :
+- **DA** : palette ambre/encre dark-only, fonts Pixelify/Silkscreen + DM Sans (cf. [`docs/design.md`](../design.md) §4 ADR-003/004 ; [`tokens.css`](../../design_handoff_open_adventure/tokens.css))
+- **Mockup visuel** : [`design_handoff_open_adventure/journal.jsx`](../../design_handoff_open_adventure/journal.jsx)
+- **Atomes UI** : `OAStamp` pour filtres, `OAPill` pour catégories, `OAIcon` pour entrées (livrés par Epic 5 story 5-4)
+- **Motion** : auto-scroll respecte `Curves.stepN` (ADR-006) et `MediaQuery.disableAnimations`
+- **Path target** : `lib/features/journal/journal_view.dart` (post-réorg 5-2)
+- **State** : `ConsumerWidget` + sélecteur `gameStateProvider.select((s) => s.journal)` (post-migration 5-6)
+
+> ⚠️ **Bloquant** : cette story ne peut entrer en dev qu'après livraison de l'Epic 5 (5-2, 5-3, 5-4, 5-5, 5-6).
+> Les AC ci-dessous peuvent nécessiter des compléments — à revoir lors du `Create Story` / `Validate Story`.
+---
 
 ## Story
 

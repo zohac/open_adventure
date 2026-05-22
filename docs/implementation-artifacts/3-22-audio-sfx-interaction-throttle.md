@@ -3,7 +3,19 @@
 Status: ready-for-dev
 Epic: 3
 Source ticket: ADVT‑S3‑22 (`docs/EXEC_S3.md`)
-Refs : [project-context](../project-context.md), [architecture](../architecture.md), [asset-inventory](../asset-inventory.md)
+Refs : [design.md](../design.md), [project-context](../project-context.md), [architecture](../architecture.md), [asset-inventory](../asset-inventory.md)
+
+---
+## 📝 Amendement Design Handoff — 2026-05-22
+
+Intégrer durant le dev :
+- **Stack audio confirmée** : `just_audio` + `audio_session` (cf. [`docs/design.md`](../design.md) §3.1 patché 2026-05-22)
+- **SFX list** : tap stamp, take, drop, lamp on/off, dwarf alert, treasure sparkle, magic word, death (cf. [`docs/design.md`](../design.md) §8)
+- **Throttle 150 ms** : préservé (cf. `project-context.md` §Performance Rules)
+- **Migration** : si l'Epic 5 story 5-10 est déjà livrée, `AudioController` est consommé via `audioControllerProvider`
+
+> ℹ️ Non bloquant : la story peut progresser indépendamment d'Epic 5.
+---
 
 ## Story
 

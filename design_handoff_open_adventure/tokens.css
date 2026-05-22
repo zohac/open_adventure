@@ -1,0 +1,151 @@
+/* ============================================================
+   OPEN ADVENTURE — Design Tokens
+   Theme: "Carnet d'explorateur sous la lanterne"
+   Mode: Dark only (cave / spelunking)
+   ============================================================ */
+
+:root {
+  /* ── COLOR · INK (deep cave backgrounds) ──────────────── */
+  --c-ink-void:     #06101a;   /* deepest darkness, full-screen base */
+  --c-ink-deep:     #0d1d2d;   /* primary background */
+  --c-ink-mid:      #16304a;   /* panels, cards */
+  --c-ink-raised:   #1f4267;   /* raised surface, hover */
+  --c-ink-line:     #2a5478;   /* subtle borders */
+  --c-ink-hairline: #1a3a5a;   /* divider lines */
+
+  /* ── COLOR · TEAL (cool secondary, mist / depth) ──────── */
+  --c-teal-mist:    #5a8fa8;   /* secondary text, idle icons */
+  --c-teal-deep:    #2a4d6e;   /* secondary surface tint */
+  --c-teal-glow:    #4ec5b8;   /* cool interactive (links, toggles) */
+
+  /* ── COLOR · PAPER (warm cream, primary text on dark) ─── */
+  --c-paper-bright: #faf2dd;   /* H1/display, max contrast */
+  --c-paper-warm:   #f0e4cc;   /* body text */
+  --c-paper-faded:  #c8b896;   /* tertiary text, captions */
+  --c-paper-ink:    #7a6a4e;   /* faded ink, watermarks */
+
+  /* ── COLOR · AMBER (lantern accent — signature) ───────── */
+  --c-amber-glow:   #ffc070;   /* lantern highlight */
+  --c-amber:        #f0a040;   /* primary accent */
+  --c-amber-deep:   #c97432;   /* pressed amber */
+  --c-amber-shadow: #8a4a1a;   /* amber shadow tone */
+  --c-amber-halo:   rgba(240,160,64,0.22); /* lamp light wash */
+
+  /* ── COLOR · SEMANTIC ─────────────────────────────────── */
+  --c-treasure:     #d4a84a;   /* gold, treasures, score */
+  --c-danger:       #d44a3a;   /* hostile, danger, low lamp */
+  --c-success:      #6ea34a;   /* discovery, success */
+  --c-magic:        #9870c4;   /* incantations, mystical */
+
+  /* ── TYPE · FAMILIES ──────────────────────────────────── */
+  --f-display: "Pixelify Sans", "Press Start 2P", monospace;
+  --f-caps:    "Silkscreen", "Pixelify Sans", monospace;
+  --f-body:    "DM Sans", -apple-system, system-ui, sans-serif;
+  --f-mono:    "JetBrains Mono", ui-monospace, monospace;
+
+  /* ── TYPE · SCALE (mobile, base 16px) ─────────────────── */
+  --t-display-xl: 40px;  /* hero titles, game title */
+  --t-display-l:  28px;  /* location names */
+  --t-display-m:  22px;  /* section heads */
+  --t-display-s:  18px;  /* sub-heads */
+  --t-caps-m:     12px;  /* status pills, tabs */
+  --t-caps-s:     10px;  /* micro-labels */
+  --t-body-l:     17px;  /* description, long-form */
+  --t-body-m:     15px;  /* default body */
+  --t-body-s:     13px;  /* secondary body */
+  --t-action:     16px;  /* action button label */
+
+  /* ── SPACING (4dp grid) ───────────────────────────────── */
+  --s-0:  0px;
+  --s-1:  4px;
+  --s-2:  8px;
+  --s-3:  12px;
+  --s-4:  16px;
+  --s-5:  20px;
+  --s-6:  24px;
+  --s-7:  32px;
+  --s-8:  40px;
+  --s-9:  48px;
+  --s-10: 64px;
+
+  /* ── RADII (pixel-art prefers sharp) ──────────────────── */
+  --r-0: 0px;   /* default — pixel chrome */
+  --r-1: 2px;   /* subtle softening */
+  --r-2: 4px;   /* secondary surfaces */
+  --r-3: 8px;   /* large cards (rare) */
+
+  /* ── BORDER WEIGHTS ───────────────────────────────────── */
+  --b-1: 1px;
+  --b-2: 2px;   /* default pixel border */
+  --b-3: 3px;   /* emphasized */
+
+  /* ── SHADOWS (hard offset for pixel feel) ─────────────── */
+  --sh-block-sm:  2px 2px 0 0 var(--c-ink-void);
+  --sh-block-md:  3px 3px 0 0 var(--c-ink-void);
+  --sh-block-lg:  4px 4px 0 0 var(--c-ink-void);
+  --sh-amber-glow: 0 0 24px 4px var(--c-amber-halo);
+  --sh-soft:      0 4px 12px rgba(0,0,0,0.4);
+
+  /* ── MOTION ───────────────────────────────────────────── */
+  --ease-pixel: steps(4, end);              /* chunky transitions */
+  --ease-out:   cubic-bezier(.2,.7,.3,1);
+  --dur-fast:   120ms;
+  --dur-base:   200ms;
+  --dur-slow:   320ms;
+
+  /* ── TAP TARGETS (mobile minimums) ────────────────────── */
+  --hit-min:    44px;
+  --hit-comfy:  48px;
+  --hit-large:  56px;
+}
+
+/* ── BASE / RESET ──────────────────────────────────────── */
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: var(--f-body);
+  color: var(--c-paper-warm);
+  background: var(--c-ink-void);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Pixel rendering for pixel-art images and SVGs */
+.pixelated {
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+/* ── TYPE UTILITY CLASSES ─────────────────────────────── */
+.t-display-xl { font-family: var(--f-display); font-size: var(--t-display-xl); font-weight: 700; line-height: 1.05; letter-spacing: 0.02em; }
+.t-display-l  { font-family: var(--f-display); font-size: var(--t-display-l);  font-weight: 700; line-height: 1.1; letter-spacing: 0.01em; }
+.t-display-m  { font-family: var(--f-display); font-size: var(--t-display-m);  font-weight: 600; line-height: 1.15; }
+.t-display-s  { font-family: var(--f-display); font-size: var(--t-display-s);  font-weight: 600; line-height: 1.2; }
+.t-caps-m     { font-family: var(--f-caps); font-size: var(--t-caps-m); font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase; }
+.t-caps-s     { font-family: var(--f-caps); font-size: var(--t-caps-s); font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; }
+.t-body-l     { font-family: var(--f-body); font-size: var(--t-body-l); font-weight: 400; line-height: 1.55; }
+.t-body-m     { font-family: var(--f-body); font-size: var(--t-body-m); font-weight: 400; line-height: 1.5; }
+.t-body-s     { font-family: var(--f-body); font-size: var(--t-body-s); font-weight: 400; line-height: 1.45; }
+.t-mono       { font-family: var(--f-mono); font-size: var(--t-body-s); font-weight: 400; }
+
+/* ── PIXEL BORDERS (chunky, sharp) ────────────────────── */
+.pix-border {
+  border: var(--b-2) solid var(--c-paper-warm);
+  border-radius: 0;
+}
+.pix-border-amber { border-color: var(--c-amber); }
+.pix-border-teal  { border-color: var(--c-teal-mist); }
+.pix-border-faded { border-color: var(--c-paper-ink); }
+
+/* Inset double-line border (premium frame) */
+.pix-frame-double {
+  position: relative;
+  border: var(--b-2) solid var(--c-paper-warm);
+}
+.pix-frame-double::before {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  border: var(--b-1) solid var(--c-paper-warm);
+  pointer-events: none;
+}

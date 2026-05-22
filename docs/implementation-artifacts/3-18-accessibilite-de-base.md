@@ -3,7 +3,19 @@
 Status: ready-for-dev
 Epic: 3
 Source ticket: ADVT‑S3‑18 (`docs/EXEC_S3.md`)
-Refs : [project-context](../project-context.md), [UX_SCREENS](../UX_SCREENS.md), [VISUAL_STYLE_GUIDE](../VISUAL_STYLE_GUIDE.md)
+Refs : [design.md](../design.md), [project-context](../project-context.md)
+~~Refs obsolètes~~ : ~~[UX_SCREENS](../UX_SCREENS.md)~~, ~~[VISUAL_STYLE_GUIDE](../VISUAL_STYLE_GUIDE.md)~~ (superseded 2026-05-22)
+
+---
+## 📝 Amendement Design Handoff — 2026-05-22
+
+Intégrer durant le dev :
+- **ADR-006 — Motion steps** : `prefers-reduced-motion` doit désactiver les animations `Curves.stepN`. Respecter `MediaQuery.disableAnimations` partout (cf. [`docs/design.md`](../design.md) §4 ADR-006 ; [`motion.css`](../../design_handoff_open_adventure/motion.css))
+- **Contraste WCAG AA** : vérifier sur la palette ambre/encre du handoff (ADR-003), pas sur la palette indigo de `VISUAL_STYLE_GUIDE.md` obsolète
+- **Atomes UI** : si l'Epic 5 story 5-4 est déjà livrée, les Semantics labels doivent être appliqués sur `OAStamp` directement (DRY)
+
+> ℹ️ Non bloquant : la story peut progresser sur les semantics et focus management indépendamment d'Epic 5, mais le contraste / motion doit être validé contre la nouvelle DA.
+---
 
 ## Story
 

@@ -3,7 +3,18 @@
 Status: ready-for-dev
 Epic: 4
 Source ticket: ADVT‑S4‑09 (`docs/EXEC_S4.md`)
-Refs : [project-context](../project-context.md), [architecture](../architecture.md)
+Refs : [design.md](../design.md), [project-context](../project-context.md), [architecture](../architecture.md)
+
+---
+## 📝 Amendement Design Handoff — 2026-05-22
+
+Intégrer durant le dev :
+- **Nouvelles clés ARB** : le handoff (mockups + `docs/features/*.md`) introduit des libellés qui peuvent ne pas être encore couverts. Faire un balayage de `design_handoff_open_adventure/*.jsx` et `docs/features/` pour repérer les chaînes UI nouvelles (labels boutons, headers de catégorie, états vides, dialogs).
+- **Convention naming** : préservée — `actions.*`, `menu.*`, `home.*`, etc. (cf. `project-context.md` §i18n)
+- **Cohérence** : EN reste source canonique du wording original Crowther/Woods/Raymond (cf. [`docs/design.md`](../design.md) §4 ADR-008)
+
+> ℹ️ Non bloquant — mais dépend implicitement de l'avancement des stories UI 5-7/5-8/5-9 et 4-5/4-6/4-7/4-8 (nouvelles chaînes générées au fil de leur dev).
+---
 
 ## Story
 

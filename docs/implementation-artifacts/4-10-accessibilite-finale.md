@@ -3,7 +3,20 @@
 Status: ready-for-dev
 Epic: 4
 Source ticket: ADVT‑S4‑10 (`docs/EXEC_S4.md`)
-Refs : [project-context](../project-context.md), [VISUAL_STYLE_GUIDE](../VISUAL_STYLE_GUIDE.md)
+Refs : [design.md](../design.md), [project-context](../project-context.md)
+~~Refs obsolètes~~ : ~~[VISUAL_STYLE_GUIDE](../VISUAL_STYLE_GUIDE.md)~~ (superseded 2026-05-22)
+
+---
+## 📝 Amendement Design Handoff — 2026-05-22
+
+Intégrer durant le dev :
+- **ADR-006 — Motion steps** : audit `MediaQuery.disableAnimations` doit couvrir le motion system `OAAnimations` livré en 5-5
+- **Contrastes WCAG AA** : à valider sur la palette ambre/encre du handoff (ADR-003) — pas sur l'indigo de `VISUAL_STYLE_GUIDE.md` obsolète
+- **Pages couvertes** : Home, Adventure v2, Inventory, Saves, Settings, Map, EndGame, Credits → toutes refondues en Epic 5 / blocked-by-epic-5 → l'audit ne peut être qu'**après** livraison d'Epic 5 et des stories 4-x débloquées
+- **Atomes UI** : `OAStamp`, `OAPill`, `OAIcon` doivent porter les Semantics labels (DRY) — vérifier que 5-4 les expose correctement
+
+> ℹ️ Non bloquant techniquement, mais l'audit final doit être planifié **après** clôture d'Epic 5 et des stories UI 4-5/4-6/4-7/4-8/4-19 pour avoir un état stable à auditer.
+---
 
 ## Story
 

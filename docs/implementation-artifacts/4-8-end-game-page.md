@@ -1,9 +1,25 @@
 # Story 4.8: EndGamePage/Dialog — breakdown + classe + actions
 
-Status: ready-for-dev
+Status: blocked-by-epic-5
 Epic: 4
 Source ticket: ADVT‑S4‑08 (`docs/EXEC_S4.md`)
-Refs : [UX_SCREENS](../UX_SCREENS.md), [Dossier_de_Référence](../Dossier_de_Référence.md)
+Refs : [design.md](../design.md), [Dossier_de_Référence](../Dossier_de_Référence.md)
+~~Refs obsolètes~~ : ~~[UX_SCREENS](../UX_SCREENS.md)~~ (superseded 2026-05-22)
+
+---
+## 📝 Amendement Design Handoff — 2026-05-22
+
+Cette story est antérieure au handoff design. Avant `dev-story`, intégrer :
+- **DA** : palette ambre/encre dark-only, fonts Pixelify/Silkscreen + DM Sans (cf. [`docs/design.md`](../design.md) §4 ADR-003/004 ; [`tokens.css`](../../design_handoff_open_adventure/tokens.css))
+- **Mockups visuels** : [`design_handoff_open_adventure/endgame.jsx`](../../design_handoff_open_adventure/endgame.jsx) (victoire/closing) + [`death.jsx`](../../design_handoff_open_adventure/death.jsx) (mort/abandon)
+- **Atomes UI** : `OAStamp` (Rejouer/Charger/Crédits), `OAPill` (composantes de score) (livrés par Epic 5 story 5-4)
+- **Motion** : entrée de l'écran respecte `Curves.stepN` (ADR-006) ; `MediaQuery.disableAnimations` respecté
+- **Path target** : `lib/features/endgame/endgame_page.dart` + `lib/features/endgame/death_page.dart` (post-réorg 5-2)
+- **State** : `ConsumerWidget` + `endGameStateProvider` (post-migration 5-6)
+
+> ⚠️ **Bloquant** : cette story ne peut entrer en dev qu'après livraison de l'Epic 5 (5-2, 5-3, 5-4, 5-5, 5-6).
+> Les AC ci-dessous peuvent nécessiter des compléments — à revoir lors du `Create Story` / `Validate Story`.
+---
 
 ## Story
 

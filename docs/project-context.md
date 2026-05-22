@@ -18,6 +18,11 @@ optimized_for_llm: true
 
 # Project Context for AI Agents — open_adventure
 
+> **🚧 EN TRANSITION — 2026-05-22.** L'architecture cible (Riverpod 2 + `lib/features/`) est en cours de migration via l'Epic 5 "Foundation Refresh".
+> Jusqu'à la livraison des stories 5-1 à 5-15, les sections **State Management / Composition root / DI manuelle** décrivent l'état **en place** (ValueNotifier + `lib/presentation/`).
+> Source de vérité de l'architecture cible : [`docs/design.md`](./design.md) §3–§5.
+> Toutes les autres règles (Clean Architecture frontières, immutabilité, i18n, boucle de tour, RNG déterministe, PixelCanvas, perfs, tests, plateformes, anti-patterns Domain/Data) restent **valides**.
+
 > Règles critiques que tout agent BMad doit suivre pour produire du code conforme. Centré sur les détails non évidents : un LLM générique connaît Flutter, il ne connaît pas les choix opinionés de ce projet.
 >
 > Source de vérité fonctionnelle : `docs/CONVERSION_SPEC.md` (prime sur le code en cas de contradiction). Pour navigation détaillée : `docs/index.md`.

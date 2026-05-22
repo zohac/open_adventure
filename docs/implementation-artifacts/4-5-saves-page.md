@@ -1,9 +1,26 @@
 # Story 4.5: SavesPage — liste slots + charger/supprimer avec confirmations
 
-Status: ready-for-dev
+Status: blocked-by-epic-5
 Epic: 4
 Source ticket: ADVT‑S4‑05 (`docs/EXEC_S4.md`)
-Refs : [UX_SCREENS](../UX_SCREENS.md), [project-context](../project-context.md)
+Refs : [design.md](../design.md), [features/saves.md](../features/saves.md), [project-context](../project-context.md)
+~~Refs obsolètes~~ : ~~[UX_SCREENS](../UX_SCREENS.md)~~ (superseded 2026-05-22)
+
+---
+## 📝 Amendement Design Handoff — 2026-05-22
+
+Cette story est antérieure au handoff design. Avant `dev-story`, intégrer :
+- **DA** : palette ambre/encre dark-only, fonts Pixelify/Silkscreen + DM Sans (cf. [`docs/design.md`](../design.md) §4 ADR-003/004 ; [`tokens.css`](../../design_handoff_open_adventure/tokens.css))
+- **Mockup visuel** : [`design_handoff_open_adventure/saves.jsx`](../../design_handoff_open_adventure/saves.jsx)
+- **Spec feature** : [`docs/features/saves.md`](../features/saves.md)
+- **Atomes UI** : `OAStamp` pour Charger/Supprimer, `OAPill` pour metadata slot, `OAIcon` pour actions secondaires (livrés par Epic 5 story 5-4)
+- **Motion** : transitions de suppression respectent `Curves.stepN` (ADR-006)
+- **Path target** : `lib/features/saves/saves_page.dart` (post-réorg 5-2)
+- **State** : `ConsumerWidget` + `saveSlotsProvider` (post-migration 5-6/5-10)
+
+> ⚠️ **Bloquant** : cette story ne peut entrer en dev qu'après livraison de l'Epic 5 (5-2, 5-3, 5-4, 5-5, 5-10).
+> Les AC ci-dessous peuvent nécessiter des compléments — à revoir lors du `Create Story` / `Validate Story`.
+---
 
 ## Story
 

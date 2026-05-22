@@ -1,5 +1,10 @@
 # Architecture — open_adventure
 
+> **🚧 EN TRANSITION — 2026-05-22.** L'architecture cible (Riverpod 2 + `lib/features/`) est en cours de migration via l'Epic 5 "Foundation Refresh".
+> Jusqu'à la livraison des stories 5-1 à 5-15, ce document décrit l'architecture **en place** (ValueNotifier + `lib/presentation/`).
+> Source de vérité de l'architecture cible : [`docs/design.md`](./design.md) §3–§5.
+> Ce document sera réécrit dans la story 5-15.
+
 > Document descriptif de l'architecture livrée à l'état actuel (S1 + S2 ✅, S3 ~70 %). Doit être lu en complément de la spec normative `docs/CONVERSION_SPEC.md` (§4 et §7) qui prime en cas de divergence.
 
 ## 1. Executive Summary

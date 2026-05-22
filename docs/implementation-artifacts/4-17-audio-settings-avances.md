@@ -3,7 +3,20 @@
 Status: ready-for-dev
 Epic: 4
 Source ticket: ADVT‑S4‑17 (`docs/EXEC_S4.md`)
-Refs : [project-context](../project-context.md), [UX_SCREENS](../UX_SCREENS.md)
+Refs : [design.md](../design.md), [features/settings.md](../features/settings.md), [project-context](../project-context.md)
+~~Refs obsolètes~~ : ~~[UX_SCREENS](../UX_SCREENS.md)~~ (superseded 2026-05-22)
+
+---
+## 📝 Amendement Design Handoff — 2026-05-22
+
+Intégrer durant le dev :
+- **Stack audio confirmée** : `just_audio` + `audio_session` (cf. [`docs/design.md`](../design.md) §3.1 patché 2026-05-22)
+- **Schéma settings** : aligné sur [`docs/design.md`](../design.md) §7.2 (`audio.bgmVolume`, `audio.sfxVolume`, `audio.muted`)
+- **Migration** : si l'Epic 5 story 5-10 est déjà livrée, `SettingsController` est consommé via `settingsProvider`
+- **Path target** : `lib/features/settings/widgets/audio_section.dart` (post-réorg 5-2)
+
+> ℹ️ Non bloquant techniquement, mais cohérent à grouper avec 4-6 (SettingsPage globale) qui est blocked-by-epic-5.
+---
 
 ## Story
 

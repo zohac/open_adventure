@@ -1,9 +1,26 @@
 # Story 3.20: Images de scène — déclarer .webp + intégrer LocationImage
 
-Status: ready-for-dev
+Status: blocked-by-epic-5
 Epic: 3
 Source ticket: ADVT‑S3‑20 (`docs/EXEC_S3.md`)
-Refs : [ART_ASSET_BIBLE](../ART_ASSET_BIBLE.md), [VISUAL_STYLE_GUIDE](../VISUAL_STYLE_GUIDE.md), [asset-inventory](../asset-inventory.md)
+Refs : [design.md](../design.md), [ART_ASSET_BIBLE](../ART_ASSET_BIBLE.md), [asset-inventory](../asset-inventory.md)
+~~Refs obsolètes~~ : ~~[VISUAL_STYLE_GUIDE](../VISUAL_STYLE_GUIDE.md)~~ (superseded 2026-05-22)
+
+---
+## 📝 Amendement Design Handoff — 2026-05-22
+
+Cette story est antérieure au handoff design. Avant `dev-story`, intégrer :
+- **ADR-010 — 3 tiers d'assets** : la story actuelle ne couvre que les scènes 16:9 320×180 WebP. Étendre au pipeline complet :
+  - **Tier 1** : scènes 16:9 320×180 WebP `assets/scenes/` (déjà en cours)
+  - **Tier 2** : objets 1:1 512×512 PNG transparent `assets/objects/`
+  - **Tier 3** : créatures 1:1 768×768 PNG transparent `assets/creatures/`
+- **Atomes UI** : utiliser `OASceneFrame` (16:9) et `OAItemSprite` (1:1 avec tone contextuel) — livrés par Epic 5 story 5-4
+- **Path target** : `lib/features/<feature>/widgets/scene_image.dart` (post-réorg 5-2)
+- **Dépendance** : aligné avec story 5-12 (pipeline assets 3 tiers — extension des scripts Python)
+
+> ⚠️ **Bloquant** : cette story ne peut entrer en dev qu'après livraison de Epic 5 stories 5-4 et 5-12.
+> Les AC ci-dessous décrivent uniquement le tier 1 — à compléter pour couvrir tiers 2 et 3.
+---
 
 ## Story
 

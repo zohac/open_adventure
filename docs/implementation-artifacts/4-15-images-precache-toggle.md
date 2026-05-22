@@ -1,9 +1,22 @@
 # Story 4.15: Images — préchargement + cache + toggle Settings
 
-Status: ready-for-dev
+Status: blocked-by-epic-5
 Epic: 4
 Source ticket: ADVT‑S4‑15 (`docs/EXEC_S4.md`)
-Refs : [project-context](../project-context.md), [asset-inventory](../asset-inventory.md)
+Refs : [design.md](../design.md), [project-context](../project-context.md), [asset-inventory](../asset-inventory.md)
+
+---
+## 📝 Amendement Design Handoff — 2026-05-22
+
+Cette story est antérieure au handoff design. Avant `dev-story`, intégrer :
+- **ADR-010 — 3 tiers d'assets** : le préchargement doit couvrir les 3 tiers (scènes 320×180 WebP + objets 512² PNG + créatures 768² PNG) — pas seulement les scènes
+- **Cache** : `ImageCache.maximumSizeBytes` à régler 64–96 Mo (DoD S4) — réviser à la hausse si les 3 tiers saturent le cache courant
+- **Toggle Settings** : un toggle global « afficher les images de scène » avec impact sur les 3 tiers (ou ventiler par tier ? à arbitrer)
+- **Dépendance** : aligné avec story 5-12 (pipeline assets 3 tiers)
+
+> ⚠️ **Bloquant** : cette story ne peut entrer en dev qu'après livraison de Epic 5 story 5-12 (asset pipeline).
+> AC à compléter pour couvrir tiers 2 et 3 — à traiter lors du `Create Story`.
+---
 
 ## Story
 

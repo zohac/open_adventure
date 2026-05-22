@@ -1,9 +1,26 @@
 # Story 4.6: SettingsPage — thème + taille police + langue (FR/EN) + persistance
 
-Status: ready-for-dev
+Status: blocked-by-epic-5
 Epic: 4
 Source ticket: ADVT‑S4‑06 (`docs/EXEC_S4.md`)
-Refs : [project-context](../project-context.md), [VISUAL_STYLE_GUIDE](../VISUAL_STYLE_GUIDE.md), [UX_SCREENS](../UX_SCREENS.md)
+Refs : [design.md](../design.md), [features/settings.md](../features/settings.md), [project-context](../project-context.md)
+~~Refs obsolètes~~ : ~~[VISUAL_STYLE_GUIDE](../VISUAL_STYLE_GUIDE.md)~~, ~~[UX_SCREENS](../UX_SCREENS.md)~~ (superseded 2026-05-22)
+
+---
+## 📝 Amendement Design Handoff — 2026-05-22
+
+Cette story est antérieure au handoff design. Avant `dev-story`, intégrer :
+- **⚠️ Changement de scope sur AC1 (thème)** : ADR-003 impose **dark-only**. Le réglage « thème clair/sombre/système » est **obsolète** — remplacer par des préférences alternatives : `pixelFontEverywhere` (toggle ADR-004), `vfx` (animations on/off), `lampHalo` (effet halo lampe on/off). Voir [`docs/design.md`](../design.md) §7.2 schéma `Settings`.
+- **DA** : palette ambre/encre dark-only, fonts Pixelify/Silkscreen + DM Sans (cf. [`docs/design.md`](../design.md) §4 ADR-003/004 ; [`tokens.css`](../../design_handoff_open_adventure/tokens.css))
+- **Mockup visuel** : [`design_handoff_open_adventure/settings.jsx`](../../design_handoff_open_adventure/settings.jsx)
+- **Spec feature** : [`docs/features/settings.md`](../features/settings.md)
+- **Atomes UI** : `OAStamp`, `OAPill`, `OAIcon` (livrés par Epic 5 story 5-4)
+- **Path target** : `lib/features/settings/settings_page.dart` (post-réorg 5-2)
+- **State** : `ConsumerWidget` + `settingsProvider` (post-migration 5-10)
+
+> ⚠️ **Bloquant** : cette story ne peut entrer en dev qu'après livraison de l'Epic 5 (5-2, 5-3, 5-4, 5-10).
+> AC1 doit être **réécrit** — à traiter lors du `Create Story` / `Validate Story`.
+---
 
 ## Story
 

@@ -1,5 +1,9 @@
 # Spécification UX — Écrans et Composants (normatif)
 
+> **⚠️ SUPERSEDED — 2026-05-22.** Ce document est conservé pour historique mais n'est plus normatif.
+> Source de vérité design : [`docs/design.md`](./design.md) + [`docs/features/`](./features/).
+> Le contenu ci-dessous peut contredire les ADRs en vigueur — ne pas implémenter directement contre.
+
 Statut: Normatif. Cette annexe complète `docs/CONVERSION_SPEC.md` (§17–§19) et l’exécution S2–S4. Tout écart doit être amendé ici avant implémentation.
 
 Règle d’or (non négociable): sur les écrans d’action, afficher 3–7 choix réellement utiles, accessibles au pouce, sans saisie texte.

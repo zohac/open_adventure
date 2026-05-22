@@ -1,9 +1,24 @@
 # Story 4.19: HomePage v1 — style 16-bit final + i18n/a11y
 
-Status: ready-for-dev
+Status: blocked-by-epic-5
 Epic: 4
 Source ticket: ADVT‑S4‑19 (`docs/EXEC_S4.md`)
-Refs : [VISUAL_STYLE_GUIDE](../VISUAL_STYLE_GUIDE.md), [UX_SCREENS](../UX_SCREENS.md), [project-context](../project-context.md)
+Refs : [design.md](../design.md), [project-context](../project-context.md)
+~~Refs obsolètes~~ : ~~[VISUAL_STYLE_GUIDE](../VISUAL_STYLE_GUIDE.md)~~, ~~[UX_SCREENS](../UX_SCREENS.md)~~ (superseded 2026-05-22)
+
+---
+## 📝 Amendement Design Handoff — 2026-05-22
+
+Cette story est antérieure au handoff design. Avant `dev-story`, intégrer :
+- **⚠️ Scope révisé** : l'Epic 5 story 5-8 livre déjà la HomePage refondue (migration Riverpod + reskin DA). Cette story 4-19 devient le **polish final** : i18n FR/EN complète, a11y AA, états raffinés sur les boutons (pressed/disabled/focused), affinage typographique
+- **DA** : palette ambre/encre dark-only, fonts Pixelify/Silkscreen + DM Sans (cf. [`docs/design.md`](../design.md) §4 ADR-003/004 ; [`tokens.css`](../../design_handoff_open_adventure/tokens.css))
+- **Mockup visuel** : [`design_handoff_open_adventure/screens.jsx`](../../design_handoff_open_adventure/screens.jsx) (HomeScreen) + [`onboarding.jsx`](../../design_handoff_open_adventure/onboarding.jsx) pour le first-run
+- **Atomes UI** : `OAStamp` variantes primary/secondary/ghost (livrés par Epic 5 story 5-4)
+- **Path target** : `lib/features/home/home_page.dart` (déjà migré en 5-8)
+
+> ⚠️ **Bloquant** : cette story ne peut entrer en dev qu'après livraison de l'Epic 5 — notamment 5-8.
+> AC à recadrer comme « polish » et non « refonte from scratch » — à traiter lors du `Create Story`.
+---
 
 ## Story
 

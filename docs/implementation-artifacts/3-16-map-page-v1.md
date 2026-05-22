@@ -1,9 +1,24 @@
 # Story 3.16: MapPage v1 — Atlas topologique multi-couches
 
-Status: ready-for-dev
+Status: blocked-by-epic-5
 Epic: 3 (Interactions, Inventaire, Nains, Lampe, Scoring, Map, Journal, Images, Audio)
 Source ticket: ADVT‑S3‑16 (`docs/EXEC_S3.md`)
-Specs sources : [`docs/Cahier_des_charges_Map.md`](../Cahier_des_charges_Map.md) (normatif), [`docs/CTO_DEV_MAP_REQUEST.md`](../CTO_DEV_MAP_REQUEST.md)
+Specs sources : [`docs/Cahier_des_charges_Map.md`](../Cahier_des_charges_Map.md) (normatif, layout map), [`docs/CTO_DEV_MAP_REQUEST.md`](../CTO_DEV_MAP_REQUEST.md)
+
+---
+## 📝 Amendement Design Handoff — 2026-05-22
+
+Cette story est antérieure au handoff design. Avant `dev-story`, intégrer :
+- **DA** : palette ambre/encre dark-only, fonts Pixelify Sans + Silkscreen + DM Sans (cf. [`docs/design.md`](../design.md) §4 ADR-003/004 ; [`tokens.css`](../../design_handoff_open_adventure/tokens.css))
+- **Mockup visuel** : [`design_handoff_open_adventure/map-page.jsx`](../../design_handoff_open_adventure/map-page.jsx) (à concilier avec `Cahier_des_charges_Map.md` qui reste normatif sur le layout topologique)
+- **Atomes UI** : `OASceneFrame`, `OAStamp`, `OAPill`, `OAIcon` (livrés par Epic 5 story 5-4)
+- **Motion** : `Curves.stepN` via `OAAnimations` (ADR-006), `MediaQuery.disableAnimations` respecté
+- **Path target** : `lib/features/map/map_page.dart` (post-réorg 5-2) et non plus `lib/presentation/pages/map_page.dart`
+- **State** : `ConsumerWidget` + `mapGraphProvider` (post-migration 5-6) et non plus `ValueListenableBuilder`
+
+> ⚠️ **Bloquant** : cette story ne peut entrer en dev qu'après livraison de l'Epic 5 (au minimum 5-2, 5-3, 5-4, 5-5, 5-6).
+> La section « Acceptance Criteria » ci-dessous peut nécessiter des compléments — à revoir lors du `Create Story` / `Validate Story`.
+---
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 

@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Open Adventure — Design System</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600;700&family=Silkscreen:wght@400;700&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="tokens.css" />
+  <link rel="stylesheet" href="motion.css" />
+
+  <style>
+    html, body, #root { height: 100%; }
+    body { background: #f0eee9; }
+    /* design-canvas hosts its own bg; this is just a safety */
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+  <script type="text/babel" src="design-canvas.jsx"></script>
+  <script type="text/babel" src="pixel-ui.jsx"></script>
+  <script type="text/babel" src="action-buttons.jsx"></script>
+  <script type="text/babel" src="inventory.jsx"></script>
+  <script type="text/babel" src="map-page.jsx"></script>
+  <script type="text/babel" src="endgame.jsx"></script>
+  <script type="text/babel" src="journal.jsx"></script>
+  <script type="text/babel" src="saves.jsx"></script>
+  <script type="text/babel" src="settings.jsx"></script>
+  <script type="text/babel" src="credits.jsx"></script>
+  <script type="text/babel" src="screens.jsx"></script>
+  <script type="text/babel" src="onboarding.jsx"></script>
+  <script type="text/babel" src="death.jsx"></script>
+  <script type="text/babel" src="encounters.jsx"></script>
+  <script type="text/babel" src="overflow-actions.jsx"></script>
+  <script type="text/babel" src="dialogs.jsx"></script>
+  <script type="text/babel" src="design-system.jsx"></script>
+  <script type="text/babel" src="motion-spec.jsx"></script>
+
+  <script type="text/babel" data-presets="env,react">
+    const { useEffect } = React;
+
+    function App() {
+      return (
+        <DesignCanvas>
+          <DCSection
+            id="philosophy"
+            title="Système · Carnet d'explorateur sous la lanterne"
+            subtitle="Pulpe rétro · 16-bit · dark only · FR/EN · 100% offline"
+          >
+            <DCArtboard id="ds-spec" label="Design system — tokens & composants" width={DS_W} height={9100}>
+              <DesignSystemBoard />
+            </DCArtboard>
+          </DCSection>
+
+          <DCSection
+            id="onboarding"
+            title="Onboarding · 3 écrans d'introduction"
+            subtitle="Premier lancement — boutons contextuels, lanterne diegetic, carnet de bord"
+          >
+            <DCArtboard id="onb-1" label="1/3 — Tu n'écris pas, tu choisis" width={PHONE_W} height={PHONE_H}>
+              <Onboarding1 />
+            </DCArtboard>
+            <DCArtboard id="onb-2" label="2/3 — La lanterne est ton souffle" width={PHONE_W} height={PHONE_H}>
+              <Onboarding2 />
+            </DCArtboard>
+            <DCArtboard id="onb-3" label="3/3 — Le carnet retient tout" width={PHONE_W} height={PHONE_H}>
+              <Onboarding3 />
+            </DCArtboard>
+          </DCSection>
+
+          <DCSection
+            id="home"
+            title="Accueil"
+            subtitle="Hero pixel-art + menu, lampe = signature lumineuse"
+          >
+            <DCArtboard id="home-default" label="Home — État par défaut (sauvegarde présente)" width={PHONE_W} height={PHONE_H}>
+              <HomeScreen />
+            </DCArtboard>
+          </DCSection>
+
+          <DCSection
+            id="adventure"
+            title="Adventure · grammaire Tampons en contexte"
+            subtitle="Lanterne diegetic · incantation contextuelle · 5 états du jeu (dont LOC_START en vraie pixel-art), un seul langage"
+          >
+            <DCArtboard id="adv-start" label="LOC_START — début canon, devant le cottage (vraie scène)" width={PHONE_W} height={PHONE_H}>
+              <AdventureStart />
+            </DCArtboard>
+            <DCArtboard id="adv-valley" label="LOC_VALLEY — vallée au ruisseau (vraie scène)" width={PHONE_W} height={PHONE_H}>
+              <AdventureValley />
+            </DCArtboard>
+            <DCArtboard id="adv-winding" label="LOC_WINDING — corridor sinueux (vraie scène)" width={PHONE_W} height={PHONE_H}>
+              <AdventureWinding />
+            </DCArtboard>
+            <DCArtboard id="adv-hall" label="Hall des Brumes — exploration calme" width={PHONE_W} height={PHONE_H}>
+              <AdventureHall />
+            </DCArtboard>
+            <DCArtboard id="adv-magic" label="Mot magique — XYZZY débloqué (DDR-001 Option A)" width={PHONE_W} height={PHONE_H}>
+              <AdventureMagic />
+            </DCArtboard>
+            <DCArtboard id="adv-lamp" label="Lampe critique — flash danger" width={PHONE_W} height={PHONE_H}>
+              <AdventureLamp />
+            </DCArtboard>
+            <DCArtboard id="adv-treasure" label="Antre du Dragon — découverte de trésor" width={PHONE_W} height={PHONE_H}>
+              <AdventureTreasure />
+            </DCArtboard>
+            <DCArtboard id="adv-overflow" label="Plus… — 11 actions, 6 visibles + disclosure" width={PHONE_W} height={PHONE_H}>
+              <AdventureOverflow />
+            </DCArtboard>
+            <DCArtboard id="adv-overflow-sheet" label="Plus… — sheet expandue par catégorie" width={PHONE_W} height={PHONE_H}>
+              <AdventureOverflowSheet />
+            </DCArtboard>
+          </DCSection>
+
+          <DCSection
+            id="inventory"
+            title="Inventaire & objets · sac à dos et actions contextuelles"
+            subtitle="Capacité 7 (limite canon) · sprites pixel · bottom sheet d'actions par objet"
+          >
+            <DCArtboard id="inv-page" label="Inventaire plein — 7 / 7 objets" width={PHONE_W} height={PHONE_H}>
+              <InventoryScreen />
+            </DCArtboard>
+            <DCArtboard id="inv-sheet" label="Action sheet — bouteille d'eau sélectionnée" width={PHONE_W} height={PHONE_H}>
+              <AdventureItemSheet />
+            </DCArtboard>
+            <DCArtboard id="inv-lantern" label="Action sheet — Lanterne en cuivre (hero, vraie illustration)" width={PHONE_W} height={PHONE_H}>
+              <AdventureLanternSheet />
+            </DCArtboard>
+          </DCSection>
+
+          <DCSection
+            id="map"
+            title="Carte · carnet d'explorateur"
+            subtitle="Graphe pixel des lieux visités, position courante, annotations manuscrites"
+          >
+            <DCArtboard id="map-page" label="Carte — 14 lieux explorés sur 87" width={PHONE_W} height={PHONE_H}>
+              <MapPage />
+            </DCArtboard>
+          </DCSection>
+
+          <DCSection
+            id="encounters"
+            title="Rencontres · moments narratifs"
+            subtitle="Modales scrim au-dessus de Adventure — nain hostile, pirate furtif, troll au péage"
+          >
+            <DCArtboard id="enc-dwarf" label="Nain hostile — attaque aléatoire" width={PHONE_W} height={PHONE_H}>
+              <DwarfEncounter />
+            </DCArtboard>
+            <DCArtboard id="enc-pirate" label="Pirate furtif — vol de trésor" width={PHONE_W} height={PHONE_H}>
+              <PirateSteal />
+            </DCArtboard>
+            <DCArtboard id="enc-troll" label="Troll du pont — demande de tribut" width={PHONE_W} height={PHONE_H}>
+              <TrollBridge />
+            </DCArtboard>
+          </DCSection>
+
+          <DCSection
+            id="dialogs"
+            title="Dialogues de confirmation"
+            subtitle="Modales légères sur action critique — effacer une save, attaquer le dragon, quitter"
+          >
+            <DCArtboard id="dlg-delete" label="Effacer une sauvegarde (destructif)" width={PHONE_W} height={PHONE_H}>
+              <DialogDeleteSave />
+            </DCArtboard>
+            <DCArtboard id="dlg-attack" label="Attaquer le dragon à mains nues (risqué)" width={PHONE_W} height={PHONE_H}>
+              <DialogAttackDragon />
+            </DCArtboard>
+            <DCArtboard id="dlg-quit" label="Quitter l'aventure (neutre)" width={PHONE_W} height={PHONE_H}>
+              <DialogQuit />
+            </DCArtboard>
+          </DCSection>
+
+          <DCSection
+            id="death"
+            title="Mort & obituaire · réincarnation canon"
+            subtitle="Lanterne renversée · message canonique · −5 pts par réincarnation (max 3)"
+          >
+            <DCArtboard id="death-1" label="Mort 1 — réincarnations restantes" width={PHONE_W} height={PHONE_H}>
+              <DeathPage />
+            </DCArtboard>
+            <DCArtboard id="death-final" label="Mort finale — plus d'incarnation" width={PHONE_W} height={PHONE_H}>
+              <DeathPageFinal />
+            </DCArtboard>
+          </DCSection>
+
+          <DCSection
+            id="endgame"
+            title="Fin de partie · breakdown 430 pts"
+            subtitle="Score canon Adventure · tally trésors · rang décerné · détail des catégories"
+          >
+            <DCArtboard id="end-screen" label="Fin — 287/430 · Maître Junior" width={PHONE_W} height={PHONE_H}>
+              <EndGamePage />
+            </DCArtboard>
+          </DCSection>
+
+          <DCSection
+            id="meta"
+            title="Écrans méta · carnet de bord, options, lignée"
+            subtitle="Journal scrollable · sauvegardes · mixeur audio · crédits"
+          >
+            <DCArtboard id="journal" label="Journal — fil chronologique des 200 derniers messages" width={PHONE_W} height={PHONE_H}>
+              <JournalPage />
+            </DCArtboard>
+            <DCArtboard id="saves" label="Sauvegardes — autosave + 3 slots + 2 libres" width={PHONE_W} height={PHONE_H}>
+              <SavesPage />
+            </DCArtboard>
+            <DCArtboard id="settings" label="Options — mixeur audio, affichage, langue, a11y" width={PHONE_W} height={PHONE_H}>
+              <SettingsPage />
+            </DCArtboard>
+            <DCArtboard id="credits" label="Crédits — Crowther · Woods · Raymond · 50 ans" width={PHONE_W} height={PHONE_H}>
+              <CreditsPage />
+            </DCArtboard>
+          </DCSection>
+        </DesignCanvas>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+  </script>
+</body>
+</html>

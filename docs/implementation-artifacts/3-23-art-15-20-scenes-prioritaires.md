@@ -1,9 +1,22 @@
 # Story 3.23: Art — livrer 15–20 scènes prioritaires (Asset Bible)
 
-Status: ready-for-dev
+Status: blocked-by-epic-5
 Epic: 3
 Source ticket: ADVT‑S3‑23 (`docs/EXEC_S3.md`)
-Refs : [ART_ASSET_BIBLE](../ART_ASSET_BIBLE.md), [VISUAL_STYLE_GUIDE](../VISUAL_STYLE_GUIDE.md), [asset-inventory](../asset-inventory.md), [ASSET_MANIFEST.json](../ASSET_MANIFEST.json)
+Refs : [design.md](../design.md), [ART_ASSET_BIBLE](../ART_ASSET_BIBLE.md), [asset-inventory](../asset-inventory.md), [ASSET_MANIFEST.json](../ASSET_MANIFEST.json)
+~~Refs obsolètes~~ : ~~[VISUAL_STYLE_GUIDE](../VISUAL_STYLE_GUIDE.md)~~ (superseded 2026-05-22)
+
+---
+## 📝 Amendement Design Handoff — 2026-05-22
+
+Cette story est antérieure au handoff design. Avant `dev-story`, intégrer :
+- **Palette imposée** : encre profonde × halo ambre × papier vieilli (cf. [`docs/design.md`](../design.md) §4 ADR-003 ; [`tokens.css`](../../design_handoff_open_adventure/tokens.css))
+- **Cohérence visuelle** : les scènes doivent harmoniser leurs palettes avec les tokens de l'UI (chrome ambre, fond encre) — pas de scènes saturées qui rompent la signature lumineuse
+- **QA** : check de contraste WCAG AA pour les éléments porteurs d'info (signalisation visuelle des sorties, objets interactifs)
+- **ART_ASSET_BIBLE.md** doit être mis à jour en amont (story 5-12 ou en parallèle) pour intégrer les directives ADR-010 (3 tiers d'assets)
+
+> ⚠️ **Bloquant** : cette story ne peut entrer en dev qu'après livraison de Epic 5 story 5-3 (tokens) — pour caler la palette de référence.
+---
 
 ## Story
 
