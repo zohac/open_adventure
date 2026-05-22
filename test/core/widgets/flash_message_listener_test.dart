@@ -8,7 +8,7 @@ import 'package:open_adventure/domain/services/dwarf_system.dart';
 import 'package:open_adventure/domain/usecases/apply_turn.dart';
 import 'package:open_adventure/domain/usecases/list_available_actions.dart';
 import 'package:open_adventure/l10n/app_localizations.dart';
-import 'package:open_adventure/presentation/widgets/flash_message_listener.dart';
+import 'package:open_adventure/core/widgets/flash_message_listener.dart';
 
 class _MockAdventureRepository extends Mock implements AdventureRepository {}
 

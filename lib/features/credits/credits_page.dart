@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:open_adventure/presentation/theme/app_spacing.dart';
+import 'package:open_adventure/core/theme/app_spacing.dart';
 
 /// Placeholder Credits page until the full credits module is implemented.
 class CreditsPage extends StatelessWidget {

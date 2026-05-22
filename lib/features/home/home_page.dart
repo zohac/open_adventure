@@ -3,15 +3,15 @@ import 'package:open_adventure/l10n/app_localizations.dart';
 import 'package:open_adventure/application/controllers/audio_settings_controller.dart';
 import 'package:open_adventure/application/controllers/game_controller.dart';
 import 'package:open_adventure/application/controllers/home_controller.dart';
-import 'package:open_adventure/presentation/pages/adventure_page.dart';
-import 'package:open_adventure/presentation/pages/credits_page.dart';
-import 'package:open_adventure/presentation/pages/home/widgets/home_hero_banner.dart';
-import 'package:open_adventure/presentation/pages/home/widgets/home_menu_button.dart';
-import 'package:open_adventure/presentation/pages/saves_page.dart';
-import 'package:open_adventure/presentation/pages/settings_page.dart';
-import 'package:open_adventure/presentation/theme/app_colors.dart';
-import 'package:open_adventure/presentation/theme/app_spacing.dart';
-import 'package:open_adventure/presentation/widgets/flash_message_listener.dart';
+import 'package:open_adventure/features/adventure/adventure_page.dart';
+import 'package:open_adventure/features/credits/credits_page.dart';
+import 'package:open_adventure/features/home/widgets/home_hero_banner.dart';
+import 'package:open_adventure/features/home/widgets/home_menu_button.dart';
+import 'package:open_adventure/features/saves/saves_page.dart';
+import 'package:open_adventure/features/settings/settings_page.dart';
+import 'package:open_adventure/core/theme/app_colors.dart';
+import 'package:open_adventure/core/theme/app_spacing.dart';
+import 'package:open_adventure/core/widgets/flash_message_listener.dart';
 
 /// HomePage v0 — presents the entry menu for starting or resuming the adventure.
 class HomePage extends StatefulWidget {

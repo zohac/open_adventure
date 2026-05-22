@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:open_adventure/presentation/theme/app_spacing.dart';
+import 'package:open_adventure/core/theme/app_spacing.dart';
 
 /// Placeholder Saves page used while the save manager is under construction.
 class SavesPage extends StatelessWidget {

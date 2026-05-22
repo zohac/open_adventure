@@ -7,7 +7,7 @@ import 'package:open_adventure/domain/entities/audio_settings.dart';
 import 'package:open_adventure/domain/repositories/audio_settings_repository.dart';
 import 'package:open_adventure/domain/usecases/load_audio_settings.dart';
 import 'package:open_adventure/domain/usecases/save_audio_settings.dart';
-import 'package:open_adventure/presentation/pages/settings_page.dart';
+import 'package:open_adventure/features/settings/settings_page.dart';
 
 class _MockAudioOutput extends Mock implements AudioOutput {}
 

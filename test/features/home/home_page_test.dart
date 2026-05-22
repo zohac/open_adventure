@@ -21,14 +21,14 @@ import 'package:open_adventure/domain/services/dwarf_system.dart';
 import 'package:open_adventure/domain/value_objects/action_option.dart';
 import 'package:open_adventure/domain/value_objects/game_snapshot.dart';
 import 'package:open_adventure/domain/value_objects/dwarf_tick_result.dart';
-import 'package:open_adventure/presentation/pages/adventure_page.dart';
-import 'package:open_adventure/presentation/pages/credits_page.dart';
-import 'package:open_adventure/presentation/pages/home_page.dart';
-import 'package:open_adventure/presentation/pages/saves_page.dart';
-import 'package:open_adventure/presentation/pages/settings_page.dart';
-import 'package:open_adventure/presentation/theme/app_colors.dart';
-import 'package:open_adventure/presentation/theme/app_theme.dart';
-import 'package:open_adventure/presentation/widgets/pixel_canvas.dart';
+import 'package:open_adventure/features/adventure/adventure_page.dart';
+import 'package:open_adventure/features/credits/credits_page.dart';
+import 'package:open_adventure/features/home/home_page.dart';
+import 'package:open_adventure/features/saves/saves_page.dart';
+import 'package:open_adventure/features/settings/settings_page.dart';
+import 'package:open_adventure/core/theme/app_colors.dart';
+import 'package:open_adventure/core/theme/app_theme.dart';
+import 'package:open_adventure/core/widgets/pixel_canvas.dart';
 
 class _MockAdventureRepository extends Mock implements AdventureRepository {}
 

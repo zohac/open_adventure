@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:open_adventure/l10n/app_localizations.dart';
-import 'package:open_adventure/presentation/theme/app_spacing.dart';
-import 'package:open_adventure/presentation/widgets/pixel_canvas.dart';
+import 'package:open_adventure/core/theme/app_spacing.dart';
+import 'package:open_adventure/core/widgets/pixel_canvas.dart';
 
 /// Displays the hero pixel art banner rendered inside the pixel canvas.
 class HomeHeroBanner extends StatelessWidget {

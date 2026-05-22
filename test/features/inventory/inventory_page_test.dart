@@ -14,8 +14,8 @@ import 'package:open_adventure/domain/value_objects/action_option.dart';
 import 'package:open_adventure/domain/value_objects/dwarf_tick_result.dart';
 import 'package:open_adventure/domain/value_objects/game_snapshot.dart';
 import 'package:open_adventure/l10n/app_localizations.dart';
-import 'package:open_adventure/presentation/pages/inventory_page.dart';
-import 'package:open_adventure/presentation/widgets/flash_message_listener.dart';
+import 'package:open_adventure/features/inventory/inventory_page.dart';
+import 'package:open_adventure/core/widgets/flash_message_listener.dart';
 
 class _MockAdventureRepository extends Mock implements AdventureRepository {}
 

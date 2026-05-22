@@ -3,7 +3,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:open_adventure/core/utils/location_image.dart';
-import 'package:open_adventure/presentation/widgets/pixel_canvas.dart';
+import 'package:open_adventure/core/widgets/pixel_canvas.dart';
 
 /// Displays the location illustration using pixel-perfect scaling and provides
 /// a graceful placeholder when the asset is missing.

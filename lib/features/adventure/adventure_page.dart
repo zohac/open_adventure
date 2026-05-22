@@ -5,12 +5,12 @@ import 'package:open_adventure/application/controllers/audio_settings_controller
 import 'package:open_adventure/application/controllers/game_controller.dart';
 import 'package:open_adventure/domain/value_objects/action_option.dart';
 import 'package:open_adventure/l10n/app_localizations.dart';
-import 'package:open_adventure/presentation/theme/app_spacing.dart';
-import 'package:open_adventure/presentation/widgets/icon_helper.dart';
-import 'package:open_adventure/presentation/widgets/location_image.dart';
-import 'package:open_adventure/presentation/pages/inventory_page.dart';
-import 'package:open_adventure/presentation/pages/settings_page.dart';
-import 'package:open_adventure/presentation/widgets/flash_message_listener.dart';
+import 'package:open_adventure/core/theme/app_spacing.dart';
+import 'package:open_adventure/core/widgets/icon_helper.dart';
+import 'package:open_adventure/core/widgets/location_image.dart';
+import 'package:open_adventure/features/inventory/inventory_page.dart';
+import 'package:open_adventure/features/settings/settings_page.dart';
+import 'package:open_adventure/core/widgets/flash_message_listener.dart';
 
 /// First iteration of the Adventure screen (S2) showing description, travel
 /// buttons and a minimal journal backed by the [GameController].

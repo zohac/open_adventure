@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:open_adventure/presentation/theme/app_spacing.dart';
+import 'package:open_adventure/core/theme/app_spacing.dart';
 
 /// A primary action button displayed in the home menu.
 class HomeMenuButton extends StatelessWidget {

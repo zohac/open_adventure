@@ -26,8 +26,8 @@ import 'package:open_adventure/domain/usecases/open_object.dart';
 import 'package:open_adventure/domain/usecases/save_audio_settings.dart';
 import 'package:open_adventure/domain/usecases/take_object.dart';
 import 'package:open_adventure/domain/services/dwarf_system.dart';
-import 'package:open_adventure/presentation/pages/home_page.dart';
-import 'package:open_adventure/presentation/theme/app_theme.dart';
+import 'package:open_adventure/features/home/home_page.dart';
+import 'package:open_adventure/core/theme/app_theme.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

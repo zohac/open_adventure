@@ -19,7 +19,7 @@ optimized_for_llm: true
 # Project Context for AI Agents — open_adventure
 
 > **🚧 EN TRANSITION — 2026-05-22.** L'architecture cible (Riverpod 2 + `lib/features/`) est en cours de migration via l'Epic 5 "Foundation Refresh".
-> Jusqu'à la livraison des stories 5-1 à 5-15, les sections **State Management / Composition root / DI manuelle** décrivent l'état **en place** (ValueNotifier + `lib/presentation/`).
+> Jusqu'à la livraison des stories 5-1 à 5-15, les sections **State Management / Composition root / DI manuelle** décrivent l'état **en place** (ValueNotifier + `lib/features/` post-5-2 ; migration Riverpod en 5-6 → 5-10).
 > Source de vérité de l'architecture cible : [`docs/design.md`](./design.md) §3–§5.
 > Toutes les autres règles (Clean Architecture frontières, immutabilité, i18n, boucle de tour, RNG déterministe, PixelCanvas, perfs, tests, plateformes, anti-patterns Domain/Data) restent **valides**.
 
@@ -77,7 +77,7 @@ optimized_for_llm: true
 
 - **Domain pur** : `lib/domain/**` ne doit **jamais** importer `package:flutter/*`. Aucune classe Material, aucun `ValueNotifier`, aucun `BuildContext`. Si tu en as besoin, c'est que la classe va dans `Application` ou `Presentation`.
 - **Data passive** : `lib/data/models/**` fait du mapping JSON ↔ entités, **point**. Aucun calcul métier, aucune décision. Si la logique dépend de l'état du jeu, elle vit dans un use case Domain.
-- **Presentation sans logique** : `lib/presentation/**` écoute un `ValueNotifier<*ViewState>` et appelle `controller.perform(...)`. Aucune mutation, aucun calcul de score, aucune règle de visibilité d'action.
+- **Presentation sans logique** : `lib/features/**` (+ atomes `lib/core/widgets/**`) écoute un `ValueNotifier<*ViewState>` et appelle `controller.perform(...)`. Aucune mutation, aucun calcul de score, aucune règle de visibilité d'action.
 - **Application = orchestration** : `lib/application/controllers/**` bridge UI ↔ Domain ; ne contient pas de logique métier (ex : règle "incantation cachée tant que non débloquée" → reste dans `MagicWords.isIncantation` côté Domain et est appliquée à l'`ActionOption` côté GameController).
 - **Sens du flux** : Presentation → Application → Domain ← Data. La dépendance pointe toujours vers Domain. Une importation Data → Domain est autorisée ; Domain → Data est interdite.
 
@@ -95,7 +95,7 @@ optimized_for_llm: true
 
 #### i18n
 
-- **Aucune chaîne UI codée en dur** dans `lib/presentation/**`. Toujours passer par une clé ARB (`AppLocalizations.of(context).<key>`).
+- **Aucune chaîne UI codée en dur** dans `lib/features/**` ni `lib/core/widgets/**`. Toujours passer par une clé ARB (`AppLocalizations.of(context).<key>`).
 - `ActionOption.label` porte **une clé ARB** (ex : `actions.travel.back`, `actions.interaction.take.LAMP`), pas un texte. La résolution se fait dans le widget qui construit le bouton.
 - À chaque ajout de clé : éditer `lib/l10n/app_en.arb` **et** `lib/l10n/app_fr.arb`, déclarer placeholders via `@key`, regénérer `lib/l10n/app_localizations.dart` via `flutter gen-l10n`.
 - Convention de naming des clés : `snake_case` + structuration par contexte (`actions.travel.back`, `actions.interaction.take.<OBJECT_NAME>`, `home.menu.continue`).
@@ -128,7 +128,7 @@ Dans `GameController.perform(option)` (cf. `lib/application/controllers/game_con
 
 #### Pixel-perfect
 
-- Toute image pixel-art passe par `PixelCanvas` (`lib/presentation/widgets/pixel_canvas.dart`) en canvas logique 320×180 ou 384×216, scale entier uniquement, `FilterQuality.none`.
+- Toute image pixel-art passe par `PixelCanvas` (`lib/core/widgets/pixel_canvas.dart`) en canvas logique 320×180 ou 384×216, scale entier uniquement, `FilterQuality.none`.
 - Pas de scaling non entier, pas de lissage. Si un nouveau widget affiche du pixel-art sans `PixelCanvas`, c'est une régression à corriger.
 
 ---
@@ -153,13 +153,18 @@ Dans `GameController.perform(option)` (cf. `lib/application/controllers/game_con
 ```
 lib/
   domain/{entities,value_objects,repositories,usecases,services,constants}
-  application/{controllers,services,routing}
+  application/{controllers,services,providers,routing}
   data/{datasources,models,repositories,services}
-  presentation/{pages,widgets,theme}
-  core/{constant,error,usecases,utils,settings.dart,di}
+  features/{home,adventure,inventory,saves,settings,credits}     ← un écran = un dossier (cf. design.md §3.2)
+  core/{constant,error,theme,widgets,usecases,utils,settings.dart,di}
   l10n/{app_en.arb,app_fr.arb,app_localizations.dart}
   main.dart
 ```
+
+- **`features/<screen>/`** : tout le code dédié à un écran (page + widgets internes + state local éventuel). Un widget vit ici **si** il est consommé uniquement par cet écran.
+- **`core/widgets/`** : atomes UI transverses partagés entre plusieurs écrans (`pixel_canvas.dart`, `flash_message_listener.dart`, `icon_helper.dart`, `location_image.dart`). Les composants design system (`OAStamp`, `OAPill`, …) arrivent en Story 5-4.
+- **`core/theme/`** : tokens et thèmes Material (`app_colors.dart`, `app_spacing.dart`, `app_typography.dart`, `app_theme.dart`). La Story 5-3 renomme/refonde ces fichiers vers `oa_colors.dart` etc.
+- **`application/providers/`** : providers Riverpod (cf. [`dev-notes/riverpod-playbook.md`](./dev-notes/riverpod-playbook.md)). Introduit en Story 5-1 ; rempli par 5-6 → 5-10.
 
 - **Tout nouveau use case** va dans `lib/domain/usecases/<verb>_<object>.dart` avec :
   - une `abstract class` contractuelle (`abstract class TakeObject { Future<TurnResult> call(String objectId, Game game); }`),

@@ -4,9 +4,9 @@ import 'package:open_adventure/domain/entities/game.dart';
 import 'package:open_adventure/domain/entities/game_object_state.dart';
 import 'package:open_adventure/domain/value_objects/action_option.dart';
 import 'package:open_adventure/l10n/app_localizations.dart';
-import 'package:open_adventure/presentation/theme/app_spacing.dart';
-import 'package:open_adventure/presentation/widgets/icon_helper.dart';
-import 'package:open_adventure/presentation/widgets/flash_message_listener.dart';
+import 'package:open_adventure/core/theme/app_spacing.dart';
+import 'package:open_adventure/core/widgets/icon_helper.dart';
+import 'package:open_adventure/core/widgets/flash_message_listener.dart';
 
 /// InventoryPage renders the list of carried objects alongside contextual
 /// actions that reuse the domain [ActionOption] contracts.
