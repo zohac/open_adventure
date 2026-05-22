@@ -1,6 +1,6 @@
 # Story 5.3: Port `tokens.css` → Dart (remplace 2-19)
 
-Status: ready-for-dev
+Status: review
 Epic: 5
 Source ticket: Sprint Change Proposal 2026-05-22 §4.2 ; supersède la story `2-19-theme-tokens-baseline`
 Refs : [epic-5](../planning-artifacts/epic-5.md#story-53-port-tokenscss--dart-remplace-2-19), [design.md §4 ADR-003/004](../design.md), [tokens.css](../../design_handoff_open_adventure/tokens.css)
@@ -26,23 +26,23 @@ Refs : [epic-5](../planning-artifacts/epic-5.md#story-53-port-tokenscss--dart-re
 
 ## Tasks / Subtasks
 
-- [ ] **Task 1 — Embarquer les fonts** (AC: #5)
-  - [ ] Télécharger Pixelify Sans / Silkscreen / DM Sans depuis Google Fonts (OFL).
-  - [ ] Déposer sous `assets/fonts/<family>/<family>-<weight>.ttf` + `OFL.txt`.
-  - [ ] Section `fonts:` dans `pubspec.yaml`.
-- [ ] **Task 2 — `OAColors` ThemeExtension** (AC: #1)
-- [ ] **Task 3 — `OATypography` ThemeExtension** (AC: #2)
-- [ ] **Task 4 — `OASpacing` ThemeExtension** (AC: #3)
-- [ ] **Task 5 — `OAMotionTokens` (durées)** (AC: #4)
-- [ ] **Task 6 — `OAThemeData.dark()`** (AC: #6)
-- [ ] **Task 7 — Extension `BuildContextX`** (AC: #7)
-  - [ ] Fichier `lib/core/theme/build_context_x.dart` (≤ 40 lignes).
-- [ ] **Task 8 — Wiring `MaterialApp`** (AC: #6)
-  - [ ] `lib/main.dart` consomme `OAThemeData.dark()`.
-  - [ ] L'ancien `AppTheme` (`app_colors.dart`, `app_typography.dart`, `app_spacing.dart`, `app_theme.dart`) reste en place tant que les pages refondues (5-7/5-8/5-9) ne sont pas livrées — Dev Note explicite. **Cette story n'efface pas l'ancien thème**, elle ajoute le nouveau.
-- [ ] **Task 9 — Smoke test** (AC: #8)
-- [ ] **Task 10 — Superseder `2-19`** (AC: #9)
-- [ ] **Task 11 — Vérifications finales** (AC: #10)
+- [x] **Task 1 — Embarquer les fonts** (AC: #5)
+  - [x] Télécharger Pixelify Sans / Silkscreen / DM Sans depuis Google Fonts (OFL).
+  - [x] Déposer sous `assets/fonts/<family>/<family>-<weight>.ttf` + `OFL.txt`.
+  - [x] Section `fonts:` dans `pubspec.yaml`.
+- [x] **Task 2 — `OAColors` ThemeExtension** (AC: #1)
+- [x] **Task 3 — `OATypography` ThemeExtension** (AC: #2)
+- [x] **Task 4 — `OASpacing` ThemeExtension** (AC: #3)
+- [x] **Task 5 — `OAMotionTokens` (durées)** (AC: #4)
+- [x] **Task 6 — `OAThemeData.dark()`** (AC: #6)
+- [x] **Task 7 — Extension `BuildContextX`** (AC: #7)
+  - [x] Fichier `lib/core/theme/build_context_x.dart` (≤ 40 lignes).
+- [x] **Task 8 — Wiring `MaterialApp`** (AC: #6)
+  - [x] `lib/main.dart` consomme `OAThemeData.dark()`.
+  - [x] L'ancien `AppTheme` (`app_colors.dart`, `app_typography.dart`, `app_spacing.dart`, `app_theme.dart`) reste en place tant que les pages refondues (5-7/5-8/5-9) ne sont pas livrées — Dev Note explicite. **Cette story n'efface pas l'ancien thème**, elle ajoute le nouveau.
+- [x] **Task 9 — Smoke test** (AC: #8)
+- [x] **Task 10 — Superseder `2-19`** (AC: #9)
+- [x] **Task 11 — Vérifications finales** (AC: #10)
 
 ## Dev Notes
 
@@ -105,6 +105,65 @@ Refs : [epic-5](../planning-artifacts/epic-5.md#story-53-port-tokenscss--dart-re
 ## Dev Agent Record
 
 ### Agent Model Used
+
+- `claude-opus-4-7[1m]` (Claude Code, mode bmad-dev-story) — 2026-05-22.
+
 ### Debug Log References
+
+- `curl` Google Fonts repo (OFL) → 3 familles téléchargées (~390 KB total : PixelifySans variable 79 KB, Silkscreen Regular/Bold 32+30 KB, DM Sans variable 240 KB).
+- `flutter pub get` → exit 0 après ajout section `fonts:`.
+- `flutter analyze` → `No issues found! (ran in 0.9s)`.
+- `flutter test test/core/theme/oa_theme_smoke_test.dart` → 2/2 verts.
+- `flutter test` → `+205: All tests passed!` (203 préexistants + 2 du smoke).
+- `flutter build apk --debug` → `✓ Built build/app/outputs/flutter-apk/app-debug.apk` (~4 s — incrémental).
+
 ### Completion Notes List
+
+- **AC1 — `OAColors`** : `lib/core/theme/oa_colors.dart` (~280 lignes). 5 sous-palettes immutables (`OAInkPalette`, `OATealPalette`, `OAPaperPalette`, `OAAmberPalette`, `OASemanticColors`) + `OAColors` extends `ThemeExtension<OAColors>`. Tous les champs `final`, constructeurs `const`, `copyWith` + `lerp` implémentés (les sous-palettes ont leur propre `lerp` static, `OAColors.lerp` les compose). `void` (Dart reserved word) renommé en `voidColor` ; la doc API conserve la trace de la variable CSS source (`/// '--c-ink-void' — ...`).
+- **AC2 — `OATypography`** : `lib/core/theme/oa_typography.dart` (~220 lignes). Sous-classes `OADisplayStyles` (xl/l/m/s), `OACapsStyles` (m/s), `OABodyStyles` (l/m/s) + `action` + `mono` au niveau racine. `OAFontFamily` (abstract final class) expose les constants `display='PixelifySans'`, `caps='Silkscreen'`, `body='DMSans'`, `mono='JetBrainsMono'` (la mono n'est pas embarquée — fallback système ; déclaré pour cohérence future). `letterSpacing` converti em → dp en absolu (0.02em × 40px = 0.8 dp).
+- **AC3 — `OASpacing`** : `lib/core/theme/oa_spacing.dart` (~210 lignes). `s0..s10` flat (port direct 4dp grid), + sous-classes `OARadii` (r0..r3), `OABorderWidths` (b1..b3), `OAHitTargets` (min:44, comfy:48, large:56). `lerpDouble` helper local (visibility `@visibleForTesting`).
+- **AC4 — `OAMotionTokens`** : `lib/core/theme/oa_motion_tokens.dart` (~70 lignes). 3 durées `Duration(milliseconds: 120/200/320)`. Courbes (`Curves.stepN`) explicitement déléguées à Story 5-5. `_lerpDuration` helper local.
+- **AC5 — Fonts embarquées** : 3 familles sous `assets/fonts/<family>/` avec leurs `OFL.txt`. Pixelify & DM Sans en variable fonts (un seul TTF couvre tous les poids) ; Silkscreen en deux statiques Regular+Bold. Section `fonts:` ajoutée dans `pubspec.yaml` avec déclarations `weight: 400/700` (Pixelify, Silkscreen) et `weight: 400/500` (DM Sans).
+- **AC6 — Wiring `ThemeData`** : `lib/core/theme/oa_theme.dart` construit `ThemeData(useMaterial3: true, brightness: Brightness.dark, colorScheme: ColorScheme.dark(...), extensions: {colors, typography, OASpacing.standard, OAMotionTokens.standard})`. `colorScheme` dérivé : `primary=amber.base`, `secondary=teal.glow`, `surface=ink.deep`, `outline=ink.line`, `error=semantic.danger`, etc. `textTheme` mappé sur `display.*`, `caps.*`, `body.*`, `action`, avec `apply(bodyColor: paper.warm, displayColor: paper.bright)`. Pas de `lightTheme` ; `MaterialApp.themeMode = ThemeMode.dark` force le mode dark même si l'OS est en light.
+- **AC7 — `BuildContextX`** : `lib/core/theme/build_context_x.dart` (32 lignes). Getters `oaColors`, `oaTypography`, `oaSpacing`, `oaMotion` ; helper privé `_extension<T>()` lance `StateError` explicite si le `Theme` n'expose pas l'extension (l'app racine DOIT utiliser `OAThemeData.dark()`).
+- **AC8 — Smoke test** : `test/core/theme/oa_theme_smoke_test.dart` (60 lignes). Vérifie via `pumpWidget(MaterialApp(theme: OAThemeData.dark(), home: Builder...))` que les 4 extensions sont non-null et que les 4 valeurs canoniques de l'AC8 sont exactes (`amber.base = 0xFFF0A040` via `toARGB32()`, `body.m.fontSize == 15`, `s4 == 16.0`, `durBase == 200ms`). Test secondaire : `OAThemeData.dark().brightness == Brightness.dark`.
+- **AC9 — Story 2-19 superseded** : la story `2-19-theme-tokens-baseline` **n'a pas de fichier dédié** (legacy pré-BMad). Elle est annotée dans `sprint-status.yaml:106` avec `done  # supersedée par 5-3 (Epic 5 Foundation Refresh)` — annotation antérieure à cette story 5-3, donc l'AC est satisfait en pratique sans modification supplémentaire. Pas de bandeau à ajouter en l'absence de fichier.
+- **AC10 — Qualité** : `flutter analyze` 0 warning, `flutter test` 205/205 verts (+2 nouveaux), `flutter build apk --debug` OK. Couverture Presentation : les 6 nouveaux fichiers `lib/core/theme/oa_*.dart` + `build_context_x.dart` sont couverts par le smoke test à hauteur des chemins exercés (les sous-palettes non-canoniques et les `lerp/copyWith` ne sont pas couverts mais l'AC vise ≥ 60 % Presentation — préservé par le périmètre existant).
+
+### Cohabitation transitoire (par design)
+
+- L'ancien `AppTheme` + ses 4 tokens (`app_colors.dart`, `app_typography.dart`, `app_spacing.dart`, `app_theme.dart`) **restent en place** et leur test `test/core/theme/app_theme_test.dart` continue à passer. Aucune référence depuis `lib/main.dart` (qui consomme désormais `OAThemeData.dark()`) mais les pages non-refondues qui les importeraient encore via `AppColors.x` continuent à fonctionner si quelqu'un les référence.
+- Les pages livrées Epic 1-4 (`HomePage`, `AdventurePage`, `InventoryPage`, etc.) **n'utilisent pas encore** `context.oaColors` — leur reskin est délégué aux stories 5-7/5-8/5-9. Visuellement, l'app continue donc à afficher les couleurs/typos Material par défaut héritées du `colorScheme.dark`, qui retombent désormais sur les tokens OA (amber primary, teal secondary, ink surfaces). C'est un mix transitoire **acceptable** documenté dans la story.
+
 ### File List
+
+**NEW :**
+
+- `assets/fonts/PixelifySans/PixelifySans-Variable.ttf` (79 KB, variable wght 400-700)
+- `assets/fonts/PixelifySans/OFL.txt`
+- `assets/fonts/Silkscreen/Silkscreen-Regular.ttf` (32 KB)
+- `assets/fonts/Silkscreen/Silkscreen-Bold.ttf` (30 KB)
+- `assets/fonts/Silkscreen/OFL.txt`
+- `assets/fonts/DMSans/DMSans-Variable.ttf` (240 KB, variable opsz+wght)
+- `assets/fonts/DMSans/OFL.txt`
+- `lib/core/theme/oa_colors.dart`
+- `lib/core/theme/oa_typography.dart`
+- `lib/core/theme/oa_spacing.dart`
+- `lib/core/theme/oa_motion_tokens.dart`
+- `lib/core/theme/oa_theme.dart`
+- `lib/core/theme/build_context_x.dart`
+- `test/core/theme/oa_theme_smoke_test.dart`
+
+**UPDATE :**
+
+- `pubspec.yaml` (section `fonts:` ajoutée — remplace les commentaires d'exemple)
+- `pubspec.lock` (régénéré par `flutter pub get`)
+- `lib/main.dart` (import `oa_theme.dart`, `theme: OAThemeData.dark()`, `themeMode: ThemeMode.dark`)
+- `docs/implementation-artifacts/sprint-status.yaml` (`5-3-port-tokens-design-system` → `review`)
+- `docs/implementation-artifacts/5-3-port-tokens-design-system.md` (tâches cochées, Dev Agent Record rempli, Status `review`)
+
+## Change Log
+
+| Date       | Author        | Change                                                                              |
+|------------|---------------|-------------------------------------------------------------------------------------|
+| 2026-05-22 | Claude (dev)  | Implémentation Story 5-3 : port `tokens.css` → 4 `ThemeExtension` Dart typées (`OAColors`, `OATypography`, `OASpacing`, `OAMotionTokens`), `OAThemeData.dark()`, helper `BuildContextX`, 3 fonts embarquées (Pixelify Sans, Silkscreen, DM Sans, OFL committées), wiring `MaterialApp`. Smoke test couvre les 4 valeurs canoniques de l'AC8. Cohabitation transitoire avec l'ancien `AppTheme` préservée pour les pages non encore refondues. 205 tests verts, analyze 0 warning, APK debug OK. |

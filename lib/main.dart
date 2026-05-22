@@ -27,7 +27,7 @@ import 'package:open_adventure/domain/usecases/save_audio_settings.dart';
 import 'package:open_adventure/domain/usecases/take_object.dart';
 import 'package:open_adventure/domain/services/dwarf_system.dart';
 import 'package:open_adventure/features/home/home_page.dart';
-import 'package:open_adventure/core/theme/app_theme.dart';
+import 'package:open_adventure/core/theme/oa_theme.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -135,9 +135,9 @@ class _OpenAdventureAppState extends State<OpenAdventureApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       onGenerateTitle: (context) => AppLocalizations.of(context).appTitle,
-      theme: AppTheme.light(),
-      darkTheme: AppTheme.dark(),
-      themeMode: ThemeMode.system,
+      theme: OAThemeData.dark(),
+      darkTheme: OAThemeData.dark(),
+      themeMode: ThemeMode.dark,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       home: HomePage(
