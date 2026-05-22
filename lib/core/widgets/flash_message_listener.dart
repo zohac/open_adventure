@@ -24,6 +24,13 @@ class FlashMessageListener extends StatefulWidget {
   @visibleForTesting
   static const Key flashMessageKey = ValueKey<String>('flash_message_overlay');
 
+  /// Key applied to the internal `AnimatedSwitcher` so motion-contract tests
+  /// can target it precisely (avoids matching the `AnimatedSwitcher`
+  /// instances internal to `Scaffold` / `Material`).
+  @visibleForTesting
+  static const Key flashMessageSwitcherKey =
+      ValueKey<String>('flash_message_switcher');
+
   @override
   State<FlashMessageListener> createState() => _FlashMessageListenerState();
 }
@@ -112,22 +119,13 @@ class _FlashMessageListenerState extends State<FlashMessageListener> {
   Widget build(BuildContext context) {
     final String? message = _visibleMessage;
     final l10n = AppLocalizations.of(context);
-    // Defensive resolve : the widget can be hosted under a `MaterialApp`
-    // that lacks the `OAAnimations` extension (legacy test harnesses,
-    // overlays bootstrapped before the theme is mounted, etc.). In that
-    // case we fall back to the canonical animation set (still
-    // step-discretised — no cubic-bezier sneaks back in). Reduce-motion
-    // is honoured whenever a `MediaQuery` ancestor exists.
-    final extension = Theme.of(context).extension<OAAnimations>();
-    final disableAnimations =
-        MediaQuery.maybeDisableAnimationsOf(context) ?? false;
-    final animations = extension ?? OAAnimations.standard;
-    final inResolved = disableAnimations
-        ? animations.raw(OAAnimationSemantic.instant)
-        : animations.raw(OAAnimationSemantic.base);
-    final outResolved = disableAnimations
-        ? animations.raw(OAAnimationSemantic.instant)
-        : animations.raw(OAAnimationSemantic.fast);
+    // Reduce-motion-aware resolve, centralised in `OAMotion.fallbackOf`.
+    // The listener can be hosted under a legacy theme (no `OAAnimations`
+    // extension) — `fallbackOf` then uses `OAAnimations.standard` while
+    // still honouring `MediaQuery.disableAnimations`.
+    final motion = OAMotion.fallbackOf(context);
+    final inResolved = motion.resolve(OAAnimationSemantic.base);
+    final outResolved = motion.resolve(OAAnimationSemantic.fast);
     return Stack(
       fit: StackFit.expand,
       children: <Widget>[
@@ -141,6 +139,7 @@ class _FlashMessageListenerState extends State<FlashMessageListener> {
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
                   child: AnimatedSwitcher(
+                    key: FlashMessageListener.flashMessageSwitcherKey,
                     duration: inResolved.duration,
                     reverseDuration: outResolved.duration,
                     switchInCurve: inResolved.curve,

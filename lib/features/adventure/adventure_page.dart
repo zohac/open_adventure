@@ -5,6 +5,7 @@ import 'package:open_adventure/application/controllers/audio_settings_controller
 import 'package:open_adventure/application/controllers/game_controller.dart';
 import 'package:open_adventure/domain/value_objects/action_option.dart';
 import 'package:open_adventure/l10n/app_localizations.dart';
+import 'package:open_adventure/core/motion/oa_page_pixel_transition.dart';
 import 'package:open_adventure/core/theme/app_spacing.dart';
 import 'package:open_adventure/core/widgets/icon_helper.dart';
 import 'package:open_adventure/core/widgets/location_image.dart';
@@ -85,7 +86,7 @@ class _AdventurePageState extends State<AdventurePage> {
               onPressed: () {
                 final controller = widget.audioSettingsController!;
                 Navigator.of(context).push(
-                  MaterialPageRoute<void>(
+                  OAMaterialPageRoute<void>(
                     builder: (_) => SettingsPage(
                       audioSettingsController: controller,
                       initializeOnMount: false,
@@ -156,7 +157,7 @@ class _AdventurePageState extends State<AdventurePage> {
   Future<void> _handleAction(ActionOption option) async {
     if (option.category == 'meta' && option.verb == 'INVENTORY') {
       await Navigator.of(context).push(
-        MaterialPageRoute<void>(
+        OAMaterialPageRoute<void>(
           builder: (_) => InventoryPage(controller: widget.controller),
         ),
       );

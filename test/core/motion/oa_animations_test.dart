@@ -108,6 +108,81 @@ void main() {
     });
   });
 
+  group('OAMotion.fallbackOf — defensive resolver (F6)', () {
+    testWidgets(
+        'never throws when OAAnimations extension is missing : falls back '
+        'to OAAnimations.standard',
+        (tester) async {
+      late BuildContext ctx;
+      await tester.pumpWidget(
+        MaterialApp(
+          theme: ThemeData.light(),
+          home: Builder(builder: (c) {
+            ctx = c;
+            return const SizedBox.shrink();
+          }),
+        ),
+      );
+
+      final motion = OAMotion.fallbackOf(ctx);
+      expect(motion.disableAnimations, isFalse);
+
+      final base = motion.resolve(OAAnimationSemantic.base);
+      expect(base.duration, const Duration(milliseconds: 200));
+      expect(base.curve, OAStepCurve.step4);
+    });
+
+    testWidgets(
+        'honours MediaQuery.disableAnimations even when the extension '
+        'is missing',
+        (tester) async {
+      late BuildContext ctx;
+      await tester.pumpWidget(
+        MaterialApp(
+          theme: ThemeData.light(),
+          home: MediaQuery(
+            data: const MediaQueryData(disableAnimations: true),
+            child: Builder(builder: (c) {
+              ctx = c;
+              return const SizedBox.shrink();
+            }),
+          ),
+        ),
+      );
+
+      final motion = OAMotion.fallbackOf(ctx);
+      expect(motion.disableAnimations, isTrue);
+
+      for (final s in OAAnimationSemantic.values) {
+        final r = motion.resolve(s);
+        expect(r.duration, Duration.zero,
+            reason: 'duration should collapse for $s');
+        expect(r.curve, Curves.linear,
+            reason: 'curve should collapse for $s');
+      }
+    });
+
+    testWidgets('uses the theme extension when present', (tester) async {
+      late BuildContext ctx;
+      await tester.pumpWidget(
+        MaterialApp(
+          theme: OAThemeData.dark(),
+          home: Builder(builder: (c) {
+            ctx = c;
+            return const SizedBox.shrink();
+          }),
+        ),
+      );
+
+      final motion = OAMotion.fallbackOf(ctx);
+      expect(motion.disableAnimations, isFalse);
+      expect(
+        motion.resolve(OAAnimationSemantic.cinematic).duration,
+        const Duration(milliseconds: 560),
+      );
+    });
+  });
+
   group('Structural equality', () {
     test('two OAAnimations.standard are equal', () {
       const a = OAAnimations.standard;

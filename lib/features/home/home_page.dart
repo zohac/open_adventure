@@ -9,6 +9,7 @@ import 'package:open_adventure/features/home/widgets/home_hero_banner.dart';
 import 'package:open_adventure/features/home/widgets/home_menu_button.dart';
 import 'package:open_adventure/features/saves/saves_page.dart';
 import 'package:open_adventure/features/settings/settings_page.dart';
+import 'package:open_adventure/core/motion/oa_page_pixel_transition.dart';
 import 'package:open_adventure/core/theme/app_colors.dart';
 import 'package:open_adventure/core/theme/app_spacing.dart';
 import 'package:open_adventure/core/widgets/flash_message_listener.dart';
@@ -53,7 +54,7 @@ class _HomePageState extends State<HomePage> {
 
   void _openAdventure() {
     Navigator.of(context).push(
-      MaterialPageRoute<void>(
+      OAMaterialPageRoute<void>(
         builder: (_) => AdventurePage(
           controller: widget.gameController,
           audioSettingsController: widget.audioSettingsController,
@@ -66,7 +67,7 @@ class _HomePageState extends State<HomePage> {
 
   void _openSaves() {
     Navigator.of(context).push(
-      MaterialPageRoute<void>(
+      OAMaterialPageRoute<void>(
         builder: (_) => const SavesPage(),
       ),
     );
@@ -74,7 +75,7 @@ class _HomePageState extends State<HomePage> {
 
   void _openSettings() {
     Navigator.of(context).push(
-      MaterialPageRoute<void>(
+      OAMaterialPageRoute<void>(
         builder: (_) => SettingsPage(
           audioSettingsController: widget.audioSettingsController,
           disposeController: false,
@@ -85,7 +86,7 @@ class _HomePageState extends State<HomePage> {
 
   void _openCredits() {
     Navigator.of(context).push(
-      MaterialPageRoute<void>(
+      OAMaterialPageRoute<void>(
         builder: (_) => const CreditsPage(),
       ),
     );

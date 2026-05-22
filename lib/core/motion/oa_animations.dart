@@ -124,6 +124,10 @@ class OAMotion {
 
   /// Build a motion resolver tied to the given context. Throws [StateError]
   /// if the [OAAnimations] extension is missing from the theme.
+  ///
+  /// Use this when the calling widget **requires** an OA theme (refondue
+  /// page, atome). Widgets that may be hosted under a legacy theme should
+  /// use [OAMotion.fallbackOf] instead.
   factory OAMotion.of(BuildContext context) {
     final animations = Theme.of(context).extension<OAAnimations>();
     if (animations == null) {
@@ -132,6 +136,22 @@ class OAMotion {
         'OAThemeData.dark() (see lib/core/theme/oa_theme.dart).',
       );
     }
+    final disabled = MediaQuery.maybeDisableAnimationsOf(context) ?? false;
+    return OAMotion._(animations, disabled);
+  }
+
+  /// Reduce-motion-aware resolver that **never throws**. When the
+  /// `OAAnimations` extension is missing from the theme (legacy
+  /// `AppTheme`, overlays bootstrapped before the theme is mounted, test
+  /// harnesses without an OA theme), falls back to [OAAnimations.standard]
+  /// — preserving the step-discretised grammar (ADR-006) and the
+  /// reduce-motion contract (`MediaQuery.disableAnimations`).
+  ///
+  /// Used by widgets in transitional cohabitation pendant Epic 5
+  /// (e.g. `FlashMessageListener`).
+  factory OAMotion.fallbackOf(BuildContext context) {
+    final animations = Theme.of(context).extension<OAAnimations>() ??
+        OAAnimations.standard;
     final disabled = MediaQuery.maybeDisableAnimationsOf(context) ?? false;
     return OAMotion._(animations, disabled);
   }
