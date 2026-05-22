@@ -4,12 +4,17 @@
 // Convention "full Riverpod" (cf. `docs/dev-notes/riverpod-playbook.md`) :
 // repositories, use cases and services are exposed as `Provider<T>` and
 // composed via `ref.watch`. Domain stays Riverpod-free.
+//
+// All providers are **synchronous** : the only async dependency
+// (`MotionCanonicalizer` loaded from JSON) is resolved before the
+// `ProviderScope` is mounted and injected via an `overrideWithValue`
+// at the root (cf. `lib/main.dart`). Test harnesses do the same with
+// `MotionCanonicalizer` mocks.
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:open_adventure/data/repositories/adventure_repository_impl.dart';
 import 'package:open_adventure/data/repositories/save_repository_impl.dart';
-import 'package:open_adventure/data/services/motion_normalizer_impl.dart';
 import 'package:open_adventure/domain/repositories/adventure_repository.dart';
 import 'package:open_adventure/domain/repositories/save_repository.dart';
 import 'package:open_adventure/domain/services/dwarf_system.dart';
@@ -39,9 +44,18 @@ final saveRepositoryProvider = Provider<SaveRepository>(
   name: 'saveRepositoryProvider',
 );
 
-/// Async motion normalizer (loads canonical motion table from JSON).
-final motionNormalizerProvider = FutureProvider<MotionCanonicalizer>(
-  (ref) => MotionNormalizerImpl.load(),
+/// Motion canonicalizer. **Always overridden** at the root [ProviderScope]
+/// because the concrete `MotionNormalizerImpl.load()` is async (JSON parse).
+/// The override happens once at app bootstrap (`lib/main.dart`) — all
+/// downstream providers are synchronous from that point on.
+final motionNormalizerProvider = Provider<MotionCanonicalizer>(
+  (ref) {
+    throw StateError(
+      'motionNormalizerProvider must be overridden at the ProviderScope root. '
+      'Bootstrap should call `MotionNormalizerImpl.load()` and inject the '
+      'instance via `overrideWithValue` (see lib/main.dart).',
+    );
+  },
   name: 'motionNormalizerProvider',
 );
 
@@ -51,27 +65,27 @@ final evaluateConditionProvider = Provider<EvaluateCondition>(
   name: 'evaluateConditionProvider',
 );
 
-/// `ListAvailableActions` orchestrator (depends on motion normalizer).
-final listAvailableActionsProvider = FutureProvider<ListAvailableActions>(
-  (ref) async {
+/// `ListAvailableActions` orchestrator (synchronous — depends on motion
+/// resolved at root).
+final listAvailableActionsProvider = Provider<ListAvailableActions>(
+  (ref) {
     final repo = ref.watch(adventureRepositoryProvider);
-    final motion = await ref.watch(motionNormalizerProvider.future);
+    final motion = ref.watch(motionNormalizerProvider);
     final evaluate = ref.watch(evaluateConditionProvider);
-    final travel = ListAvailableActionsTravel(repo, motion);
     return ListAvailableActions(
       adventureRepository: repo,
-      travel: travel,
+      travel: ListAvailableActionsTravel(repo, motion),
       evaluateCondition: evaluate,
     );
   },
   name: 'listAvailableActionsProvider',
 );
 
-/// `ApplyTurn` router (composes all interaction use cases).
-final applyTurnProvider = FutureProvider<ApplyTurn>(
-  (ref) async {
+/// `ApplyTurn` router (synchronous — composes all interaction use cases).
+final applyTurnProvider = Provider<ApplyTurn>(
+  (ref) {
     final repo = ref.watch(adventureRepositoryProvider);
-    final motion = await ref.watch(motionNormalizerProvider.future);
+    final motion = ref.watch(motionNormalizerProvider);
     return ApplyTurn(
       travel: ApplyTurnGoto(repo, motion),
       examine: ExamineImpl(adventureRepository: repo),

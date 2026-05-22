@@ -1,6 +1,8 @@
 // Tests the Riverpod wiring introduced by Story 5-6 :
 //   - dependency providers can be overridden via `ProviderContainer`
-//   - `gameStateProvider` resolves to a fully-wired `GameNotifier`
+//   - `gameStateProvider` resolves synchronously to a fully-wired
+//     `GameNotifier` exposed as `StateNotifierProvider<GameNotifier,
+//     GameViewState>` (AC2)
 //   - autosave is triggered exactly once per successful turn through the
 //     notifier obtained from the provider (AC7 — règle non négociable)
 
@@ -16,7 +18,6 @@ import 'package:open_adventure/domain/entities/location.dart';
 import 'package:open_adventure/domain/repositories/adventure_repository.dart';
 import 'package:open_adventure/domain/repositories/save_repository.dart';
 import 'package:open_adventure/domain/services/dwarf_system.dart';
-import 'package:open_adventure/domain/services/motion_canonicalizer.dart';
 import 'package:open_adventure/domain/usecases/apply_turn.dart';
 import 'package:open_adventure/domain/usecases/list_available_actions.dart';
 import 'package:open_adventure/domain/value_objects/action_option.dart';
@@ -34,14 +35,9 @@ class _MockApplyTurn extends Mock implements ApplyTurn {}
 
 class _MockDwarfSystem extends Mock implements DwarfSystem {}
 
-class _MockMotion extends Mock implements MotionCanonicalizer {}
-
 const _initial = Game(loc: 1, oldLoc: 1, newLoc: 1, turns: 0, rngSeed: 42);
 
-const _location = Location(
-  id: 1,
-  name: 'Test Loc',
-);
+const _location = Location(id: 1, name: 'Test Loc');
 
 const _gotoAction = ActionOption(
   id: 'travel.north',
@@ -56,15 +52,13 @@ ProviderContainer _buildContainer({
   required ApplyTurn apply,
   required SaveRepository save,
   required DwarfSystem dwarfs,
-  required MotionCanonicalizer motion,
 }) {
   return ProviderContainer(
     overrides: <Override>[
       adventureRepositoryProvider.overrideWithValue(repo),
       saveRepositoryProvider.overrideWithValue(save),
-      motionNormalizerProvider.overrideWith((ref) async => motion),
-      listAvailableActionsProvider.overrideWith((ref) async => actions),
-      applyTurnProvider.overrideWith((ref) async => apply),
+      listAvailableActionsProvider.overrideWithValue(actions),
+      applyTurnProvider.overrideWithValue(apply),
       dwarfSystemProvider.overrideWithValue(dwarfs),
     ],
   );
@@ -85,7 +79,6 @@ void main() {
     late _MockListAvailableActions list;
     late _MockApplyTurn apply;
     late _MockDwarfSystem dwarfs;
-    late _MockMotion motion;
 
     setUp(() {
       repo = _MockAdventureRepository();
@@ -93,58 +86,64 @@ void main() {
       list = _MockListAvailableActions();
       apply = _MockApplyTurn();
       dwarfs = _MockDwarfSystem();
-      motion = _MockMotion();
 
       when(() => repo.getGameObjects()).thenAnswer((_) async => <GameObject>[]);
       when(() => repo.initialGame()).thenAnswer((_) async => _initial);
       when(() => repo.locationById(any())).thenAnswer((_) async => _location);
       when(() => save.autosave(any())).thenAnswer((_) async {});
       when(() => list(any())).thenAnswer((_) async => const <ActionOption>[]);
-      when(() => dwarfs.tick(any()))
-          .thenAnswer((invocation) async => DwarfTickResult(
-                game: invocation.positionalArguments[0] as Game,
-                messages: const <String>[],
-              ));
+      when(() => dwarfs.tick(any())).thenAnswer(
+        (invocation) async => DwarfTickResult(
+          game: invocation.positionalArguments[0] as Game,
+          messages: const <String>[],
+        ),
+      );
     });
 
-    test('gameStateProvider resolves to a wired GameNotifier', () async {
+    test('gameStateProvider exposes a StateNotifierProvider and resolves '
+        'synchronously to a GameNotifier (AC2)', () {
       final container = _buildContainer(
         repo: repo,
         actions: list,
         apply: apply,
         save: save,
         dwarfs: dwarfs,
-        motion: motion,
       );
       addTearDown(container.dispose);
 
-      final notifier = await container.read(gameStateProvider.future);
+      // Reading via `.notifier` returns the GameNotifier instance.
+      final notifier = container.read(gameStateProvider.notifier);
       expect(notifier, isA<GameNotifier>());
-      expect(notifier.state.isLoading, isTrue,
+
+      // Reading the provider directly returns the GameViewState (initial).
+      final state = container.read(gameStateProvider);
+      expect(state, isA<GameViewState>());
+      expect(state.isLoading, isTrue,
           reason: 'init() not auto-invoked — UI decides (AC5).');
+      expect(state.game, isNull);
     });
 
-    test('init() through provider triggers autosave exactly once', () async {
+    test('init() triggers autosave exactly once (AC7 règle non négociable)',
+        () async {
       final container = _buildContainer(
         repo: repo,
         actions: list,
         apply: apply,
         save: save,
         dwarfs: dwarfs,
-        motion: motion,
       );
       addTearDown(container.dispose);
 
-      final notifier = await container.read(gameStateProvider.future);
+      final notifier = container.read(gameStateProvider.notifier);
       await notifier.init();
 
       verify(() => save.autosave(any())).called(1);
-      expect(notifier.state.isLoading, isFalse);
-      expect(notifier.state.game, equals(_initial));
+      expect(container.read(gameStateProvider).isLoading, isFalse);
+      expect(container.read(gameStateProvider).game, equals(_initial));
     });
 
-    test('perform() through provider triggers autosave exactly once on '
-        'successful turn (AC6 boucle de tour préservée)', () async {
+    test('perform() triggers autosave exactly once on successful turn '
+        '(AC6 boucle de tour 1→11 préservée)', () async {
       const nextGame = Game(loc: 2, oldLoc: 1, newLoc: 2, turns: 1, rngSeed: 42);
       when(() => apply(_gotoAction, _initial))
           .thenAnswer((_) async => TurnResult(nextGame, const <String>[]));
@@ -155,11 +154,10 @@ void main() {
         apply: apply,
         save: save,
         dwarfs: dwarfs,
-        motion: motion,
       );
       addTearDown(container.dispose);
 
-      final notifier = await container.read(gameStateProvider.future);
+      final notifier = container.read(gameStateProvider.notifier);
       await notifier.init();
       // Reset call counter to assert only the perform-triggered autosave.
       clearInteractions(save);
@@ -167,7 +165,32 @@ void main() {
       await notifier.perform(_gotoAction);
 
       verify(() => save.autosave(any())).called(1);
-      expect(notifier.state.game, equals(nextGame));
+      expect(container.read(gameStateProvider).game, equals(nextGame));
+    });
+
+    test('ref.watch(gameStateProvider) rebuilds emit on state change',
+        () async {
+      final container = _buildContainer(
+        repo: repo,
+        actions: list,
+        apply: apply,
+        save: save,
+        dwarfs: dwarfs,
+      );
+      addTearDown(container.dispose);
+
+      final received = <bool>[];
+      final sub = container.listen<GameViewState>(
+        gameStateProvider,
+        (_, next) => received.add(next.isLoading),
+        fireImmediately: true,
+      );
+      addTearDown(sub.close);
+
+      await container.read(gameStateProvider.notifier).init();
+
+      // At least one update should have been received with isLoading == false.
+      expect(received, contains(false));
     });
 
     test('listenable adapter receives state updates (AC10 transitional)',
@@ -178,11 +201,10 @@ void main() {
         apply: apply,
         save: save,
         dwarfs: dwarfs,
-        motion: motion,
       );
       addTearDown(container.dispose);
 
-      final notifier = await container.read(gameStateProvider.future);
+      final notifier = container.read(gameStateProvider.notifier);
       // ignore: deprecated_member_use_from_same_package
       final listenable = notifier.listenable;
       final received = <bool>[];

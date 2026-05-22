@@ -6,40 +6,36 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../controllers/game_controller.dart';
 import 'dependencies.dart';
 
-/// Asynchronous factory that wires the [GameNotifier] from its dependency
-/// providers. Exposed indirectly via [gameStateProvider] so consumers see
-/// a synchronous `StateNotifierProvider`.
-final _gameNotifierFactoryProvider = FutureProvider<GameNotifier>(
-  (ref) async {
-    final repo = ref.watch(adventureRepositoryProvider);
-    final listActions = await ref.watch(listAvailableActionsProvider.future);
-    final apply = await ref.watch(applyTurnProvider.future);
-    final save = ref.watch(saveRepositoryProvider);
-    final dwarfs = ref.watch(dwarfSystemProvider);
-    final notifier = GameNotifier(
-      adventureRepository: repo,
-      listAvailableActions: listActions,
-      applyTurn: apply,
-      saveRepository: save,
-      dwarfSystem: dwarfs,
+/// Synchronous factory that wires the [GameNotifier] from its dependency
+/// providers. Exposed only via [gameStateProvider] — kept private so the
+/// surface area of the public API stays minimal.
+final _gameNotifierFactoryProvider = Provider<GameNotifier>(
+  (ref) {
+    // No `ref.onDispose(notifier.dispose)` here : the parent
+    // [StateNotifierProvider] is responsible for disposing the
+    // `StateNotifier` returned by this factory. Doing both leads to a
+    // double-dispose error.
+    return GameNotifier(
+      adventureRepository: ref.watch(adventureRepositoryProvider),
+      listAvailableActions: ref.watch(listAvailableActionsProvider),
+      applyTurn: ref.watch(applyTurnProvider),
+      saveRepository: ref.watch(saveRepositoryProvider),
+      dwarfSystem: ref.watch(dwarfSystemProvider),
     );
-    ref.onDispose(notifier.dispose);
-    return notifier;
   },
   name: '_gameNotifierFactoryProvider',
 );
 
-/// Main entry point used by the Presentation layer (post 5-7/5-9).
+/// Main entry point used by the Presentation layer.
 ///
-/// Resolves only once the async dependencies (motion normalizer parsing)
-/// have completed. Consumers that need synchronous state can either :
-///  * `ref.watch(gameStateProvider).whenData(...)` to react to the
-///    [GameNotifier] becoming ready ;
-///  * read the `state` once the `AsyncData` arrives.
+/// Consumers either :
+///   * `ref.watch(gameStateProvider)` to rebuild on every state change ;
+///   * `ref.read(gameStateProvider.notifier)` to call methods (`init()`,
+///     `perform()`, etc.) without subscribing.
 ///
 /// The `init()` call is **not** triggered automatically — the UI decides
 /// when to start the game (cf. Story 5-6 AC5).
-final gameStateProvider = FutureProvider<GameNotifier>(
-  (ref) => ref.watch(_gameNotifierFactoryProvider.future),
-  name: 'gameStateProvider',
-);
+final gameStateProvider =
+    StateNotifierProvider<GameNotifier, GameViewState>((ref) {
+  return ref.watch(_gameNotifierFactoryProvider);
+}, name: 'gameStateProvider');

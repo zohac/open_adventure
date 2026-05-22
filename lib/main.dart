@@ -4,13 +4,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:open_adventure/application/controllers/audio_settings_controller.dart';
-import 'package:open_adventure/application/controllers/game_controller.dart';
 import 'package:open_adventure/application/controllers/home_controller.dart';
 import 'package:open_adventure/application/providers/dependencies.dart';
 import 'package:open_adventure/application/providers/game_state_provider.dart';
 import 'package:open_adventure/application/services/audio_controller.dart';
 import 'package:open_adventure/core/theme/oa_theme.dart';
 import 'package:open_adventure/data/repositories/audio_settings_repository_impl.dart';
+import 'package:open_adventure/data/services/motion_normalizer_impl.dart';
 import 'package:open_adventure/domain/usecases/load_audio_settings.dart';
 import 'package:open_adventure/domain/usecases/save_audio_settings.dart';
 import 'package:open_adventure/features/debug/widget_gallery.dart';
@@ -20,41 +20,30 @@ import 'package:open_adventure/l10n/app_localizations.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Container Riverpod racine — résout tous les providers gameplay
-  // (adventureRepository, applyTurn, saveRepository, dwarfSystem, etc.)
-  // exposés par `lib/application/providers/dependencies.dart` (Story 5-6).
-  final container = ProviderContainer();
+  // The only async dependency at boot is the motion canonicalizer (JSON
+  // parse). Once resolved, every gameplay provider is synchronous and
+  // wired via the standard `ProviderScope` (cf. Story 5-6 AC4).
+  final motion = await MotionNormalizerImpl.load();
 
-  // Pré-résoudre les FutureProviders pour que les pages legacy non encore
-  // refondues (cohabitation transitoire) reçoivent un `GameNotifier` prêt
-  // par constructeur. Les pages refondues (5-7/5-9) consommeront
-  // `ref.watch(gameStateProvider)` et géreront elles-mêmes l'AsyncValue.
-  final gameController = await container.read(gameStateProvider.future);
-  final saveRepository = container.read(saveRepositoryProvider);
-
-  // Audio + Home controllers : migrés en Stories 5-10 (audio settings)
-  // et lots futurs (Home). Pour l'instant DI manuelle.
+  // Legacy controllers — migrated in subsequent stories (5-10 etc.).
+  // They still receive their dependencies by constructor for now.
   final audioController = AudioController();
   final audioSettingsRepository = AudioSettingsRepositoryImpl();
-  final loadAudioSettings = LoadAudioSettings(audioSettingsRepository);
-  final saveAudioSettings = SaveAudioSettings(audioSettingsRepository);
   final audioSettingsController = AudioSettingsController(
-    loadAudioSettings: loadAudioSettings,
-    saveAudioSettings: saveAudioSettings,
+    loadAudioSettings: LoadAudioSettings(audioSettingsRepository),
+    saveAudioSettings: SaveAudioSettings(audioSettingsRepository),
     audioOutput: audioController,
   );
   await audioSettingsController.init();
 
-  final homeController = HomeController(saveRepository: saveRepository);
-
   runApp(
-    UncontrolledProviderScope(
-      container: container,
+    ProviderScope(
+      overrides: <Override>[
+        motionNormalizerProvider.overrideWithValue(motion),
+      ],
       child: OpenAdventureApp(
-        gameController: gameController,
         audioController: audioController,
         audioSettingsController: audioSettingsController,
-        homeController: homeController,
       ),
     ),
   );
@@ -63,16 +52,12 @@ Future<void> main() async {
 class OpenAdventureApp extends StatefulWidget {
   const OpenAdventureApp({
     super.key,
-    required this.gameController,
     required this.audioController,
     required this.audioSettingsController,
-    required this.homeController,
   });
 
-  final GameNotifier gameController;
   final AudioController audioController;
   final AudioSettingsController audioSettingsController;
-  final HomeController homeController;
 
   @override
   State<OpenAdventureApp> createState() => _OpenAdventureAppState();
@@ -83,9 +68,9 @@ class _OpenAdventureAppState extends State<OpenAdventureApp> {
   void dispose() {
     unawaited(widget.audioController.dispose());
     widget.audioSettingsController.dispose();
-    widget.homeController.dispose();
     // `gameController` lifecycle is owned by the Riverpod container (cf.
-    // `gameStateProvider` ref.onDispose). No manual dispose needed here.
+    // `gameStateProvider` ref.onDispose). HomeController is created inside
+    // the Consumer below and disposed when the widget tree is torn down.
     super.dispose();
   }
 
@@ -104,11 +89,44 @@ class _OpenAdventureAppState extends State<OpenAdventureApp> {
         if (!kReleaseMode)
           WidgetGalleryPage.routeName: (_) => const WidgetGalleryPage(),
       },
-      home: HomePage(
-        gameController: widget.gameController,
-        homeController: widget.homeController,
+      home: _AppHome(
         audioSettingsController: widget.audioSettingsController,
       ),
+    );
+  }
+}
+
+/// Resolves the gameplay notifier + spawns the legacy `HomeController` via
+/// Riverpod, then builds [HomePage]. Kept private because it's a pure
+/// composition shim — once 5-7/5-8 land, [HomePage] becomes a
+/// `ConsumerWidget` itself and this shim disappears.
+class _AppHome extends ConsumerStatefulWidget {
+  const _AppHome({required this.audioSettingsController});
+
+  final AudioSettingsController audioSettingsController;
+
+  @override
+  ConsumerState<_AppHome> createState() => _AppHomeState();
+}
+
+class _AppHomeState extends ConsumerState<_AppHome> {
+  late final HomeController _homeController = HomeController(
+    saveRepository: ref.read(saveRepositoryProvider),
+  );
+
+  @override
+  void dispose() {
+    _homeController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final gameController = ref.watch(gameStateProvider.notifier);
+    return HomePage(
+      gameController: gameController,
+      homeController: _homeController,
+      audioSettingsController: widget.audioSettingsController,
     );
   }
 }

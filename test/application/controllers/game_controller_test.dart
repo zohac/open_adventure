@@ -1,6 +1,9 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:open_adventure/application/controllers/game_controller.dart';
+import 'package:open_adventure/application/providers/dependencies.dart';
+import 'package:open_adventure/application/providers/game_state_provider.dart';
 import 'package:open_adventure/domain/entities/game.dart';
 import 'package:open_adventure/domain/entities/game_object.dart';
 import 'package:open_adventure/domain/entities/game_object_state.dart';
@@ -33,7 +36,8 @@ void main() {
   late _MockApplyTurn applyTurn;
   late _MockSaveRepository saveRepository;
   late _MockDwarfSystem dwarfSystem;
-  late GameController controller;
+  late ProviderContainer container;
+  late GameNotifier controller;
 
   const initialGame = Game(
     loc: 1,
@@ -75,13 +79,20 @@ void main() {
       return DwarfTickResult(game: game);
     });
 
-    controller = GameController(
-      adventureRepository: adventureRepository,
-      listAvailableActions: listAvailableActions,
-      applyTurn: applyTurn,
-      saveRepository: saveRepository,
-      dwarfSystem: dwarfSystem,
+    container = ProviderContainer(
+      overrides: <Override>[
+        adventureRepositoryProvider.overrideWithValue(adventureRepository),
+        saveRepositoryProvider.overrideWithValue(saveRepository),
+        listAvailableActionsProvider.overrideWithValue(listAvailableActions),
+        applyTurnProvider.overrideWithValue(applyTurn),
+        dwarfSystemProvider.overrideWithValue(dwarfSystem),
+      ],
     );
+    controller = container.read(gameStateProvider.notifier);
+  });
+
+  tearDown(() {
+    container.dispose();
   });
 
   group('init', () {
@@ -115,7 +126,7 @@ void main() {
 
       await controller.init();
 
-      final state = controller.value;
+      final state = container.read(gameStateProvider);
       expect(state.game, equals(initialGame));
       expect(state.locationTitle, equals(location.name));
       expect(state.locationDescription, equals(location.longDescription));
@@ -165,8 +176,8 @@ void main() {
 
       await controller.init();
 
-      expect(controller.value.actions, equals(const [normalAction]));
-      expect(controller.value.flashMessage, isNull);
+      expect(container.read(gameStateProvider).actions, equals(const [normalAction]));
+      expect(container.read(gameStateProvider).flashMessage, isNull);
     });
 
     test('exposes cached objects for presentation', () async {
@@ -193,7 +204,7 @@ void main() {
 
       expect(controller.objectById(5), isNotNull);
       expect(controller.objectById(5)!.name, equals('LAMP'));
-      expect(controller.value.flashMessage, isNull);
+      expect(container.read(gameStateProvider).flashMessage, isNull);
     });
   });
 
@@ -280,7 +291,7 @@ void main() {
 
         await controller.perform(initialActions.first);
 
-        final state = controller.value;
+        final state = container.read(gameStateProvider);
         expect(state.game, equals(nextGame));
         expect(state.locationTitle, equals(nextLocation.name));
         expect(state.locationDescription, equals('Short west description'));
@@ -296,7 +307,7 @@ void main() {
         expect(state.flashMessage, isNull);
 
         controller.clearFlashMessage();
-        expect(controller.value.flashMessage, isNull);
+        expect(container.read(gameStateProvider).flashMessage, isNull);
 
         verify(() => applyTurn(any(), any())).called(1);
         verify(
@@ -330,7 +341,7 @@ void main() {
 
         await controller.perform(initialActions.first);
 
-        final state = controller.value;
+        final state = container.read(gameStateProvider);
         expect(state.locationDescription, equals(messages.join('\n')));
         expect(
           state.journal.sublist(state.journal.length - 3),
@@ -362,7 +373,7 @@ void main() {
 
       await controller.perform(initialActions.first);
 
-      final state = controller.value;
+      final state = container.read(gameStateProvider);
       expect(state.game, equals(dwarfGame));
       expect(
         state.journal.sublist(state.journal.length - 2),
@@ -403,7 +414,7 @@ void main() {
 
         await controller.perform(backAction);
 
-        final state = controller.value;
+        final state = container.read(gameStateProvider);
         expect(state.game, equals(initialGame));
         expect(state.locationTitle, equals('LOC_START'));
         expect(state.locationDescription, equals('Long start description'));
@@ -465,13 +476,13 @@ void main() {
           const GameSnapshot(loc: 1, turns: 0, rngSeed: 42),
         ),
       ).called(1);
-      expect(controller.value.game, equals(mutatedGame));
+      expect(container.read(gameStateProvider).game, equals(mutatedGame));
       expect(
-        controller.value.journal.last,
+        container.read(gameStateProvider).journal.last,
         equals('journal.take.success.KEYS'),
       );
       expect(
-        controller.value.flashMessage,
+        container.read(gameStateProvider).flashMessage,
         equals('journal.take.success.KEYS'),
       );
     });
@@ -519,7 +530,7 @@ void main() {
 
       await controller.perform(initialActions.first);
 
-      final state = controller.value;
+      final state = container.read(gameStateProvider);
       final Game game = state.game!;
       expect(game, equals(warnedGame));
       expect(game.limit, equals(30));
@@ -595,7 +606,7 @@ void main() {
 
       await controller.perform(initialActions.first);
 
-      final state = controller.value;
+      final state = container.read(gameStateProvider);
       final Game game = state.game!;
       expect(game, equals(depletedGame));
       expect(game.limit, equals(-1));
@@ -650,7 +661,7 @@ void main() {
 
         await controller.perform(observerAction);
 
-        final state = controller.value;
+        final state = container.read(gameStateProvider);
         expect(state.locationDescription, equals('Long start description'));
         expect(state.journal.last, equals('Long start description'));
         expect(state.flashMessage, equals('Long start description'));
@@ -661,7 +672,7 @@ void main() {
     );
 
     test('meta map defers to presentation layer', () async {
-      final previousState = controller.value;
+      final previousState = container.read(gameStateProvider);
       clearInteractions(applyTurn);
       clearInteractions(saveRepository);
       clearInteractions(dwarfSystem);
@@ -676,8 +687,8 @@ void main() {
 
       await controller.perform(mapAction);
 
-      expect(controller.value, same(previousState));
-      expect(controller.value.flashMessage, isNull);
+      expect(container.read(gameStateProvider), same(previousState));
+      expect(container.read(gameStateProvider).flashMessage, isNull);
       verifyNever(() => applyTurn(any(), any()));
       verifyZeroInteractions(saveRepository);
       verifyNever(() => dwarfSystem.tick(any()));
@@ -720,8 +731,8 @@ void main() {
 
       verifyNever(() => applyTurn(any(), any()));
       verifyNever(() => dwarfSystem.tick(any()));
-      expect(controller.value.game, equals(initialGame));
-      expect(controller.value.flashMessage, isNull);
+      expect(container.read(gameStateProvider).game, equals(initialGame));
+      expect(container.read(gameStateProvider).flashMessage, isNull);
     });
   });
 
@@ -760,8 +771,8 @@ void main() {
 
       await controller.refreshActions();
 
-      expect(controller.value.actions, hasLength(1));
-      expect(controller.value.flashMessage, isNull);
+      expect(container.read(gameStateProvider).actions, hasLength(1));
+      expect(container.read(gameStateProvider).flashMessage, isNull);
     });
   });
 }
