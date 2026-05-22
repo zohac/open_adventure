@@ -44,7 +44,7 @@
 # - Master index: docs/index.md
 
 generated: 2026-05-17
-last_updated: 2026-05-22  # 5-4-atomes-ui-partages : in-progress → review
+last_updated: 2026-05-22  # 5-4-atomes-ui-partages : review → in-progress (code review findings)
 project: open_adventure
 project_key: NOKEY
 tracking_system: file-system
@@ -173,8 +173,8 @@ development_status:
   epic-5: in-progress
   5-1-riverpod-foundation: done
   5-2-reorganisation-features: done
-  5-3-port-tokens-design-system: review
-  5-4-atomes-ui-partages: review
+  5-3-port-tokens-design-system: done
+  5-4-atomes-ui-partages: in-progress
   5-5-motion-system: ready-for-dev
   5-6-migration-game-controller: ready-for-dev
   5-7-migration-adventure-page: ready-for-dev

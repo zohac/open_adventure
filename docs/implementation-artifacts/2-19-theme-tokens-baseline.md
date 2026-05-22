@@ -1,6 +1,6 @@
 # Story 2-19: Theme tokens baseline (Material indigo)
 
-> ⚠️ **Supersedée par Story 5-3** (Epic 5 Foundation Refresh, 2026-05-22).
+> ⚠️ Supersedée par 5-3 (Epic 5 Foundation Refresh, 2026-05-22).
 >
 > Le contenu vivant des tokens de thème est désormais sous `lib/core/theme/oa_*.dart` (cf. `docs/dev-notes/riverpod-playbook.md` et la story [`5-3-port-tokens-design-system.md`](./5-3-port-tokens-design-system.md)). La baseline indigo livrée originellement par 2-19 reste accessible historiquement via `git log --follow lib/core/theme/app_theme.dart`.
 

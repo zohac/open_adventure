@@ -68,7 +68,7 @@ void main() {
   group('Lerp', () {
     test('OAColors.lerp blends each sub-palette toward the target', () {
       const a = OAColors.dark;
-      final mid = a.lerp(a, 0.5) as OAColors;
+      final mid = a.lerp(a, 0.5);
       expect(mid, equals(a));
     });
 

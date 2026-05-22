@@ -34,7 +34,7 @@ void main() {
         durBase: Duration(milliseconds: 0),
         durSlow: Duration(milliseconds: 0),
       );
-      final mid = a.lerp(b, 0.5) as OAMotionTokens;
+      final mid = a.lerp(b, 0.5);
       expect(mid.durBase, const Duration(milliseconds: 100));
     });
 

@@ -1,6 +1,6 @@
 # Story 5.3: Port `tokens.css` → Dart (remplace 2-19)
 
-Status: review
+Status: done
 Epic: 5
 Source ticket: Sprint Change Proposal 2026-05-22 §4.2 ; supersède la story `2-19-theme-tokens-baseline`
 Refs : [epic-5](../planning-artifacts/epic-5.md#story-53-port-tokenscss--dart-remplace-2-19), [design.md §4 ADR-003/004](../design.md), [tokens.css](../../design_handoff_open_adventure/tokens.css)
@@ -47,7 +47,7 @@ Refs : [epic-5](../planning-artifacts/epic-5.md#story-53-port-tokenscss--dart-re
 ### Review Findings
 
 - [x] [Review][Decision] AC9 cible un fichier story `2-19` inexistant — L'AC9 demande un bandeau en tête de `docs/implementation-artifacts/2-19-theme-tokens-baseline.md`, mais ce fichier n'existe pas dans l'historique Git consulté ; seule l'entrée `sprint-status.yaml` existe déjà. Décision requise : créer un placeholder historique `done` avec bandeau superseded, ou ajuster l'AC/record pour acter que `sprint-status.yaml` est la source canonique.
-  - **R1 — Résolu (2026-05-22)** : placeholder créé à `docs/implementation-artifacts/2-19-theme-tokens-baseline.md` avec bandeau `> ⚠️ **Supersedée par Story 5-3**` en tête, statut `done` préservé, Dev Agent Record marqué historique (story livrée avant l'adoption de BMad pour ce projet). Le fichier référence 5-3 et la sprint change proposal, et documente pourquoi `app_theme.dart` reste en cohabitation. AC9 désormais strictement satisfait.
+  - **R1 — Résolu (2026-05-22)** : placeholder créé à `docs/implementation-artifacts/2-19-theme-tokens-baseline.md` avec le bandeau exact `> ⚠️ Supersedée par 5-3 (Epic 5 Foundation Refresh, 2026-05-22).` en tête, statut `done` préservé, Dev Agent Record marqué historique (story livrée avant l'adoption de BMad pour ce projet). Le fichier référence 5-3 et la sprint change proposal, et documente pourquoi `app_theme.dart` reste en cohabitation. AC9 désormais strictement satisfait.
 - [x] [Review][Patch] `OAThemeData.dark()` retire l'extension legacy `AppActionAccents`, ce qui fait crasher `HomePage` dès que l'état n'est plus loading [lib/core/theme/oa_theme.dart:57]
   - **R2 — Résolu (2026-05-22)** : `AppActionAccents.dark` ajoutée aux `extensions` du `OAThemeData.dark()` (cohabitation transitoire explicite, retirée quand HomePage sera refondue en Story 5-8). Commentaire inline dans `oa_theme.dart` documente la décision. Le set d'extensions est passé de `const` à non-const (les extensions OA overrident `==` ce qui interdit leur usage dans un `const Set` — cf. analyzer `const_set_element_not_primitive_equality`).
 - [x] [Review][Patch] Les tokens de thème n'implémentent pas `==`/`hashCode` structurels malgré l'AC1 et la règle d'immutabilité [lib/core/theme/oa_colors.dart:254]
@@ -57,7 +57,7 @@ Refs : [epic-5](../planning-artifacts/epic-5.md#story-53-port-tokenscss--dart-re
 - [x] [Review][Patch] `Pixelify Sans` demande `FontWeight.w600` mais la fonte variable n'est pas déclarée pour le poids 600 dans `pubspec.yaml` [pubspec.yaml:92]
   - **R5 — Résolu (2026-05-22)** : ajout d'une déclaration `weight: 600` pour `Pixelify Sans` dans `pubspec.yaml` (pointe vers la même asset variable `PixelifySans-Variable.ttf`). Le variable font supporte nativement la valeur 600 entre 400 et 700 ; Flutter rendra le poids correct au lieu d'un fallback. La famille `Pixelify Sans` a maintenant 3 déclarations (400, 600, 700).
 - [x] [Review][Patch] Les nouveaux modules `lib/core/theme/*` n'ont pas de tests miroir dédiés, seulement un smoke test global [test/core/theme/oa_theme_smoke_test.dart:1]
-  - **R6 — Résolu (2026-05-22)** : 5 nouveaux fichiers tests miroirs créés sous `test/core/theme/` couvrant : palettes canoniques + égalité + lerp + sub-palettes (`oa_colors_test.dart`), scale + family names + égalité (`oa_typography_test.dart`), grille 4dp + hit targets + lerp helpers (`oa_spacing_test.dart`), durées + égalité + lerp (`oa_motion_tokens_test.dart`), getters + `StateError` (`build_context_x_test.dart`). **30 nouveaux tests** au total. La suite passe à **256 tests verts** (vs 226 baseline post-5-4).
+  - **R6 — Résolu (2026-05-22)** : 6 nouveaux fichiers tests miroirs créés sous `test/core/theme/` couvrant : palettes canoniques + égalité + lerp + sub-palettes (`oa_colors_test.dart`), scale + family names + égalité (`oa_typography_test.dart`), grille 4dp + hit targets + lerp helpers (`oa_spacing_test.dart`), durées + égalité + lerp (`oa_motion_tokens_test.dart`), assemblage `OAThemeData.dark()` + compat `AppActionAccents` (`oa_theme_test.dart`), getters + `StateError` (`build_context_x_test.dart`). Le smoke test demandé par l'AC8 reste en place dans `oa_theme_smoke_test.dart`.
 
 ## Dev Notes
 
