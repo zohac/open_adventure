@@ -1,6 +1,6 @@
 # Story 5.2: Réorganisation `lib/presentation/` → `lib/features/`
 
-Status: review
+Status: done
 Epic: 5
 Source ticket: Sprint Change Proposal 2026-05-22 §4.2
 Refs : [epic-5](../planning-artifacts/epic-5.md#story-52-réorganisation-libpresentation--libfeatures), [design.md §3.2](../design.md), [project-context §Code Organization Rules](../project-context.md)
@@ -151,6 +151,7 @@ lib/
 - `flutter test` → `+203: All tests passed!`.
 - `flutter build apk --debug` → `✓ Built build/app/outputs/flutter-apk/app-debug.apk` (~28 s).
 - `grep -rn "package:open_adventure/presentation/" lib/ test/` → 0 matches.
+- `rg -n "presentation/" lib test` → 0 matches après review fixes.
 - `git diff --stat lib/ ` → 26+/26- côté lib (1 import patché par fichier × 15 fichiers, symétrique).
 - `git diff --stat test/` → 17+/17- côté tests.
 
@@ -216,12 +217,13 @@ lib/
 **Modifiés (contenu doc) :**
 
 - `docs/project-context.md` (§Layout obligatoire + 4 réfs techniques résiduelles)
-- `docs/implementation-artifacts/sprint-status.yaml` (`5-2-reorganisation-features` → `review`)
-- `docs/implementation-artifacts/5-2-reorganisation-features.md` (tâches cochées, Dev Agent Record rempli, Status `review`)
+- `docs/implementation-artifacts/sprint-status.yaml` (`5-2-reorganisation-features` → `done`)
+- `docs/implementation-artifacts/5-2-reorganisation-features.md` (tâches cochées, Review Findings résolus, Dev Agent Record rempli, Status `done`)
 
 ## Change Log
 
 | Date       | Author        | Change                                                                              |
 |------------|---------------|-------------------------------------------------------------------------------------|
 | 2026-05-22 | Claude (dev)  | Implémentation Story 5-2 : `lib/presentation/` → `lib/features/` + `lib/core/widgets/` + `lib/core/theme/` (`git mv` × 22, imports patchés, tests miroirs préservés, `project-context.md` mis à jour). Pure restructuration mécanique : zéro changement de comportement, 203 tests verts, APK debug OK. |
-| 2026-05-22 | Claude (dev)  | Review findings R1/R2/R3 adressés. R1 : décision « hors scope de 5-2, dette préexistante » ; rattrapage tests miroirs délégué stories par stories (5-3 pour tokens, 5-4 pour atomes, 5-7/5-8/5-9 pour pages refondues). R2 : 2 commentaires d'en-tête `// lib/presentation/...` supprimés (`pixel_canvas.dart`, `location_image.dart`). R3 : 5 docs vivants mis à jour (`component-inventory.md`, `architecture.md`, `source-tree-analysis.md`, `development-guide.md`, `Cahier_des_charges_Map.md`) ; docs historiques (EXEC_S*, sprint-change-proposal, epic-5) laissés intacts. Statut reste `review`. |
+| 2026-05-22 | Claude (dev)  | Review findings R1/R2/R3 adressés. R1 : décision « hors scope de 5-2, dette préexistante » ; rattrapage tests miroirs délégué stories par stories (5-3 pour tokens, 5-4 pour atomes, 5-7/5-8/5-9 pour pages refondues). R2 : 2 commentaires d'en-tête `// lib/presentation/...` supprimés (`pixel_canvas.dart`, `location_image.dart`). R3 : 5 docs vivants mis à jour (`component-inventory.md`, `architecture.md`, `source-tree-analysis.md`, `development-guide.md`, `Cahier_des_charges_Map.md`) ; docs historiques (EXEC_S*, sprint-change-proposal, epic-5) laissés intacts. |
+| 2026-05-22 | Codex (review) | Clôture review : `rg -n "presentation/" lib test`, `flutter analyze`, `flutter test`, `flutter build apk --debug` verts ; statut → done. |
