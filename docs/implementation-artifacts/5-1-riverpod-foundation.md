@@ -1,6 +1,6 @@
 # Story 5.1: Riverpod foundation — `ProviderScope` racine + playbook
 
-Status: review
+Status: done
 Epic: 5
 Source ticket: Sprint Change Proposal 2026-05-22 (`docs/planning-artifacts/sprint-change-proposal-2026-05-22.md` §4.2)
 Refs : [epic-5](../planning-artifacts/epic-5.md#story-51-riverpod-foundation), [design.md §3.1 / §5](../design.md), [project-context](../project-context.md)
@@ -48,7 +48,7 @@ Refs : [epic-5](../planning-artifacts/epic-5.md#story-51-riverpod-foundation), [
 - [x] [Review][Decision] Clarifier la convention Riverpod DI/lifecycle avant 5-6 — AC3 demande un playbook exploitable, mais `docs/dev-notes/riverpod-playbook.md` dit à la fois que repositories/use cases/services restent injectés par constructeur et "ne deviennent pas des providers" (l.8-10), puis montre des overrides de repository providers (l.29-37), un `GameController` qui `watch(applyTurnProvider)` (l.122-127), et la suppression du `dispose()` manuel dans `OpenAdventureApp` (l.152) alors que la signature publique reste censée ne pas changer. Il faut choisir la convention cible avant de patcher la doc.
   - **R1 — Résolu (2026-05-22)** : Convention **B (full Riverpod)** tranchée par l'utilisateur. Playbook entièrement refondu : §2 expose la convention cible (toute dépendance non-Flutter devient un Provider, `main()` se réduit à `runApp(ProviderScope(child: OpenAdventureApp()))`), §4 détaille le lifecycle (`OpenAdventureApp` rétrécit story-par-story, `dispose` manuel retiré au coup-par-coup, services I/O exposent `ref.onDispose`), §5 confirme zéro `overrideWithValue` au bootstrap en régime nominal, §9 réécrit le squelette migration en consommant tout via `ref.watch(*Provider)`. Le rétrécissement de signature de `OpenAdventureApp` est explicitement délégué aux stories 5-6 → 5-10 (donc hors Story 5-1, qui ne change rien).
 - [x] [Review][Patch] Regénérer `pubspec.lock` sans upgrades transitoires hors scope ou aligner explicitement la montée de toolchain [`pubspec.lock`:750]
-  - **R2 — Résolu (2026-05-22)** : Documentation explicite ajoutée. `docs/dev-notes/riverpod-playbook.md` §10 (« Lockfile & toolchain ») recense les bumps transitive observés (`_fe_analyzer_shared` 85→93, `analyzer` 7.7.1→10.0.1, `characters` 1.4.0→1.4.1, `matcher` 0.12.17→0.12.19, suppression `js 0.7.2`) et acte la décision d'accepter ces conséquences toolchain (Flutter 3.41.9 / Dart 3.11.5) plutôt que de forcer des `dependency_overrides` (risque de masquer un problème de résolution). Le commit `02998cc` (`chore(deps): refresh lockfile`) consolide. Audit post-Epic 5 prévu si `analyzer 10.x` introduit un effet de bord.
+  - **R2 — Résolu (2026-05-22)** : Documentation explicite ajoutée. `docs/dev-notes/riverpod-playbook.md` §10 (« Lockfile & toolchain ») recense les bumps transitive observés (`_fe_analyzer_shared` 85→93, `analyzer` 7.7.1→10.0.1, `characters` 1.4.0→1.4.1, `matcher` 0.12.17→0.12.19, suppression `js 0.7.2`) et acte la décision d'accepter ces conséquences toolchain (Flutter 3.41.9 / Dart 3.11.5) plutôt que de forcer des `dependency_overrides` (risque de masquer un problème de résolution). `pubspec.yaml`, `README.md` et `docs/project-context.md` sont alignés sur Dart `>=3.11.0` / Flutter 3.41.x. Les trois infos révélées par `analyzer 10.x` (`use_null_aware_elements`, `unnecessary_underscores`) sont corrigées ; `flutter analyze` repasse à zéro issue. Le commit `02998cc` (`chore(deps): refresh lockfile`) consolide.
 - [x] [Review][Patch] Ne pas passer 5-2 → 5-15 en `ready-for-dev` dans le commit 5-1 sans artefacts story committés [`docs/implementation-artifacts/sprint-status.yaml`:175]
   - **R3 — Résolu (2026-05-22)** : Les 13 fichiers `5-3-port-tokens-design-system.md` → `5-15-reecriture-project-context-md.md` (artefacts existants issus du sprint change proposal) ont été committés en parallèle par l'utilisateur dans `bb50313 docs(epic-5): draft stories 5-3 to 5-15 (Foundation Refresh)`. `5-2-reorganisation-features.md` était déjà couvert par le commit `198112a`. Sprint-status désormais cohérent : chaque story marquée `ready-for-dev` ou plus a bien son fichier tracké dans le repo.
 
@@ -126,7 +126,7 @@ Refs : [epic-5](../planning-artifacts/epic-5.md#story-51-riverpod-foundation), [
 - **AC7 — Commentaire pubspec** : ligne inline « introduit Story 5-1 — Riverpod foundation ; conventions documentées dans docs/dev-notes/riverpod-playbook.md » au-dessus de `flutter_riverpod: ^2.6.0`.
 - **Choix de version** : `^2.6.0` (résolu 2.6.1) ; Riverpod 3.x volontairement écarté (breaking changes API non auditées), comme stipulé par la story et confirmé via `resolve-library-id` (3.x existe mais hors scope sans DDR).
 - **Lien dans `docs/index.md`** : nouvelle section « Dev notes » insérée entre les artefacts générés et la référence amont.
-- **Sprint status** : `5-1-riverpod-foundation` passé `backlog → in-progress → review` ; `last_updated` mis à jour au 2026-05-22.
+- **Sprint status** : `5-1-riverpod-foundation` passé `backlog → in-progress → review → done` ; `last_updated` mis à jour au 2026-05-22.
 
 ### File List
 
@@ -137,12 +137,13 @@ Refs : [epic-5](../planning-artifacts/epic-5.md#story-51-riverpod-foundation), [
 - `test/application/providers/app_bootstrap_provider_test.dart` — NEW (test smoke provider, AC5).
 - `docs/dev-notes/riverpod-playbook.md` — NEW (playbook, AC3).
 - `docs/index.md` — UPDATE (section « Dev notes » + lien playbook).
-- `docs/implementation-artifacts/sprint-status.yaml` — UPDATE (`5-1-riverpod-foundation` → `review`, `last_updated` 2026-05-22).
-- `docs/implementation-artifacts/5-1-riverpod-foundation.md` — UPDATE (tâches cochées, Dev Agent Record rempli, Status `review`).
+- `docs/implementation-artifacts/sprint-status.yaml` — UPDATE (`5-1-riverpod-foundation` → `done`, `last_updated` 2026-05-22).
+- `docs/implementation-artifacts/5-1-riverpod-foundation.md` — UPDATE (tâches cochées, Review Findings résolus, Dev Agent Record rempli, Status `done`).
 
 ## Change Log
 
 | Date       | Author        | Change                                                                              |
 |------------|---------------|-------------------------------------------------------------------------------------|
 | 2026-05-22 | Claude (dev)  | Implémentation initiale Story 5-1 : dépendance Riverpod 2.6.1, `ProviderScope` racine, smoke provider + test, playbook, lien index, statut → review. |
-| 2026-05-22 | Claude (dev)  | Review findings R1/R2/R3 adressés. R1 : convention Riverpod tranchée **Full Riverpod (B)** ; playbook entièrement réécrit (§§2/4/5/9 cohérents, §3 grille de typage, §10 nouvelle section lockfile). R2 : §10 du playbook documente les bumps transitive toolchain. R3 : résolu indépendamment par l'utilisateur via `bb50313`. Statut reste `review`. |
+| 2026-05-22 | Claude (dev)  | Review findings R1/R2/R3 adressés. R1 : convention Riverpod tranchée **Full Riverpod (B)** ; playbook entièrement réécrit (§§2/4/5/9 cohérents, §3 grille de typage, §10 nouvelle section lockfile). R2 : §10 du playbook documente les bumps transitive toolchain. R3 : résolu indépendamment par l'utilisateur via `bb50313`. |
+| 2026-05-22 | Codex (review) | Clôture review : toolchain alignée dans `pubspec.yaml` / README / project-context, lints `analyzer 10.x` corrigés, `flutter analyze`, `flutter test`, `flutter build apk --debug` verts, statut → done. |

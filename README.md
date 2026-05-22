@@ -6,7 +6,7 @@ Open Adventure - A Colossal Cave Adventure
 
 Development quickstart
 
-- Requirements: Flutter stable 3.35.x, Dart ≥ 3.9 (Flutter tools). Run `flutter doctor`.
+- Requirements: Flutter stable 3.41.x, Dart >= 3.11 (Flutter tools). Run `flutter doctor`.
 - Assets: JSON under `assets/data/` are the runtime source; C/YAML truth lives in `open-adventure-master/`.
 - Install deps and validate:
   - `flutter pub get`

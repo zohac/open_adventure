@@ -54,7 +54,7 @@ class InventoryPage extends StatelessWidget {
             return ListView.separated(
               padding: const EdgeInsets.all(AppSpacing.md),
               itemCount: inventory.length,
-              separatorBuilder: (_, __) => const SizedBox(height: AppSpacing.md),
+              separatorBuilder: (_, _) => const SizedBox(height: AppSpacing.md),
               itemBuilder: (context, index) {
                 final entry = inventory[index];
                 return _InventoryCard(

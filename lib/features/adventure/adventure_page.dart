@@ -299,7 +299,7 @@ class _ActionsSection extends StatelessWidget {
                       },
                     );
                   },
-                  separatorBuilder: (_, __) => const SizedBox(height: 0),
+                  separatorBuilder: (_, _) => const SizedBox(height: 0),
                   itemCount: overflowActions.length,
                 ),
               ],

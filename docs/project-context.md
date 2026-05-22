@@ -31,8 +31,8 @@ optimized_for_llm: true
 
 ## Technology Stack & Versions
 
-- **Framework** : Flutter stable **3.35.x** (cf. README §Getting Started)
-- **Langage** : Dart `>=3.0.0 <4.0.0` (null-safety stricte)
+- **Framework** : Flutter stable **3.41.x** (cf. README §Getting Started)
+- **Langage** : Dart `>=3.11.0 <4.0.0` (null-safety stricte)
 - **Cible plateforme** : Android (`android/` natif présent), iOS planifié (dossier `ios/` à créer via `flutter create --platforms=ios .`)
 - **Lint** : `flutter_lints` ^6.0.0 (`analysis_options.yaml`, fail-on-warning visé). Exclusions : `lib_legacy/`, `test/features/`, `build/`, `coverage/`.
 
