@@ -1,6 +1,6 @@
 # Story 5.6: Migration `GameController` → `StateNotifier` Riverpod
 
-Status: review
+Status: done
 Epic: 5
 Source ticket: Sprint Change Proposal 2026-05-22 §4.2 ; refonde l'API publique livrée par `3-14-game-controller-journal-lampe-nains` (done)
 Refs : [epic-5](../planning-artifacts/epic-5.md#story-56-migration-gamecontroller--statenotifier), [design.md §5](../design.md), [project-context §Boucle de tour](../project-context.md), [riverpod-playbook](../dev-notes/riverpod-playbook.md) (5-1)
