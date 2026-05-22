@@ -1,6 +1,6 @@
 # Story 5.5: Motion system (`OAAnimations` + `Curves.stepN`)
 
-Status: review
+Status: done
 Epic: 5
 Source ticket: Sprint Change Proposal 2026-05-22 §4.2
 Refs : [epic-5](../planning-artifacts/epic-5.md#story-55-motion-system), [design.md ADR-006](../design.md), [motion-spec.jsx](../../design_handoff_open_adventure/motion-spec.jsx), [motion.css](../../design_handoff_open_adventure/motion.css)

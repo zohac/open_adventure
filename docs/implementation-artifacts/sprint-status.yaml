@@ -44,7 +44,7 @@
 # - Master index: docs/index.md
 
 generated: 2026-05-17
-last_updated: 2026-05-22  # 5-5-motion-system : in-progress → review
+last_updated: 2026-05-22  # 5-6-migration-game-controller : ready-for-dev → in-progress
 project: open_adventure
 project_key: NOKEY
 tracking_system: file-system
@@ -175,8 +175,8 @@ development_status:
   5-2-reorganisation-features: done
   5-3-port-tokens-design-system: done
   5-4-atomes-ui-partages: done
-  5-5-motion-system: review
-  5-6-migration-game-controller: ready-for-dev
+  5-5-motion-system: done
+  5-6-migration-game-controller: in-progress
   5-7-migration-adventure-page: ready-for-dev
   5-8-migration-home-page: ready-for-dev
   5-9-migration-inventory-page: ready-for-dev
