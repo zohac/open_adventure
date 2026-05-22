@@ -1,7 +1,9 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:open_adventure/features/debug/widget_gallery.dart';
 import 'package:open_adventure/l10n/app_localizations.dart';
 import 'package:open_adventure/application/controllers/audio_settings_controller.dart';
 import 'package:open_adventure/application/controllers/game_controller.dart';
@@ -140,6 +142,10 @@ class _OpenAdventureAppState extends State<OpenAdventureApp> {
       themeMode: ThemeMode.dark,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
+      routes: <String, WidgetBuilder>{
+        if (kDebugMode)
+          WidgetGalleryPage.routeName: (_) => const WidgetGalleryPage(),
+      },
       home: HomePage(
         gameController: widget.gameController,
         homeController: widget.homeController,
