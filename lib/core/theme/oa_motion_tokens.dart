@@ -52,6 +52,18 @@ class OAMotionTokens extends ThemeExtension<OAMotionTokens> {
       durSlow: _lerpDuration(durSlow, other.durSlow, t),
     );
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is OAMotionTokens &&
+        other.durFast == durFast &&
+        other.durBase == durBase &&
+        other.durSlow == durSlow;
+  }
+
+  @override
+  int get hashCode => Object.hash(durFast, durBase, durSlow);
 }
 
 Duration _lerpDuration(Duration a, Duration b, double t) {

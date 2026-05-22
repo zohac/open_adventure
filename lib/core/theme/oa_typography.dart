@@ -7,18 +7,19 @@ import 'package:flutter/material.dart';
 
 /// Font family constants (declared once, used everywhere).
 abstract final class OAFontFamily {
-  /// `--f-display` — Pixelify Sans (pixel chrome, titres).
-  static const String display = 'PixelifySans';
+  /// `--f-display` — Pixelify Sans (pixel chrome, titres). Family name aligné
+  /// sur `tokens.css` (avec espace).
+  static const String display = 'Pixelify Sans';
 
   /// `--f-caps` — Silkscreen (caps lock micro-labels, tags).
   static const String caps = 'Silkscreen';
 
   /// `--f-body` — DM Sans (descriptions, long-form).
-  static const String body = 'DMSans';
+  static const String body = 'DM Sans';
 
   /// `--f-mono` — JetBrains Mono (fallback monospace). Non embarquée pour
   /// l'instant ; Flutter retombera sur la fonte mono système.
-  static const String mono = 'JetBrainsMono';
+  static const String mono = 'JetBrains Mono';
 }
 
 @immutable
@@ -68,6 +69,19 @@ class OADisplayStyles {
       s: TextStyle.lerp(a.s, b.s, t)!,
     );
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is OADisplayStyles &&
+        other.xl == xl &&
+        other.l == l &&
+        other.m == m &&
+        other.s == s;
+  }
+
+  @override
+  int get hashCode => Object.hash(xl, l, m, s);
 }
 
 @immutable
@@ -90,6 +104,15 @@ class OACapsStyles {
       s: TextStyle.lerp(a.s, b.s, t)!,
     );
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is OACapsStyles && other.m == m && other.s == s;
+  }
+
+  @override
+  int get hashCode => Object.hash(m, s);
 }
 
 @immutable
@@ -120,6 +143,15 @@ class OABodyStyles {
       s: TextStyle.lerp(a.s, b.s, t)!,
     );
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is OABodyStyles && other.l == l && other.m == m && other.s == s;
+  }
+
+  @override
+  int get hashCode => Object.hash(l, m, s);
 }
 
 /// Typography tokens exposed as a [ThemeExtension].
@@ -247,4 +279,18 @@ class OATypography extends ThemeExtension<OATypography> {
       mono: TextStyle.lerp(mono, other.mono, t)!,
     );
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is OATypography &&
+        other.display == display &&
+        other.caps == caps &&
+        other.body == body &&
+        other.action == action &&
+        other.mono == mono;
+  }
+
+  @override
+  int get hashCode => Object.hash(display, caps, body, action, mono);
 }

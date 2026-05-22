@@ -4,6 +4,7 @@
 
 import 'package:flutter/material.dart';
 
+import 'app_colors.dart' show AppActionAccents;
 import 'oa_colors.dart';
 import 'oa_motion_tokens.dart';
 import 'oa_spacing.dart';
@@ -54,11 +55,19 @@ abstract final class OAThemeData {
         bodyColor: colors.paper.warm,
         displayColor: colors.paper.bright,
       ),
-      extensions: const <ThemeExtension<dynamic>>{
+      // Set non-const : les `ThemeExtension` Open Adventure overrident `==`
+      // (égalité structurelle), ce qui interdit leur utilisation dans un
+      // `const Set` (cf. analyzer `const_set_element_not_primitive_equality`).
+      extensions: <ThemeExtension<dynamic>>{
         colors,
         typography,
         OASpacing.standard,
         OAMotionTokens.standard,
+        // Compat transitoire (cohabitation Epic 5) : `HomePage` (et tout autre
+        // écran non encore refondu) lit `theme.extension<AppActionAccents>()!`.
+        // L'extension est retirée une fois les pages migrées (Story 5-8 pour
+        // HomePage, etc.).
+        AppActionAccents.dark,
       },
     );
   }

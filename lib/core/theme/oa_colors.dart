@@ -63,6 +63,21 @@ class OAInkPalette {
       hairline: Color.lerp(a.hairline, b.hairline, t)!,
     );
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is OAInkPalette &&
+        other.voidColor == voidColor &&
+        other.deep == deep &&
+        other.mid == mid &&
+        other.raised == raised &&
+        other.line == line &&
+        other.hairline == hairline;
+  }
+
+  @override
+  int get hashCode => Object.hash(voidColor, deep, mid, raised, line, hairline);
 }
 
 @immutable
@@ -97,6 +112,18 @@ class OATealPalette {
       glow: Color.lerp(a.glow, b.glow, t)!,
     );
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is OATealPalette &&
+        other.mist == mist &&
+        other.deep == deep &&
+        other.glow == glow;
+  }
+
+  @override
+  int get hashCode => Object.hash(mist, deep, glow);
 }
 
 @immutable
@@ -142,6 +169,19 @@ class OAPaperPalette {
       ink: Color.lerp(a.ink, b.ink, t)!,
     );
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is OAPaperPalette &&
+        other.bright == bright &&
+        other.warm == warm &&
+        other.faded == faded &&
+        other.ink == ink;
+  }
+
+  @override
+  int get hashCode => Object.hash(bright, warm, faded, ink);
 }
 
 @immutable
@@ -194,6 +234,20 @@ class OAAmberPalette {
       halo: Color.lerp(a.halo, b.halo, t)!,
     );
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is OAAmberPalette &&
+        other.glow == glow &&
+        other.base == base &&
+        other.deep == deep &&
+        other.shadow == shadow &&
+        other.halo == halo;
+  }
+
+  @override
+  int get hashCode => Object.hash(glow, base, deep, shadow, halo);
 }
 
 @immutable
@@ -243,6 +297,19 @@ class OASemanticColors {
       magic: Color.lerp(a.magic, b.magic, t)!,
     );
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is OASemanticColors &&
+        other.treasure == treasure &&
+        other.danger == danger &&
+        other.success == success &&
+        other.magic == magic;
+  }
+
+  @override
+  int get hashCode => Object.hash(treasure, danger, success, magic);
 }
 
 /// Open Adventure color tokens, exposed as a [ThemeExtension].
@@ -330,4 +397,18 @@ class OAColors extends ThemeExtension<OAColors> {
       semantic: OASemanticColors.lerp(semantic, other.semantic, t),
     );
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is OAColors &&
+        other.ink == ink &&
+        other.teal == teal &&
+        other.paper == paper &&
+        other.amber == amber &&
+        other.semantic == semantic;
+  }
+
+  @override
+  int get hashCode => Object.hash(ink, teal, paper, amber, semantic);
 }

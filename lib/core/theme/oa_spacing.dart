@@ -41,6 +41,19 @@ class OARadii {
       r3: lerpDouble(a.r3, b.r3, t),
     );
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is OARadii &&
+        other.r0 == r0 &&
+        other.r1 == r1 &&
+        other.r2 == r2 &&
+        other.r3 == r3;
+  }
+
+  @override
+  int get hashCode => Object.hash(r0, r1, r2, r3);
 }
 
 @immutable
@@ -75,6 +88,18 @@ class OABorderWidths {
       b3: lerpDouble(a.b3, b.b3, t),
     );
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is OABorderWidths &&
+        other.b1 == b1 &&
+        other.b2 == b2 &&
+        other.b3 == b3;
+  }
+
+  @override
+  int get hashCode => Object.hash(b1, b2, b3);
 }
 
 @immutable
@@ -109,6 +134,18 @@ class OAHitTargets {
       large: lerpDouble(a.large, b.large, t),
     );
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is OAHitTargets &&
+        other.min == min &&
+        other.comfy == comfy &&
+        other.large == large;
+  }
+
+  @override
+  int get hashCode => Object.hash(min, comfy, large);
 }
 
 /// Spacing/radii/border/hit-target tokens.
@@ -219,6 +256,35 @@ class OASpacing extends ThemeExtension<OASpacing> {
       hitTargets: OAHitTargets.lerp(hitTargets, other.hitTargets, t),
     );
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is OASpacing &&
+        other.s0 == s0 &&
+        other.s1 == s1 &&
+        other.s2 == s2 &&
+        other.s3 == s3 &&
+        other.s4 == s4 &&
+        other.s5 == s5 &&
+        other.s6 == s6 &&
+        other.s7 == s7 &&
+        other.s8 == s8 &&
+        other.s9 == s9 &&
+        other.s10 == s10 &&
+        other.radii == radii &&
+        other.borderWidths == borderWidths &&
+        other.hitTargets == hitTargets;
+  }
+
+  @override
+  int get hashCode => Object.hash(
+        Object.hash(s0, s1, s2, s3, s4, s5),
+        Object.hash(s6, s7, s8, s9, s10),
+        radii,
+        borderWidths,
+        hitTargets,
+      );
 }
 
 /// Local helper since `lerpDouble` from `dart:ui` returns a nullable.
