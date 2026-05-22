@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:open_adventure/l10n/app_localizations.dart';
 import 'package:open_adventure/application/controllers/audio_settings_controller.dart';
 import 'package:open_adventure/application/controllers/game_controller.dart';
@@ -91,11 +92,13 @@ Future<void> main() async {
   final homeController = HomeController(saveRepository: saveRepository);
 
   runApp(
-    OpenAdventureApp(
-      gameController: controller,
-      audioController: audioController,
-      audioSettingsController: audioSettingsController,
-      homeController: homeController,
+    ProviderScope(
+      child: OpenAdventureApp(
+        gameController: controller,
+        audioController: audioController,
+        audioSettingsController: audioSettingsController,
+        homeController: homeController,
+      ),
     ),
   );
 }

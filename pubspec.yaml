@@ -45,6 +45,8 @@ dependencies:
   just_audio: ^0.10.5
   audio_session: ^0.2.2
   intl: ^0.20.2
+  # introduit Story 5-1 — Riverpod foundation ; conventions documentées dans docs/dev-notes/riverpod-playbook.md
+  flutter_riverpod: ^2.6.0
 
 dev_dependencies:
   flutter_test:

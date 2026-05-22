@@ -75,6 +75,10 @@
 - [`ux_screens_images/`](./ux_screens_images/) — Screenshots wireframes (HomePage clair/sombre)
 - [`project-scan-report.json`](./project-scan-report.json) — État interne de ce workflow
 
+### Dev notes
+
+- [`dev-notes/riverpod-playbook.md`](./dev-notes/riverpod-playbook.md) — Conventions Riverpod (Provider vs StateNotifierProvider, family, overrides en tests, anti-patterns, squelette migration `ValueNotifier → StateNotifier`). Socle posé par Story 5-1.
+
 ### Référence amont (lecture seule, non compilée)
 
 - `open-adventure-master/adventure.yaml` — source de vérité YAML (gameplay/lore/données)

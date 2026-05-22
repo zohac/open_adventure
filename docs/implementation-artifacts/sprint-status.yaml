@@ -44,7 +44,7 @@
 # - Master index: docs/index.md
 
 generated: 2026-05-17
-last_updated: 2026-05-17  # bulk story creation : 27 stories backlog → ready-for-dev (epic 3 reste + epic 4 complet)
+last_updated: 2026-05-22  # Epic 5 stories rédigées : 5-2 → 5-15 backlog → ready-for-dev (5-1 déjà à review)
 project: open_adventure
 project_key: NOKEY
 tracking_system: file-system
@@ -170,20 +170,20 @@ development_status:
   # Migration ValueNotifier→Riverpod + lib/presentation/→lib/features/ + design system
   # Inséré entre clôture epic-3 reste et démarrage epic-4
   # ──────────────────────────────────────────────────────────────────
-  epic-5: backlog
-  5-1-riverpod-foundation: backlog
-  5-2-reorganisation-features: backlog
-  5-3-port-tokens-design-system: backlog
-  5-4-atomes-ui-partages: backlog
-  5-5-motion-system: backlog
-  5-6-migration-game-controller: backlog
-  5-7-migration-adventure-page: backlog
-  5-8-migration-home-page: backlog
-  5-9-migration-inventory-page: backlog
-  5-10-migration-audio-settings: backlog
-  5-11-magic-word-surface: backlog
-  5-12-pipeline-assets-3-tiers: backlog
-  5-13-audit-fidelite-postmigration: backlog
-  5-14-reecriture-architecture-md: backlog
-  5-15-reecriture-project-context-md: backlog
+  epic-5: in-progress
+  5-1-riverpod-foundation: review
+  5-2-reorganisation-features: ready-for-dev
+  5-3-port-tokens-design-system: ready-for-dev
+  5-4-atomes-ui-partages: ready-for-dev
+  5-5-motion-system: ready-for-dev
+  5-6-migration-game-controller: ready-for-dev
+  5-7-migration-adventure-page: ready-for-dev
+  5-8-migration-home-page: ready-for-dev
+  5-9-migration-inventory-page: ready-for-dev
+  5-10-migration-audio-settings: ready-for-dev
+  5-11-magic-word-surface: ready-for-dev
+  5-12-pipeline-assets-3-tiers: ready-for-dev
+  5-13-audit-fidelite-postmigration: ready-for-dev
+  5-14-reecriture-architecture-md: ready-for-dev
+  5-15-reecriture-project-context-md: ready-for-dev
   epic-5-retrospective: optional
