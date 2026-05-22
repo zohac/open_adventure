@@ -23,14 +23,16 @@ Refs : [epic-5](../planning-artifacts/epic-5.md#story-56-migration-gamecontrolle
    ```
    Le `_gameNotifierFactoryProvider` (privé) lit les dépendances (repositories, use cases) via d'autres providers (`adventureRepositoryProvider`, `applyTurnProvider`, etc.) introduits dans cette story.
 3. **AC3 — Providers dépendances** : nouveaux providers dans `lib/application/providers/dependencies.dart` (ou fichiers séparés selon préférence du dev) :
-   - `adventureRepositoryProvider` (Provider, lit `AdventureRepositoryImpl()` — instanciation unique côté provider, plus dans `main.dart`).
-   - `motionNormalizerProvider` (FutureProvider).
-   - `listAvailableActionsProvider` (Provider).
-   - `applyTurnProvider` (FutureProvider — dépend de `motionNormalizerProvider`).
-   - `saveRepositoryProvider` (Provider).
-   - `dwarfSystemProvider` (Provider).
+   - `adventureRepositoryProvider` (`Provider<AdventureRepository>`, lit `AdventureRepositoryImpl()` — instanciation unique côté provider, plus dans `main.dart`).
+   - `motionNormalizerProvider` (`Provider<MotionCanonicalizer>` — **doit être override à la racine** avec le résultat de `MotionNormalizerImpl.load()`. Throws `StateError` si non override, message pointant vers `main.dart`. Cette stratégie évite la propagation d'`async` à travers tous les downstream providers).
+   - `evaluateConditionProvider` (`Provider<EvaluateCondition>`, instance const).
+   - `listAvailableActionsProvider` (`Provider<ListAvailableActions>` — synchrone, consomme `motionNormalizerProvider` via `ref.watch`).
+   - `applyTurnProvider` (`Provider<ApplyTurn>` — synchrone, consomme `motionNormalizerProvider` via `ref.watch`).
+   - `saveRepositoryProvider` (`Provider<SaveRepository>`).
+   - `dwarfSystemProvider` (`Provider<DwarfSystem>`).
    - **Tous overridables** dans les tests via `ProviderContainer(overrides: [...])`.
-4. **AC4 — `main.dart` allégé** : `main.dart` n'instancie plus directement `AdventureRepositoryImpl`, `ListAvailableActions`, `ApplyTurn`, `SaveRepositoryImpl`, `DwarfSystem`, `GameController`. Tout passe par les providers via `ProviderScope`. Conservés dans `main.dart` : `AudioController` + `AudioSettingsController` + `HomeController` (migrés dans 5-10) — ainsi que `WidgetsFlutterBinding.ensureInitialized()` et le bootstrap initial du jeu si nécessaire.
+   - **Convention** (révisée 2026-05-23) : toute asynchronicité est résolue **en amont** du `ProviderScope` (cf. AC4). Aucun `FutureProvider` dans la chaîne gameplay — le graphe est synchrone après bootstrap, ce qui permet aux Consumer widgets de récupérer le `GameNotifier` sans gestion d'`AsyncValue`.
+4. **AC4 — `main.dart` allégé** : `main.dart` n'instancie plus directement `AdventureRepositoryImpl`, `ListAvailableActions`, `ApplyTurn`, `SaveRepositoryImpl`, `DwarfSystem`, `GameController`. Tout passe par les providers via `ProviderScope`. **Seule asynchronicité préservée** : `MotionNormalizerImpl.load()` (JSON parse) awaité avant le `runApp`, puis injecté via `motionNormalizerProvider.overrideWithValue(motion)` dans les overrides du `ProviderScope`. Conservés dans `main.dart` : `AudioController` + `AudioSettingsController` (migrés dans 5-10) ; `HomeController` est désormais instancié dans le widget `_AppHome` (`ConsumerStatefulWidget`) qui consomme `ref.read(saveRepositoryProvider)` — sera migré 5-10 ou plus tard, mais reste hors composition root.
 5. **AC5 — Initialisation du jeu** : `GameNotifier.init()` reste asynchrone et est appelée explicitement par l'UI au démarrage (équivalent du flux actuel via `HomePage → AdventurePage`). Le provider ne déclenche **pas** automatiquement `init()` — l'UI décide. (Alternative : `gameStateProvider.notifier` exposé + appel manuel — documenter le choix retenu dans la PR.)
 6. **AC6 — Boucle de tour préservée intégralement** : ordre 1→11 documenté dans `project-context.md` §Boucle de tour reste **strictement identique** :
    1. Short-circuit meta verbs (INVENTORY/OBSERVER/MAP)
@@ -84,21 +86,37 @@ Refs : [epic-5](../planning-artifacts/epic-5.md#story-56-migration-gamecontrolle
   - **F3 — Résolu (2026-05-23)** : `main.dart` utilise désormais un `ProviderScope(overrides: [motionNormalizerProvider.overrideWithValue(motion)])` standard (plus de `UncontrolledProviderScope` ni de container manuel). `OpenAdventureApp` **ne reçoit plus** `gameController` par constructeur : sa signature publique se réduit à `audioController` + `audioSettingsController`. Le `MaterialApp.home` est désormais un widget privé `_AppHome` (`ConsumerStatefulWidget`) qui résout `ref.watch(gameStateProvider.notifier)` et instancie son propre `HomeController` via `ref.read(saveRepositoryProvider)`. La couche UI consomme donc directement les providers (couche shim retirée en 5-7/5-8).
 - [x] [Review][Patch] Le test historique d'application n'a pas été migré selon AC7 : `test/application/controllers/game_controller_test.dart` construit toujours `GameController(...)` directement et valide l'alias déprécié `controller.value`, au lieu d'exercer la création via `ProviderContainer(overrides: [...])` et la surface `StateNotifier/state` demandées par la story [`test/application/controllers/game_controller_test.dart:78`]
   - **F4 — Résolu (2026-05-23)** : `game_controller_test.dart` migré. Le `setUp` crée désormais un `ProviderContainer(overrides: [adventureRepositoryProvider.overrideWithValue(...), saveRepositoryProvider..., listAvailableActionsProvider..., applyTurnProvider..., dwarfSystemProvider...])` et résout le notifier via `container.read(gameStateProvider.notifier)`. Les 22 occurrences `controller.value` sont remplacées par `container.read(gameStateProvider)` (lecture publique du state émis par le provider, AC7). `tearDown` dispose le container. Le seul site qui crée encore un `GameController(...)` direct est le test `throws StateError if perform is called before init` qui exerce volontairement un notifier indépendant du container — cas légitime documenté par le typedef rétrocompat.
+- [x] [Review][Decision] Le correctif F2/F3 a déplacé le contrat d'architecture sans mettre à jour la story : le code final utilise `motionNormalizerProvider` et `applyTurnProvider` comme `Provider<T>` synchrones avec `MotionNormalizerImpl.load()` résolu en amont dans `main.dart`, alors que l'AC3, le schéma d'architecture et les Dev Notes décrivent encore `motionNormalizerProvider` / `applyTurnProvider` en `FutureProvider` et un bootstrap où les dépendances gameplay restent dans les providers [`lib/application/providers/dependencies.dart:47`]
+  - **F5 — Résolu (2026-05-23)** : doc alignée sur l'implémentation finale. **AC3** réécrit pour expliciter chaque provider avec son type exact (`Provider<MotionCanonicalizer>` qui throws si non override, `Provider<ListAvailableActions>` synchrone, `Provider<ApplyTurn>` synchrone). **AC4** précise que `MotionNormalizerImpl.load()` est awaité avant `runApp` et injecté via `overrideWithValue`. **Dev Notes §Architecture cible** entièrement réécrite (titre `révisée 2026-05-23`) : pseudo-code `main()` qui montre le pattern async → override → ProviderScope synchrone ; schéma du graphe corrigé (`Provider` au lieu de `FutureProvider`) ; section **Rationale** explique le choix (éviter de propager `AsyncValue` à travers `gameStateProvider`, ce qui violerait l'AC2 `StateNotifierProvider<GameNotifier, GameViewState>`). Le code et la story sont désormais en accord strict.
 
 ## Dev Notes
 
-### Architecture cible
+### Architecture cible (révisée 2026-05-23)
+
+Toute asynchronicité est concentrée **avant** le `ProviderScope`. Le graphe Riverpod est ensuite 100 % synchrone — pas de `FutureProvider` dans la chaîne gameplay.
 
 ```
+main() {
+  final motion = await MotionNormalizerImpl.load();   // seule async I/O
+  runApp(ProviderScope(
+    overrides: [motionNormalizerProvider.overrideWithValue(motion)],
+    child: OpenAdventureApp(...),
+  ));
+}
+
 ProviderScope
-  └── adventureRepositoryProvider      (Provider<AdventureRepository>)
-  └── motionNormalizerProvider         (FutureProvider<MotionNormalizer>)
-  └── listAvailableActionsProvider     (Provider<ListAvailableActions>)
-  └── applyTurnProvider                (FutureProvider<ApplyTurn>)
-  └── saveRepositoryProvider           (Provider<SaveRepository>)
-  └── dwarfSystemProvider              (Provider<DwarfSystem>)
-  └── gameStateProvider                (StateNotifierProvider<GameNotifier, GameViewState>)
+  └── motionNormalizerProvider        (Provider<MotionCanonicalizer> — throws si non override ; injecté au root)
+  └── adventureRepositoryProvider     (Provider<AdventureRepository>)
+  └── saveRepositoryProvider          (Provider<SaveRepository>)
+  └── evaluateConditionProvider       (Provider<EvaluateCondition>)
+  └── listAvailableActionsProvider    (Provider<ListAvailableActions>     — ref.watch motion + repo + evaluate)
+  └── applyTurnProvider               (Provider<ApplyTurn>                — ref.watch motion + repo, compose 8 use cases)
+  └── dwarfSystemProvider             (Provider<DwarfSystem>              — ref.watch repo)
+  └── gameStateProvider               (StateNotifierProvider<GameNotifier, GameViewState>
+                                          — _gameNotifierFactoryProvider (Provider<GameNotifier>) compose les deps)
 ```
+
+**Rationale** : un `FutureProvider` pour `motionNormalizer` propagerait `AsyncValue` à travers `applyTurnProvider`, `listAvailableActionsProvider` puis le `StateNotifierProvider`, obligeant chaque consumer UI à gérer un état `loading` factice. En résolvant l'async à boot et en injectant la valeur via override, l'AC2 (`StateNotifierProvider<GameNotifier, GameViewState>`) est respecté avec un type d'état réel (pas `AsyncValue<GameNotifier>`).
 
 ### Source tree
 
@@ -212,3 +230,4 @@ ProviderScope
 |------------|---------------|-------------------------------------------------------------------------------------|
 | 2026-05-23 | Claude (dev)  | Implémentation Story 5-6 : migration `GameController` (ValueNotifier) → `GameNotifier` (StateNotifier Riverpod). 7 providers de dépendances + `gameStateProvider`. `main.dart` allégé (12 imports retirés, `UncontrolledProviderScope` racine). `@Deprecated listenable` adapter ValueListenable pour cohabitation 5-7/5-9. Boucle de tour 1→11 strictement préservée, autosave×1 vérifié via ProviderContainer. 324 tests verts (+4), analyze 0 warning, APK debug OK. Aucune régression métier. |
 | 2026-05-23 | Claude (dev)  | Review findings F1-F4 adressés. **F1** : `gameStateProvider` est désormais `StateNotifierProvider<GameNotifier, GameViewState>` (AC2 strict). Bug double-dispose corrigé. **F2** : `listAvailableActionsProvider` et `applyTurnProvider` devenus `Provider<T>` synchrones ; `motionNormalizerProvider` Provider qui throws si non override (résolu en amont à boot). **F3** : `main.dart` utilise désormais un `ProviderScope` standard avec override de `motionNormalizerProvider` ; `OpenAdventureApp` ne reçoit plus `gameController` par constructeur (signature réduite à audio uniquement) ; le widget `_AppHome` (`ConsumerStatefulWidget`) consomme `ref.watch(gameStateProvider.notifier)` directement. **F4** : `game_controller_test.dart` migré vers `ProviderContainer(overrides: [...])` ; les 22 occurrences `controller.value` remplacées par `container.read(gameStateProvider)`. 325 tests verts (+1 vs 324), analyze 0 warning, APK debug OK. Aucune dette technique. Statut reste `review`. |
+| 2026-05-23 | Claude (dev)  | Review finding F5 adressé. La story est désormais alignée sur l'implémentation : AC3 réécrit avec les types exacts (`Provider<MotionCanonicalizer>` overridable, `Provider<ListAvailableActions>` sync, `Provider<ApplyTurn>` sync) + convention "toute asynchronicité résolue en amont" ; AC4 explicite le pattern `MotionNormalizerImpl.load() → overrideWithValue → ProviderScope` ; Dev Notes §Architecture cible entièrement réécrite (pseudo-code `main()`, schéma corrigé, section Rationale expliquant le choix sync vs `FutureProvider` qui aurait propagé `AsyncValue`). Aucune modification de code. Statut reste `review`. |
